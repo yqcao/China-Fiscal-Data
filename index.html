@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>China Fiscal Data · 中国政府预算四本账</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      background: #f7f7f8;
+      color: #1a1a1a;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+    h1 { font-size: 1.9rem; margin: 0 0 .25rem; }
+    .sub { color: #666; margin: 0 0 2.25rem; }
+    .card {
+      display: block;
+      background: #fff;
+      border: 1px solid #e3e3e6;
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 1rem;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .15s, box-shadow .15s, transform .15s;
+    }
+    .card:hover { border-color: #c00; box-shadow: 0 4px 16px rgba(0,0,0,.06); transform: translateY(-1px); }
+    .card h2 { font-size: 1.15rem; margin: 0 0 .2rem; color: #c00; }
+    .card p { margin: 0; color: #555; font-size: .95rem; }
+    footer { margin-top: 2.5rem; font-size: .85rem; color: #999; }
+    footer a { color: #999; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #16171a; color: #e6e6e6; }
+      .sub { color: #9aa; }
+      .card { background: #1e1f23; border-color: #2c2e33; }
+      .card p { color: #aab; }
+      .card h2 { color: #ff6b6b; }
+      .card:hover { border-color: #ff6b6b; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>China Fiscal Data</h1>
+    <p class="sub">中国政府预算四本账 · Visualizations of China's government budget system</p>
+
+    <a class="card" href="China%20Budget%20System%20FY2025%20(standalone).html">
+      <h2>China Budget System — FY2025 Execution</h2>
+      <p>中国政府预算四本账 · FY2025 budget execution figures</p>
+    </a>
+
+    <a class="card" href="China%20Budget%20System%20(standalone).html">
+      <h2>China Budget System</h2>
+      <p>中国政府预算四本账 · Overview of the four-account budget system</p>
+    </a>
+
+    <footer>
+      Source &amp; data: <a href="https://github.com/yqcao/China-Fiscal-Data">github.com/yqcao/China-Fiscal-Data</a>
+    </footer>
+  </div>
+</body>
+</html>
