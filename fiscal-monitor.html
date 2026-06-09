@@ -70,8 +70,12 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
       <p>The main on-budget account: tax & non-tax revenue and government expenditure.</p></div>
     <p class="period" id="period_gen"></p>
     <div class="kpis" id="kpi_gen"></div>
-    <div class="card"><h3>Revenue vs Expenditure <span class="zh">收入 vs 支出</span></h3>
-      <p class="note" id="note_gen"></p><div id="c_gen" class="chart"></div></div>
+    <div class="subhead"><span data-l="Revenue &amp; Expenditure|收入与支出"></span></div>
+    <p class="note" id="note_gen" style="margin-top:-.25rem"></p>
+    <div class="row2">
+      <div class="card"><h3 data-l="Revenue|收入"></h3><div id="c_gen_rev" class="chart sm"></div></div>
+      <div class="card"><h3 data-l="Expenditure|支出"></h3><div id="c_gen_exp" class="chart sm"></div></div>
+    </div>
 
     <div class="subhead"><span data-l="Major Tax Items|主要税收分项"></span> <select id="taxsel"></select></div>
     <div class="row2">
@@ -166,6 +170,16 @@ const NAMES=[
  [/债务付息/,'Debt Interest']];
 function enName(cn){ for(const[re,en]of NAMES) if(re.test(cn)) return en; return cn; }
 const nm=cn=>lang==='en'?enName(cn):cn;
+// short abbreviations for compact pie/bar labels (English mode)
+const ABBR={'国内增值税':'VAT','国内消费税':'Excise','企业所得税':'CIT','个人所得税':'PIT',
+ '进口货物增值税、消费税':'Import VAT&Excise','关税':'Customs','出口退税':'Export Rebate',
+ '城市维护建设税':'City Maint.','车辆购置税':'Vehicle Purch.','印花税':'Stamp','资源税':'Resource',
+ '契税':'Deed','房产税':'Property','城镇土地使用税':'Land-Use','土地增值税':'LAT','耕地占用税':'Farmland',
+ '环境保护税':'Env. Tax','其他税收':'Other',
+ '教育支出':'Education','科学技术支出':'Sci-Tech','文化旅游体育与传媒支出':'Culture','社会保障和就业支出':'Soc. Security',
+ '卫生健康支出':'Health','节能环保支出':'Energy/Env.','城乡社区支出':'Community','农林水支出':'Agri-Water',
+ '交通运输支出':'Transport','债务付息支出':'Debt Int.'};
+const shortNm=cn=>lang==='en'?(ABBR[cn]||enName(cn)):cn;
 
 function monthly(field){
   const byY={}; DATA.forEach(r=>{const o=r[field]; if(o)(byY[r.year]=byY[r.year]||[]).push({m:r.month,v:o.v});});
@@ -182,30 +196,27 @@ function kpi(el,cards){document.getElementById(el).innerHTML=cards.map(([t,zh,va
 
 const baseX=()=>({type:'category',data:periods,axisLabel:{color:AX,rotate:45,fontSize:10},axisLine:{lineStyle:{color:GRID}}});
 
-function drawGen(){
-  document.getElementById('note_gen').textContent=L(
-    basis==='cum'?'Cumulative YTD level (RMB tn, left) with YoY growth (%, right)':'Derived single-month flow (RMB tn, left) with YoY growth (%, right)',
-    basis==='cum'?'累计规模（万亿元，左）与同比增速（%，右）':'当月推算（万亿元，左）与同比增速（%，右）');
-  let sers;
-  if(split==='total'){
-    const rev=series('pub_rev',basis),exp=series('pub_exp',basis);
-    sers=[
-     {name:L('Revenue','收入'),type:'line',smooth:true,showSymbol:false,lineStyle:{width:2.4,color:C.rev},itemStyle:{color:C.rev},areaStyle:{opacity:.06,color:C.rev},data:rev.map(d=>d.v)},
-     {name:L('Expenditure','支出'),type:'line',smooth:true,showSymbol:false,lineStyle:{width:2.4,color:C.exp},itemStyle:{color:C.exp},areaStyle:{opacity:.06,color:C.exp},data:exp.map(d=>d.v)},
-     {name:L('Revenue YoY','收入同比'),type:'line',yAxisIndex:1,smooth:true,showSymbol:false,lineStyle:{width:1.6,type:'dashed',color:C.rev},itemStyle:{color:C.rev},data:rev.map(d=>d.g)},
-     {name:L('Expenditure YoY','支出同比'),type:'line',yAxisIndex:1,smooth:true,showSymbol:false,lineStyle:{width:1.6,type:'dashed',color:C.exp},itemStyle:{color:C.exp},data:exp.map(d=>d.g)}];
-  } else {
-    sers=[['pub_rev_central','Central Rev','中央收入','#c00'],['pub_rev_local','Local Rev','地方收入','#ff8a8a'],
-          ['pub_exp_central','Central Exp','中央支出','#1463ff'],['pub_exp_local','Local Exp','地方支出','#8ab4ff']]
-      .map(s=>({name:L(s[1],s[2]),type:'line',smooth:true,showSymbol:false,lineStyle:{width:2,color:s[3]},itemStyle:{color:s[3]},data:series(s[0],basis).map(d=>d.v)}));
-  }
-  charts.c_gen.setOption({grid:{left:56,right:56,top:30,bottom:48},textStyle:{color:FG},
+function drawPanel(id,kind){
+  const isRev=kind==='rev', col=isRev?C.rev:C.exp;
+  let levels;
+  if(split==='total') levels=[{f:isRev?'pub_rev':'pub_exp',n:isRev?['Revenue','收入']:['Expenditure','支出'],c:col}];
+  else levels=isRev?[{f:'pub_rev_central',n:['Central','中央'],c:'#c00'},{f:'pub_rev_local',n:['Local','地方'],c:'#ff8a8a'}]
+                   :[{f:'pub_exp_central',n:['Central','中央'],c:'#1463ff'},{f:'pub_exp_local',n:['Local','地方'],c:'#8ab4ff'}];
+  const sers=levels.map(l=>{const d=series(l.f,basis);return {name:L(l.n[0],l.n[1]),type:'line',smooth:true,showSymbol:false,lineStyle:{width:2.4,color:l.c},itemStyle:{color:l.c},areaStyle:{opacity:.06,color:l.c},data:d.map(x=>x.v)};});
+  sers.push({name:L('YoY %','同比 %'),type:'line',yAxisIndex:1,smooth:true,showSymbol:false,lineStyle:{width:1.6,type:'dashed',color:col},itemStyle:{color:col},data:series(isRev?'pub_rev':'pub_exp',basis).map(d=>d.g)});
+  charts[id].setOption({grid:{left:48,right:46,top:28,bottom:48},textStyle:{color:FG},
     legend:{top:0,textStyle:{color:AX},data:sers.map(s=>s.name)},
-    tooltip:{trigger:'axis',valueFormatter:null,formatter:ps=>ps[0].axisValue+'<br>'+ps.map(p=>p.marker+p.seriesName+': '+(/YoY|同比/.test(p.seriesName)?(p.value==null?'–':p.value+'%'):fmtT(p.value))).join('<br>')},
+    tooltip:{trigger:'axis',formatter:ps=>ps[0].axisValue+'<br>'+ps.map(p=>p.marker+p.seriesName+': '+(/YoY|同比/.test(p.seriesName)?(p.value==null?'–':p.value+'%'):fmtT(p.value))).join('<br>')},
     xAxis:baseX(),
     yAxis:[{type:'value',name:'RMB tn',axisLabel:{color:AX,formatter:v=>(v/1000).toFixed(0)},splitLine:{lineStyle:{color:GRID}},nameTextStyle:{color:AX}},
            {type:'value',name:'YoY %',axisLabel:{color:AX,formatter:'{value}%'},splitLine:{show:false},nameTextStyle:{color:AX}}],
     series:sers},true);
+}
+function drawGen(){
+  document.getElementById('note_gen').textContent=L(
+    basis==='cum'?'Cumulative YTD level (RMB tn, left) + YoY growth (%, right)':'Single-month flow (RMB tn, left) + YoY growth (%, right)',
+    basis==='cum'?'累计（万亿元，左）+ 同比（%，右）':'当月（万亿元，左）+ 同比（%，右）');
+  drawPanel('c_gen_rev','rev'); drawPanel('c_gen_exp','exp');
 }
 
 function drawFund(){
@@ -237,15 +248,15 @@ function drawComposition(pieId,growId,field,period){
   const tot=pieItems.reduce((s,i)=>s+i.v,0);
   charts[pieId].setOption({textStyle:{color:FG},color:PIE,
     tooltip:{trigger:'item',formatter:p=>nm(p.name)+'<br>'+fmtB(p.value)+' ('+p.percent+'%)'},
-    series:[{type:'pie',radius:['38%','72%'],center:['50%','52%'],minShowLabelAngle:8,
-      label:{color:FG,fontSize:10,formatter:p=>p.percent>=4?nm(p.name)+' '+p.percent+'%':''},
-      labelLine:{length:6,length2:6},
+    series:[{type:'pie',radius:['34%','64%'],center:['50%','52%'],minShowLabelAngle:0,
+      label:{color:FG,fontSize:9.5,formatter:p=>shortNm(p.name)+' '+p.percent+'%'},
+      labelLine:{length:5,length2:5},
       data:pieItems.map(i=>({name:i.name,value:i.v}))}]},true);
   const g=items.slice().sort((a,b)=>(b.g??-999)-(a.g??-999));
-  charts[growId].setOption({grid:{left:128,right:48,top:8,bottom:22},textStyle:{color:FG},
+  charts[growId].setOption({grid:{left:108,right:48,top:8,bottom:22},textStyle:{color:FG},
     tooltip:{trigger:'item',formatter:p=>nm(g[p.dataIndex].name)+'：'+gtxt(g[p.dataIndex].g)+'  ('+fmtB(g[p.dataIndex].v)+')'},
     xAxis:{type:'value',axisLabel:{color:AX,formatter:'{value}%'},splitLine:{lineStyle:{color:GRID}}},
-    yAxis:{type:'category',inverse:true,data:g.map(i=>nm(i.name)),axisLabel:{color:AX,fontSize:11}},
+    yAxis:{type:'category',inverse:true,data:g.map(i=>shortNm(i.name)),axisLabel:{color:AX,fontSize:11}},
     series:[{type:'bar',data:g.map(i=>({value:i.g,itemStyle:{color:i.g>=0?C.up:C.down}})),
       label:{show:true,position:'right',color:AX,fontSize:10,formatter:p=>gtxt(g[p.dataIndex].g)}}]},true);
 }
@@ -331,7 +342,7 @@ function renderKPIs(){
 
 function applyDataL(){document.querySelectorAll('[data-l]').forEach(e=>{const[en,zh]=e.getAttribute('data-l').split('|');e.textContent=lang==='en'?en:zh;});}
 
-['c_gen','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_lgb','c_lgb_nat','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);
+['c_gen_rev','c_gen_exp','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_lgb','c_lgb_nat','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);
 document.getElementById('taxsel').onchange=e=>drawComposition('c_tax_pie','c_tax_grow','tax_items',e.target.value);
 document.getElementById('expsel').onchange=e=>drawComposition('c_exp_pie','c_exp_grow','exp_items',e.target.value);
 document.getElementById('lgbsel').onchange=e=>drawUse(e.target.value);
