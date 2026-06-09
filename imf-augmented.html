@@ -52,6 +52,13 @@
   .step.on{border-color:var(--imf); background:#fff; box-shadow:var(--shadow)}
   .step.on .n{color:var(--imf)}
   .step .dotcol{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:7px; vertical-align:1px}
+  .step .t{padding-right:22px}
+  .step-i{position:absolute; top:10px; right:10px; width:19px; height:19px; border-radius:50%;
+    border:1px solid var(--rule); background:#fff; color:var(--faint); font-size:11px; font-weight:700;
+    font-style:italic; font-family:Georgia,"Times New Roman",serif; display:flex; align-items:center;
+    justify-content:center; cursor:pointer; transition:.15s; line-height:1; z-index:2}
+  .step-i:hover{border-color:var(--imf); color:var(--imf); background:#eef5fc}
+  .step.on .step-i{border-color:#bcd0e2}
 
   /* Panels */
   .panels{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:18px}
@@ -117,10 +124,50 @@
   footer p{margin:4px 0; max-width:880px}
   footer b{color:var(--muted)}
 
+  /* Detail pop-up */
+  .m-more{font-family:var(--sans); margin-top:16px; font-size:13px; font-weight:700; color:#fff;
+    background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.24); border-radius:9px;
+    padding:9px 14px; cursor:pointer; transition:.15s}
+  .m-more:hover{background:rgba(255,255,255,.26)}
+  .modal-overlay{position:fixed; inset:0; background:rgba(16,33,47,.55); -webkit-backdrop-filter:blur(2px);
+    backdrop-filter:blur(2px); display:flex; align-items:center; justify-content:center; padding:24px;
+    z-index:50; animation:ovfade .18s ease}
+  .modal-overlay[hidden]{display:none}
+  @keyframes ovfade{from{opacity:0}to{opacity:1}}
+  .modal{background:#fff; border-radius:18px; max-width:560px; width:100%; max-height:88vh; overflow:auto;
+    box-shadow:0 24px 70px rgba(16,33,47,.34); padding:26px 26px 24px; position:relative;
+    animation:mpop .2s cubic-bezier(.2,.8,.3,1)}
+  @keyframes mpop{from{transform:translateY(8px) scale(.985); opacity:.5}to{transform:none; opacity:1}}
+  .modal-close{position:absolute; top:14px; right:14px; width:32px; height:32px; border-radius:9px;
+    border:1px solid var(--rule); background:#fff; color:var(--muted); font-size:19px; line-height:1;
+    cursor:pointer; transition:.15s}
+  .modal-close:hover{background:var(--card); color:var(--ink)}
+  .modal-kick{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--imf)}
+  .modal h3{margin:6px 0 15px; font-size:22px; letter-spacing:-.01em; color:var(--ink); font-weight:800; padding-right:32px}
+  .m-adds{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px}
+  .m-add{background:var(--card); border:1px solid var(--rule); border-radius:12px; padding:13px 14px}
+  .m-add-h{font-size:10.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--faint)}
+  .m-add-nm{font-size:14.5px; font-weight:700; margin-top:5px; letter-spacing:-.01em}
+  .m-add-note{font-size:12px; color:var(--muted); margin-top:1px}
+  .m-add-v{font-family:var(--mono); font-weight:700; font-size:21px; margin-top:9px; letter-spacing:-.02em}
+  .m-add-v small{font-family:var(--sans); font-weight:600; font-size:11px; color:var(--faint)}
+  .m-add-v.pos{color:var(--imf)} .m-add-v.neg{color:#b4472f}
+  .m-detail{font-size:14px; color:var(--muted); line-height:1.55}
+  .m-detail p{margin:0 0 9px} .m-detail p:last-child{margin-bottom:0} .m-detail b{color:var(--ink)}
+  .m-detail .tag-off{margin-left:0}
+  .m-cite{display:block; margin-top:18px; text-decoration:none; background:var(--imf-dark); color:#eaf2fa;
+    border-radius:13px; padding:15px 16px; transition:.15s}
+  .m-cite:hover{background:#16406f}
+  .m-cite-k{display:block; font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#9fc2e6}
+  .m-cite-t{display:block; font-size:15px; font-weight:700; color:#fff; margin-top:5px; line-height:1.3}
+  .m-cite-m{display:block; font-size:12.5px; color:#cfe0f1; margin-top:5px}
+  .m-cite-go{display:inline-block; font-size:12px; font-weight:700; color:#9fc2e6; margin-top:9px}
+
   @media (max-width:820px){
     .stepper{grid-template-columns:1fr 1fr}
     .panels{grid-template-columns:1fr}
     .readout{grid-template-columns:1fr}
+    .m-adds{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){
     circle.ring{transition:none} .track i{transition:none}
@@ -175,6 +222,7 @@
         <div>Adds to debt<b data-add="debt"></b></div>
         <div>Adds to deficit<b data-add="deficit"></b></div>
       </div>
+      <button class="m-more" id="methodMore" type="button">See what's added — details ›</button>
     </div>
     <div class="compare" id="compare">
       <h4>Official vs. augmented · <span id="cmpYear">2025</span></h4>
@@ -205,6 +253,15 @@
       (LGFVs) and government-guided &amp; special-construction funds. Source: IMF Country Report No.&nbsp;26/44, Table&nbsp;2
       (General Government Fiscal Data).</p>
   </footer>
+</div>
+
+<div class="modal-overlay" id="modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" type="button" aria-label="Close">&times;</button>
+    <div class="modal-kick" id="modalKick"></div>
+    <h3 id="modalTitle"></h3>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
 </div>
 
 <script>
@@ -256,6 +313,27 @@
      p:"Add the final quasi-fiscal pieces — government-guided funds and special-construction funds — and you reach the IMF's \u2018augmented\u2019 aggregates: the broadest, most economically meaningful gauge of China's fiscal position."}
   ];
 
+  // Per-step pop-up detail + key IMF working-paper citations
+  var DETAILS=[
+    {detail:"<p><b>What's inside.</b> The official, on-budget headline: central-government treasury debt on the stock side, and the general public budget deficit announced in the annual budget speech on the flow side.</p>"+
+      "<p><b>What's left out.</b> Everything financed or spent outside the formal budget — explicit local-government bonds, the other government funds, and the off-budget vehicles added in the later steps.</p>"},
+    {detail:"<p><b>Added to debt.</b> Explicit local-government debt — the general- and special-purpose bonds carried on local-government balance sheets.</p>"+
+      "<p><b>Added to the deficit.</b> The balances of the other general-government accounts the headline omits: the government-managed fund budget (largely land-sale revenue and spending), the state capital-operations (SOE) budget, and the social-security fund.</p>"+
+      "<p>This brings China onto the IMF's <b>official general-government</b> perimeter (GFSM basis), making it comparable with other economies.</p>"},
+    {detail:"<p><b>Added to debt.</b> Borrowing by <b>local-government financing vehicles (LGFVs)</b> — state-owned companies that raise loans and bonds to build infrastructure off the government's books. It is the single largest layer the headline misses, roughly half of GDP.</p>"+
+      "<p><b>Added to the deficit.</b> The quasi-fiscal share of LGFV investment — infrastructure spending carried out on behalf of local governments.</p>"+
+      "<p>These are <span class=\"tag-off\">est.</span> IMF staff estimates, not official data. The 'augmented' debt-and-deficit concept was created precisely to capture this off-budget local-government activity.</p>",
+     cite:{authors:"Y. Sophia Zhang & Steven A. Barnett", year:2014, num:"WP/14/4",
+       title:"Fiscal Vulnerabilities and Risks from Local Government Finance in China",
+       url:"https://www.imf.org/external/pubs/ft/wp/2014/wp1404.pdf"}},
+    {detail:"<p><b>Added to debt.</b> The liabilities of <b>government-guided funds (GGFs)</b> and <b>special-construction funds (SCFs)</b> — newer quasi-fiscal vehicles that channel state-directed equity and lending into infrastructure and industrial projects.</p>"+
+      "<p><b>Added to the deficit.</b> Their net quasi-fiscal spending.</p>"+
+      "<p>The IMF extended the augmented perimeter to include these vehicles after they grew significant post-2015, completing the broadest, most economically meaningful gauge of China's fiscal position.</p>",
+     cite:{authors:"Rui C. Mano & Phil Stokoe", year:2017, num:"WP/17/272",
+       title:"Reassessing the Perimeter of Government Accounts in China",
+       url:"https://www.imf.org/-/media/files/publications/wp/2017/wp17272.pdf"}}
+  ];
+
   var COL=["--l0","--l1","--l2","--l3"];
   var Rmax=128, CX=150, CY=150;
   var state={year:5, step:0}; // 2025, first layer revealed
@@ -294,8 +372,12 @@
     STEPS.forEach(function(S,i){
       var d=document.createElement("button");
       d.className="step"; d.dataset.i=i; d.type="button";
-      d.innerHTML='<div class="n">'+S.n+'</div><div class="t"><span class="dotcol" style="background:var('+COL[i]+')"></span>'+S.t+'</div>';
-      d.addEventListener("click",function(){state.step=i; render(false);});
+      d.innerHTML='<div class="n">'+S.n+'</div><div class="t"><span class="dotcol" style="background:var('+COL[i]+')"></span>'+S.t+'</div>'+
+        '<span class="step-i" title="What this step adds or deducts" aria-label="What this step adds or deducts">i</span>';
+      d.addEventListener("click",function(e){
+        if(e.target.closest(".step-i")){ openModal(i); return; }
+        state.step=i; render(false);
+      });
       box.appendChild(d);
     });
   }
@@ -343,6 +425,43 @@
       });
     });
   }
+
+  // ---------- detail pop-up ----------
+  function openModal(i){
+    var yi=state.year, S=STEPS[i], D=DETAILS[i];
+    var dL=DATA.debt.layers[i], fL=DATA.deficit.layers[i];
+    document.getElementById("modalKick").innerHTML=S.kick;
+    document.getElementById("modalTitle").innerHTML=S.h;
+    var html='<div class="m-adds">'+
+      '<div class="m-add"><div class="m-add-h">Added to debt stock'+(dL.off?' <span class="tag-off">est.</span>':'')+'</div>'+
+        '<div class="m-add-nm">'+dL.name+'</div><div class="m-add-note">'+dL.note+'</div>'+
+        '<div class="m-add-v pos">+'+dL.vals[yi].toFixed(1)+'<small> % of GDP</small></div></div>'+
+      '<div class="m-add"><div class="m-add-h">Added to deficit flow'+(fL.off?' <span class="tag-off">est.</span>':'')+'</div>'+
+        '<div class="m-add-nm">'+fL.name+'</div><div class="m-add-note">'+fL.note+'</div>'+
+        '<div class="m-add-v neg">−'+fL.vals[yi].toFixed(1)+'<small> % of GDP</small></div></div>'+
+      '</div>'+
+      '<div class="m-detail">'+D.detail+'</div>';
+    if(D.cite){
+      var c=D.cite;
+      html+='<a class="m-cite" href="'+c.url+'" target="_blank" rel="noopener">'+
+        '<span class="m-cite-k">Key IMF working paper</span>'+
+        '<span class="m-cite-t">'+c.title+'</span>'+
+        '<span class="m-cite-m">'+c.authors+' · IMF Working Paper '+c.num+' ('+c.year+')</span>'+
+        '<span class="m-cite-go">Read on imf.org ↗</span></a>';
+    }
+    document.getElementById("modalBody").innerHTML=html;
+    var ov=document.getElementById("modal");
+    ov.hidden=false; document.body.style.overflow="hidden";
+    document.getElementById("modalClose").focus();
+  }
+  function closeModal(){
+    document.getElementById("modal").hidden=true; document.body.style.overflow="";
+  }
+  document.getElementById("modalClose").addEventListener("click",closeModal);
+  document.getElementById("modal").addEventListener("click",function(e){
+    if(e.target===this) closeModal(); // click on backdrop only
+  });
+  document.getElementById("methodMore").addEventListener("click",function(){ openModal(state.step); });
 
   // ---------- count-up ----------
   var anims={};
@@ -444,6 +563,10 @@
     if(state.step>0){state.step--; render(false);}
   });
   document.addEventListener("keydown",function(e){
+    if(!document.getElementById("modal").hidden){
+      if(e.key==="Escape") closeModal();
+      return; // don't navigate steps while the pop-up is open
+    }
     if(e.key==="ArrowRight"){state.step=Math.min(3,state.step+1); render(false);}
     if(e.key==="ArrowLeft"){state.step=Math.max(0,state.step-1); render(false);}
   });
