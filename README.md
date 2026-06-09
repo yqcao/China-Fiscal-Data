@@ -11,6 +11,7 @@ sourced from the Ministry of Finance (财政部).
 |------|-------------|
 | [`index.html`](index.html) | Landing page linking the visualizations below |
 | [`fiscal-monitor.html`](fiscal-monitor.html) | **Monthly Fiscal Monitor** — interactive ECharts dashboard: general public budget, government-managed fund, and local-government bond issuance/repayment, 2021–2026 |
+| [`imf-augmented.html`](imf-augmented.html) | **IMF Augmented Debt & Deficit** — how the IMF builds China's augmented general-government debt and deficit (IMF Table 2) |
 | [`budget-system.html`](budget-system.html) | China Budget System — overview of the four-account budget system (四本账) |
 | [`budget-system-fy2025.html`](budget-system-fy2025.html) | China Budget System — FY2025 execution figures |
 
