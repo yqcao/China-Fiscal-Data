@@ -252,8 +252,10 @@
       along different paths, so each has its own stepper. Solid rings are official data; dashed rings are off-budget
       IMF staff estimates.</p>
     <p><b>Definitions.</b> <em>Debt</em>: central-government debt + explicit local-government debt is the official
-      figure; the WEO / IMF general-government measure adds roughly two-thirds of estimated LGFV debt; the augmented
-      measure adds the remaining LGFV debt plus government-guided and special-construction funds. <em>Deficit</em>: the
+      figure; the WEO / IMF general-government measure (Table&nbsp;2, item&nbsp;15) adds the ≈two-thirds of LGFV debt the
+      National Audit Office (2013) recognizes as the government's explicit obligation; the augmented measure (item&nbsp;14)
+      adds the remaining “possible to be recognized” LGFV debt plus government-guided and special-construction funds.
+      <em>Deficit</em>: the
       general public budget headline balance, then the other general-government accounts (government-managed fund,
       social-insurance and SOE/cash) to reach the WEO / IMF general-government deficit, then off-budget LGFV, GGF and
       SCF spending for the augmented deficit. Source: IMF Country Report No.&nbsp;26/44, Table&nbsp;2.</p>
@@ -292,8 +294,14 @@
   var LGFVspd =[ 6.2, 5.8, 6.0, 5.9, 5.3, 5.1, 5.0, 4.7, 4.4, 4.2, 4.0];
   var GGFspd  =[ 0.4, 0.3, 0.2, 0.2, 0.4, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5];
 
-  var LGFV23  =LGFVdebt.map(function(v){return v*2/3;});                         // WEO share of LGFV debt
-  var debtAug =LGFVdebt.map(function(v,i){return v/3 + GGFdebt[i];});            // rest of LGFV + GGF/SCF
+  // Debt step 3 reaches the IMF "General Government (WEO)" line = Table 2 memo item 15
+  // ("augmented excluding possible-to-be-recognized"): official debt plus only the ~2/3 of
+  // LGFV debt the National Audit Office (2013) recognizes as explicit government debt. Step 4
+  // adds the remaining ~1/3 ("possible to be recognized") plus GGF/SCF debt (row 13).
+  var WEOdebt =[70.1,72.1,77.3,84.1,90.0,98.9,106.8,112.3,116.5,120.0,123.3];   // item 15
+  var AUGdebt =[97.5,98.7,104.2,111.3,117.0,126.6,135.3,141.5,146.2,150.0,153.7]; // item 14
+  var LGFV23  =WEOdebt.map(function(v,i){return v - CGv[i] - LGv[i];});          // NAO-recognized LGFV → WEO
+  var debtAug =AUGdebt.map(function(v,i){return v - WEOdebt[i];});               // rest of LGFV + GGF/SCF
   var defAug  =LGFVspd.map(function(v,i){return v + GGFspd[i];});                // LGFV + GGF/SCF spending
 
   var DATA={
@@ -302,10 +310,10 @@
       steps:[
         {name:"Central government", note:"on-budget treasury debt", off:false, inc:CGv},
         {name:"Local government", note:"explicit on-budget bonds", off:false, inc:LGv},
-        {name:"⅔ of LGFV debt", note:"WEO general-government basis", off:true, inc:LGFV23,
-         milestone:"WEO / IMF general-government debt"},
-        {name:"Rest of LGFV + GGF &amp; SCF", note:"remaining ⅓ LGFV + guided/construction funds", off:true, inc:debtAug,
-         milestone:"Augmented — broadest perimeter"}
+        {name:"Recognized LGFV debt", note:"≈⅔, NAO-recognized as gov’t debt", off:true, inc:LGFV23,
+         milestone:"WEO / IMF general-government debt · Table 2 item 15"},
+        {name:"Rest of LGFV + GGF &amp; SCF", note:"“possible to be recognized” LGFV + guided/construction funds", off:true, inc:debtAug,
+         milestone:"Augmented — broadest perimeter · Table 2 item 14"}
       ]
     },
     deficit:{
@@ -343,13 +351,13 @@
       {kick:"Debt · Step 2", h:"Add local government",
        lead:"Adds explicit local-government bonds. Central + local = China’s official general-government debt.",
        body:"<p><b>Added.</b> Explicit local-government debt — the general- and special-purpose bonds carried on local-government balance sheets.</p><p>Central + explicit local debt is China’s <b>official</b> general-government debt.</p>"},
-      {kick:"Debt · Step 3", h:"Add ⅔ of LGFV debt",
-       lead:"Adds about two-thirds of LGFV debt to reach the WEO / IMF general-government definition.",
-       body:"<p><b>Added.</b> About two-thirds of estimated <b>LGFV</b> debt — the IMF/WEO treats this share of local-government financing-vehicle borrowing as general government for China.</p><p>This reaches the <b>WEO / IMF general-government debt</b> definition used in cross-country comparisons.</p>",
+      {kick:"Debt · Step 3", h:"Add recognized LGFV debt",
+       lead:"Adds the ~⅔ of LGFV debt the NAO recognizes as government debt — Table 2 item 15, the WEO general-government line.",
+       body:"<p><b>Added.</b> About two-thirds of <b>LGFV</b> debt — the portion the <b>National Audit Office (2013)</b> categorizes as the government’s explicit obligation. (The remaining ~⅓ is treated as merely government-guaranteed, or “possible to be recognized,” and is left to the next step.)</p><p>Official debt plus this NAO-recognized share is the IMF’s <b>General Government (WEO)</b> measure — Table&nbsp;2 memorandum <b>item&nbsp;15</b>, “augmented excluding possible-to-be-recognized.” It is the basis used in cross-country comparisons.</p>",
        cites:["lgfv"]},
       {kick:"Debt · Step 4", h:"Augmented debt",
-       lead:"Adds the rest of LGFV debt plus GGF & SCF liabilities — the IMF’s augmented debt.",
-       body:"<p><b>Added.</b> The remaining third of LGFV debt, plus the liabilities of <b>government-guided funds (GGFs)</b> and <b>special-construction funds (SCFs)</b>.</p><p>This completes the IMF’s <b>augmented</b> debt — the broadest perimeter of the Chinese state.</p>",
+       lead:"Adds the remaining LGFV debt plus GGF & SCF liabilities — the IMF’s augmented debt (item 14).",
+       body:"<p><b>Added.</b> The remaining ~one-third of LGFV debt — the “possible to be recognized” portion the WEO line excludes — plus the liabilities of <b>government-guided funds (GGFs)</b> and <b>special-construction funds (SCFs)</b> (Table&nbsp;2 row&nbsp;13).</p><p>This completes the IMF’s <b>augmented</b> debt (Table&nbsp;2 row&nbsp;14) — the broadest perimeter of the Chinese state.</p>",
        cites:["lgfv","ggf"]}
     ],
     deficit:[
