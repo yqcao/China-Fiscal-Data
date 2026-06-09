@@ -41,35 +41,34 @@
   .yearsel button:hover{color:var(--ink); background:#e6eef6}
   .yearsel button.on{background:var(--imf); color:#fff; box-shadow:0 1px 2px rgba(28,78,135,.4)}
 
-  /* Stepper */
-  .stepper{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:26px 0 6px}
-  .step{position:relative; text-align:left; background:var(--card); border:1px solid var(--rule);
-    border-radius:11px; padding:13px 14px; cursor:pointer; transition:.18s; overflow:hidden}
-  .step:hover{border-color:#bcd0e2}
-  .step .n{font-size:11px; font-weight:800; letter-spacing:.12em; color:var(--faint); text-transform:uppercase}
-  .step .t{font-size:14px; font-weight:700; margin-top:3px; letter-spacing:-.01em}
-  .step.done{background:#fff}
-  .step.on{border-color:var(--imf); background:#fff; box-shadow:var(--shadow)}
-  .step.on .n{color:var(--imf)}
-  .step .dotcol{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:7px; vertical-align:1px}
-  .step .t{padding-right:22px}
-  .step-i{position:absolute; top:10px; right:10px; width:19px; height:19px; border-radius:50%;
-    border:1px solid var(--rule); background:#fff; color:var(--faint); font-size:11px; font-weight:700;
-    font-style:italic; font-family:Georgia,"Times New Roman",serif; display:flex; align-items:center;
-    justify-content:center; cursor:pointer; transition:.15s; line-height:1; z-index:2}
-  .step-i:hover{border-color:var(--imf); color:var(--imf); background:#eef5fc}
-  .step.on .step-i{border-color:#bcd0e2}
-
   /* Panels */
-  .panels{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:18px}
-  .panel{background:var(--card); border:1px solid var(--rule); border-radius:16px; padding:20px 20px 16px;
+  .panels{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:24px; align-items:start}
+  .panel{background:var(--card); border:1px solid var(--rule); border-radius:16px; padding:20px 20px 18px;
     box-shadow:var(--shadow)}
   .panel h2{margin:0; font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--imf); font-weight:800}
   .panel .unit{font-size:12.5px; color:var(--faint); margin-top:2px}
-  .ringwrap{position:relative; cursor:pointer; margin:4px auto 2px; width:300px; max-width:100%}
+
+  /* Per-panel stepper */
+  .steps{display:flex; flex-wrap:wrap; gap:8px; margin:15px 0 6px}
+  .step{position:relative; display:inline-flex; align-items:center; gap:7px; font-family:var(--sans);
+    background:#fff; border:1px solid var(--rule); border-radius:9px; padding:8px 10px; cursor:pointer; transition:.15s}
+  .step:hover{border-color:#bcd0e2}
+  .step.on{border-color:var(--imf); box-shadow:var(--shadow)}
+  .step .dotcol{width:9px; height:9px; border-radius:50%; flex:0 0 auto}
+  .step .lbl{font-size:12.5px; font-weight:700; letter-spacing:-.01em; color:var(--muted)}
+  .step.on .lbl,.step.done .lbl{color:var(--ink)}
+  .step-i{width:16px; height:16px; border-radius:50%; border:1px solid var(--rule); background:#fff;
+    color:var(--faint); font:italic 700 10px/1 Georgia,"Times New Roman",serif; display:inline-flex;
+    align-items:center; justify-content:center; cursor:pointer; transition:.15s}
+  .step-i:hover{border-color:var(--imf); color:var(--imf); background:#eef5fc}
+
+  /* Rings */
+  .ringwrap{position:relative; cursor:pointer; margin:6px auto 22px; width:300px; max-width:100%}
   .ringwrap svg{display:block; width:100%; height:auto; overflow:visible}
-  .ringwrap .hint{position:absolute; left:50%; bottom:-2px; transform:translateX(-50%);
-    font-size:11.5px; color:var(--faint); white-space:nowrap; pointer-events:none; transition:.2s}
+  .milestone{position:absolute; left:50%; bottom:-10px; transform:translateX(-50%); white-space:nowrap;
+    font-size:11px; font-weight:700; color:var(--imf); background:#eaf2fb; border:1px solid #cfe0f1;
+    border-radius:20px; padding:3px 11px; opacity:0; transition:.25s; pointer-events:none}
+  .milestone.show{opacity:1}
   .ctr-val{font-weight:800; letter-spacing:-.03em}
   .ctr-sub{font-size:11px; letter-spacing:.06em; text-transform:uppercase}
   circle.ring{transition:r .6s cubic-bezier(.4,0,.2,1), opacity .5s ease}
@@ -77,9 +76,9 @@
   @keyframes pulse{0%{stroke-width:6} 100%{stroke-width:1.6}}
 
   /* Mini legend per panel */
-  .leg{margin-top:12px; border-top:1px solid var(--rule); padding-top:10px; display:flex; flex-direction:column; gap:2px}
+  .leg{margin-top:4px; border-top:1px solid var(--rule); padding-top:10px; display:flex; flex-direction:column; gap:2px}
   .leg .row{display:grid; grid-template-columns:16px 1fr auto auto; align-items:center; gap:9px;
-    padding:6px 6px; border-radius:8px; opacity:.42; transition:.25s}
+    padding:6px 6px; border-radius:8px; opacity:.42; transition:.25s; cursor:pointer}
   .leg .row.show{opacity:1}
   .leg .row.cur{background:#e9f1f9}
   .leg .sw{width:13px; height:13px; border-radius:3px}
@@ -91,44 +90,40 @@
   .tag-off{font-size:9.5px; font-weight:800; letter-spacing:.06em; color:#9a6420; background:#f6ecdc;
     border-radius:4px; padding:1px 4px; margin-left:6px; vertical-align:1px; text-transform:uppercase}
 
-  /* Readout row */
-  .readout{display:grid; grid-template-columns:1.35fr 1fr; gap:22px; margin-top:22px}
-  .method{background:var(--imf-dark); color:#eaf2fa; border-radius:16px; padding:22px 24px; position:relative; overflow:hidden}
-  .method .kick{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#9fc2e6}
-  .method h3{margin:6px 0 8px; font-size:21px; letter-spacing:-.01em; color:#fff}
-  .method p{margin:0; font-size:14.5px; color:#cfe0f1; max-width:46ch}
-  .method .adds{display:flex; gap:26px; margin-top:16px; flex-wrap:wrap}
-  .method .adds div{font-size:12px; color:#9fc2e6}
-  .method .adds b{display:block; font-size:20px; color:#fff; font-family:var(--mono); font-weight:700; letter-spacing:-.02em; margin-top:2px}
-  .compare{background:var(--card2); border:1px solid var(--rule); border-radius:16px; padding:20px 22px}
+  /* Per-panel step note (dark) + nav */
+  .stepnote{margin-top:14px; background:var(--imf-dark); color:#eaf2fa; border-radius:14px; padding:15px 16px}
+  .stepnote .kick{font-size:10.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#9fc2e6}
+  .stepnote p{margin:6px 0 0; font-size:13.5px; color:#cfe0f1}
+  .stepnote .more{margin-top:12px; font-family:var(--sans); font-size:12.5px; font-weight:700; color:#fff;
+    background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.24); border-radius:9px;
+    padding:8px 12px; cursor:pointer; transition:.15s}
+  .stepnote .more:hover{background:rgba(255,255,255,.26)}
+  .pnav{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px}
+  .pnav .btn{font-family:var(--sans); font-size:13px; font-weight:700; border-radius:9px; padding:9px 14px;
+    border:1px solid var(--rule); background:#fff; color:var(--ink); cursor:pointer; transition:.15s}
+  .pnav .btn:hover{border-color:#bcd0e2}
+  .pnav .btn.primary{background:var(--imf); color:#fff; border-color:var(--imf)}
+  .pnav .btn.primary:hover{background:#16406f}
+  .pnav .btn[disabled]{opacity:.4; cursor:default}
+  .pnav .prog{font-size:12px; color:var(--faint); font-variant-numeric:tabular-nums; letter-spacing:.02em}
+
+  /* Compare card */
+  .compare{background:var(--card2); border:1px solid var(--rule); border-radius:16px; padding:20px 22px; margin-top:22px}
   .compare h4{margin:0 0 12px; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); font-weight:800}
-  .cbar{margin:11px 0}
+  .cbars{display:grid; grid-template-columns:1fr 1fr; gap:22px}
   .cbar .lbl{display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:5px}
   .cbar .lbl b{font-family:var(--mono); font-weight:700}
   .track{height:12px; background:#dde7f0; border-radius:7px; overflow:hidden}
   .track i{display:block; height:100%; border-radius:7px; transition:width .6s cubic-bezier(.4,0,.2,1)}
-  .mult{margin-top:14px; font-size:13.5px; color:var(--muted)}
+  .mult{margin:14px 0 0; font-size:13.5px; color:var(--muted)}
   .mult b{color:var(--imf); font-weight:800}
-
-  /* Nav */
-  .nav{display:flex; align-items:center; justify-content:space-between; gap:14px; margin:22px 0 6px}
-  .nav .btn{font-family:var(--sans); font-size:14px; font-weight:700; border-radius:10px; padding:11px 18px;
-    border:1px solid var(--rule); background:#fff; color:var(--ink); cursor:pointer; transition:.15s}
-  .nav .btn:hover{border-color:#bcd0e2}
-  .nav .btn.primary{background:var(--imf); color:#fff; border-color:var(--imf)}
-  .nav .btn.primary:hover{background:#16406f}
-  .nav .btn[disabled]{opacity:.4; cursor:default}
-  .nav .prog{font-size:13px; color:var(--faint); font-variant-numeric:tabular-nums; letter-spacing:.02em}
 
   footer{border-top:1px solid var(--rule); margin-top:30px; padding:20px 0 50px; color:var(--faint); font-size:12.5px}
   footer p{margin:4px 0; max-width:880px}
   footer b{color:var(--muted)}
+  footer a{color:var(--imf)}
 
   /* Detail pop-up */
-  .m-more{font-family:var(--sans); margin-top:16px; font-size:13px; font-weight:700; color:#fff;
-    background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.24); border-radius:9px;
-    padding:9px 14px; cursor:pointer; transition:.15s}
-  .m-more:hover{background:rgba(255,255,255,.26)}
   .modal-overlay{position:fixed; inset:0; background:rgba(16,33,47,.55); -webkit-backdrop-filter:blur(2px);
     backdrop-filter:blur(2px); display:flex; align-items:center; justify-content:center; padding:24px;
     z-index:50; animation:ovfade .18s ease}
@@ -143,7 +138,9 @@
     cursor:pointer; transition:.15s}
   .modal-close:hover{background:var(--card); color:var(--ink)}
   .modal-kick{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--imf)}
-  .modal h3{margin:6px 0 15px; font-size:22px; letter-spacing:-.01em; color:var(--ink); font-weight:800; padding-right:32px}
+  .modal h3{margin:6px 0 14px; font-size:22px; letter-spacing:-.01em; color:var(--ink); font-weight:800; padding-right:32px}
+  .m-ms{display:inline-block; font-size:11.5px; font-weight:700; color:var(--imf); background:#eaf2fb;
+    border:1px solid #cfe0f1; border-radius:20px; padding:4px 12px; margin-bottom:14px}
   .m-adds{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px}
   .m-add{background:var(--card); border:1px solid var(--rule); border-radius:12px; padding:13px 14px}
   .m-add-h{font-size:10.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--faint)}
@@ -154,8 +151,7 @@
   .m-add-v.pos{color:var(--imf)} .m-add-v.neg{color:#b4472f}
   .m-detail{font-size:14px; color:var(--muted); line-height:1.55}
   .m-detail p{margin:0 0 9px} .m-detail p:last-child{margin-bottom:0} .m-detail b{color:var(--ink)}
-  .m-detail .tag-off{margin-left:0}
-  .m-cite{display:block; margin-top:18px; text-decoration:none; background:var(--imf-dark); color:#eaf2fa;
+  .m-cite{display:block; margin-top:14px; text-decoration:none; background:var(--imf-dark); color:#eaf2fa;
     border-radius:13px; padding:15px 16px; transition:.15s}
   .m-cite:hover{background:#16406f}
   .m-cite-k{display:block; font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#9fc2e6}
@@ -164,9 +160,8 @@
   .m-cite-go{display:inline-block; font-size:12px; font-weight:700; color:#9fc2e6; margin-top:9px}
 
   @media (max-width:820px){
-    .stepper{grid-template-columns:1fr 1fr}
     .panels{grid-template-columns:1fr}
-    .readout{grid-template-columns:1fr}
+    .cbars{grid-template-columns:1fr}
     .m-adds{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){
@@ -180,52 +175,65 @@
   <header class="masthead">
     <div class="brand"><span class="bar"></span> International Monetary Fund · China Article&nbsp;IV 2025</div>
     <h1>How the IMF builds China's <em>augmented</em> debt &amp; deficit</h1>
-    <p class="dek">The official headline numbers capture only the innermost circle of the state. Step outward — local
-      governments, off-budget financing vehicles, quasi-fiscal funds — and the fiscal picture roughly doubles.
-      Percent of GDP. <span class="src">Source: IMF Country Report No. 26/44 (Feb 2026), Table&nbsp;2.</span></p>
+    <p class="dek">The official headline numbers capture only the innermost circle of the state. The debt stock and the
+      annual deficit are each built up along their own path — through the WEO general-government definition and out to
+      the IMF's <em>augmented</em> perimeter. Step through each separately. Percent of GDP.
+      <span class="src">Source: IMF Country Report No. 26/44 (Feb 2026), Table&nbsp;2.</span></p>
     <div class="yearrow">
       <label for="years">Year</label>
       <div class="yearsel" id="years"></div>
     </div>
   </header>
 
-  <div class="stepper" id="stepper"></div>
-
   <div class="panels">
-    <figure class="panel" id="panel-debt">
-      <h2>General government debt</h2>
-      <div class="unit">Debt stock, end-year · % of GDP</div>
-      <div class="ringwrap" data-panel="debt">
+
+    <figure class="panel" data-panel="debt">
+      <h2></h2>
+      <div class="unit"></div>
+      <div class="steps" data-steps="debt"></div>
+      <div class="ringwrap" data-ring="debt">
         <svg viewBox="0 0 300 300" role="img" aria-label="Concentric rings of China general government debt"></svg>
-        <div class="hint">click to add the next layer ›</div>
+        <div class="milestone" data-ms="debt"></div>
       </div>
       <div class="leg" data-leg="debt"></div>
+      <div class="stepnote" data-note="debt">
+        <span class="kick"></span>
+        <p></p>
+        <button class="more" type="button">What's added — details ›</button>
+      </div>
+      <div class="pnav" data-pnav="debt">
+        <button class="btn prev" type="button">‹ Back</button>
+        <span class="prog"></span>
+        <button class="btn primary next" type="button">Next ›</button>
+      </div>
     </figure>
 
-    <figure class="panel" id="panel-deficit">
-      <h2>General government deficit</h2>
-      <div class="unit">Net lending/borrowing, annual flow · % of GDP</div>
-      <div class="ringwrap" data-panel="deficit">
+    <figure class="panel" data-panel="deficit">
+      <h2></h2>
+      <div class="unit"></div>
+      <div class="steps" data-steps="deficit"></div>
+      <div class="ringwrap" data-ring="deficit">
         <svg viewBox="0 0 300 300" role="img" aria-label="Concentric rings of China general government deficit"></svg>
-        <div class="hint">click to add the next layer ›</div>
+        <div class="milestone" data-ms="deficit"></div>
       </div>
       <div class="leg" data-leg="deficit"></div>
+      <div class="stepnote" data-note="deficit">
+        <span class="kick"></span>
+        <p></p>
+        <button class="more" type="button">What's added — details ›</button>
+      </div>
+      <div class="pnav" data-pnav="deficit">
+        <button class="btn prev" type="button">‹ Back</button>
+        <span class="prog"></span>
+        <button class="btn primary next" type="button">Next ›</button>
+      </div>
     </figure>
+
   </div>
 
-  <div class="readout">
-    <div class="method" id="method">
-      <div class="kick"></div>
-      <h3></h3>
-      <p></p>
-      <div class="adds">
-        <div>Adds to debt<b data-add="debt"></b></div>
-        <div>Adds to deficit<b data-add="deficit"></b></div>
-      </div>
-      <button class="m-more" id="methodMore" type="button">See what's added — details ›</button>
-    </div>
-    <div class="compare" id="compare">
-      <h4>Official vs. augmented · <span id="cmpYear">2025</span></h4>
+  <div class="compare" id="compare">
+    <h4>Official vs. augmented · <span id="cmpYear">2025</span></h4>
+    <div class="cbars">
       <div class="cbar" data-cmp="debt">
         <div class="lbl"><span>Debt — official → augmented</span><b></b></div>
         <div class="track"><i style="background:linear-gradient(90deg,var(--l1),var(--l3))"></i></div>
@@ -234,24 +242,28 @@
         <div class="lbl"><span>Deficit — headline → augmented</span><b></b></div>
         <div class="track"><i style="background:linear-gradient(90deg,var(--l1),var(--l3))"></i></div>
       </div>
-      <p class="mult" id="multline"></p>
     </div>
-  </div>
-
-  <div class="nav">
-    <button class="btn" id="prev">‹ Back</button>
-    <div class="prog" id="prog"></div>
-    <button class="btn primary" id="next">Add next layer ›</button>
+    <p class="mult" id="multline"></p>
   </div>
 
   <footer>
     <p><b>How to read it.</b> Each ring is sized so its <em>area</em> is proportional to its share of the total, and the
-      two diagrams are scaled independently — debt is a stock, the deficit an annual flow. Solid rings are official
-      data; dashed rings are off-budget IMF staff estimates.</p>
-    <p><b>Definitions.</b> Official general-government debt = central-government debt + explicit local-government debt.
-      The "augmented" aggregates expand the perimeter of government to include local-government financing vehicles
-      (LGFVs) and government-guided &amp; special-construction funds. Source: IMF Country Report No.&nbsp;26/44, Table&nbsp;2
-      (General Government Fiscal Data).</p>
+      two diagrams are scaled independently — debt is a stock, the deficit an annual flow. The two panels also build up
+      along different paths, so each has its own stepper. Solid rings are official data; dashed rings are off-budget
+      IMF staff estimates.</p>
+    <p><b>Definitions.</b> <em>Debt</em>: central-government debt + explicit local-government debt is the official
+      figure; the WEO / IMF general-government measure adds roughly two-thirds of estimated LGFV debt; the augmented
+      measure adds the remaining LGFV debt plus government-guided and special-construction funds. <em>Deficit</em>: the
+      general public budget headline balance, then the other general-government accounts (government-managed fund,
+      social-insurance and SOE/cash) to reach the WEO / IMF general-government deficit, then off-budget LGFV, GGF and
+      SCF spending for the augmented deficit. Source: IMF Country Report No.&nbsp;26/44, Table&nbsp;2.</p>
+    <p><b>Key IMF working papers.</b> On LGFVs and the augmented concept:
+      Y. Sophia Zhang &amp; Steven A. Barnett (2014),
+      <a href="https://www.imf.org/external/pubs/ft/wp/2014/wp1404.pdf">“Fiscal Vulnerabilities and Risks from Local
+      Government Finance in China,” IMF WP/14/4</a>. On guided- and special-construction funds:
+      Rui C. Mano &amp; Phil Stokoe (2017),
+      <a href="https://www.imf.org/-/media/files/publications/wp/2017/wp17272.pdf">“Reassessing the Perimeter of
+      Government Accounts in China,” IMF WP/17/272</a>.</p>
   </footer>
 </div>
 
@@ -269,92 +281,109 @@
   "use strict";
   var YEARS=[2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030];
 
+  // ---- underlying series (% of GDP), from IMF CR 26/44 Table 2 ----
+  var CGv     =[20.0,19.8,21.0,23.2,25.6,29.3,32.9,35.8,38.4,40.3,42.2];
+  var LGv     =[24.6,26.0,28.4,31.5,35.2,39.1,42.2,43.1,43.5,44.1,44.7];
+  var LGFVdebt=[45.3,45.8,47.8,49.8,49.1,50.9,52.7,54.9,56.5,57.7,58.7];
+  var GGFdebt =[ 7.6, 7.1, 7.0, 6.9, 7.0, 7.3, 7.6, 7.7, 7.9, 8.0, 8.1];
+
+  var HEADdef =[ 3.6, 3.0, 2.7, 3.8, 3.0, 4.0, 3.9, 3.9, 3.8, 3.9, 3.9];
+  var OTHERdef=[ 6.0, 2.9, 4.6, 2.9, 4.4, 4.7, 4.8, 4.6, 4.4, 4.2, 4.1];
+  var LGFVspd =[ 6.2, 5.8, 6.0, 5.9, 5.3, 5.1, 5.0, 4.7, 4.4, 4.2, 4.0];
+  var GGFspd  =[ 0.4, 0.3, 0.2, 0.2, 0.4, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5];
+
+  var LGFV23  =LGFVdebt.map(function(v){return v*2/3;});                         // WEO share of LGFV debt
+  var debtAug =LGFVdebt.map(function(v,i){return v/3 + GGFdebt[i];});            // rest of LGFV + GGF/SCF
+  var defAug  =LGFVspd.map(function(v,i){return v + GGFspd[i];});                // LGFV + GGF/SCF spending
+
   var DATA={
     debt:{
-      sign:1, unit:"% of GDP",
-      layers:[
-        {name:"Central government", note:"on-budget treasury debt", off:false,
-         vals:[20.0,19.8,21.0,23.2,25.6,29.3,32.9,35.8,38.4,40.3,42.2]},
-        {name:"Local government", note:"explicit on-budget debt", off:false,
-         vals:[24.6,26.0,28.4,31.5,35.2,39.1,42.2,43.1,43.5,44.1,44.7]},
-        {name:"LGFV debt", note:"financing vehicles", off:true,
-         vals:[45.3,45.8,47.8,49.8,49.1,50.9,52.7,54.9,56.5,57.7,58.7]},
-        {name:"Guided &amp; construction funds", note:"GGFs + special funds", off:true,
-         vals:[7.6,7.1,7.0,6.9,7.0,7.3,7.6,7.7,7.9,8.0,8.1]}
+      sign:1, label:"General government debt", sub:"Debt stock, end-year · % of GDP",
+      steps:[
+        {name:"Central government", note:"on-budget treasury debt", off:false, inc:CGv},
+        {name:"Local government", note:"explicit on-budget bonds", off:false, inc:LGv},
+        {name:"⅔ of LGFV debt", note:"WEO general-government basis", off:true, inc:LGFV23,
+         milestone:"WEO / IMF general-government debt"},
+        {name:"Rest of LGFV + GGF &amp; SCF", note:"remaining ⅓ LGFV + guided/construction funds", off:true, inc:debtAug,
+         milestone:"Augmented — broadest perimeter"}
       ]
     },
     deficit:{
-      sign:-1, unit:"% of GDP",
-      layers:[
-        {name:"Headline budget balance", note:"official reported deficit", off:false,
-         vals:[3.6,3.0,2.7,3.8,3.0,4.0,3.9,3.9,3.8,3.9,3.9]},
-        {name:"Other general-gov\u2019t funds", note:"managed, social-security &amp; SOE", off:false,
-         vals:[6.0,2.9,4.6,2.9,4.4,4.7,4.8,4.6,4.4,4.2,4.1]},
-        {name:"LGFV-financed investment", note:"off-budget infrastructure", off:true,
-         vals:[6.2,5.8,6.0,5.9,5.3,5.1,5.0,4.7,4.4,4.2,4.0]},
-        {name:"Guided &amp; construction funds", note:"special &amp; guided-fund spend", off:true,
-         vals:[0.4,0.3,0.2,0.2,0.4,0.5,0.5,0.5,0.5,0.5,0.5]}
+      sign:-1, label:"General government deficit", sub:"Net lending/borrowing, annual flow · % of GDP",
+      steps:[
+        {name:"GPB headline balance", note:"general public budget, official", off:false, inc:HEADdef},
+        {name:"Other general-gov’t funds", note:"managed fund + social insurance + SOE &amp; cash", off:false, inc:OTHERdef,
+         milestone:"WEO / IMF general-government deficit"},
+        {name:"LGFV + GGF &amp; SCF spending", note:"off-budget quasi-fiscal spending", off:true, inc:defAug,
+         milestone:"Augmented — broadest perimeter"}
       ]
     }
   };
 
-  var STEPS=[
-    {n:"Step 1", t:"Headline", kick:"Step 1 · The headline figure",
-     h:"What governments report",
-     p:"Start with the official, on-budget number — central-government debt on the stock side, the headline fiscal deficit on the flow side. It is the figure in the budget speech, and the smallest."},
-    {n:"Step 2", t:"General gov\u2019t", kick:"Step 2 · Official general government",
-     h:"Consolidating the whole budget",
-     p:"Fold in the rest of the general government so China is comparable with peers: explicit local-government debt, plus government-managed (largely land-sale) funds, social-security and SOE funds. This is the official general-government perimeter."},
-    {n:"Step 3", t:"+ LGFVs", kick:"Step 3 · Stepping off-budget",
-     h:"Local-government financing vehicles",
-     p:"LGFVs are state-owned companies that borrow and invest for local governments outside the budget. They are the single largest layer the headline numbers miss — adding roughly half of GDP to the debt."},
-    {n:"Step 4", t:"Augmented", kick:"Step 4 · The augmented measure",
-     h:"Guided &amp; construction funds",
-     p:"Add the final quasi-fiscal pieces — government-guided funds and special-construction funds — and you reach the IMF's \u2018augmented\u2019 aggregates: the broadest, most economically meaningful gauge of China's fiscal position."}
-  ];
+  var SHORT={
+    debt:["Central gov’t","+ Local gov’t","+ ⅔ LGFV","Augmented"],
+    deficit:["GPB headline","+ Other GG funds","Augmented"]
+  };
 
-  // Per-step pop-up detail + key IMF working-paper citations
-  var DETAILS=[
-    {detail:"<p><b>What's inside.</b> The official, on-budget headline: central-government treasury debt on the stock side, and the general public budget deficit announced in the annual budget speech on the flow side.</p>"+
-      "<p><b>What's left out.</b> Everything financed or spent outside the formal budget — explicit local-government bonds, the other government funds, and the off-budget vehicles added in the later steps.</p>"},
-    {detail:"<p><b>Added to debt.</b> Explicit local-government debt — the general- and special-purpose bonds carried on local-government balance sheets.</p>"+
-      "<p><b>Added to the deficit.</b> The balances of the other general-government accounts the headline omits: the government-managed fund budget (largely land-sale revenue and spending), the state capital-operations (SOE) budget, and the social-security fund.</p>"+
-      "<p>This brings China onto the IMF's <b>official general-government</b> perimeter (GFSM basis), making it comparable with other economies.</p>"},
-    {detail:"<p><b>Added to debt.</b> Borrowing by <b>local-government financing vehicles (LGFVs)</b> — state-owned companies that raise loans and bonds to build infrastructure off the government's books. It is the single largest layer the headline misses, roughly half of GDP.</p>"+
-      "<p><b>Added to the deficit.</b> The quasi-fiscal share of LGFV investment — infrastructure spending carried out on behalf of local governments.</p>"+
-      "<p>These are <span class=\"tag-off\">est.</span> IMF staff estimates, not official data. The 'augmented' debt-and-deficit concept was created precisely to capture this off-budget local-government activity.</p>",
-     cite:{authors:"Y. Sophia Zhang & Steven A. Barnett", year:2014, num:"WP/14/4",
-       title:"Fiscal Vulnerabilities and Risks from Local Government Finance in China",
-       url:"https://www.imf.org/external/pubs/ft/wp/2014/wp1404.pdf"}},
-    {detail:"<p><b>Added to debt.</b> The liabilities of <b>government-guided funds (GGFs)</b> and <b>special-construction funds (SCFs)</b> — newer quasi-fiscal vehicles that channel state-directed equity and lending into infrastructure and industrial projects.</p>"+
-      "<p><b>Added to the deficit.</b> Their net quasi-fiscal spending.</p>"+
-      "<p>The IMF extended the augmented perimeter to include these vehicles after they grew significant post-2015, completing the broadest, most economically meaningful gauge of China's fiscal position.</p>",
-     cite:{authors:"Rui C. Mano & Phil Stokoe", year:2017, num:"WP/17/272",
-       title:"Reassessing the Perimeter of Government Accounts in China",
-       url:"https://www.imf.org/-/media/files/publications/wp/2017/wp17272.pdf"}}
-  ];
+  var CITE={
+    lgfv:{authors:"Y. Sophia Zhang & Steven A. Barnett", year:2014, num:"WP/14/4",
+      title:"Fiscal Vulnerabilities and Risks from Local Government Finance in China",
+      url:"https://www.imf.org/external/pubs/ft/wp/2014/wp1404.pdf"},
+    ggf:{authors:"Rui C. Mano & Phil Stokoe", year:2017, num:"WP/17/272",
+      title:"Reassessing the Perimeter of Government Accounts in China",
+      url:"https://www.imf.org/-/media/files/publications/wp/2017/wp17272.pdf"}
+  };
+
+  // Per-step pop-up content
+  var DETAIL={
+    debt:[
+      {kick:"Debt · Step 1", h:"Central government",
+       lead:"Central-government treasury debt — the narrowest, on-budget headline measure.",
+       body:"<p><b>Added.</b> Central-government treasury debt — bonds issued by the central government, carried on-budget. The narrowest, headline debt measure.</p>"},
+      {kick:"Debt · Step 2", h:"Add local government",
+       lead:"Adds explicit local-government bonds. Central + local = China’s official general-government debt.",
+       body:"<p><b>Added.</b> Explicit local-government debt — the general- and special-purpose bonds carried on local-government balance sheets.</p><p>Central + explicit local debt is China’s <b>official</b> general-government debt.</p>"},
+      {kick:"Debt · Step 3", h:"Add ⅔ of LGFV debt",
+       lead:"Adds about two-thirds of LGFV debt to reach the WEO / IMF general-government definition.",
+       body:"<p><b>Added.</b> About two-thirds of estimated <b>LGFV</b> debt — the IMF/WEO treats this share of local-government financing-vehicle borrowing as general government for China.</p><p>This reaches the <b>WEO / IMF general-government debt</b> definition used in cross-country comparisons.</p>",
+       cites:["lgfv"]},
+      {kick:"Debt · Step 4", h:"Augmented debt",
+       lead:"Adds the rest of LGFV debt plus GGF & SCF liabilities — the IMF’s augmented debt.",
+       body:"<p><b>Added.</b> The remaining third of LGFV debt, plus the liabilities of <b>government-guided funds (GGFs)</b> and <b>special-construction funds (SCFs)</b>.</p><p>This completes the IMF’s <b>augmented</b> debt — the broadest perimeter of the Chinese state.</p>",
+       cites:["lgfv","ggf"]}
+    ],
+    deficit:[
+      {kick:"Deficit · Step 1", h:"GPB headline balance",
+       lead:"The general public budget headline balance — the official reported deficit.",
+       body:"<p><b>Added.</b> The general public budget (GPB) headline balance — the official reported deficit announced in the budget.</p>"},
+      {kick:"Deficit · Step 2", h:"Add other general-gov’t funds",
+       lead:"Adds the managed-fund, social-insurance and SOE accounts to reach the WEO / IMF general-government deficit.",
+       body:"<p><b>Added — kept as one aggregate.</b> The general-government accounts beyond the GPB:</p><p>• the <b>government-managed fund</b> budget (largely land-sale revenue &amp; spending);<br>• the <b>social-insurance</b> fund;<br>• the <b>state capital-operations (SOE)</b> budget plus cash adjustments.</p><p>Together these reach the <b>WEO / IMF general-government deficit</b> definition — comparable with other economies.</p>"},
+      {kick:"Deficit · Step 3", h:"Augmented deficit",
+       lead:"Adds off-budget LGFV, GGF & SCF spending — the IMF’s augmented deficit.",
+       body:"<p><b>Added.</b> Off-budget quasi-fiscal spending: <b>LGFV-financed investment</b> plus spending through <b>government-guided funds</b> and <b>special-construction funds</b>.</p><p>This yields the IMF’s <b>augmented</b> deficit — the broadest gauge of China’s fiscal stance.</p>",
+       cites:["lgfv","ggf"]}
+    ]
+  };
 
   var COL=["--l0","--l1","--l2","--l3"];
   var Rmax=128, CX=150, CY=150;
-  var state={year:5, step:0}; // 2025, first layer revealed
+  var state={year:5, debt:0, deficit:0}; // 2025; each panel on its first layer
 
   // ---------- helpers ----------
   function cssvar(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
   function cumulative(panel,yi){
     var out=[],run=0;
-    DATA[panel].layers.forEach(function(L){run+=L.vals[yi]; out.push(run);});
-    return out; // cum after each layer
-  }
-  function fmtSigned(panel,v){ // v positive magnitude
-    var s=DATA[panel].sign;
-    var num=v.toFixed(1);
-    return (s<0?"\u2212":"")+num;
+    DATA[panel].steps.forEach(function(S){run+=S.inc[yi]; out.push(run);});
+    return out;
   }
   function radii(panel,yi){
     var cum=cumulative(panel,yi), tot=cum[cum.length-1], r=[];
     for(var i=0;i<cum.length;i++) r.push(Rmax*Math.sqrt(cum[i]/tot));
     return {r:r,cum:cum,tot:tot};
   }
+  function fig(panel){return document.querySelector('[data-panel="'+panel+'"]');}
+  function lastStep(panel){return DATA[panel].steps.length-1;}
 
   // ---------- build static DOM ----------
   function buildYears(){
@@ -367,88 +396,107 @@
       box.appendChild(b);
     });
   }
-  function buildStepper(){
-    var box=document.getElementById("stepper");
-    STEPS.forEach(function(S,i){
-      var d=document.createElement("button");
-      d.className="step"; d.dataset.i=i; d.type="button";
-      d.innerHTML='<div class="n">'+S.n+'</div><div class="t"><span class="dotcol" style="background:var('+COL[i]+')"></span>'+S.t+'</div>'+
-        '<span class="step-i" title="What this step adds or deducts" aria-label="What this step adds or deducts">i</span>';
-      d.addEventListener("click",function(e){
-        if(e.target.closest(".step-i")){ openModal(i); return; }
-        state.step=i; render(false);
+
+  function buildPanel(panel){
+    var P=DATA[panel], F=fig(panel);
+    F.querySelector("h2").textContent=P.label;
+    F.querySelector(".unit").textContent=P.sub;
+
+    // stepper pills
+    var sbox=F.querySelector('[data-steps="'+panel+'"]');
+    P.steps.forEach(function(S,i){
+      var b=document.createElement("button");
+      b.className="step"; b.type="button"; b.dataset.i=i;
+      b.innerHTML='<span class="dotcol" style="background:var('+COL[i]+')"></span>'+
+        '<span class="lbl">'+SHORT[panel][i]+'</span>'+
+        '<span class="step-i" title="What this step adds" aria-label="What this step adds">i</span>';
+      b.addEventListener("click",function(e){
+        if(e.target.closest(".step-i")){ openModal(panel,i); return; }
+        state[panel]=i; render(false);
       });
-      box.appendChild(d);
+      sbox.appendChild(b);
     });
-  }
-  function buildRings(){
-    ["debt","deficit"].forEach(function(panel){
-      var svg=document.querySelector('[data-panel="'+panel+'"] svg');
-      // faint target perimeter
-      var tgt=document.createElementNS("http://www.w3.org/2000/svg","circle");
-      tgt.setAttribute("cx",CX); tgt.setAttribute("cy",CY); tgt.setAttribute("r",Rmax);
-      tgt.setAttribute("fill","none"); tgt.setAttribute("stroke","#c9d8e6");
-      tgt.setAttribute("stroke-dasharray","2 5"); tgt.setAttribute("stroke-width","1");
-      svg.appendChild(tgt);
-      // rings drawn outer(3) -> inner(0) so inner sits on top
-      for(var i=3;i>=0;i--){
-        var c=document.createElementNS("http://www.w3.org/2000/svg","circle");
-        c.setAttribute("class","ring"); c.setAttribute("cx",CX); c.setAttribute("cy",CY);
-        c.dataset.i=i;
-        c.setAttribute("stroke","#ffffff"); c.setAttribute("stroke-width","1.6");
-        svg.appendChild(c);
-      }
-      // centre text
-      var g=document.createElementNS("http://www.w3.org/2000/svg","text");
-      g.setAttribute("x",CX); g.setAttribute("y",CY-2); g.setAttribute("text-anchor","middle");
-      g.setAttribute("class","ctr-val"); g.setAttribute("fill","#ffffff");
-      g.setAttribute("font-size","40"); g.dataset.role="val"; svg.appendChild(g);
-      var s2=document.createElementNS("http://www.w3.org/2000/svg","text");
-      s2.setAttribute("x",CX); s2.setAttribute("y",CY+18); s2.setAttribute("text-anchor","middle");
-      s2.setAttribute("class","ctr-sub"); s2.setAttribute("fill","rgba(255,255,255,.72)");
-      s2.setAttribute("font-size","11"); s2.textContent="% of GDP"; svg.appendChild(s2);
-      // legend rows
-      var leg=document.querySelector('[data-leg="'+panel+'"]');
-      DATA[panel].layers.forEach(function(L,i){
-        var row=document.createElement("div");
-        row.className="row"+(L.off?" off":""); row.dataset.i=i;
-        row.innerHTML='<span class="sw" style="background:var('+COL[i]+')"></span>'+
-          '<span class="nm">'+L.name+(L.off?'<span class="tag-off">est.</span>':'')+'<small>'+L.note+'</small></span>'+
-          '<span class="inc"></span><span class="cum"></span>';
-        row.addEventListener("click",function(){state.step=i; render(false);});
-        leg.appendChild(row);
-      });
-      // click ring area to advance
-      var wrap=document.querySelector('[data-panel="'+panel+'"]');
-      wrap.addEventListener("click",function(){
-        state.step = state.step>=3 ? 0 : state.step+1; render(false);
-      });
+
+    // rings
+    var svg=F.querySelector("svg");
+    var tgt=document.createElementNS("http://www.w3.org/2000/svg","circle");
+    tgt.setAttribute("cx",CX); tgt.setAttribute("cy",CY); tgt.setAttribute("r",Rmax);
+    tgt.setAttribute("fill","none"); tgt.setAttribute("stroke","#c9d8e6");
+    tgt.setAttribute("stroke-dasharray","2 5"); tgt.setAttribute("stroke-width","1");
+    svg.appendChild(tgt);
+    for(var i=P.steps.length-1;i>=0;i--){
+      var c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("class","ring"); c.setAttribute("cx",CX); c.setAttribute("cy",CY);
+      c.dataset.i=i; c.setAttribute("stroke","#ffffff"); c.setAttribute("stroke-width","1.6");
+      svg.appendChild(c);
+    }
+    var g=document.createElementNS("http://www.w3.org/2000/svg","text");
+    g.setAttribute("x",CX); g.setAttribute("y",CY-2); g.setAttribute("text-anchor","middle");
+    g.setAttribute("class","ctr-val"); g.setAttribute("fill","#ffffff");
+    g.setAttribute("font-size","40"); g.dataset.role="val"; svg.appendChild(g);
+    var s2=document.createElementNS("http://www.w3.org/2000/svg","text");
+    s2.setAttribute("x",CX); s2.setAttribute("y",CY+18); s2.setAttribute("text-anchor","middle");
+    s2.setAttribute("class","ctr-sub"); s2.setAttribute("fill","rgba(255,255,255,.72)");
+    s2.setAttribute("font-size","11"); s2.textContent="% of GDP"; svg.appendChild(s2);
+
+    // legend
+    var leg=F.querySelector('[data-leg="'+panel+'"]');
+    P.steps.forEach(function(S,i){
+      var row=document.createElement("div");
+      row.className="row"+(S.off?" off":""); row.dataset.i=i;
+      row.innerHTML='<span class="sw" style="background:var('+COL[i]+')"></span>'+
+        '<span class="nm">'+S.name+(S.off?'<span class="tag-off">est.</span>':'')+'<small>'+S.note+'</small></span>'+
+        '<span class="inc"></span><span class="cum"></span>';
+      row.addEventListener("click",function(){state[panel]=i; render(false);});
+      leg.appendChild(row);
+    });
+
+    // ring click advances
+    F.querySelector('[data-ring="'+panel+'"]').addEventListener("click",function(){
+      state[panel] = state[panel]>=lastStep(panel) ? 0 : state[panel]+1; render(false);
+    });
+
+    // step-note "more" button
+    F.querySelector('[data-note="'+panel+'"] .more').addEventListener("click",function(){
+      openModal(panel,state[panel]);
+    });
+
+    // nav
+    var nav=F.querySelector('[data-pnav="'+panel+'"]');
+    nav.querySelector(".prev").addEventListener("click",function(){
+      if(state[panel]>0){state[panel]--; render(false);}
+    });
+    nav.querySelector(".next").addEventListener("click",function(){
+      state[panel] = state[panel]>=lastStep(panel) ? 0 : state[panel]+1; render(false);
     });
   }
 
   // ---------- detail pop-up ----------
-  function openModal(i){
-    var yi=state.year, S=STEPS[i], D=DETAILS[i];
-    var dL=DATA.debt.layers[i], fL=DATA.deficit.layers[i];
-    document.getElementById("modalKick").innerHTML=S.kick;
-    document.getElementById("modalTitle").innerHTML=S.h;
-    var html='<div class="m-adds">'+
-      '<div class="m-add"><div class="m-add-h">Added to debt stock'+(dL.off?' <span class="tag-off">est.</span>':'')+'</div>'+
-        '<div class="m-add-nm">'+dL.name+'</div><div class="m-add-note">'+dL.note+'</div>'+
-        '<div class="m-add-v pos">+'+dL.vals[yi].toFixed(1)+'<small> % of GDP</small></div></div>'+
-      '<div class="m-add"><div class="m-add-h">Added to deficit flow'+(fL.off?' <span class="tag-off">est.</span>':'')+'</div>'+
-        '<div class="m-add-nm">'+fL.name+'</div><div class="m-add-note">'+fL.note+'</div>'+
-        '<div class="m-add-v neg">−'+fL.vals[yi].toFixed(1)+'<small> % of GDP</small></div></div>'+
+  function openModal(panel,i){
+    var yi=state.year, P=DATA[panel], S=P.steps[i], D=DETAIL[panel][i], sign=P.sign;
+    var isDebt=panel==="debt";
+    document.getElementById("modalKick").textContent=D.kick;
+    document.getElementById("modalTitle").innerHTML=D.h;
+    var inc=S.inc[yi], cum=cumulative(panel,yi)[i];
+    var html="";
+    if(S.milestone) html+='<div class="m-ms">= '+S.milestone+'</div>';
+    html+='<div class="m-adds">'+
+      '<div class="m-add"><div class="m-add-h">Added to '+(isDebt?"debt stock":"deficit flow")+(S.off?' <span class="tag-off">est.</span>':'')+'</div>'+
+        '<div class="m-add-nm">'+S.name+'</div><div class="m-add-note">'+S.note+'</div>'+
+        '<div class="m-add-v '+(isDebt?"pos":"neg")+'">'+(isDebt?"+":"−")+inc.toFixed(1)+'<small> % of GDP</small></div></div>'+
+      '<div class="m-add"><div class="m-add-h">Running total</div>'+
+        '<div class="m-add-nm">After this step</div><div class="m-add-note">'+P.label.toLowerCase()+'</div>'+
+        '<div class="m-add-v">'+(sign<0?"−":"")+cum.toFixed(1)+'<small> % of GDP</small></div></div>'+
       '</div>'+
-      '<div class="m-detail">'+D.detail+'</div>';
-    if(D.cite){
-      var c=D.cite;
+      '<div class="m-detail">'+D.body+'</div>';
+    (D.cites||[]).forEach(function(k){
+      var c=CITE[k];
       html+='<a class="m-cite" href="'+c.url+'" target="_blank" rel="noopener">'+
         '<span class="m-cite-k">Key IMF working paper</span>'+
         '<span class="m-cite-t">'+c.title+'</span>'+
         '<span class="m-cite-m">'+c.authors+' · IMF Working Paper '+c.num+' ('+c.year+')</span>'+
         '<span class="m-cite-go">Read on imf.org ↗</span></a>';
-    }
+    });
     document.getElementById("modalBody").innerHTML=html;
     var ov=document.getElementById("modal");
     ov.hidden=false; document.body.style.overflow="hidden";
@@ -459,119 +507,114 @@
   }
   document.getElementById("modalClose").addEventListener("click",closeModal);
   document.getElementById("modal").addEventListener("click",function(e){
-    if(e.target===this) closeModal(); // click on backdrop only
+    if(e.target===this) closeModal();
   });
-  document.getElementById("methodMore").addEventListener("click",function(){ openModal(state.step); });
 
   // ---------- count-up ----------
   var anims={};
   function countTo(el,key,target,sign){
     var from=anims[key]==null?target:anims[key];
     var t0=null, dur=520;
-    el.textContent=(sign<0?"\u2212":"")+target.toFixed(1); // capture-safe final value
+    el.textContent=(sign<0?"−":"")+target.toFixed(1);
     anims[key]=target;
     if(window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches){return;}
     function tick(ts){
       if(!t0)t0=ts; var k=Math.min(1,(ts-t0)/dur); var e=1-Math.pow(1-k,3);
       var v=from+(target-from)*e;
-      el.textContent=(sign<0?"\u2212":"")+v.toFixed(1);
+      el.textContent=(sign<0?"−":"")+v.toFixed(1);
       if(k<1)requestAnimationFrame(tick); else anims[key]=target;
     }
     requestAnimationFrame(tick);
   }
 
   // ---------- render ----------
-  function render(yearChanged){
-    var yi=state.year, st=state.step;
-    // year buttons
-    document.querySelectorAll("#years button").forEach(function(b){
-      b.classList.toggle("on", +b.dataset.i===yi);
-    });
+  function renderPanel(panel){
+    var yi=state.year, st=state[panel], P=DATA[panel], sign=P.sign, n=lastStep(panel);
+    var F=fig(panel), R=radii(panel,yi);
+
     // stepper
-    document.querySelectorAll(".step").forEach(function(d){
+    F.querySelectorAll(".step").forEach(function(d){
       var i=+d.dataset.i;
       d.classList.toggle("on", i===st);
       d.classList.toggle("done", i<st);
     });
 
-    ["debt","deficit"].forEach(function(panel){
-      var R=radii(panel,yi), sign=DATA[panel].sign;
-      var svg=document.querySelector('[data-panel="'+panel+'"] svg');
-      svg.querySelectorAll("circle.ring").forEach(function(c){
-        var i=+c.dataset.i, revealed=i<=st;
-        var inner=i===0?0:R.r[i-1];
-        c.setAttribute("r", revealed?R.r[i]:inner);
-        c.style.opacity=revealed?1:0;
-        c.setAttribute("fill", cssvar(COL[i]));
-        c.setAttribute("stroke-dasharray", DATA[panel].layers[i].off?"4 3":"0");
-        c.classList.toggle("cur", revealed && i===st);
-      });
-      // centre value = cumulative at current step
-      var valEl=svg.querySelector('[data-role="val"]');
-      var target=R.cum[st];
-      // scale font a touch for big debt numbers
-      valEl.setAttribute("font-size", target>=100?34:40);
-      countTo(valEl, panel, target, sign);
+    // rings
+    var svg=F.querySelector("svg");
+    svg.querySelectorAll("circle.ring").forEach(function(c){
+      var i=+c.dataset.i, revealed=i<=st, inner=i===0?0:R.r[i-1];
+      c.setAttribute("r", revealed?R.r[i]:inner);
+      c.style.opacity=revealed?1:0;
+      c.setAttribute("fill", cssvar(COL[i]));
+      c.setAttribute("stroke-dasharray", P.steps[i].off?"4 3":"0");
+      c.classList.toggle("cur", revealed && i===st);
+    });
+    var valEl=svg.querySelector('[data-role="val"]');
+    var target=R.cum[st];
+    valEl.setAttribute("font-size", target>=100?34:40);
+    countTo(valEl, panel, target, sign);
 
-      // legend
-      var leg=document.querySelector('[data-leg="'+panel+'"]');
-      leg.querySelectorAll(".row").forEach(function(row){
-        var i=+row.dataset.i;
-        row.classList.toggle("show", i<=st);
-        row.classList.toggle("cur", i===st);
-        var inc=DATA[panel].layers[i].vals[yi];
-        row.querySelector(".inc").textContent=(sign<0?"+\u2212":"+")+inc.toFixed(1);
-        row.querySelector(".cum").textContent=(sign<0?"\u2212":"")+R.cum[i].toFixed(1);
-      });
+    // legend
+    var leg=F.querySelector('[data-leg="'+panel+'"]');
+    leg.querySelectorAll(".row").forEach(function(row){
+      var i=+row.dataset.i;
+      row.classList.toggle("show", i<=st);
+      row.classList.toggle("cur", i===st);
+      var inc=P.steps[i].inc[yi];
+      row.querySelector(".inc").textContent="+"+inc.toFixed(1);
+      row.querySelector(".cum").textContent=(sign<0?"−":"")+R.cum[i].toFixed(1);
     });
 
-    // method card
-    var S=STEPS[st], m=document.getElementById("method");
-    m.querySelector(".kick").innerHTML=S.kick;
-    m.querySelector("h3").innerHTML=S.h;
-    m.querySelector("p").innerHTML=S.p;
-    m.querySelector('[data-add="debt"]').textContent="+"+DATA.debt.layers[st].vals[yi].toFixed(1);
-    m.querySelector('[data-add="deficit"]').textContent="\u2212"+DATA.deficit.layers[st].vals[yi].toFixed(1);
+    // milestone badge
+    var ms=F.querySelector('[data-ms="'+panel+'"]'), msText=P.steps[st].milestone;
+    if(msText){ ms.textContent="= "+msText; ms.classList.add("show"); }
+    else { ms.classList.remove("show"); }
 
-    // compare panel
-    var dCum=cumulative("debt",yi), fCum=cumulative("deficit",yi);
-    var dOff=dCum[1], dAug=dCum[3], fHead=DATA.deficit.layers[0].vals[yi], fAug=fCum[3];
-    document.getElementById("cmpYear").textContent=YEARS[yi];
-    var cmpD=document.querySelector('[data-cmp="debt"]');
-    cmpD.querySelector("b").textContent=dOff.toFixed(1)+"  \u2192  "+dAug.toFixed(1);
-    cmpD.querySelector("i").style.width=(100*dOff/dAug).toFixed(1)+"%";
-    var cmpF=document.querySelector('[data-cmp="deficit"]');
-    cmpF.querySelector("b").textContent="\u2212"+fHead.toFixed(1)+"  \u2192  \u2212"+fAug.toFixed(1);
-    cmpF.querySelector("i").style.width=(100*fHead/fAug).toFixed(1)+"%";
-    document.getElementById("multline").innerHTML=
-      "In "+YEARS[yi]+", augmented debt is <b>"+(dAug/dOff).toFixed(1)+"\u00d7</b> the official "+
-      dOff.toFixed(1)+"%, and the augmented deficit is <b>"+(fAug/fHead).toFixed(1)+"\u00d7</b> the headline \u2212"+
-      fHead.toFixed(1)+"%.";
+    // step note
+    var D=DETAIL[panel][st], note=F.querySelector('[data-note="'+panel+'"]');
+    note.querySelector(".kick").textContent=D.kick;
+    note.querySelector("p").textContent=D.lead;
 
     // nav
-    document.getElementById("prev").disabled=st===0;
-    var nx=document.getElementById("next");
-    nx.textContent = st>=3 ? "Start over \u21bb" : "Add next layer \u203a";
-    document.getElementById("prog").textContent="Layer "+(st+1)+" of 4";
+    var nav=F.querySelector('[data-pnav="'+panel+'"]');
+    nav.querySelector(".prev").disabled=st===0;
+    nav.querySelector(".next").textContent = st>=n ? "Start over ↻" : "Next ›";
+    nav.querySelector(".prog").textContent="Layer "+(st+1)+" of "+(n+1);
   }
 
-  // ---------- nav wiring ----------
-  document.getElementById("next").addEventListener("click",function(){
-    state.step = state.step>=3 ? 0 : state.step+1; render(false);
-  });
-  document.getElementById("prev").addEventListener("click",function(){
-    if(state.step>0){state.step--; render(false);}
-  });
+  function renderCompare(){
+    var yi=state.year;
+    var dCum=cumulative("debt",yi), fCum=cumulative("deficit",yi);
+    var dOff=dCum[1], dAug=dCum[dCum.length-1];
+    var fHead=DATA.deficit.steps[0].inc[yi], fAug=fCum[fCum.length-1];
+    document.getElementById("cmpYear").textContent=YEARS[yi];
+    var cmpD=document.querySelector('[data-cmp="debt"]');
+    cmpD.querySelector("b").textContent=dOff.toFixed(1)+"  →  "+dAug.toFixed(1);
+    cmpD.querySelector("i").style.width=(100*dOff/dAug).toFixed(1)+"%";
+    var cmpF=document.querySelector('[data-cmp="deficit"]');
+    cmpF.querySelector("b").textContent="−"+fHead.toFixed(1)+"  →  −"+fAug.toFixed(1);
+    cmpF.querySelector("i").style.width=(100*fHead/fAug).toFixed(1)+"%";
+    document.getElementById("multline").innerHTML=
+      "In "+YEARS[yi]+", augmented debt is <b>"+(dAug/dOff).toFixed(1)+"×</b> the official "+
+      dOff.toFixed(1)+"%, and the augmented deficit is <b>"+(fAug/fHead).toFixed(1)+"×</b> the headline −"+
+      fHead.toFixed(1)+"%.";
+  }
+
+  function render(yearChanged){
+    document.querySelectorAll("#years button").forEach(function(b){
+      b.classList.toggle("on", +b.dataset.i===state.year);
+    });
+    renderPanel("debt");
+    renderPanel("deficit");
+    renderCompare();
+  }
+
+  // ---------- global keys ----------
   document.addEventListener("keydown",function(e){
-    if(!document.getElementById("modal").hidden){
-      if(e.key==="Escape") closeModal();
-      return; // don't navigate steps while the pop-up is open
-    }
-    if(e.key==="ArrowRight"){state.step=Math.min(3,state.step+1); render(false);}
-    if(e.key==="ArrowLeft"){state.step=Math.max(0,state.step-1); render(false);}
+    if(!document.getElementById("modal").hidden && e.key==="Escape") closeModal();
   });
 
-  buildYears(); buildStepper(); buildRings(); render(true);
+  buildYears(); buildPanel("debt"); buildPanel("deficit"); render(true);
 })();
 </script>
 </body>
