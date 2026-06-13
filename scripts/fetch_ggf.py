@@ -40,7 +40,7 @@ import os, sys, json, time, random, datetime, urllib.request
 ROOT   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR    = os.path.join(ROOT, 'data', 'govt-guidance-funds')
 API    = 'https://gs.amac.org.cn/amac-infodisc/api/pof/fund'
-DETAIL = 'https://gs.amac.org.cn/amac-infodisc/res/pof/fund/{}.html'
+DETAIL = 'https://gs.amac.org.cn/amac-infodisc/res/pof/fund/{}'
 UA     = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
 SIZE   = 100          # records per page
 DELAY  = 0.5          # seconds between requests (be polite)
@@ -123,7 +123,7 @@ def norm(r):
         'establish': fmt_date(r.get('establishDate')),
         'record': fmt_date(r.get('putOnRecordDate')),
         'status': r.get('workingState') or r.get('fundStatus'),
-        'detail': DETAIL.format(r['url']) if r.get('url') else None,
+        'detail': DETAIL.format(r['url'] if r['url'].endswith('.html') else r['url'] + '.html') if r.get('url') else None,
     }
 
 
