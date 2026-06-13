@@ -81,6 +81,26 @@ repayment_series.json  YTD principal repaid (亿元), split into refinancing-bon
 INDEX.md               source notes
 ```
 
+### `data/govt-guidance-funds/` — 政府投资基金 / 地方政府引导基金 (government guidance funds)
+
+A research index of **official** channels for government-guidance-fund data, plus a
+scraper for the one nationwide structured source (AMAC). Note this is a different
+accounting basis from the four budget accounts above — there is no ready-made MOF
+monthly table, so fund-level data is assembled from registration / disclosure systems.
+
+```
+SOURCES.md       catalogue of official sources: policy framework (国办发〔2025〕1号,
+                 发改委 投向评价), fund registries (发改委 登记系统, AMAC 信息公示,
+                 国家企业信用), local 管理办法 search recipe, decision guide
+funds.json       AMAC filings matching guidance-fund name keywords (after first run)
+managers.json    distinct managers of those funds, with fund counts
+INDEX.md         human-readable, date-sorted table (after first run)
+```
+
+> **Caveat:** AMAC does not tag "government guidance fund"; `fetch_ggf.py` filters by
+> fund/manager name only. Confirm each hit against the 发改委 登记系统 / local
+> announcements before treating it as official (see `SOURCES.md`).
+
 ## The Monthly Fiscal Monitor
 
 The dashboard (`fiscal-monitor.html`) embeds the four parsed JSON series inline and is
@@ -112,7 +132,13 @@ scripts/
   fetch_repayment.py   地方政府债券发行和债务余额情况 → repayment_series.json
   build_monitor.py     rebuild fiscal-monitor.html from the four JSON series
   update.sh            run all of the above in order
+  fetch_ggf.py         政府投资基金/引导基金 (AMAC) → data/govt-guidance-funds/funds.json
 ```
+
+> `fetch_ggf.py` is **not** part of `update.sh` (different cadence, and it needs
+> outbound access to `gs.amac.org.cn`). Run it on its own: `python3 scripts/fetch_ggf.py`
+> (incremental) or `--full` for the initial backfill. In Claude Code web sessions the
+> egress allowlist blocks `gs.amac.org.cn` by default — add the host or run locally.
 
 **To refresh after MOF publishes new monthly data:**
 
