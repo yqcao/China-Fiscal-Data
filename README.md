@@ -101,11 +101,13 @@ MAJOR_FUNDS.md   AMAC carries no fund size, so per-fund 规模 is hand-assembled
                  columns: paidin_yi (认缴/实缴) vs target_yi (目标/规划), with a
                  scope flag (fund vs 基金群/体系) so the two口径 are never summed together.
 province_scale.json  province-level *aggregate* fund scale from official disclosures —
-PROVINCE_SCALE.md    3-province prototype (广东/浙江/安徽), every figure a verbatim
-                 official quote + source + 口径 tag (认缴/实缴/撬动/目标/投放/只数).
-                 Finding: the aggregate is disclosed via 财政厅公告·发布会·官方媒体
-                 (not a uniform table; 政府工作报告 is mostly qualitative) — so it is a
-                 curated per-province recipe, not a clean auto-scrape.
+PROVINCE_SCALE.md    all 31 provincial-level units (广东/浙江/安徽 with multi-year
+                 timelines), every figure a verbatim official quote + source + 口径 tag
+                 (认缴/实缴/撬动/目标/投放/只数). Bases & 母/子 levels are mixed and
+                 NOT comparable — never sum or rank provinces on them. Finding: the
+                 aggregate is disclosed via 财政厅公告·发布会·官方媒体·评级报告 (四川 has
+                 a real 专栏; most don't; 政府工作报告 is mostly qualitative) — a curated
+                 per-province recipe, not a clean auto-scrape.
 rules/           local 财政厅 「管理办法」 documents — config-driven crawler:
                  sources.json (region source pages, extend province by province),
                  catalog.json, INDEX.md, markdown/ (files/ gitignored)

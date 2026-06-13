@@ -1,146 +1,356 @@
 #!/usr/bin/env python3
-"""Prototype: province-level government investment / guidance fund scale, pulled
-from OFFICIAL government disclosures (财政厅公告 / 发布会吹风会 / 官方媒体转载 /
-财政部专题 / 政府工作报告), with the exact quoted sentence and a source URL for
-every figure.
+"""Province-level government investment / guidance fund scale, from OFFICIAL
+disclosures, with a verbatim quote + source URL + 口径 tag for every figure.
 
-Why this layer exists: AMAC has no fund size and a name filter finds only ~200
-self-identified funds; the curated major_funds list is fund-by-fund. This file
-answers the *province aggregate* question ("本省产业基金规模有多大") directly.
+Covers all 31 mainland provincial-level units (built from a 13-agent sweep of
+财政厅公告 / 发布会吹风会 / 官方媒体转载 / 财政部专题 / 评级报告). 广东/浙江/安徽
+carry a multi-year timeline; the rest carry their latest aggregate + key points.
 
-WHAT THE 3-PROVINCE PROBE FOUND (广东 / 浙江 / 安徽) — the recipe & its limits:
-  * The aggregate IS disclosed officially and is high quality.
-  * It almost never lives in a clean "政府投资基金信息公开专栏" table — czt.*.gov.cn
-    column pages frequently 403/503. The numbers surface in: ① 财政厅 fund-manager
-    遴选公告 (which embed a 基金概况 paragraph), ② 财政厅/政府 发布会吹风会 readouts,
-    ③ 官方媒体 (浙江日报/安徽日报) republished on *.gov.cn subdomains, ④ 财政部 features.
-  * 政府工作报告 itself is mostly QUALITATIVE / forward-looking — it gives plans
-    and completion counts, NOT cumulative stock. So the user's original hypothesis
-    holds only weakly: read the 财政厅 channel, not the 工作报告.
-  * 口径 is wildly mixed and MUST be tagged per figure: 认缴 / 实缴 / 撬动后(社会资本)
-    / 目标 / 投放(投资额) / 只数. Never sum across 口径 or across 母/子 levels.
-  => Verdict: viable as a *curated, semi-structured* per-province source (a sources.json
-     recipe like fetch_guidance_rules.py + verbatim-quote extraction + human check),
-     NOT a clean auto-scrape. This script is the data model + a 3-province seed.
+WHAT THE SWEEP CONFIRMED — the recipe & its hard limits:
+  * The province aggregate IS disclosed and is the best answer to "本省规模" —
+    but it almost never lives in a uniform annual table or a standard
+    信息公开专栏. czt.*.gov.cn column pages frequently 403/503. Numbers surface in
+    ① 财政厅 fund-manager 遴选公告 / 运营情况 (四川 has a real 专栏 — the exception),
+    ② 财政厅/政府 发布会吹风会 readouts, ③ 官方媒体 on *.gov.cn subdomains,
+    ④ 财政部 features, ⑤ 国有平台 债券评级报告 (山东/吉林).
+  * 政府工作报告 is mostly QUALITATIVE (plans/completion counts), not stock.
+  * 口径 is wildly mixed and is tagged per row: 认缴 / 实缴 / 撬动(社会资本) /
+    目标 / 投放(累计投资额) / 只数. Bases and 母/子 levels are NOT comparable —
+    NEVER sum across them or rank provinces on mismatched 口径.
+  => Verdict: a viable CURATED, semi-structured per-province source (a sources.json
+     recipe + verbatim-quote extraction + human check), NOT a clean auto-scrape.
 
-Unit: 亿元 (RMB 100M). 10000亿 = 1万亿. Append rows / provinces and re-run.
-Each row's `quote` is the verbatim official sentence — the ground truth for its number.
+口径 INCOMPARABILITY EXAMPLES (why headline numbers must not be ranked naively):
+  * 广东 1.77万亿 认缴 = 全省政府投资基金155支(含母+子) — broadest.
+  * 湖北 7549亿 认缴 = 全省基金群532只(含母+子).
+  * 浙江 600亿 认缴 = 省产业基金母基金 own 循环认缴 — narrow.
+  * 安徽 3000亿 = 体系总规模(含撬动); its 实缴 is 927亿, 省财政出资仅144.68亿.
+  * 上海 6600亿 = 国资基金全口径(非纯财政政府投资基金).
+  * 江苏/北京/河北 have NO true 全省/全市 aggregate — headline is a sub-cluster.
+
+Unit: 亿元 (RMB 100M). 10000亿 = 1万亿. Append rows / update and re-run.
 """
 import os, json, datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR  = os.path.join(ROOT, 'data', 'govt-guidance-funds')
 
-# basis tags: 认缴 | 实缴 | 撬动 (社会资本) | 目标 | 投放 (累计投资额) | 只数
-# headline=True marks the single best current province-aggregate disclosure.
+# Fields: province, report_date(YYYY-MM|None), year, headline(bool: the single best
+# current province aggregate), basis, value_yi, paidin_yi, count, metric, quote, report, source.
+# basis: 认缴 | 实缴 | 撬动 | 目标 | 投放 | 只数 | None
+def r(province, report_date, year, headline, basis, value_yi, paidin_yi, count, metric, quote, report, source):
+    return dict(province=province, report_date=report_date, year=year, headline=headline,
+                basis=basis, value_yi=value_yi, paidin_yi=paidin_yi, count=count,
+                metric=metric, quote=quote, report=report, source=source)
+
 ROWS = [
- # ---- 广东 ----
- dict(province='广东', report_date='2025-05', year=2024, headline=True,
-      metric='全省政府投资基金存量(认缴/实缴)', basis='认缴+实缴', value_yi=17700, paidin_yi=12400, count=155,
-      quote='截至2024年底，全省政府投资基金155支，基金认缴总规模1.77万亿元、已实缴1.24万亿元。',
-      report='广东省财政厅新闻发布会(副厅长胡建斌)', source='https://czt.gd.gov.cn/tpxw/content/post_4710306.html'),
- dict(province='广东', report_date='2025-04', year=2025, headline=False,
-      metric='全省产业+创业投资基金总规模目标', basis='目标', value_yi=10000, paidin_yi=None, count=None,
-      quote='全省统筹资源整合组建超万亿元总规模的产业投资基金和创业投资基金，其中省级基金规模超过1000亿元。',
-      report='《广东省进一步激发市场主体活力加快建设现代化产业体系的若干措施》',
-      source='https://www.gd.gov.cn/zwgk/zcjd/mtjd/content/post_4705683.html'),
- dict(province='广东', report_date='2025-12', year=2025, headline=False,
-      metric='广东省战略性新兴产业投资引导基金', basis='认缴', value_yi=1000, paidin_yi=500, count=1,
-      quote='广东省战略性新兴产业投资引导基金有限责任公司注册资本500亿元，计划总规模达到1000亿元。',
-      report='广东战新引导基金成立公告', source='https://finance.sina.com.cn/roll/2025-12-22/doc-inhcryri4636444.shtml'),
+ # ===================== 广东 (timeline) =====================
+ r('广东','2025-05',2024,True,'认缴',17700,12400,155,'全省政府投资基金存量(含母+子)',
+   '截至2024年底，全省政府投资基金155支，基金认缴总规模1.77万亿元、已实缴1.24万亿元。',
+   '广东省财政厅新闻发布会(副厅长胡建斌)','https://czt.gd.gov.cn/tpxw/content/post_4710306.html'),
+ r('广东','2021-07',2020,False,'认缴',519.94,307.65,3,'省级3支基金社会资本认缴/实到(子集，非全省)',
+   '截至2020年底，省级财政已投入3项基金212亿元，社会资本认缴519.94亿元、实际到位307.65亿元。',
+   '广东省2020年度省级预算执行审计报告','http://www.gd.gov.cn/zwgk/czxx/sjgzbg/content/post_3443585.html'),
+ r('广东','2025-12',2025,False,'认缴',1000,500,1,'省战新引导基金(新设旗舰，非全省更新)',
+   '广东省战略性新兴产业投资引导基金计划总规模1000亿元，首期注册500亿元，首笔100亿元注册资本已实缴到位。',
+   '广东战新引导基金启动','https://www.news.cn/fortune/20260525/0ff9845f62664c11b2a17546ec9a9226/c.html'),
 
- # ---- 浙江 ----
- dict(province='浙江', report_date='2025-06', year=2025, headline=True,
-      metric='省产业基金累计(认缴/撬动)', basis='认缴', value_yi=600, paidin_yi=600, count=117,
-      quote='省产业基金通过循环投资累计认缴近600亿元，累计投资省内项目超1600个，撬动各类资本5459亿元。',
-      report='《浙江产业基金壮大"耐心资本"》(浙江日报，载于 zjic.zj.gov.cn)',
-      source='https://zjic.zj.gov.cn/ywdh/tzgl/202506/t20250613_23507148.shtml'),
- dict(province='浙江', report_date='2025-12', year=2025, headline=False,
-      metric='"4+1"专项基金群', basis='只数', value_yi=700, paidin_yi=None, count=17,
-      quote='组建了17支总规模超700亿元的"4+1"专项基金，已投资项目超400个、投资金额近400亿元。',
-      report='《为创新浙江注入耐心资本》(浙江日报，载于 zjic.zj.gov.cn)',
-      source='https://zjic.zj.gov.cn/ywdh/qyfz/202512/t20251202_23837981.shtml'),
- dict(province='浙江', report_date='2023-09', year=2023, headline=False,
-      metric='省产业基金累计(认缴/撬动)', basis='认缴', value_yi=400, paidin_yi=400, count=99,
-      quote='截至2023年6月末，省产业基金累计认缴近400亿元，累计参股基金99支，合作机构超80家，引导撬动社会资本近4000亿元。',
-      report='浙江省产业基金管理机构遴选公告(czt.zj.gov.cn)',
-      source='https://czt.zj.gov.cn/art/2023/9/22/art_1164164_58927426.html'),
- dict(province='浙江', report_date='2025-01', year=2024, headline=False,
-      metric='政府工作报告(完成只数，定性)', basis='只数', value_yi=None, paidin_yi=None, count=17,
-      quote='完成17支"4+1"专项基金组建。',
-      report='浙江省2025年《政府工作报告》', source='https://jxt.zj.gov.cn/art/2025/1/21/art_1660147_58933630.html'),
+ # ===================== 浙江 (timeline) =====================
+ r('浙江','2025-06',2025,True,'认缴',600,None,117,'省产业基金母基金循环认缴(窄口径)',
+   '省产业基金通过循环投资累计认缴近600亿元，累计投资省内项目超1600个，撬动各类资本5459亿元，已集聚117支基金。',
+   '浙江产业基金壮大"耐心资本"(浙江日报，载 zjic.zj.gov.cn)','https://zjic.zj.gov.cn/ywdh/tzgl/202506/t20250613_23507148.shtml'),
+ r('浙江','2019-01',2019,False,'目标',251,None,None,'省转型升级产业基金设立目标',
+   '省级整合设立总规模251亿元的省转型升级产业基金。','浙江省转型升级产业基金管理办法解读','http://czt.zj.gov.cn/art/2019/1/29/art_1164177_30149615.html'),
+ r('浙江','2022-06',2022,False,'撬动',3500,None,97,'省产业基金参股97支/撬动3500亿',
+   '截至2022年6月，累计参股97支基金，引导撬动各类资本3500亿元，惠及省内企业1270家。',
+   '浙江日报《五百亿产业基金能撬动什么》','https://www.zjsjw.gov.cn/toutiao/202302/t20230211_8603249.shtml'),
+ r('浙江','2023-06',2023,False,'认缴',400,None,99,'省产业基金累计认缴/参股99支',
+   '截至2023年6月末，省产业基金累计认缴近400亿元，累计参股基金99支，引导撬动社会资本近4000亿元。',
+   '浙江省产业基金管理机构遴选公告(czt.zj.gov.cn)','http://czt.zj.gov.cn/art/2023/9/22/art_1164164_58927429.html'),
+ r('浙江','2024-06',2024,False,'撬动',4749,None,89,'省产业基金子基金89支/撬动4749亿',
+   '截至2024年6月，省产业基金累计投资子基金89支，累计撬动社会资本投资我省4749亿元。',
+   '浙江省社会科学院对策建议','https://www.zjskw.gov.cn/art/2024/11/11/art_1229556986_61507.html'),
+ r('浙江','2025-12',2025,False,'只数',700,None,17,'"4+1"专项基金群17支超700亿',
+   '组建了17支总规模超700亿元的"4+1"专项基金，已投资项目超400个、投资金额近400亿元。',
+   '浙江省创新投资集团《为创新浙江注入耐心资本》','https://zjic.zj.gov.cn/ywdh/qyfz/202512/t20251202_23837981.shtml'),
 
- # ---- 安徽 ----
- dict(province='安徽', report_date='2025-12', year=2025, headline=True,
-      metric='全省政府性股权投资基金体系', basis='实缴', value_yi=3000, paidin_yi=927, count=214,
-      quote='全省政府性股权投资基金体系总规模已超过3000亿元，其中16只母基金共设立子基金198只，母子基金累计实缴规模达927亿元，省财政出资144.68亿元，撬动社会资本782.32亿元，撬动比例达到5.41倍。',
-      report='安徽省政府新闻发布会(2025年末数据，财联社/科创板日报转述)', source='https://www.cls.cn/detail/2383311'),
- dict(province='安徽', report_date='2024-10', year=2024, headline=False,
-      metric='省新兴产业引导基金16只母基金', basis='认缴', value_yi=1800, paidin_yi=None, count=16,
-      quote='省本级16只母基金已经组建完成，总的认缴规模已经接近1800亿元，母子基金数将近200个。',
-      report='财政部《一场"破"与"立"的改革》(引省财政厅官员)',
-      source='https://www.mof.gov.cn/zhengwuxinxi/caizhengxinwen/202410/t20241016_3945672.htm'),
- dict(province='安徽', report_date='2023-12', year=2023, headline=False,
-      metric='省新兴产业引导基金体系(实缴)', basis='实缴', value_yi=534.75, paidin_yi=534.75, count=56,
-      quote='截至2023年底，基金体系母子基金实缴规模534.75亿元，累计投资项目469个；已设立16只母基金和40只子基金。',
-      report='安徽省新兴产业引导基金信息公开', source='https://baike.baidu.com/item/安徽省新兴产业引导基金/62930369'),
- dict(province='安徽', report_date='2022-06', year=2022, headline=False,
-      metric='省新兴产业引导基金体系(组建目标)', basis='目标', value_yi=2000, paidin_yi=500, count=16,
-      quote='省级财政计划出资500亿元组建省新兴产业引导基金，下设三大基金群16只母基金，撬动形成总规模不低于2000亿元的体系。',
-      report='《安徽省新兴产业引导基金组建方案》新闻发布会',
-      source='http://fbh.anhuinews.com/project/202206/t20220630_6112377.html'),
+ # ===================== 安徽 (timeline) =====================
+ r('安徽','2025-12',2025,True,'实缴',3000,927,214,'政府性股权基金体系(含撬动；实缴927/省财政144.68)',
+   '截至2025年底，16只母基金共设立子基金198只，母子基金累计实缴927亿元，其中省财政出资144.68亿元，撬动社会资本782.32亿元，撬动比例5.41倍。全省政府性股权投资基金体系总规模已超过3000亿元。',
+   '3000亿安徽政府引导基金迎来"新规"(新浪财经)','https://finance.sina.com.cn/jjxw/2026-05-27/doc-inhzizpk9138804.shtml'),
+ r('安徽','2022-06',2022,False,'目标',2000,None,16,'省新兴产业引导基金体系组建目标(财政500亿)',
+   '连续5年由省财政出资组建500亿元省新兴产业引导基金，逐层撬动形成总规模不低于2000亿元的体系。',
+   '安徽省新兴产业引导基金组建方案发布会','http://fbh.anhuinews.com/project/202206/t20220630_6112377.html'),
+ r('安徽','2023-12',2023,False,'实缴',None,534.75,56,'体系母子基金实缴534.75亿/56只',
+   '截至2023年底，基金体系累计投资项目469个，母子基金实缴规模534.75亿元(16母+40子)。',
+   '安徽省新兴产业引导基金信息公开','https://baike.baidu.com/item/安徽省新兴产业引导基金/62930369'),
+ r('安徽','2024-10',2024,False,'实缴',None,500,124,'体系母子基金124只/实缴近500亿',
+   '省新兴产业引导基金体系累计设立母子基金124只、实缴规模合计近500亿元。',
+   '安徽：加快培育基金丛林(证券时报)','https://stcn.com/article/detail/1392330.html'),
+ r('安徽','2025-01',2025,False,'认缴',2220.13,None,158,'体系认缴破2000亿(2220.13)/16母142子',
+   '截至2025年1月底，引导基金体系认缴规模突破2000亿元，达到2220.13亿元(16母+142子=158只)。',
+   '安徽创投新政(长三角与长江经济带研究中心)','https://cyrdebr.sass.org.cn/2025/1021/c7675a583498/page.htm'),
+
+ # ===================== 江苏 (无全省汇总，仅战新母基金集群) =====================
+ r('江苏','2025-07',2025,True,'目标',1069,None,41,'战新母基金集群(无全省汇总；母基金500亿)',
+   '省战新母基金出资组建的产业专项基金累计达41只，总规模1069亿元，全省13个设区市全覆盖。',
+   '省战新母基金第三批启动(江苏省委新闻网)','https://www.zgjssw.gov.cn/yaowen/202507/t20250714_8504121.shtml'),
+ r('江苏','2024-08',2024,False,'目标',506,None,14,'战新母基金首批专项基金14支',
+   '首批产业专项基金14支、506亿元，省级母基金出资126.5亿元。',
+   '江苏战新母基金首批组建发布会','https://gjzx.jschina.com.cn/PressConference/202408/t20240813_8376376.shtml'),
+
+ # ===================== 山东 (新动能引导基金；口径差异大) =====================
+ r('山东','2025-04',2025,True,'认缴',3749,1993,151,'新动能引导基金参股151只(宽口径含子基金)',
+   '共参股设立151只基金，基金认缴规模3749亿元、同比增长5.5%，实缴1993亿元、增长3.9%。',
+   '山东新旧动能转换基金加码科创(新浪财经)','https://news.qq.com/rain/a/20250515A05Y8800'),
+ r('山东','2024-12',2024,False,'认缴',442.97,239.93,219,'引导基金直接参股219支(窄口径，评级报告)',
+   '截至2024年末，新动能基金共参股基金219支，认缴规模442.97亿元，实缴规模239.93亿元。',
+   '山东省新动能基金管理公司2025年跟踪评级报告(联合资信)','http://qxb-pdf-osscache.qixin.com/AnBaseinfo/c851fe4f141152417f955dce7ebd1288.pdf'),
+ r('山东','2023-10',2023,False,'实缴',None,204,140,'引导基金实缴204亿/参股140只/撬动4996亿',
+   '累计实缴出资204亿元，设立参股基金140只，投资项目1446个，投资金额1809亿元，带动社会投资4996亿元。',
+   '人民日报关注：山东用好政府投资基金(山东省财政厅)','http://czt.shandong.gov.cn/art/2023/11/14/art_21859_10317110.html'),
+
+ # ===================== 北京 (无全市汇总；引导基金母+8只产业基金) =====================
+ r('北京','2025-01',2025,True,'认缴',2500.1,None,None,'市政府投资引导基金(母基金，无全市汇总)',
+   '北京市政府投资引导基金(有限合伙)出资额由1000.1亿元增至2500.1亿元，增幅约150%。',
+   '北京市政府投资引导基金大幅增资(证券时报)','https://stcn.com/article/detail/1483760.html'),
+ r('北京','2025-01',2024,False,'实缴',1000,127.33,8,'8只市级产业基金总规模1000亿/实缴127.33亿',
+   '总规模1000亿元的8只市级政府投资基金，已完成167个项目投资决策，对135个项目出资合计约127.33亿元。',
+   '千亿北京大基金亮出成绩单(21世纪经济报道)','https://www.21jingji.com/article/20241231/herald/3eca75ab13ae5dabc483e719c0c3126d.html'),
+ r('北京','2023-02',2022,False,'撬动',1961,None,None,'市级引导基金累计撬动1961亿(放大5倍)',
+   '市级政府投资引导基金累计投资6236个项目，撬动社会资本总规模达1961亿元，财政资金放大至5倍。',
+   '北京市2022年预算执行情况报告','https://www.bjrd.gov.cn/zyfb/bg/202302/t20230201_2909871.html'),
+
+ # ===================== 上海 (无纯财政全市汇总；国资口径) =====================
+ r('上海','2026-01',2026,True,'认缴',6600,None,None,'上海国资基金(国资全口径，非纯财政政府投资基金)',
+   '目前上海国资基金规模超过6600亿元。','上海国资国企改革发展会议(新浪财经)','https://finance.sina.com.cn/jjxw/2026-01-23/doc-inhiicfp6318998.shtml'),
+ r('上海','2024-07',2024,False,'认缴',890.03,None,3,'三大先导产业母基金合计890.03亿',
+   '上海三大先导产业母基金7月22日正式设立，出资额合计890.03亿元(集成电路450.01+生物医药215.01+人工智能225.01)。',
+   '上海三大先导产业母基金成立(新浪财经)','https://finance.sina.com.cn/money/fund/jjyj/2024-07-23/doc-incfchwx3464972.shtml'),
+
+ # ===================== 天津 (海河产业基金) =====================
+ r('天津','2025-05',2025,True,'实缴',739.3,739.3,81,'海河产业基金81只母基金出资到位739.3亿',
+   '引导基金带动81只母基金出资到位739.3亿元，投资项目780个，投资金额601.2亿元，实现项目在津投资金额超2000亿元。',
+   '海河产业基金管理优化(天津市财政局/天津日报)','https://cz.tj.gov.cn/xwdt/mtsd/202506/t20250619_6961718.html'),
+ r('天津','2023-12',2023,False,'实缴',688,688,66,'海河66支母基金实缴688亿(引导基金实缴172亿)',
+   '已出资设立66支母基金，实缴172亿元，带动各类社会资本实缴688亿元，投资项目和子基金585个。',
+   '海河产业基金(天津市财政局)','https://cz.tj.gov.cn/sy_53704/gabsycs/gzdtgh/202312/t20231222_6487978.html'),
+ r('天津','2024-12',2024,False,'认缴',703,None,72,'海河72只母基金总规模703亿',
+   '海河产业基金共设立母基金72只，总规模703亿元；所有母、子基金共投资项目713个，投资金额570.5亿元。',
+   '海河产业基金服务科技创新(新浪财经/天津日报)','https://finance.sina.com.cn/jjxw/2024-12-08/doc-incystay7158191.shtml'),
+
+ # ===================== 重庆 (产业投资母基金) =====================
+ r('重庆','2025-01',2024,True,'认缴',603,138,25,'产业母基金子基金25支认缴603亿/母基金认缴138亿',
+   '合作设立子基金25支，认缴总规模603亿元，其中重庆产业母基金认缴138亿元，实现4.4倍放大；战略性直投出资超100亿元，撬动项目投资727亿元。',
+   '2000亿重庆产业母基金交出成绩单(新浪财经)','https://finance.sina.com.cn/money/smjj/2025-01-29/doc-inehrhca9123297.shtml'),
+ r('重庆','2023-12',2023,False,'认缴',600,None,46,'产业母基金子基金46只总规模超600亿',
+   '子基金46只，子基金总规模超600亿元，已完成重大项目投资10个，撬动产业投资373亿元。',
+   '渝富控股升级国资投资运营平台(重庆日报)','https://www.cqrb.cn/content/2023-12-25/1803126_pc.html'),
+
+ # ===================== 河南 =====================
+ r('河南','2024-12',2024,True,'认缴',2263,1105,24,'24只省级政府投资基金设立2263亿/到位1105亿',
+   '24只省级政府投资基金设立规模2263亿元，到位规模1105亿元，已投资项目1316个。',
+   '大河财立方·发改委财金处处长田学艺表述','https://m.henan100.com/news/2024/1216697.shtml'),
+ r('河南','2023-11',2023,False,'实缴',None,891.94,22,'22只省级基金到位891.94亿(省财政155.31亿，放大5.74倍)',
+   '河南省共设立22只省级政府投资基金，累计到位规模891.94亿元，其中省级财政到位155.31亿元，财政资金放大了5.74倍。',
+   '河南省财政厅副厅长王崴新闻发布会','https://news.qq.com/rain/a/20231117A09JU700'),
+
+ # ===================== 湖北 (全省基金群) =====================
+ r('湖北','2024-10',2024,True,'认缴',7549,4610,532,'全省政府投资基金群532只认缴7549/实缴4610',
+   '全省政府投资基金群设立基金532只，认缴总规模7549亿元，实缴总规模4610亿元，累计投资项目4270个，带动社会投资超过1万亿元。',
+   '湖北将打造2000亿政府投资基金群(新浪财经)','https://finance.sina.com.cn/roll/2024-10-22/doc-inctkrfm8137679.shtml'),
+ r('湖北','2024-12',2024,False,'认缴',5735,4577,46,'长江产业基金参股子基金群认缴5735/实缴4577',
+   '长江产业基金累计出资377.38亿元，参股设立46支基金，基金认缴总规模5735亿元，实缴4577亿元。',
+   '长江产业投资集团2025年度跟踪评级报告(上交所披露)','http://static.sse.com.cn/disclosure/bond/announcement/corporate/c/new/2025-06-27/271169_20250627_XFZC.pdf'),
+ r('湖北','2023-07',2023,False,'目标',200,None,None,'湖北省政府投资引导基金首期200亿(目标群2000亿)',
+   '设立首期规模200亿元的省政府投资引导基金，力争2至3年在全省形成超过2000亿元的政府投资基金群。',
+   '湖北省财政厅','https://czt.hubei.gov.cn/bmdt/dtyw/202307/t20230727_4770058.shtml'),
+
+ # ===================== 湖南 (金芙蓉) =====================
+ r('湖南','2025-09',2025,True,'认缴',340,None,22,'金芙蓉已批复22只子基金目标340亿(财政认缴超80亿)',
+   '省政府已批复22只子基金计划，目标规模合计达340亿元，湖南省财政厅认缴超80亿元，已有5只合计167.56亿元的金芙蓉基金完成备案。',
+   '金芙蓉基金"1+5+N"体系(上海证券报)','https://paper.cnstock.com/html/2025-09/29/content_2127152.htm'),
+ r('湖南','2024-09',2024,False,'目标',3000,None,None,'金芙蓉三年目标3000亿(财政240亿+国企800亿)',
+   '计划用三年左右时间，省财政累计出资约240亿元，协同省属国企出资约800亿元，引导撬动社会资本，形成规模达3000亿元的金芙蓉基金。',
+   '湖南省金芙蓉投资基金发布会(省财政厅厅长刘文杰)','https://czt.hunan.gov.cn/czt/xxgk/gzdt/gzdt/202409/t20240905_33447423.html'),
+
+ # ===================== 四川 (财政厅有专栏) =====================
+ r('四川','2025-11',2025,True,'认缴',578.37,191.28,46,'省产业引导基金新体系46支协议578.37/到位191.28',
+   '已批准设立省级政府产业投资引导基金46支，目标总规模863亿元，协议募资578.37亿元，实际到位资金191.28亿元。',
+   '四川省级产业投资引导基金运营情况(四川省财政厅专栏)','http://czt.sc.gov.cn/scczt/c102406/2025/11/7/83a5d1ef115e4d668ea6e7992ff2386d.shtml'),
+ r('四川','2024-03',2023,False,'认缴',554,323,None,'旧体系2023累计协议554/到位323/撬动362',
+   '计划规模1202亿元，累计协议募资554亿元，实际到位323亿元，到位率58%，带动社会资本超过362亿元。',
+   '四川省级产业投资引导基金2023年运营情况(四川省财政厅)','http://czt.sc.gov.cn/scczt/c102406/2024/3/22/e3c3dbeb0db741c598611d40fea54576.shtml'),
+
+ # ===================== 陕西 =====================
+ r('陕西','2025-07',2025,True,'撬动',1055.38,None,45,'省政府投资引导基金集群1055.38亿/45只子基金',
+   '截至2025年6月底，省政府投资引导基金已形成总规模1055.38亿元的基金集群，通过45只子基金累计投资重点产业项目315个。',
+   '陕西省政府投资引导基金总规模突破千亿元(陕西省政府)','https://www.shaanxi.gov.cn/xw/sxyw/202507/t20250717_3544059.html'),
+ r('陕西','2025-02',2024,False,'认缴',352,None,42,'截至2024末子基金42只352亿/认缴80.85/合作千亿',
+   '设立子基金42只、总规模352亿元；合作设立基金规模首破千亿达1038.6亿元；累计认缴80.85亿元，带动社会资本超580亿元。',
+   '陕西省政府投资引导基金(21世纪经济报道)','https://m.21jingji.com/article/20250208/herald/c8d99a0955806c77b250b7f06a0ffede.html'),
+ r('陕西','2023-01',2022,False,'撬动',280,None,27,'截至2022末批复子基金27只超280亿/带动270亿',
+   '政府引导基金已报批复子基金27只，总规模超过280亿元，带动社会资本投入270亿元。',
+   '陕西省政府投资引导基金(陕西省政府)','http://www.shaanxi.gov.cn/xw/sxyw/202301/t20230130_2273206.html'),
+
+ # ===================== 江西 =====================
+ r('江西','2025-12',2025,True,'认缴',3420,None,125,'现代产业引导基金累计125只总规模超3420亿',
+   '累计设立基金125支，总规模超3420亿元，成功招引落地产业项目90个，总投资规模达982亿元。',
+   '江西现代产业引导基金总规模超3420亿元(央广网江西)','https://jx.cnr.cn/yw/20251212/t20251212_527456971.shtml'),
+ r('江西','2023-06',2023,False,'目标',3000,None,None,'现代产业引导基金首批1500亿(母基金300亿撬动1200亿)',
+   '首批规模达1500亿元，其中省级母基金出资300亿元，撬动市、县、金融机构及社会资本1200亿元。',
+   '江西3000亿产业基金落地(澎湃新闻)','https://www.thepaper.cn/newsDetail_forward_23665683'),
+
+ # ===================== 福建 =====================
+ r('福建','2024-06',2024,True,'实缴',None,690,76,'全省政府引导基金76只实缴约690亿',
+   '截至2024年上半年，政府引导基金共76只，实缴总金额约690亿元。',
+   '1300亿基金"雁阵"乘风起飞(福建省政府门户)','https://www.fj.gov.cn/zwgk/ztzl/sxzygwzxsgzx/zx/202501/t20250120_6704562.htm'),
+ r('福建','2025-05',2025,False,'目标',1300,None,None,'省级政府引导基金矩阵目标超1300亿(2029)',
+   '打造总规模超1300亿元的政府引导基金矩阵；两只100亿母基金现有子基金合计29只规模超835亿元。',
+   '1300亿福建超级基金群来了(澎湃新闻)','https://m.thepaper.cn/newsDetail_forward_30854087'),
+
+ # ===================== 河北 (无全省汇总) =====================
+ r('河北','2025-04',2025,True,'目标',204,None,37,'省科技投资引导基金母28.85亿/37子204亿(无全省汇总)',
+   '河北省科技投资引导基金是全省唯一专注科技创新的省级政府引导基金，规模28.85亿元，已设立子基金37支，总规模204亿元。',
+   '河北省科技厅','https://www.most.gov.cn/dfkj/hb/zxdt/202504/t20250424_193463.html'),
+
+ # ===================== 山西 =====================
+ r('山西','2024-12',2024,True,'投放',460,None,12,'12只省级政府投资基金累计投放460亿',
+   '目前我省共有12只省级政府投资基金，累计投放项目200余个，投放资金460亿元。',
+   '山西省地方金融管理局副局长马爱锋发布会(新浪财经)','https://finance.sina.com.cn/jjxw/2024-12-17/doc-inczukxm4774364.shtml'),
+
+ # ===================== 辽宁 =====================
+ r('辽宁','2024-10',2024,True,'认缴',437,None,26,'辽宁基金参与设立母子基金26只认缴437亿(撬动4.7倍)',
+   '辽宁基金已参与设立26只母、子基金，总认缴规模437亿元，撬动其他资本倍数达到4.7倍。',
+   '辽宁省政府新闻发布会','https://www.ln.gov.cn/web/spzb/2024nxwfbh/2024102914420754788/index.shtml'),
+
+ # ===================== 吉林 =====================
+ r('吉林','2025-07',2024,True,'目标',988,None,58,'省产投集团运营基金58只总规模988亿(评级报告)',
+   '截至2024年末，累计参与运营管理的基金共58只、总规模988亿元，其中在管运营基金51只、总规模945.01亿元。',
+   '吉林省投资集团2025年信用评级报告','http://qxb-pdf-osscache.qixin.com/AnBaseinfo/93e3d5a40671041d1937772bf251907c.pdf'),
+ r('吉林','2024-01',2023,False,'实缴',900,66,54,'引导基金到位66亿/参股子基金54支超900亿',
+   '引导基金到位66亿元，累计参股子基金54支，总规模超过900亿元。',
+   '吉林省财政厅','http://czt.jl.gov.cn/xwfb/gzdt/202401/t20240130_3032520.html'),
+
+ # ===================== 黑龙江 =====================
+ r('黑龙江','2023-12',2023,True,'实缴',None,116,24,'全省各级政府投资基金24支实缴116亿',
+   '黑龙江省各级政府已设立政府投资基金24支，实缴资本规模116亿元，累计投资项目283个，累计投资资金规模92亿元。',
+   '省财政厅(黑龙江省政府网)','https://www.hlj.gov.cn/hlj/c107857/202312/c00_31693701.shtml'),
+
+ # ===================== 内蒙古 =====================
+ r('内蒙古','2025-10',2025,True,'目标',85,None,None,'重点产业引导基金总规模85亿',
+   '2025年，全区设立总规模85亿元的重点产业引导基金，聚焦传统产业升级、新兴产业培育和未来产业前瞻布局。',
+   '内蒙古财政"组合拳"助推新型工业化(央广网内蒙古)','https://nm.cnr.cn/yaowen/20251029/t20251029_527411268.shtml'),
+
+ # ===================== 广西 =====================
+ r('广西','2025-05',2025,True,'实缴',None,112.65,66,'引导基金累计实缴112.65亿/撬动486.2亿',
+   '截至2025年5月末，广西政府引导基金已累计实缴出资112.65亿元，带动社会资本实缴486.2亿元，杠杆约5.3倍。',
+   '经济参考报(新华社)','https://www.ggnews.com.cn/news/guangxi/2025-06-26/106184.html'),
+ r('广西','2025-02',2025,False,'认缴',600,None,30,'签约30只子基金认缴近600亿(财政认缴200亿)',
+   '30家基金管理机构与广西政府投资引导基金签约，认缴规模近600亿元，其中财政认缴出资200亿元。',
+   '2025广西政府投资基金推介暨签约大会','https://www.ggnews.com.cn/news/guangxi/2025-06-26/106184.html'),
+
+ # ===================== 贵州 =====================
+ r('贵州','2021-11',2021,True,'实缴',200,130.64,5,'"四化"及生态环保基金5只财政认缴200/实缴130.64',
+   '统筹安排200亿元的"四化"及生态环保基金，共5支基金完成投资项目114个，累计实缴出资130.64亿元，预计带动社会资本投资1009.13亿元。',
+   '贵州省财政厅(财政部网站转载)','http://m.mof.gov.cn/czxw/202111/t20211112_3765259.htm'),
+ r('贵州','2024-02',2024,False,'投放',267,None,None,'2024年省财政安排267亿注入产业基金(年度)',
+   '2024年安排267亿元注入"四化"及生态环保、新动能产业基金，强化对"六大产业基地"建设支持。',
+   '贵州省2024年预算执行报告','https://www.guizhou.gov.cn/home/rdgz/202502/t20250206_86722936.html'),
+
+ # ===================== 云南 =====================
+ r('云南','2024-12',2024,True,'目标',500,None,None,'省级引导基金认缴60亿/首期实缴23亿(5年目标500亿)',
+   '力争5年内构建500亿元以上规模的基金体系，带动社会资本投资规模不低于1000亿元；省级引导基金认缴规模60亿元，首期出资23亿元已实缴。',
+   '云南省政府投资基金支持产业高质量发展实施方案(云政发〔2024〕30号)','https://www.weihengag.com/home/article/detail/id/26367'),
+
+ # ===================== 甘肃 =====================
+ r('甘肃','2024-12',2024,True,'撬动',200,None,20,'兴陇基金管理20只超200亿/撬动135亿',
+   '甘肃国投兴陇基金控参股基金管理公司8家，管理基金20只，管理规模超200亿元，撬动社会资本出资超135亿元。',
+   '甘肃国投兴陇基金(新浪财经)','https://finance.sina.com.cn/jjxw/2024-12-03/doc-incyekxt4880855.shtml'),
+
+ # ===================== 宁夏 =====================
+ r('宁夏','2023-01',2022,True,'认缴',75.37,None,None,'国投基金受托管理产业引导基金直投+子基金75.37亿',
+   '宁夏国投基金受托管理的政府产业引导基金直投项目及子基金规模达到75.37亿元。',
+   '宁夏国投基金75亿元畅通产业发展动脉(人民网宁夏)','http://nx.people.com.cn/n2/2023/0112/c192482-40263649.html'),
+
+ # ===================== 青海 =====================
+ r('青海','2023-11',2023,True,'认缴',50,15,1,'省高质量发展政府投资基金认缴50亿/首期实缴15亿',
+   '青海省高质量发展政府投资基金全部由省级财政出资，认缴规模50亿元，其中首期出资15亿元已实缴到位。',
+   '青海省政府网','http://www.qinghai.gov.cn/msfw/system/2023/11/15/030029739.shtml'),
+
+ # ===================== 新疆 =====================
+ r('新疆','2023-10',2023,True,'撬动',100,6.32,5,'产业发展引导基金100亿母/出资到位6.32/撬动43.13',
+   '新疆产业发展投资引导基金成立一年，累计出资设立5支子基金，撬动社会资金43.13亿元；母基金总规模100亿元，出资到位6.32亿元。',
+   '一年撬动社会资金超43亿元(新华网新疆)','https://www.xj.news.cn/20231101/c935f9bc1df047d4b47caef437caecb0/c.html'),
+
+ # ===================== 海南 =====================
+ r('海南','2025-02',2024,True,'认缴',165,None,23,'自贸港建设投资基金100亿母/23子合计认缴165亿',
+   '海南自由贸易港建设投资基金已成功设立子基金23只，合计认缴规模165亿元，撬动社会资本2.5倍。',
+   '海南财金集团','https://www.hncjjt.com.cn/home/article/detail.html?id=206'),
+
+ # ===================== 西藏 (无区级基金) =====================
+ r('西藏',None,None,True,None,None,None,None,'未发现自治区级政府投资基金(仅拉萨市级15亿)',
+   '经多渠道检索，未找到西藏自治区级政府投资基金/引导基金的官方汇总规模披露；仅有拉萨市级产业强市投资基金(15亿元，2025年5月启动)。',
+   '拉萨市产业强市投资基金(人民网西藏，市级非区级)','http://xz.people.com.cn/n2/2025/0522/c138901-41236027.html'),
 ]
 
 
 def build():
-    rows = sorted(ROWS, key=lambda r: (r['province'], r['report_date']))
+    rows = ROWS
+    provinces = sorted({x['province'] for x in rows})
+    heads = [x for x in rows if x['headline']]
+    with_val = [h for h in heads if h['value_yi'] is not None]
+    with_paid = [h for h in heads if h['paidin_yi'] is not None]
     meta = {
-        'title': 'Province-level government investment/guidance fund scale — official disclosures (prototype)',
+        'title': 'Province-level government investment/guidance fund scale — official disclosures',
         'unit': '亿元 (RMB 100M); 10000亿 = 1万亿',
-        'provinces': sorted({r['province'] for r in rows}),
+        'coverage': f'{len(provinces)} provincial-level units (3 with multi-year timeline)',
         'basis_tags': '认缴 | 实缴 | 撬动(社会资本) | 目标 | 投放(累计投资额) | 只数',
-        'caveat': ('数字以各行 quote/source 为准。口径混杂，不可跨口径或跨母/子层相加。来源多为财政厅公告/'
-                   '发布会/官方媒体转载，政府工作报告多为定性。非统一年度表，需逐省人工核验。'),
+        'caveat': ('每个数字以其 quote/source 为准。口径混杂(认缴/实缴/撬动/目标/投放)且含母/子层差异，'
+                   '不可跨口径或跨省横比、不可相加。来源以财政厅公告/发布会/官方媒体/评级报告为主，'
+                   '政府工作报告多为定性。非统一年度表，需逐省人工核验。'),
         'updated': datetime.date.today().isoformat(),
-        'rows': len(rows),
+        'rows': len(rows), 'provinces': len(provinces),
     }
-    json.dump({'meta': meta, 'data': rows},
-              open(os.path.join(DIR, 'province_scale.json'), 'w'),
+    json.dump({'meta': meta, 'data': rows}, open(os.path.join(DIR, 'province_scale.json'), 'w'),
               ensure_ascii=False, separators=(',', ':'))
 
     def yi(v): return '—' if v is None else (f'{v:,.0f}' if float(v).is_integer() else f'{v:,.2f}')
-    lines = ['# 省级政府投资基金规模 — 官方披露（原型，3 省）', '',
-             '单位 **亿元**。每个数字以其 **quote/来源** 为准。', '',
-             '> 口径标签:认缴 / 实缴 / 撬动(社会资本) / 目标 / 投放(累计投资额) / 只数。'
-             '**不可跨口径或跨母/子层相加。** 来源以财政厅公告·发布会·官方媒体转载为主;政府工作报告多为定性。', '']
-    # headline summary
-    lines += ['## 各省最新汇总(headline)', '',
-              '| 省 | 时点 | 口径 | 规模(亿) | 实缴(亿) | 只数 | 来源 |',
-              '|----|------|------|-------:|-------:|----:|------|']
-    for r in [x for x in rows if x['headline']]:
-        lines.append(f"| {r['province']} | {r['report_date']} | {r['basis']} | {yi(r['value_yi'])} | "
-                     f"{yi(r['paidin_yi'])} | {r['count'] or '—'} | [链接]({r['source']}) |")
-    lines.append('')
-    # full timeline per province
-    for prov in meta['provinces']:
-        lines += [f'## {prov}（时间线）', '',
-                  '| 时点 | 口径 | 规模/值(亿) | 只数 | 指标 | 原文 | 来源 |',
-                  '|------|------|--------:|----:|------|------|------|']
-        for r in [x for x in rows if x['province'] == prov]:
-            q = r['quote'][:80] + ('…' if len(r['quote']) > 80 else '')
-            lines.append(f"| {r['report_date']} | {r['basis']} | {yi(r['value_yi'])} | {r['count'] or '—'} | "
-                         f"{r['metric']} | {q} | [链接]({r['source']}) |")
-        lines.append('')
-    open(os.path.join(DIR, 'PROVINCE_SCALE.md'), 'w', encoding='utf-8').write('\n'.join(lines))
+    L = ['# 省级政府投资基金规模 — 官方披露（全 31 省级单位）', '',
+         f'单位 **亿元**(10000亿=1万亿)。覆盖 **{len(provinces)}** 个省级单位。每个数字以其 **quote/来源** 为准。', '',
+         '> **口径警示:** 认缴 / 实缴 / 撬动(社会资本) / 目标 / 投放(累计投资额) / 只数 —— '
+         '**口径混杂且含母/子层差异，不可跨口径或跨省横比、更不可相加。** 例:广东1.77万亿=全省含母子认缴;'
+         '浙江600亿=省产业基金母基金窄口径;安徽3000亿=体系含撬动(实缴仅927亿)。来源以财政厅公告/发布会/'
+         '官方媒体/评级报告为主;政府工作报告多为定性。', '',
+         '## 各省最新汇总（headline，按口径分列，勿横比）', '',
+         '| 省/市 | 时点 | 口径 | 规模(亿) | 实缴(亿) | 只数 | 指标 | 来源 |',
+         '|------|------|------|-------:|-------:|----:|------|------|']
+    for h in sorted(heads, key=lambda x: (x['value_yi'] is None, -(x['value_yi'] or 0))):
+        L.append(f"| {h['province']} | {h['report_date'] or '—'} | {h['basis'] or '—'} | "
+                 f"{yi(h['value_yi'])} | {yi(h['paidin_yi'])} | {h['count'] or '—'} | {h['metric']} | "
+                 f"[链接]({h['source']}) |")
+    L.append('')
+    for prov in provinces:
+        pr = [x for x in rows if x['province'] == prov]
+        if len(pr) == 1 and pr[0]['value_yi'] is None and prov == '西藏':
+            L += [f'## {prov}', '', f"> {pr[0]['quote']} [链接]({pr[0]['source']})", '']
+            continue
+        L += [f'## {prov}', '', '| 时点 | 口径 | 值(亿) | 实缴(亿) | 只数 | 指标 | 原文 | 来源 |',
+              '|------|------|-----:|-----:|----:|------|------|------|']
+        for x in sorted(pr, key=lambda z: (z['report_date'] or '')):
+            q = x['quote'][:90] + ('…' if len(x['quote']) > 90 else '')
+            L.append(f"| {x['report_date'] or '—'} | {x['basis'] or '—'} | {yi(x['value_yi'])} | "
+                     f"{yi(x['paidin_yi'])} | {x['count'] or '—'} | {x['metric']} | {q} | [链接]({x['source']}) |")
+        L.append('')
+    open(os.path.join(DIR, 'PROVINCE_SCALE.md'), 'w', encoding='utf-8').write('\n'.join(L))
 
-    print(f"  province_scale.json + PROVINCE_SCALE.md: {len(rows)} rows, "
-          f"{len(meta['provinces'])} provinces {meta['provinces']}")
-    for r in [x for x in rows if x['headline']]:
-        print(f"    {r['province']} {r['report_date']}: {r['metric']} = {yi(r['value_yi'])}亿 "
-              f"(实缴 {yi(r['paidin_yi'])}, {r['count']}支, {r['basis']})")
+    print(f"  province_scale.json + PROVINCE_SCALE.md: {len(rows)} rows, {len(provinces)} provincial units")
+    print(f"  headline aggregates: {len(heads)} ({len(with_val)} with a 规模, {len(with_paid)} with 实缴; "
+          f"西藏 无区级基金)")
+    print(f"  NOTE: 口径混杂，不汇总；各省 headline 仅供分列查阅。")
 
 
 if __name__ == '__main__':
-    print('Building province-level fund-scale prototype (广东/浙江/安徽) ...')
+    print('Building province-level fund-scale table (31 provincial units) ...')
     build()
     print('Done.')
