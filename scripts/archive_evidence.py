@@ -33,8 +33,17 @@ WB   = SAVE or '--wayback' in sys.argv   # Wayback lookups are slow; opt in
 ONLY = sys.argv[sys.argv.index('--only') + 1] if '--only' in sys.argv else None
 
 
-def get(url, timeout=20):
-    req = urllib.request.Request(url, headers={'User-Agent': UA, 'Accept': 'text/html,*/*'})
+def enc(url):
+    """Percent-encode non-ASCII (e.g. Chinese) URL paths so urllib can fetch them,
+    without double-encoding bytes that are already escaped."""
+    p = urllib.parse.urlsplit(url)
+    return urllib.parse.urlunsplit((p.scheme, p.netloc,
+        urllib.parse.quote(p.path, safe="/%:@!$&'()*+,;="),
+        urllib.parse.quote(p.query, safe="/%:@!$&'()*+,;=?"), p.fragment))
+
+
+def get(url, timeout=12):
+    req = urllib.request.Request(enc(url), headers={'User-Agent': UA, 'Accept': 'text/html,*/*'})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.status, r.read()
 
@@ -138,12 +147,31 @@ def main():
                                'not-found' if want else 'no-number')
         except Exception as e:
             rec['status'] = str(e).split('\n')[0][:80]
-        wb_url, wb_ts = (wayback_lookup(url) if WB else prior_wb.get(url, (None, None)))
-        if not wb_url and SAVE and rec['verified'] != 'verified':
-            wayback_save(url)
+        # quote-pin fallback: if the live page can't be fetched, still pin the
+        # collected datum (the verbatim official quotes) to an on-disk file, so
+        # every province's data is fixed in evidence/ regardless of URL rot.
+        if not rec['text_file']:
+            fn = f'{provinces[0]}_{h8}.txt'
+            quotes = '\n\n'.join(f'[{r["province"]} {r.get("report_date")}] {r.get("metric")}\n{r.get("quote")}'
+                                 for r in rs if r.get('quote'))
+            open(os.path.join(TEXT, fn), 'w', encoding='utf-8').write(
+                f'SOURCE: {url}\nFETCHED: {rec["fetched"]}\nLIVE FETCH FAILED: {rec["status"]}\n'
+                f'PROVINCES: {",".join(provinces)}\n{"="*60}\n'
+                f'QUOTE-PIN — 活页面抓取失败，以下为收集时摘录的官方原文(随仓库固定):\n\n{quotes}')
+            rec['text_file'] = f'evidence/text/{fn}'
+            if rec['verified'] == 'no-fetch':
+                rec['verified'] = 'quote-pin'
+        # Wayback: only chase it for the gaps (sources with no live 200 snapshot),
+        # so a --save run stays bounded to the unreachable handful, not all URLs.
+        is_gap = rec['status'] != 200
+        wb_url, wb_ts = prior_wb.get(url, (None, None))
+        if is_gap and (WB or SAVE) and not wb_url:
             wb_url, wb_ts = wayback_lookup(url)
+            if not wb_url and SAVE:
+                wayback_save(url)
+                wb_url, wb_ts = wayback_lookup(url)
         rec['wayback_url'], rec['wayback_ts'] = wb_url, wb_ts
-        flag = {'verified': '✓', 'partial': '~', 'not-found': '✗', 'no-fetch': '!', 'no-number': '·'}.get(rec['verified'], '?')
+        flag = {'verified': '✓', 'partial': '~', 'not-found': '✗', 'quote-pin': '◆', 'no-fetch': '!', 'no-number': '·'}.get(rec['verified'], '?')
         print(f"  [{flag}] {rec['status']!s:>3}  wb={'Y' if wb_url else '-'}  {','.join(provinces)}  {url[:60]}")
         manifest.append(rec)
         time.sleep(0.3)
@@ -196,7 +224,7 @@ def main():
          '或为图片版 PDF/媒体转载,这些依赖本地快照+Wayback 兜底。', '',
          '| 核验 | HTTP | Wayback | 省 | 关键数字 | 快照 | 来源 |',
          '|:--:|:--:|:--:|------|------|------|------|']
-    flagmap = {'verified': '✓', 'partial': '~', 'not-found': '✗', 'no-fetch': '!', 'no-number': '·'}
+    flagmap = {'verified': '✓', 'partial': '~', 'not-found': '✗', 'quote-pin': '◆', 'no-fetch': '!', 'no-number': '·'}
     for m in sorted(manifest, key=lambda x: (x['verified'] != 'verified', x['provinces'])):
         nums = ','.join((m['matched'] or m['missing'])[:3]) or '—'
         snap = f"[txt]({m['text_file']})" if m['text_file'] else '—'

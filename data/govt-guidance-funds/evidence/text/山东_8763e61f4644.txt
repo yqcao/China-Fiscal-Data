@@ -1,0 +1,9 @@
+SOURCE: http://dcj.mofcom.gov.cn/article/gdtb/tbzx/202011/20201103016916.shtml
+FETCHED: 2026-06-13
+LIVE FETCH FAILED: <urlopen error [Errno -2] Name or service not known>
+PROVINCES: 山东
+============================================================
+QUOTE-PIN — 活页面抓取失败，以下为收集时摘录的官方原文(随仓库固定):
+
+[山东 2020-11] 全省新旧动能转换基金545只认缴7371亿(商务部全口径)
+山东省共设立新旧动能转换基金545只，认缴规模达7371亿元，已投资项目1977个，带动其他金融和社会资本投资4740亿元。
