@@ -100,6 +100,12 @@ MAJOR_FUNDS.md   AMAC carries no fund size, so per-fund 规模 is hand-assembled
                  announcements/工商/media (70 funds, every figure sourced). Two
                  columns: paidin_yi (认缴/实缴) vs target_yi (目标/规划), with a
                  scope flag (fund vs 基金群/体系) so the two口径 are never summed together.
+province_scale.json  province-level *aggregate* fund scale from official disclosures —
+PROVINCE_SCALE.md    3-province prototype (广东/浙江/安徽), every figure a verbatim
+                 official quote + source + 口径 tag (认缴/实缴/撬动/目标/投放/只数).
+                 Finding: the aggregate is disclosed via 财政厅公告·发布会·官方媒体
+                 (not a uniform table; 政府工作报告 is mostly qualitative) — so it is a
+                 curated per-province recipe, not a clean auto-scrape.
 rules/           local 财政厅 「管理办法」 documents — config-driven crawler:
                  sources.json (region source pages, extend province by province),
                  catalog.json, INDEX.md, markdown/ (files/ gitignored)
@@ -143,6 +149,7 @@ scripts/
   fetch_ggf.py         政府投资基金/引导基金 (AMAC) → data/govt-guidance-funds/funds.json
   fetch_guidance_rules.py  local 财政厅 管理办法 (config-driven) → .../rules/catalog.json
   build_major_funds.py 重点基金规模 (curated, sourced) → .../major_funds.json + MAJOR_FUNDS.md
+  build_province_scale.py 省级汇总规模 (官方披露, 原型3省) → .../province_scale.json + PROVINCE_SCALE.md
 ```
 
 > `fetch_ggf.py` is **not** part of `update.sh` (different cadence, and it needs
