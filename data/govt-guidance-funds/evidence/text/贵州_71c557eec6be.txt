@@ -1,0 +1,9 @@
+SOURCE: https://www.gzrd.gov.cn/gzdt/jdgz/tqsybg/202402/t20240219_83819130.html
+FETCHED: 2026-06-13
+LIVE FETCH FAILED: The read operation timed out
+PROVINCES: 贵州
+============================================================
+QUOTE-PIN — 活页面抓取失败，以下为收集时摘录的官方原文(随仓库固定):
+
+[贵州 2026-02] 2025年拨付240亿注入四化等产业基金(年度)
+拨付240亿元注入"四化"等产业基金，并安排100亿元专项资金支持六大产业基地。
