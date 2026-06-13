@@ -57,13 +57,23 @@ INDEX = os.path.join(DIR, 'INDEX.md')
 STATE = os.path.join(DIR, 'state.json')
 
 
-def post(page):
+def post(page, retries=5):
+    # AMAC's anti-bot returns sporadic 403s; retry the single page with backoff +
+    # jitter so one transient block doesn't abort a long (--full) scan.
     body = json.dumps({}).encode()
-    url = f'{API}?rand={random.random()}&page={page}&size={SIZE}'
-    req = urllib.request.Request(url, data=body, method='POST', headers={
-        'User-Agent': UA, 'Content-Type': 'application/json',
-        'Accept': 'application/json'})
-    return json.loads(urllib.request.urlopen(req, timeout=60).read().decode('utf-8', 'replace'))
+    for attempt in range(retries + 1):
+        url = f'{API}?rand={random.random()}&page={page}&size={SIZE}'
+        req = urllib.request.Request(url, data=body, method='POST', headers={
+            'User-Agent': UA, 'Content-Type': 'application/json',
+            'Accept': 'application/json'})
+        try:
+            return json.loads(urllib.request.urlopen(req, timeout=60).read().decode('utf-8', 'replace'))
+        except Exception as e:
+            if attempt == retries:
+                raise
+            wait = min(2 ** attempt, 16) + random.random()
+            print(f'    page {page} {type(e).__name__} ({e}); retry {attempt + 1}/{retries} in {wait:.1f}s')
+            time.sleep(wait)
 
 
 def probe():
