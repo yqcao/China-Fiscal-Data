@@ -108,6 +108,12 @@ PROVINCE_SCALE.md    all 31 provincial-level units (广东/浙江/安徽 with mu
                  aggregate is disclosed via 财政厅公告·发布会·官方媒体·评级报告 (四川 has
                  a real 专栏; most don't; 政府工作报告 is mostly qualitative) — a curated
                  per-province recipe, not a clean auto-scrape.
+sources.json     per-province recheck recipe: the canonical 财政厅/官方 page + channel
+                 type + latest value, so each province's aggregate can be re-checked yearly.
+evidence/        pinned evidence — text snapshots of every source page (text/*.txt,
+EVIDENCE.md      committed so figures survive URL rot), manifest.json (per-URL sha256,
+                 HTTP status, Wayback link, and a NUMBER-VERIFICATION flag = whether the
+                 cited figure was actually found in the fetched page). 39/62 verified.
 rules/           local 财政厅 「管理办法」 documents — config-driven crawler:
                  sources.json (region source pages, extend province by province),
                  catalog.json, INDEX.md, markdown/ (files/ gitignored)
