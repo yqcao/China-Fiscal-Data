@@ -82,15 +82,15 @@
   },
   "天津": {
    "province": "天津",
-   "latest_value_yi": 739.3,
-   "latest_paidin_yi": 739.3,
+   "latest_value_yi": 742.4,
+   "latest_paidin_yi": null,
    "latest_count": 81,
-   "latest_basis": "实缴",
-   "as_of": "2025-05",
-   "metric": "海河产业基金81只母基金出资到位739.3亿",
+   "latest_basis": "投放",
+   "as_of": "2025-09",
+   "metric": "海河81只母基金出资742.4亿(市财政出资143.4亿，截至2025-06末)",
    "channel": "政府/部门官网",
-   "recheck_url": "https://cz.tj.gov.cn/xwdt/mtsd/202506/t20250619_6961718.html",
-   "report": "海河产业基金管理优化(天津市财政局/天津日报)",
+   "recheck_url": "https://cz.tj.gov.cn/xwdt/gzdt/202509/t20250918_7136550.html",
+   "report": "海河产业基金服务民营经济(天津市财政局)",
    "note": "年度复查:在此渠道找下一年同口径汇总(发布会/运营情况/预算报告)。"
   },
   "宁夏": {

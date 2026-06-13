@@ -29,10 +29,11 @@ EVID = os.path.join(DIR, 'evidence')
 TEXT = os.path.join(EVID, 'text')
 UA   = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36'
 SAVE = '--save' in sys.argv
+WB   = SAVE or '--wayback' in sys.argv   # Wayback lookups are slow; opt in
 ONLY = sys.argv[sys.argv.index('--only') + 1] if '--only' in sys.argv else None
 
 
-def get(url, timeout=45):
+def get(url, timeout=20):
     req = urllib.request.Request(url, headers={'User-Agent': UA, 'Accept': 'text/html,*/*'})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.status, r.read()
@@ -85,6 +86,13 @@ def main():
     rows = json.load(open(os.path.join(DIR, 'province_scale.json')))['data']
     if ONLY:
         rows = [r for r in rows if r['province'] == ONLY]
+    # reuse Wayback links already found on a previous run (avoid re-querying / regressing)
+    prior_wb = {}
+    mpath = os.path.join(EVID, 'manifest.json')
+    if os.path.exists(mpath):
+        for m in json.load(open(mpath)).get('sources', []):
+            if m.get('wayback_url'):
+                prior_wb[m['url']] = (m['wayback_url'], m.get('wayback_ts'))
 
     # group rows by url
     by_url = {}
@@ -130,7 +138,7 @@ def main():
                                'not-found' if want else 'no-number')
         except Exception as e:
             rec['status'] = str(e).split('\n')[0][:80]
-        wb_url, wb_ts = wayback_lookup(url)
+        wb_url, wb_ts = (wayback_lookup(url) if WB else prior_wb.get(url, (None, None)))
         if not wb_url and SAVE and rec['verified'] != 'verified':
             wayback_save(url)
             wb_url, wb_ts = wayback_lookup(url)

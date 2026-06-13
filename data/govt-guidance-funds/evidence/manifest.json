@@ -1,6 +1,6 @@
 {
  "updated": "2026-06-13",
- "count": 62,
+ "count": 76,
  "sources": [
   {
    "url": "https://finance.sina.com.cn/jjxw/2026-01-23/doc-inhiicfp6318998.shtml",
@@ -45,8 +45,8 @@
    ],
    "rows": 1,
    "status": 200,
-   "sha256": "6ee39a1b98bef66c04943c480a6d81949af0deed32e8bbe20ce62003a00cab39",
-   "bytes": 428824,
+   "sha256": "dfa400948be5f9fecaa584197d6ccac5f8b994f08a457e82fc1b5185520a192a",
+   "bytes": 428825,
    "text_file": "evidence/text/云南_5b99fc39eda2.txt",
    "verified": "verified",
    "matched": [
@@ -137,12 +137,14 @@
     "吉林"
    ],
    "rows": 1,
-   "status": "HTTP Error 403: Forbidden",
-   "sha256": null,
-   "bytes": null,
-   "text_file": null,
-   "verified": "no-fetch",
-   "matched": [],
+   "status": 200,
+   "sha256": "cd72800f42f543a3016de2e99f583bc54787125ab48ce9ed63991512443361c8",
+   "bytes": 51202,
+   "text_file": "evidence/text/吉林_ace3b93bdaaa.txt",
+   "verified": "verified",
+   "matched": [
+    "900亿元"
+   ],
    "missing": [],
    "wayback_url": null,
    "wayback_ts": null,
@@ -202,6 +204,40 @@
    "fetched": "2026-06-13"
   },
   {
+   "url": "https://czt.sc.gov.cn/scczt/c102358/2025/8/22/ce18a6bf9bb84aed8bc15ec0c64941af.shtml",
+   "provinces": [
+    "四川"
+   ],
+   "rows": 1,
+   "status": "HTTP Error 503: Service Unavailable",
+   "sha256": null,
+   "bytes": null,
+   "text_file": null,
+   "verified": "no-fetch",
+   "matched": [],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
+   "url": "http://fund.jrj.com.cn/2019/02/25170027084927.shtml",
+   "provinces": [
+    "天津"
+   ],
+   "rows": 1,
+   "status": "HTTP Error 404: Not Found",
+   "sha256": null,
+   "bytes": null,
+   "text_file": null,
+   "verified": "no-fetch",
+   "matched": [],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
    "url": "https://cz.tj.gov.cn/sy_53704/gabsycs/gzdtgh/202312/t20231222_6487978.html",
    "provinces": [
     "天津"
@@ -219,7 +255,7 @@
    "fetched": "2026-06-13"
   },
   {
-   "url": "https://cz.tj.gov.cn/xwdt/mtsd/202506/t20250619_6961718.html",
+   "url": "https://cz.tj.gov.cn/xwdt/gzdt/202509/t20250918_7136550.html",
    "provinces": [
     "天津"
    ],
@@ -231,8 +267,8 @@
    "verified": "no-fetch",
    "matched": [],
    "missing": [],
-   "wayback_url": "http://web.archive.org/web/20251225213622/https://cz.tj.gov.cn/xwdt/mtsd/202506/t20250619_6961718.html",
-   "wayback_ts": "20251225213622",
+   "wayback_url": null,
+   "wayback_ts": null,
    "fetched": "2026-06-13"
   },
   {
@@ -248,6 +284,25 @@
    "verified": "verified",
    "matched": [
     "570.5亿元"
+   ],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
+   "url": "https://tj.chinadaily.com.cn/a/202004/17/WS5e9925c9a310c00b73c77c60.html",
+   "provinces": [
+    "天津"
+   ],
+   "rows": 1,
+   "status": 200,
+   "sha256": "b254b60d24828ba7998e425e8af2a26da191147e53fda1ee5441ba1b6633d95c",
+   "bytes": 62902,
+   "text_file": "evidence/text/天津_bbb08899e884.txt",
+   "verified": "verified",
+   "matched": [
+    "254亿元"
    ],
    "missing": [],
    "wayback_url": null,
@@ -384,6 +439,23 @@
    "fetched": "2026-06-13"
   },
   {
+   "url": "http://dcj.mofcom.gov.cn/article/gdtb/tbzx/202011/20201103016916.shtml",
+   "provinces": [
+    "山东"
+   ],
+   "rows": 1,
+   "status": "<urlopen error [Errno -2] Name or service not known>",
+   "sha256": null,
+   "bytes": null,
+   "text_file": null,
+   "verified": "no-fetch",
+   "matched": [],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
    "url": "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/c851fe4f141152417f955dce7ebd1288.pdf",
    "provinces": [
     "山东"
@@ -403,6 +475,25 @@
    "fetched": "2026-06-13"
   },
   {
+   "url": "http://www.mof.gov.cn/zhuantihuigu/2020bghb/202005/t20200518_3515161.htm",
+   "provinces": [
+    "山东"
+   ],
+   "rows": 1,
+   "status": 200,
+   "sha256": "53f105f96b4e6d0363cfbe7d1f3629bfd2f9278d0b86662697ab494e0c95ccbe",
+   "bytes": 56131,
+   "text_file": "evidence/text/山东_5103b8e8dde3.txt",
+   "verified": "verified",
+   "matched": [
+    "6731亿元"
+   ],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
    "url": "https://news.qq.com/rain/a/20250515A05Y8800",
    "provinces": [
     "山东"
@@ -414,7 +505,7 @@
    "text_file": "evidence/text/山东_c3cb8fd65e90.txt",
    "verified": "verified",
    "matched": [
-    "1993亿元"
+    "3749亿元"
    ],
    "missing": [],
    "wayback_url": null,
@@ -427,14 +518,12 @@
     "山西"
    ],
    "rows": 1,
-   "status": 200,
-   "sha256": "9d3798f08704200dc17d1e7c4e579cd24fc630390d75047a09b0fbde68b09669",
-   "bytes": 97642,
-   "text_file": "evidence/text/山西_183ced87187f.txt",
-   "verified": "verified",
-   "matched": [
-    "460亿元"
-   ],
+   "status": "HTTP Error 403: Forbidden",
+   "sha256": null,
+   "bytes": null,
+   "text_file": null,
+   "verified": "no-fetch",
+   "matched": [],
    "missing": [],
    "wayback_url": null,
    "wayback_ts": null,
@@ -471,7 +560,7 @@
    "text_file": "evidence/text/广东_8a5208269ca3.txt",
    "verified": "verified",
    "matched": [
-    "1.24万亿"
+    "1.77万亿"
    ],
    "missing": [],
    "wayback_url": "http://web.archive.org/web/20260118105632/https://czt.gd.gov.cn/tpxw/content/post_4710306.html",
@@ -592,20 +681,41 @@
    "fetched": "2026-06-13"
   },
   {
-   "url": "https://www.thepaper.cn/newsDetail_forward_23665683",
+   "url": "https://startup.aliyun.com/info/1061132.html",
    "provinces": [
     "江西"
    ],
    "rows": 1,
    "status": 200,
+   "sha256": "98ea9293dc359518611a82009fc596ab0a7eb5a3f3af5d4e6364307c82d6720e",
+   "bytes": 31757,
+   "text_file": "evidence/text/江西_14d38c1a3feb.txt",
+   "verified": "verified",
+   "matched": [
+    "1344亿元"
+   ],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
+   "url": "https://www.thepaper.cn/newsDetail_forward_23665683",
+   "provinces": [
+    "江西"
+   ],
+   "rows": 2,
+   "status": 200,
    "sha256": "d405cf45aa995804097b9d704244fb9fffb00e5f9cfdf3ef4456e9d790bffddc",
    "bytes": 29394,
    "text_file": "evidence/text/江西_703785b41abd.txt",
-   "verified": "verified",
+   "verified": "partial",
    "matched": [
-    "1200亿元"
+    "1500亿元"
    ],
-   "missing": [],
+   "missing": [
+    "600亿元"
+   ],
    "wayback_url": "http://web.archive.org/web/20240618035746/https://www.thepaper.cn/newsDetail_forward_23665683",
    "wayback_ts": "20240618035746",
    "fetched": "2026-06-13"
@@ -623,6 +733,25 @@
    "verified": "verified",
    "matched": [
     "28.85亿元"
+   ],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
+   "url": "https://app.dahecube.com/nweb/news/20240417/197254ncd9e4c4c87e.htm",
+   "provinces": [
+    "河南"
+   ],
+   "rows": 1,
+   "status": 200,
+   "sha256": "1869b3994bedeb3be7746ab64256ae1d74b58140efab9302c0f6b53e32b2b74d",
+   "bytes": 17505,
+   "text_file": "evidence/text/河南_1ab8342b14d0.txt",
+   "verified": "verified",
+   "matched": [
+    "1014.49亿元"
    ],
    "missing": [],
    "wayback_url": null,
@@ -660,7 +789,26 @@
    "text_file": "evidence/text/河南_5b1391ed6927.txt",
    "verified": "verified",
    "matched": [
-    "891.94亿元"
+    "155.31亿元"
+   ],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
+   "url": "https://startup.aliyun.com/info/1041387.html",
+   "provinces": [
+    "河南"
+   ],
+   "rows": 1,
+   "status": 200,
+   "sha256": "0971e3eb7ce65dfd11134ec126cb19c90223dce2355b96b9ea8209c022afa108",
+   "bytes": 31103,
+   "text_file": "evidence/text/河南_a0552598b093.txt",
+   "verified": "verified",
+   "matched": [
+    "1500亿元"
    ],
    "missing": [],
    "wayback_url": null,
@@ -784,7 +932,7 @@
    ],
    "rows": 1,
    "status": 200,
-   "sha256": "e2f3bd0c434b625506c4e347ce63aadd6db34ae49d8b0644dafd4d35774d1a1b",
+   "sha256": "6c5b51d6af1de3aa1375218496f786ee0f0f3df0d7930607496f6c9fbe1c7a4c",
    "bytes": 31228,
    "text_file": "evidence/text/海南_0c28644ecd12.txt",
    "verified": "verified",
@@ -802,15 +950,13 @@
     "湖北"
    ],
    "rows": 1,
-   "status": 200,
-   "sha256": "335a1bca489fb05231a8fd442ac6f15f3f34edbdb8091cb628e9529b96910526",
-   "bytes": 3385274,
-   "text_file": "evidence/text/湖北_98878df42be3.txt",
-   "verified": "not-found",
+   "status": "HTTP Error 403: Forbidden",
+   "sha256": null,
+   "bytes": null,
+   "text_file": null,
+   "verified": "no-fetch",
    "matched": [],
-   "missing": [
-    "377.38亿元"
-   ],
+   "missing": [],
    "wayback_url": null,
    "wayback_ts": null,
    "fetched": "2026-06-13"
@@ -840,13 +986,68 @@
     "湖北"
    ],
    "rows": 1,
+   "status": "HTTP Error 403: Forbidden",
+   "sha256": null,
+   "bytes": null,
+   "text_file": null,
+   "verified": "no-fetch",
+   "matched": [],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
+   "url": "https://jrj.wuhan.gov.cn/ynzx_57/whjrdt/201911/t20191129_56559.shtml",
+   "provinces": [
+    "湖北"
+   ],
+   "rows": 1,
    "status": 200,
-   "sha256": "ddb67ae2a887acc63bd73888c7cb3923e7b97302dd9afac8acb52bd569c85f0c",
-   "bytes": 100663,
-   "text_file": "evidence/text/湖北_6c7ff142e0ff.txt",
+   "sha256": "aa75c3cb2f404a1b2ac9bdb5ac90d2a0df1e7029bb906e69f26d371781534a07",
+   "bytes": 40050,
+   "text_file": "evidence/text/湖北_9750db64129d.txt",
    "verified": "verified",
    "matched": [
-    "7549亿元"
+    "890.93亿元"
+   ],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
+   "url": "https://news.qq.com/rain/a/20231018A03JA500",
+   "provinces": [
+    "湖北"
+   ],
+   "rows": 1,
+   "status": 200,
+   "sha256": "f2da6eec41ce02ba75fa5a2dc5e5dcd55a102675d122253c01a5c4f3ce3464b8",
+   "bytes": 63649,
+   "text_file": "evidence/text/湖北_d3bc9c9ec08c.txt",
+   "verified": "verified",
+   "matched": [
+    "3395亿元"
+   ],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
+   "url": "https://www.cjtouzi.com/xwzx/jtyw/202501/t20250122_25436.shtml",
+   "provinces": [
+    "湖北"
+   ],
+   "rows": 1,
+   "status": 200,
+   "sha256": "c616c59525b0b7c5e1a30db9a5eb052e668dbe381bcb545d43b1f06a4547d851",
+   "bytes": 27594,
+   "text_file": "evidence/text/湖北_794348787462.txt",
+   "verified": "verified",
+   "matched": [
+    "7367.26亿元"
    ],
    "missing": [],
    "wayback_url": null,
@@ -935,14 +1136,12 @@
     "福建"
    ],
    "rows": 1,
-   "status": 200,
-   "sha256": "069e90297f75534073c212ba3e84269be2068234391e7850887c12a707a28743",
-   "bytes": 322476,
-   "text_file": "evidence/text/福建_9de1de2b28f2.txt",
-   "verified": "verified",
-   "matched": [
-    "690亿元"
-   ],
+   "status": "HTTP Error 403: Forbidden",
+   "sha256": null,
+   "bytes": null,
+   "text_file": null,
+   "verified": "no-fetch",
+   "matched": [],
    "missing": [],
    "wayback_url": null,
    "wayback_ts": null,
@@ -973,15 +1172,13 @@
     "贵州"
    ],
    "rows": 1,
-   "status": 200,
-   "sha256": "da9fb41574573389f0f2742e6f25e8134656c03fc8332a683ab53b4fddec6086",
-   "bytes": 8953,
-   "text_file": "evidence/text/贵州_72af25d93b6c.txt",
-   "verified": "not-found",
+   "status": "HTTP Error 502: Bad Gateway",
+   "sha256": null,
+   "bytes": null,
+   "text_file": null,
+   "verified": "no-fetch",
    "matched": [],
-   "missing": [
-    "1009.13亿元"
-   ],
+   "missing": [],
    "wayback_url": null,
    "wayback_ts": null,
    "fetched": "2026-06-13"
@@ -1034,7 +1231,26 @@
    "text_file": "evidence/text/重庆_58142b61d87a.txt",
    "verified": "verified",
    "matched": [
-    "603亿元"
+    "100亿元"
+   ],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
+   "url": "https://www.cqdic.com/index.php?c=article&id=93",
+   "provinces": [
+    "重庆"
+   ],
+   "rows": 1,
+   "status": 200,
+   "sha256": "3347b0674539ea074260e2abed67ec5f609af9d01738d711c56f4942ef9153cf",
+   "bytes": 28288,
+   "text_file": "evidence/text/重庆_081e822b5478.txt",
+   "verified": "verified",
+   "matched": [
+    "1057.93亿元"
    ],
    "missing": [],
    "wayback_url": null,
@@ -1078,6 +1294,23 @@
    "fetched": "2026-06-13"
   },
   {
+   "url": "https://baike.baidu.com/item/陕西省政府投资引导基金管理有限责任公司/51320283",
+   "provinces": [
+    "陕西"
+   ],
+   "rows": 1,
+   "status": "'ascii' codec can't encode characters in position 10-28: ordinal not in range(12",
+   "sha256": null,
+   "bytes": null,
+   "text_file": null,
+   "verified": "no-fetch",
+   "matched": [],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
    "url": "https://m.21jingji.com/article/20250208/herald/c8d99a0955806c77b250b7f06a0ffede.html",
    "provinces": [
     "陕西"
@@ -1108,6 +1341,25 @@
    "text_file": null,
    "verified": "no-fetch",
    "matched": [],
+   "missing": [],
+   "wayback_url": null,
+   "wayback_ts": null,
+   "fetched": "2026-06-13"
+  },
+  {
+   "url": "https://www.sxdaily.com.cn/2023-11/10/content_10444141.html",
+   "provinces": [
+    "陕西"
+   ],
+   "rows": 1,
+   "status": 200,
+   "sha256": "4569971727c900cde16eb37e6886ef2a82ee1de9a4e23b17d305b7f20b77dd5c",
+   "bytes": 17752,
+   "text_file": "evidence/text/陕西_a3d994879238.txt",
+   "verified": "verified",
+   "matched": [
+    "319.11亿元"
+   ],
    "missing": [],
    "wayback_url": null,
    "wayback_ts": null,
