@@ -30,6 +30,7 @@ CAVEATS:
     JSON; if AMAC changes them, adjust norm()/rec_date() after one live run.
 
 Usage:
+  python3 scripts/fetch_ggf.py --probe          # one page, no writes: verify API shape
   python3 scripts/fetch_ggf.py                  # incremental: newest pages
   python3 scripts/fetch_ggf.py --max-pages 80   # cap pages scanned this run
   python3 scripts/fetch_ggf.py --full           # full backfill (slow; ~1500 pages)
@@ -63,6 +64,25 @@ def post(page):
         'User-Agent': UA, 'Content-Type': 'application/json',
         'Accept': 'application/json'})
     return json.loads(urllib.request.urlopen(req, timeout=60).read().decode('utf-8', 'replace'))
+
+
+def probe():
+    """Fetch one page and print the live API shape — run this first after enabling
+    network, to confirm field names match norm()/rec_date() before a real run."""
+    data = post(0)
+    print('  top-level keys:', sorted(data.keys()))
+    print('  totalElements:', data.get('totalElements'), '· totalPages:', data.get('totalPages'),
+          '· size:', data.get('size'), '· number:', data.get('number'))
+    content = data.get('content') or []
+    print('  records on page 0:', len(content))
+    if content:
+        r = content[0]
+        print('  first-record keys:', sorted(r.keys()))
+        for k in ('fundName', 'managerName', 'mandatorName', 'establishDate',
+                  'putOnRecordDate', 'workingState', 'fundStatus', 'url', 'id'):
+            if k in r:
+                print(f'    {k} = {r[k]!r}')
+        print('  → matches() on this record:', matches(r))
 
 
 def load(path, default):
@@ -184,6 +204,10 @@ def run(full, max_pages):
 
 
 if __name__ == '__main__':
+    if '--probe' in sys.argv:
+        print('Probing AMAC fund API (one page, no writes) ...')
+        probe()
+        sys.exit(0)
     full = '--full' in sys.argv
     max_pages = DEFAULT_MAX_PAGES
     if '--max-pages' in sys.argv:
