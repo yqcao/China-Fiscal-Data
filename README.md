@@ -95,6 +95,9 @@ SOURCES.md       catalogue of official sources: policy framework (国办发〔20
 funds.json       AMAC filings matching guidance-fund name keywords (after first run)
 managers.json    distinct managers of those funds, with fund counts
 INDEX.md         human-readable, date-sorted table (after first run)
+rules/           local 财政厅 「管理办法」 documents — config-driven crawler:
+                 sources.json (region source pages, extend province by province),
+                 catalog.json, INDEX.md, markdown/ (files/ gitignored)
 ```
 
 > **Caveat:** AMAC does not tag "government guidance fund"; `fetch_ggf.py` filters by
@@ -133,6 +136,7 @@ scripts/
   build_monitor.py     rebuild fiscal-monitor.html from the four JSON series
   update.sh            run all of the above in order
   fetch_ggf.py         政府投资基金/引导基金 (AMAC) → data/govt-guidance-funds/funds.json
+  fetch_guidance_rules.py  local 财政厅 管理办法 (config-driven) → .../rules/catalog.json
 ```
 
 > `fetch_ggf.py` is **not** part of `update.sh` (different cadence, and it needs
