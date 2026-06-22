@@ -5,6 +5,7 @@ DATA = json.dumps(json.load(open(base+'data/mof-reports/fiscal_series.json')), e
 LGB  = json.dumps(json.load(open(base+'data/mof-research-reports/lgb_series.json')), ensure_ascii=False, separators=(',',':'))
 NSB  = json.dumps(json.load(open(base+'data/mof-research-reports/new_special_ytd.json')), separators=(',',':'))
 REP  = json.dumps(json.load(open(base+'data/mof-debt-balance/repayment_series.json')), separators=(',',':'))
+TGT  = json.dumps(json.load(open(base+'data/budget-targets.json'))['targets'], separators=(',',':'))
 
 HTML = r'''<!DOCTYPE html>
 <html lang="en">
@@ -44,6 +45,16 @@ section{margin:2.2rem 0}
 .kpi .v small{font-size:.8rem;font-weight:400;color:var(--mut)}
 .kpi .g{font-size:.82rem;font-weight:600;min-height:1.1em}
 .up{color:var(--up)} .down{color:var(--down)}
+.exec{margin:-.1rem 0 1.4rem}
+.exec .ehead{font-size:.84rem;font-weight:600;margin:.1rem 0 .55rem}
+.exec .ehead .emut{color:var(--mut);font-weight:400;font-size:.76rem}
+.erow{display:flex;align-items:center;gap:.7rem;margin:.34rem 0;font-size:.8rem}
+.elab{width:160px}.elab b{font-weight:600}
+.ebar{flex:1;height:13px;background:var(--bd);border-radius:7px;position:relative}
+.efill{height:100%;border-radius:7px;opacity:.85}
+.epace{position:absolute;top:-3px;height:19px;width:2px;background:var(--fg);opacity:.6}
+.eval{width:215px;text-align:right;font-variant-numeric:tabular-nums;color:var(--mut)}
+@media(max-width:760px){.elab{width:104px}.eval{width:158px;font-size:.74rem}}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:1rem 1rem .4rem;margin-bottom:1.1rem}
 .card h3{font-size:.98rem;margin:.1rem 0 .15rem;font-weight:600}
 .card h3 .zh{font-size:.82rem}
@@ -78,6 +89,7 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
       <p>The main on-budget account: tax & non-tax revenue and government expenditure.</p></div>
     <p class="period" id="period_gen"></p>
     <div class="kpis" id="kpi_gen"></div>
+    <div class="exec" id="exec_gen"></div>
     <div class="subhead"><span data-l="Revenue &amp; Expenditure|收入与支出"></span></div>
     <p class="note" id="note_gen" style="margin-top:-.25rem"></p>
     <div class="row2">
@@ -108,6 +120,7 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
       <p>Earmarked fund account, dominated by state land-use-right transfer (土地出让) revenue.</p></div>
     <p class="period" id="period_fund"></p>
     <div class="kpis" id="kpi_fund"></div>
+    <div class="exec" id="exec_fund"></div>
     <div class="card"><h3>Fund Revenue, Expenditure & Land-Sale Revenue <span class="zh">基金收入·支出与土地出让收入</span></h3>
       <p class="note" id="note_fund"></p><div id="c_fund" class="chart"></div></div>
     <div class="card"><h3>Cumulative YoY Growth <span class="zh">累计同比增速</span></h3>
@@ -146,6 +159,7 @@ const DATA = __DATA__;
 const LGB  = __LGB__;
 const NSB  = __NSB__;
 const REP  = __REP__;
+const TGT  = __TGT__;
 // Unify units: MOF fiscal figures are in 亿元 — convert to RMB billion (十亿元, ÷10).
 const MFIELDS=['pub_rev','tax','nontax','pub_rev_central','pub_rev_local','pub_exp','pub_exp_central','pub_exp_local','fund_rev','land_rev','fund_exp'];
 DATA.forEach(r=>{MFIELDS.forEach(k=>{if(r[k]&&r[k].v!=null)r[k].v=+(r[k].v/10).toFixed(2);});
@@ -353,6 +367,26 @@ function drawUse(period){
       label:{show:true,position:'right',color:AX,fontSize:10,formatter:p=>'RMB '+p.value+'bn'}}]},true);
 }
 
+// Budget execution vs annual target (current year, cumulative YTD ÷ annual budget).
+// Targets are in 亿元; DATA values were converted to RMB bn (÷10), so divide the target by 10 to match.
+function execRows(elId,fields){
+  const el=document.getElementById(elId); if(!el)return;
+  const Lt=DATA[DATA.length-1], t=TGT[Lt.year];
+  if(!t){el.innerHTML='';return;}
+  const elapsed=+(Lt.month/12*100).toFixed(1);
+  el.innerHTML=`<div class="ehead">${L('Execution vs Annual Budget','预算执行进度')} `
+    +`<span class="emut">${L(Lt.year+' budget · marker ▏= '+elapsed+'% of year elapsed',Lt.year+'年预算 · 竖线▏＝时间进度 '+elapsed+'%')}</span></div>`
+    +fields.map(([k,en,zh,col])=>{
+      const a=Lt[k]?Lt[k].v:null, tg=t[k]!=null?t[k]/10:null;
+      if(a==null||tg==null) return '';
+      const pct=+(a/tg*100).toFixed(1), diff=+(pct-elapsed).toFixed(1), sign=diff>=0?'+':'';
+      return `<div class="erow"><div class="elab"><b>${en}</b> <span class="zh">${zh}</span></div>`
+        +`<div class="ebar"><div class="efill" style="width:${Math.min(pct,100)}%;background:${col}"></div>`
+        +`<div class="epace" style="left:${Math.min(elapsed,100)}%"></div></div>`
+        +`<div class="eval">${pct}% <small>${L('of target','预算')}</small> · `
+        +`<span class="${diff>=0?'up':'down'}">${sign}${diff}pp</span></div></div>`;
+    }).join('');
+}
 function renderKPIs(){
   const Lt=DATA[DATA.length-1];
   document.getElementById('period_gen').innerHTML=L('Period: ','期间：')+'<span>'+(lang==='en'?perEN(Lt):perZH(Lt))+(Lt.month===12?'':L(' · YTD',' · 累计'))+'</span>';
@@ -367,6 +401,8 @@ function renderKPIs(){
     [L('Fund Expenditure','Fund Expenditure'),'基金支出',fmtB(Lt.fund_exp.v),'',Lt.fund_exp.g],
     [L('Land-Sale Revenue','Land-Sale Revenue'),'土地出让收入',Lt.land_rev?fmtB(Lt.land_rev.v):'–','',Lt.land_rev?Lt.land_rev.g:null],
     [L('Balance','Balance'),'收支差额',fmtB(Lt.fund_rev.v-Lt.fund_exp.v),L('rev − exp','收入−支出'),null]]);
+  execRows('exec_gen',[['pub_rev','Revenue','收入','#c00'],['pub_exp','Expenditure','支出','#1463ff']]);
+  execRows('exec_fund',[['fund_rev','Fund Revenue','基金收入','#e07b00'],['fund_exp','Fund Expenditure','基金支出','#6b7280']]);
   const G=LGB[LGB.length-1],yo=lgbYoY()[LGB.length-1];
   kpi('kpi_lgb',[
     [L('Monthly Issuance','Monthly Issuance'),'当月发行',fmtB(G.issue),G.period,yo],
@@ -397,6 +433,6 @@ fillSel('taxsel');fillSel('expsel');fillLgbSel();applyDataL();drawAll();
 </body>
 </html>
 '''
-HTML=HTML.replace('__DATA__',DATA).replace('__LGB__',LGB).replace('__NSB__',NSB).replace('__REP__',REP)
+HTML=HTML.replace('__DATA__',DATA).replace('__LGB__',LGB).replace('__NSB__',NSB).replace('__REP__',REP).replace('__TGT__',TGT)
 open(base+'fiscal-monitor.html','w',encoding='utf-8').write(HTML)
 print('wrote fiscal-monitor.html',round(len(HTML)/1024,1),'KB')
