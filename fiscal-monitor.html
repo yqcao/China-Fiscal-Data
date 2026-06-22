@@ -80,9 +80,12 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
     <p class="period" id="period_gen"></p>
     <div class="kpis" id="kpi_gen"></div>
     <div class="exec" id="exec_gen"></div>
-    <div class="card"><h3 data-l="Budget Execution Progress|预算执行进度"></h3>
-      <p class="note" data-l="Cumulative YTD as % of that year's annual budget target — full history, resets each January|各期累计执行占当年全年预算的比重——全部历史，每年初归零"></p>
-      <div id="c_exec_gen" class="chart sm"></div></div>
+    <div class="subhead"><span data-l="Budget Execution Progress · YTD by Year|预算执行进度（分年度累计）"></span></div>
+    <p class="note" data-l="Cumulative YTD as % of each year's annual budget target — one line per year|各期累计执行占当年全年预算的比重——每年一条线" style="margin-top:-.3rem"></p>
+    <div class="row2">
+      <div class="card"><h3 data-l="Revenue|收入"></h3><div id="c_exec_gen_rev" class="chart sm"></div></div>
+      <div class="card"><h3 data-l="Expenditure|支出"></h3><div id="c_exec_gen_exp" class="chart sm"></div></div>
+    </div>
     <div class="subhead"><span data-l="Revenue &amp; Expenditure|收入与支出"></span></div>
     <p class="note" id="note_gen" style="margin-top:-.25rem"></p>
     <div class="row2">
@@ -114,9 +117,12 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
     <p class="period" id="period_fund"></p>
     <div class="kpis" id="kpi_fund"></div>
     <div class="exec" id="exec_fund"></div>
-    <div class="card"><h3 data-l="Budget Execution Progress|预算执行进度"></h3>
-      <p class="note" data-l="Cumulative YTD as % of that year's annual budget target — full history, resets each January|各期累计执行占当年全年预算的比重——全部历史，每年初归零"></p>
-      <div id="c_exec_fund" class="chart sm"></div></div>
+    <div class="subhead"><span data-l="Budget Execution Progress · YTD by Year|预算执行进度（分年度累计）"></span></div>
+    <p class="note" data-l="Cumulative YTD as % of each year's annual budget target — one line per year|各期累计执行占当年全年预算的比重——每年一条线" style="margin-top:-.3rem"></p>
+    <div class="row2">
+      <div class="card"><h3 data-l="Fund Revenue|基金收入"></h3><div id="c_exec_fund_rev" class="chart sm"></div></div>
+      <div class="card"><h3 data-l="Fund Expenditure|基金支出"></h3><div id="c_exec_fund_exp" class="chart sm"></div></div>
+    </div>
     <div class="card"><h3>Fund Revenue, Expenditure & Land-Sale Revenue <span class="zh">基金收入·支出与土地出让收入</span></h3>
       <p class="note" id="note_fund"></p><div id="c_fund" class="chart"></div></div>
     <div class="card"><h3>Cumulative YoY Growth <span class="zh">累计同比增速</span></h3>
@@ -254,16 +260,21 @@ function drawFund(){
       {name:L('Other Fund Revenue','其他基金收入'),type:'bar',stack:'rev',itemStyle:{color:C.fund,opacity:.85},data:other},
       {name:L('Fund Expenditure','基金支出'),type:'bar',itemStyle:{color:'#9aa',opacity:.55},data:exp.map(d=>d.v)}]},true);
 }
-// Execution trajectory: cumulative YTD as % of each year's annual target, full history.
-function drawExecChart(id,fields){
-  const sers=fields.map(([k,en,zh,col])=>({name:L(en,zh),type:'bar',itemStyle:{color:col,opacity:.85},
-    data:DATA.map(r=>{const t=TGT[r.year]; return (r[k]&&t&&t[k]!=null)?+(r[k].v/(t[k]/10)*100).toFixed(1):null;})}));
-  sers[0].markLine={silent:true,symbol:'none',lineStyle:{color:AX,type:'dashed',opacity:.45},
-    data:[{yAxis:100,label:{formatter:L('Budget 100%','全年预算100%'),color:AX,fontSize:9,position:'insideEndTop'}}]};
-  charts[id].setOption({grid:{left:46,right:14,top:28,bottom:48},textStyle:{color:FG},
-    legend:{top:0,textStyle:{color:AX},data:sers.map(s=>s.name)},
+// Execution by year: cumulative YTD as % of that year's annual target — one line per year.
+const EXECPAL={2021:'#9aa',2022:'#0a9d6b',2023:'#1463ff',2024:'#e07b00',2025:'#7c4dff',2026:'#c00'};
+function drawExecYear(id,key){
+  const years=[...new Set(DATA.map(r=>r.year))].filter(y=>TGT[y]).sort();
+  const maxY=Math.max(...years);
+  const sers=years.map(y=>({name:''+y,type:'line',smooth:true,connectNulls:true,showSymbol:true,symbolSize:4,
+    lineStyle:{width:y===maxY?2.8:1.6,color:EXECPAL[y]||'#888'},itemStyle:{color:EXECPAL[y]||'#888'},
+    data:Array.from({length:12},(_,i)=>{const r=DATA.find(x=>x.year===y&&x.month===i+1),t=TGT[y];
+      return (r&&r[key]&&t&&t[key]!=null)?+(r[key].v/(t[key]/10)*100).toFixed(1):null;})}));
+  sers[0].markLine={silent:true,symbol:'none',lineStyle:{color:AX,type:'dashed',opacity:.4},
+    data:[{yAxis:100,label:{formatter:'100%',color:AX,fontSize:9,position:'insideEndTop'}}]};
+  charts[id].setOption({grid:{left:46,right:16,top:28,bottom:34},textStyle:{color:FG},
+    legend:{top:0,textStyle:{color:AX},data:years.map(String)},
     tooltip:{trigger:'axis',valueFormatter:v=>v==null?'–':v+'%'},
-    xAxis:baseX(),
+    xAxis:{type:'category',data:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],axisLabel:{color:AX},axisLine:{lineStyle:{color:GRID}}},
     yAxis:{type:'value',name:'% of budget',axisLabel:{color:AX,formatter:'{value}%'},splitLine:{lineStyle:{color:GRID}},nameTextStyle:{color:AX}},
     series:sers},true);
 }
@@ -419,7 +430,7 @@ function renderKPIs(){
 
 function applyDataL(){document.querySelectorAll('[data-l]').forEach(e=>{const[en,zh]=e.getAttribute('data-l').split('|');e.textContent=lang==='en'?en:zh;});}
 
-['c_gen_rev','c_gen_exp','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_exec_gen','c_exec_fund','c_lgb','c_lgb_refi','c_lgb_ytd','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);
+['c_gen_rev','c_gen_exp','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_exec_gen_rev','c_exec_gen_exp','c_exec_fund_rev','c_exec_fund_exp','c_lgb','c_lgb_refi','c_lgb_ytd','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);
 document.getElementById('taxsel').onchange=e=>drawComposition('c_tax_pie','c_tax_grow','tax_items',e.target.value);
 document.getElementById('expsel').onchange=e=>drawComposition('c_exp_pie','c_exp_grow','exp_items',e.target.value);
 document.getElementById('lgbsel').onchange=e=>drawUse(e.target.value);
@@ -429,8 +440,8 @@ seg('split',v=>{split=v;drawGen();});
 seg('lang',v=>{lang=v;document.body.classList.toggle('lang-en',v==='en');document.body.classList.toggle('lang-zh',v==='zh');applyDataL();fillSel('taxsel');fillSel('expsel');drawAll();});
 
 function drawAll(){applyDataL();renderKPIs();drawGen();drawFund();
-  drawExecChart('c_exec_gen',[['pub_rev','Revenue','收入','#c00'],['pub_exp','Expenditure','支出','#1463ff']]);
-  drawExecChart('c_exec_fund',[['fund_rev','Fund Revenue','基金收入','#e07b00'],['fund_exp','Fund Expenditure','基金支出','#6b7280']]);
+  drawExecYear('c_exec_gen_rev','pub_rev'); drawExecYear('c_exec_gen_exp','pub_exp');
+  drawExecYear('c_exec_fund_rev','fund_rev'); drawExecYear('c_exec_fund_exp','fund_exp');
   yoyChart('c_fund_yoy',[['fund_rev','Fund Revenue','基金收入',C.fund],['fund_exp','Fund Expenditure','基金支出',C.exp],['land_rev','Land-Sale','土地出让',C.land]]);
   drawComposition('c_tax_pie','c_tax_grow','tax_items',document.getElementById('taxsel').value);
   drawComposition('c_exp_pie','c_exp_grow','exp_items',document.getElementById('expsel').value);
