@@ -45,15 +45,6 @@ section{margin:2.2rem 0}
 .kpi .v small{font-size:.8rem;font-weight:400;color:var(--mut)}
 .kpi .g{font-size:.82rem;font-weight:600;min-height:1.1em}
 .up{color:var(--up)} .down{color:var(--down)}
-.exec{margin:-.1rem 0 1.4rem}
-.exec .ehead{font-size:.84rem;font-weight:600;margin:.1rem 0 .55rem}
-.exec .ehead .emut{color:var(--mut);font-weight:400;font-size:.76rem}
-.erow{display:flex;align-items:center;gap:.7rem;margin:.34rem 0;font-size:.8rem}
-.elab{width:160px}.elab b{font-weight:600}
-.ebar{flex:1;height:13px;background:var(--bd);border-radius:7px;position:relative}
-.efill{height:100%;border-radius:7px;opacity:.85}
-.eval{width:215px;text-align:right;font-variant-numeric:tabular-nums;color:var(--mut)}
-@media(max-width:760px){.elab{width:104px}.eval{width:158px;font-size:.74rem}}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:1rem 1rem .4rem;margin-bottom:1.1rem}
 .card h3{font-size:.98rem;margin:.1rem 0 .15rem;font-weight:600}
 .card h3 .zh{font-size:.82rem}
@@ -88,7 +79,6 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
       <p>The main on-budget account: tax & non-tax revenue and government expenditure.</p></div>
     <p class="period" id="period_gen"></p>
     <div class="kpis" id="kpi_gen"></div>
-    <div class="exec" id="exec_gen"></div>
     <div class="subhead"><span data-l="Budget Execution Progress · YTD by Year|预算执行进度（分年度累计）"></span></div>
     <p class="note" data-l="Cumulative YTD as % of each year's annual budget target — one line per year|各期累计执行占当年全年预算的比重——每年一条线" style="margin-top:-.3rem"></p>
     <div class="row2">
@@ -125,7 +115,6 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
       <p>Earmarked fund account, dominated by state land-use-right transfer (土地出让) revenue.</p></div>
     <p class="period" id="period_fund"></p>
     <div class="kpis" id="kpi_fund"></div>
-    <div class="exec" id="exec_fund"></div>
     <div class="subhead"><span data-l="Budget Execution Progress · YTD by Year|预算执行进度（分年度累计）"></span></div>
     <p class="note" data-l="Cumulative YTD as % of each year's annual budget target — one line per year|各期累计执行占当年全年预算的比重——每年一条线" style="margin-top:-.3rem"></p>
     <div class="row2">
@@ -396,23 +385,6 @@ function drawUse(period){
       label:{show:true,position:'right',color:AX,fontSize:10,formatter:p=>'RMB '+p.value+'bn'}}]},true);
 }
 
-// Budget execution vs annual target (current year, cumulative YTD ÷ annual budget).
-// Targets are in 亿元; DATA values were converted to RMB bn (÷10), so divide the target by 10 to match.
-function execRows(elId,fields){
-  const el=document.getElementById(elId); if(!el)return;
-  const Lt=DATA[DATA.length-1], t=TGT[Lt.year];
-  if(!t){el.innerHTML='';return;}
-  el.innerHTML=`<div class="ehead">${L('Execution vs Annual Budget','预算执行进度')} `
-    +`<span class="emut">${L(Lt.year+' budget',Lt.year+'年预算')}</span></div>`
-    +fields.map(([k,en,zh,col])=>{
-      const a=Lt[k]?Lt[k].v:null, tg=t[k]!=null?t[k]/10:null;
-      if(a==null||tg==null) return '';
-      const pct=+(a/tg*100).toFixed(1);
-      return `<div class="erow"><div class="elab"><b>${en}</b> <span class="zh">${zh}</span></div>`
-        +`<div class="ebar"><div class="efill" style="width:${Math.min(pct,100)}%;background:${col}"></div></div>`
-        +`<div class="eval">${pct}% <small>${L('of target','预算')}</small></div></div>`;
-    }).join('');
-}
 function renderKPIs(){
   const Lt=DATA[DATA.length-1];
   document.getElementById('period_gen').innerHTML=L('Period: ','期间：')+'<span>'+(lang==='en'?perEN(Lt):perZH(Lt))+(Lt.month===12?'':L(' · YTD',' · 累计'))+'</span>';
@@ -427,8 +399,6 @@ function renderKPIs(){
     [L('Fund Expenditure','Fund Expenditure'),'基金支出',fmtB(Lt.fund_exp.v),'',Lt.fund_exp.g],
     [L('Land-Sale Revenue','Land-Sale Revenue'),'土地出让收入',Lt.land_rev?fmtB(Lt.land_rev.v):'–','',Lt.land_rev?Lt.land_rev.g:null],
     [L('Balance','Balance'),'收支差额',fmtB(Lt.fund_rev.v-Lt.fund_exp.v),L('rev − exp','收入−支出'),null]]);
-  execRows('exec_gen',[['pub_rev','Revenue','收入','#c00'],['pub_exp','Expenditure','支出','#1463ff']]);
-  execRows('exec_fund',[['fund_rev','Fund Revenue','基金收入','#e07b00'],['fund_exp','Fund Expenditure','基金支出','#6b7280']]);
   const G=LGB[LGB.length-1],yo=lgbYoY()[LGB.length-1];
   kpi('kpi_lgb',[
     [L('Monthly Issuance','Monthly Issuance'),'当月发行',fmtB(G.issue),G.period,yo],
