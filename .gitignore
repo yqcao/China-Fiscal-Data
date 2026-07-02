@@ -4,3 +4,5 @@
 
 # macro raw HTML cache (regenerable)
 data/macro/*_raw/
+
+__pycache__/
