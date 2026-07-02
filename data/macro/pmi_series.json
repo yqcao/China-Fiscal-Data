@@ -1,5 +1,105 @@
 [
 {
+"period": "2024-10",
+"year": 2024,
+"month": 10,
+"mfg": 50.1,
+"nonmfg": 50.2,
+"composite": 50.8,
+"title": "2024年10月中国采购经理指数运行情况",
+"url": "https://www.stats.gov.cn/sj/zxfb/202410/t20241031_1957214.html"
+},
+{
+"period": "2024-11",
+"year": 2024,
+"month": 11,
+"mfg": 50.3,
+"nonmfg": 50.0,
+"composite": 50.8,
+"title": "2024年11月中国采购经理指数运行情况",
+"url": "https://www.stats.gov.cn/sj/zxfb/202411/t20241130_1957624.html"
+},
+{
+"period": "2024-12",
+"year": 2024,
+"month": 12,
+"mfg": 50.1,
+"nonmfg": 52.2,
+"composite": 52.2,
+"title": "2024年12月中国采购经理指数运行情况",
+"url": "https://www.stats.gov.cn/sj/zxfb/202412/t20241231_1958118.html"
+},
+{
+"period": "2025-01",
+"year": 2025,
+"month": 1,
+"mfg": 49.1,
+"nonmfg": 50.2,
+"composite": 50.1,
+"title": "2025年1月中国采购经理指数运行情况",
+"url": "https://www.stats.gov.cn/sj/zxfb/202501/t20250127_1958493.html"
+},
+{
+"period": "2025-02",
+"year": 2025,
+"month": 2,
+"mfg": 50.2,
+"nonmfg": 50.4,
+"composite": 51.1,
+"title": "2025年2月中国采购经理指数运行情况",
+"url": "https://www.stats.gov.cn/sj/zxfb/202503/t20250301_1958837.html"
+},
+{
+"period": "2025-03",
+"year": 2025,
+"month": 3,
+"mfg": 50.5,
+"nonmfg": 50.8,
+"composite": 51.4,
+"title": "2025年3月中国采购经理指数运行情况",
+"url": "https://www.stats.gov.cn/sj/zxfb/202503/t20250331_1959176.html"
+},
+{
+"period": "2025-04",
+"year": 2025,
+"month": 4,
+"mfg": 49.0,
+"nonmfg": 50.4,
+"composite": 50.2,
+"title": "2025年4月中国采购经理指数运行情况",
+"url": "https://www.stats.gov.cn/sj/zxfb/202504/t20250430_1959521.html"
+},
+{
+"period": "2025-05",
+"year": 2025,
+"month": 5,
+"mfg": 49.5,
+"nonmfg": 50.3,
+"composite": 50.4,
+"title": "2025年5月中国采购经理指数运行情况",
+"url": "https://www.stats.gov.cn/sj/zxfb/202505/t20250531_1959985.html"
+},
+{
+"period": "2025-06",
+"year": 2025,
+"month": 6,
+"mfg": 49.7,
+"nonmfg": 50.5,
+"composite": 50.7,
+"title": "2025年6月中国采购经理指数运行情况",
+"url": "https://www.stats.gov.cn/sj/zxfb/202506/t20250630_1960283.html"
+},
+{
+"period": "2025-07",
+"year": 2025,
+"month": 7,
+"mfg": 49.3,
+"nonmfg": 50.1,
+"composite": 50.2,
+"title": "2025年7月中国采购经理指数运行情况",
+"url": "https://www.stats.gov.cn/sj/zxfb/202507/t20250731_1960551.html"
+},
+{
 "period": "2025-08",
 "year": 2025,
 "month": 8,
