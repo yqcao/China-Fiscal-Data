@@ -33,7 +33,7 @@ def get(url, tries=3):
 def num(s):
     return float(s) if s not in (None,'') else None
 
-def collect_links(max_pages=24):
+def collect_links(max_pages=int(os.environ.get("MACRO_MAX_PAGES","24"))):
     """Paginate the listing; return {period: (url,title)} for PMI releases.
     Crawls a fixed number of pages (PMI releases are sparse across pages, so we
     do NOT stop at the first PMI-less page — only on a fetch error / 404)."""

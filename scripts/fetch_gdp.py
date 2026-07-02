@@ -85,7 +85,7 @@ def parse_article(period, url, title, quarter, token):
         print('  no GDP figure parsed for', period, '-', title)
     return rec
 
-def collect_links(max_pages=24):
+def collect_links(max_pages=int(os.environ.get("MACRO_MAX_PAGES","24"))):
     """Paginate the listing; return {period: (url,title,quarter,token)} for GDP
     releases. GDP releases are quarterly and sparse across pages, so we do NOT
     stop at the first GDP-less page — only on a fetch error / 404."""

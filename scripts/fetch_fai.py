@@ -36,7 +36,7 @@ def signed(direction, val):
     if v is None: return 0.0 if direction=='持平' else None
     return -v if direction=='下降' else v
 
-def collect_links(max_pages=24):
+def collect_links(max_pages=int(os.environ.get("MACRO_MAX_PAGES","24"))):
     """Paginate the listing; return {period: (url,title)} for FAI releases.
     Crawls a fixed number of pages (FAI releases are sparse across pages, so we
     do NOT stop at the first FAI-less page — only on a fetch error / 404)."""
