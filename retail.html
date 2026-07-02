@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>China Retail Sales · 社会消费品零售总额</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+:root{color-scheme:light dark;--bg:#f7f7f8;--fg:#1a1a1a;--card:#fff;--bd:#e3e3e6;--mut:#666;--accent:#c00;--up:#16a34a;--down:#dc2626;}
+@media(prefers-color-scheme:dark){:root{--bg:#16171a;--fg:#e6e6e6;--card:#1e1f23;--bd:#2c2e33;--mut:#9aa;--accent:#ff6b6b;}}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5}
+body.lang-en .zh{display:none}.wrap{max-width:1000px;margin:0 auto;padding:2rem 1.1rem 4rem}
+h1{font-size:1.6rem;margin:0 0 .15rem}h1 .zh{font-size:1rem;color:var(--mut);font-weight:400;display:block;margin-top:.1rem}
+.sub{color:var(--mut);margin:.2rem 0 1.3rem;font-size:.9rem}.sub a{color:var(--accent)}
+.controls{margin-bottom:1.2rem}.seg{display:inline-flex;border:1px solid var(--bd);border-radius:9px;overflow:hidden;background:var(--card)}
+.seg button{border:0;background:transparent;color:var(--fg);padding:.45rem .8rem;font-size:.85rem;cursor:pointer}.seg button.on{background:var(--accent);color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-bottom:1.3rem}
+.kpi{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:.85rem .95rem}
+.kpi .t{font-size:.76rem;color:var(--mut)}.kpi .v{font-size:1.4rem;font-weight:650;margin-top:.1rem}
+.up{color:var(--up)}.down{color:var(--down)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:1rem 1rem .5rem}
+.card h3{font-size:1rem;margin:.1rem 0 .1rem}.card .note{font-size:.78rem;color:var(--mut);margin:0 0 .4rem}
+.chart{width:100%;height:420px}footer{margin-top:1.5rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--mut)}
+</style></head><body class="lang-en"><div class="wrap">
+<h1>China Retail Sales <span class="zh">社会消费品零售总额</span></h1>
+<p class="sub"><span data-l="Retail sales growth|社会消费品零售总额增速"></span> · <a href="index.html">&larr; all data</a> · <a href="fiscal-monitor.html" data-l="Fiscal Monitor|财政运行监测"></a> · <span data-l="Source|来源"></span>: <a href="https://www.stats.gov.cn/sj/zxfb/">NBS 国家统计局</a></p>
+<div class="controls"><span class="seg" id="lang"><button data-v="en" class="on">EN</button><button data-v="zh">中文</button></span></div>
+<div class="kpis" id="kpi"></div>
+<div class="card"><div id="c" class="chart"></div></div>
+<footer><span data-l="Data source as noted · built for|数据来源见上 · 构建于"></span> <a href="https://github.com/yqcao/China-Fiscal-Data">github.com/yqcao/China-Fiscal-Data</a></footer>
+</div><script>
+const D=[{"period":"2024-09","year":2024,"month":9,"yoy":3.2,"ytd":3.3,"title":"2024年9月份社会消费品零售总额增长3.2%","url":"https://www.stats.gov.cn/sj/zxfb/202410/t20241018_1957039.html"},{"period":"2024-10","year":2024,"month":10,"yoy":4.8,"ytd":3.5,"title":"2024年10月份社会消费品零售总额增长4.8%","url":"https://www.stats.gov.cn/sj/zxfb/202411/t20241115_1957427.html"},{"period":"2024-11","year":2024,"month":11,"yoy":3.0,"ytd":3.5,"title":"2024年11月份社会消费品零售总额增长3.0%","url":"https://www.stats.gov.cn/sj/zxfb/202412/t20241216_1957759.html"},{"period":"2024-12","year":2024,"month":12,"yoy":3.7,"ytd":3.5,"title":"2024年12月份社会消费品零售总额增长3.7%","url":"https://www.stats.gov.cn/sj/zxfb/202501/t20250117_1958327.html"},{"period":"2025-02","year":2025,"month":2,"yoy":null,"ytd":4.0,"title":"2025年1—2月份社会消费品零售总额增长4.0%","url":"https://www.stats.gov.cn/sj/zxfb/202503/t20250317_1959014.html"},{"period":"2025-03","year":2025,"month":3,"yoy":5.9,"ytd":4.6,"title":"2025年3月份社会消费品零售总额增长5.9%","url":"https://www.stats.gov.cn/sj/zxfb/202504/t20250416_1959317.html"},{"period":"2025-04","year":2025,"month":4,"yoy":5.1,"ytd":4.7,"title":"2025年4月份社会消费品零售总额增长5.1%","url":"https://www.stats.gov.cn/sj/zxfb/202505/t20250519_1959858.html"},{"period":"2025-05","year":2025,"month":5,"yoy":6.4,"ytd":5.0,"title":"2025年5月份社会消费品零售总额增长6.4%","url":"https://www.stats.gov.cn/sj/zxfb/202506/t20250616_1960169.html"},{"period":"2025-06","year":2025,"month":6,"yoy":4.8,"ytd":5.0,"title":"2025年6月份社会消费品零售总额增长4.8%","url":"https://www.stats.gov.cn/sj/zxfb/202507/t20250715_1960409.html"},{"period":"2025-07","year":2025,"month":7,"yoy":3.7,"ytd":4.8,"title":"2025年7月份社会消费品零售总额增长3.7%","url":"https://www.stats.gov.cn/sj/zxfb/202508/t20250815_1960783.html"},{"period":"2025-08","year":2025,"month":8,"yoy":3.4,"ytd":4.6,"title":"2025年8月份社会消费品零售总额增长3.4%","url":"https://www.stats.gov.cn/sj/zxfb/202509/t20250915_1961177.html"},{"period":"2025-09","year":2025,"month":9,"yoy":3.0,"ytd":4.5,"title":"2025年9月份社会消费品零售总额增长3.0%","url":"https://www.stats.gov.cn/sj/zxfb/202510/t20251020_1961606.html"},{"period":"2025-10","year":2025,"month":10,"yoy":2.9,"ytd":4.3,"title":"2025年10月份社会消费品零售总额增长2.9%","url":"https://www.stats.gov.cn/sj/zxfb/202511/t20251114_1961852.html"},{"period":"2025-11","year":2025,"month":11,"yoy":1.3,"ytd":4.0,"title":"2025年11月份社会消费品零售总额增长1.3%","url":"https://www.stats.gov.cn/sj/zxfb/202512/t20251215_1962071.html"},{"period":"2025-12","year":2025,"month":12,"yoy":0.9,"ytd":3.7,"title":"2025年12月份社会消费品零售总额增长0.9%","url":"https://www.stats.gov.cn/sj/zxfb/202601/t20260119_1962323.html"},{"period":"2026-02","year":2026,"month":2,"yoy":null,"ytd":2.8,"title":"2026年1—2月份社会消费品零售总额增长2.8%","url":"https://www.stats.gov.cn/sj/zxfb/202603/t20260316_1962786.html"},{"period":"2026-03","year":2026,"month":3,"yoy":1.7,"ytd":2.4,"title":"2026年3月份社会消费品零售总额增长1.7%","url":"https://www.stats.gov.cn/sj/zxfb/202604/t20260416_1963325.html"},{"period":"2026-04","year":2026,"month":4,"yoy":0.2,"ytd":1.9,"title":"2026年1—4月份社会消费品零售总额增长1.9%","url":"https://www.stats.gov.cn/sj/zxfb/202605/t20260518_1963727.html"},{"period":"2026-05","year":2026,"month":5,"yoy":-0.6,"ytd":1.4,"title":"2026年1—5月份社会消费品零售总额增长1.4%","url":"https://www.stats.gov.cn/sj/zxfb/202606/t20260616_1963949.html"}],SER=[{"k":"ytd","en":"YTD YoY %","zh":"累计同比 %","type":"line","axis":0,"c":"#c00","area":true},{"k":"yoy","en":"Monthly YoY %","zh":"当月同比 %","type":"bar","axis":0,"c":"#8ab4ff"}],REF=0,Y0="%",Y1="%";
+const dark=matchMedia('(prefers-color-scheme: dark)').matches;
+const AX=dark?'#9aa':'#666',GRID=dark?'#2c2e33':'#eee',FG=dark?'#e6e6e6':'#1a1a1a';
+let lang='en';const L=(e,z)=>lang==='en'?e:z;const P=D.map(r=>r.period);
+const chart=echarts.init(document.getElementById('c'));
+function applyL(){document.querySelectorAll('[data-l]').forEach(e=>{const[a,b]=e.getAttribute('data-l').split('|');e.textContent=lang==='en'?a:b;});}
+function kpis(){const last=D[D.length-1];document.getElementById('kpi').innerHTML=SER.map(s=>{const v=last[s.k];const col=(typeof v==='number'&&REF!=null)?(v>=REF?'up':'down'):'';return v==null?'':`<div class="kpi"><div class="t">${L(s.en,s.zh)} · ${last.period}</div><div class="v ${col}">${v}</div></div>`;}).join('');}
+function draw(){const useR=SER.some(s=>s.axis===1);
+ const series=SER.map(s=>{const o={name:L(s.en,s.zh),type:s.type,data:D.map(r=>r[s.k]==null?null:r[s.k])};
+   if(s.axis===1)o.yAxisIndex=1; if(s.type==='line'){o.smooth=true;o.showSymbol=false;o.lineStyle={width:2.4,color:s.c};o.itemStyle={color:s.c};if(s.area)o.areaStyle={opacity:.05,color:s.c};}
+   else{o.itemStyle={color:s.c,opacity:.7};} return o;});
+ if(REF!=null&&series.length)series[series.length-1].markLine={silent:true,symbol:'none',lineStyle:{color:AX,type:'dashed',opacity:.4},data:[{yAxis:REF}]};
+ const yA=[{type:'value',name:Y0,axisLabel:{color:AX},splitLine:{lineStyle:{color:GRID}},nameTextStyle:{color:AX}}];
+ if(useR)yA.push({type:'value',name:Y1,axisLabel:{color:AX},splitLine:{show:false},nameTextStyle:{color:AX}});
+ chart.setOption({grid:{left:48,right:useR?48:16,top:30,bottom:52},textStyle:{color:FG},
+  legend:{top:0,textStyle:{color:AX},data:SER.map(s=>L(s.en,s.zh))},tooltip:{trigger:'axis'},
+  xAxis:{type:'category',data:P,axisLabel:{color:AX,rotate:45,fontSize:10},axisLine:{lineStyle:{color:GRID}}},
+  yAxis:yA,series:series},true);}
+function render(){applyL();kpis();draw();}
+document.querySelectorAll('#lang button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#lang button').forEach(x=>x.classList.remove('on'));b.classList.add('on');lang=b.dataset.v;document.body.classList.toggle('lang-en',lang==='en');render();});
+addEventListener('resize',()=>chart.resize());render();
+</script></body></html>
