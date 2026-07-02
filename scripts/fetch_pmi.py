@@ -70,11 +70,13 @@ def parse_article(period, url, title):
         except Exception as e:
             print('  fetch failed', period, e); return rec
     txt=html.unescape(re.sub(r'\s+',' ', re.sub(r'<[^>]+>',' ', raw)))
-    m=re.search(r'制造业采购经理指数（PMI）为\s*([\d.]+)\s*%', txt)
+    # NB: HTML-cleaning inserts spaces, e.g. "制造业采购经理指数（ PMI ）为 50.0" and
+    # "综合 PMI 产出指数为" — so the patterns must tolerate whitespace throughout.
+    m=re.search(r'制造业采购经理指数\s*[（(]\s*PMI\s*[）)]\s*为\s*([\d.]+)', txt)
     rec['mfg']=num(m.group(1)) if m else None
-    m=re.search(r'非制造业商务活动指数为\s*([\d.]+)\s*%', txt)
+    m=re.search(r'非制造业商务活动指数\s*为\s*([\d.]+)', txt)
     rec['nonmfg']=num(m.group(1)) if m else None
-    m=re.search(r'综合PMI产出指数为\s*([\d.]+)\s*%', txt)
+    m=re.search(r'综合\s*PMI\s*产出指数\s*为\s*([\d.]+)', txt)
     rec['composite']=num(m.group(1)) if m else None
     return rec
 
