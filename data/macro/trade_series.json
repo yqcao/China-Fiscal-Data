@@ -1,0 +1,50 @@
+[
+{
+"period": "2026-02",
+"year": 2026,
+"month": 2,
+"exports_yoy": 19.2,
+"imports_yoy": 17.1,
+"total_yoy": 18.3,
+"basis": "RMB",
+"cumulative": true,
+"title": "1—2月份国民经济起步有力、开局良好",
+"url": "https://www.stats.gov.cn/sj/zxfb/202603/t20260316_1962780.html"
+},
+{
+"period": "2026-03",
+"year": 2026,
+"month": 3,
+"exports_yoy": 11.9,
+"imports_yoy": 19.6,
+"total_yoy": 15.0,
+"basis": "RMB",
+"cumulative": true,
+"title": "一季度国民经济实现良好开局",
+"url": "https://www.stats.gov.cn/sj/zxfb/202604/t20260416_1963330.html"
+},
+{
+"period": "2026-04",
+"year": 2026,
+"month": 4,
+"exports_yoy": 9.8,
+"imports_yoy": 20.6,
+"total_yoy": 14.2,
+"basis": "RMB",
+"cumulative": false,
+"title": "1—4月份国民经济保持稳中有进发展态势",
+"url": "https://www.stats.gov.cn/sj/zxfb/202605/t20260518_1963732.html"
+},
+{
+"period": "2026-05",
+"year": 2026,
+"month": 5,
+"exports_yoy": 13.8,
+"imports_yoy": 21.5,
+"total_yoy": 16.9,
+"basis": "RMB",
+"cumulative": false,
+"title": "5月份国民经济运行总体平稳、向新向优",
+"url": "https://www.stats.gov.cn/sj/zxfb/202606/t20260616_1963954.html"
+}
+]
