@@ -142,5 +142,14 @@
 "realestate_yoy": null,
 "title": "2026年1—5月份全国固定资产投资基本情况",
 "url": "https://www.stats.gov.cn/sj/zxfb/202606/t20260616_1963951.html"
+},
+{
+"period": "2026-06",
+"year": 2026,
+"month": 6,
+"ytd_yoy": -5.7,
+"realestate_yoy": null,
+"title": "2026年1—6月份全国固定资产投资基本情况",
+"url": "https://www.stats.gov.cn/sj/zxfb/202607/t20260715_1964124.html"
 }
 ]

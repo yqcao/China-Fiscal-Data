@@ -189,5 +189,14 @@
 "yoy": 1.2,
 "mom": -0.1,
 "core": null
+},
+{
+"period": "2026-06",
+"year": 2026,
+"month": 6,
+"title": "2026年6月份居民消费价格同比上涨1.0%",
+"url": "https://www.stats.gov.cn/sj/zxfb/202607/t20260709_1964084.html",
+"yoy": 1.0,
+"mom": -0.3
 }
 ]

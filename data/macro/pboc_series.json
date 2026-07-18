@@ -1148,7 +1148,7 @@
 "year": 2024,
 "month": 3,
 "m2_yoy": 8.3,
-"new_loans": 30900.0,
+"new_loans": null,
 "tsf_stock_yoy": null,
 "tsf_flow": null,
 "title": "2024年3月金融统计数据报告",
@@ -1428,5 +1428,16 @@
 "tsf_flow": 20300.0,
 "title": "2026年5月金融统计数据报告",
 "url": "http://www.pbc.gov.cn/diaochatongjisi/116219/116225/2026061217051611931/index.html"
+},
+{
+"period": "2026-06",
+"year": 2026,
+"month": 6,
+"m2_yoy": 8.0,
+"new_loans": 16100.0,
+"tsf_stock_yoy": 7.4,
+"tsf_flow": 33600.0,
+"title": "2026年上半年金融统计数据报告",
+"url": "http://www.pbc.gov.cn/diaochatongjisi/116219/116225/2026071515025183948/index.html"
 }
 ]
