@@ -208,5 +208,15 @@
 "composite": 50.6,
 "title": "2026-06 中国采购经理指数运行情况",
 "url": "https://www.stats.gov.cn/sj/zxfb/"
+},
+{
+"period": "2026-07",
+"year": 2026,
+"month": 7,
+"mfg": 49.2,
+"nonmfg": 49.0,
+"composite": 49.3,
+"title": "2026年7月中国采购经理指数运行情况",
+"url": "https://www.stats.gov.cn/sj/zxfb/202607/t20260731_1964253.html"
 }
 ]

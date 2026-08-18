@@ -198,5 +198,14 @@
 "url": "https://www.stats.gov.cn/sj/zxfb/202607/t20260709_1964084.html",
 "yoy": 1.0,
 "mom": -0.3
+},
+{
+"period": "2026-07",
+"year": 2026,
+"month": 7,
+"title": "2026年7月份居民消费价格同比上涨0.5%",
+"url": "https://www.stats.gov.cn/sj/zxfb/202608/t20260809_1965008.html",
+"yoy": 0.5,
+"mom": -0.1
 }
 ]
