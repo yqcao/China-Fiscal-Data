@@ -87,6 +87,45 @@ def download_and_extract(urls):
         open(os.path.join(DIR, 'text', name.replace('.htm', '.txt')), 'w', encoding='utf-8').write(title + '\n\n' + body)
     print(f'  {new} new reports downloaded')
 
+
+def write_catalog():
+    """Regenerate index.json / INDEX.md from what is on disk.
+
+    Kept in step with raw/ + text/ on every run, so the catalogs cannot drift
+    behind the archive the way they do if they are only written when something
+    new is downloaded."""
+    rows = []
+    for name in sorted(os.listdir(os.path.join(DIR, 'raw'))):
+        if not name.endswith('.htm'):
+            continue
+        txt = os.path.join(DIR, 'text', name.replace('.htm', '.txt'))
+        if not os.path.exists(txt):
+            continue
+        body = open(txt, encoding='utf-8', errors='replace').read()
+        title = body.split('\n', 1)[0].strip()
+        date = re.match(r't(\d{8})_', name)
+        rows.append({'file': name,
+                     'date': date.group(1) if date else '',
+                     'title': title,
+                     'chars': len(body),
+                     'url': 'http://gks.mof.gov.cn/tongjishuju/%s/%s' % (
+                         (date.group(1)[:6] if date else ''), name)})
+    rows.sort(key=lambda r: r['date'])
+    json.dump(rows, open(os.path.join(DIR, 'index.json'), 'w'),
+              ensure_ascii=False, indent=1)
+
+    span = '%s\u2013%s' % (rows[0]['date'], rows[-1]['date']) if rows else '-'
+    md = ['# MOF 全国财政收支情况 — archived reports', '',
+          'Source: https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhiqingkuang/', '',
+          '%d reports, %s' % (len(rows), span), '',
+          '| Date | Title | Text file |', '|---|---|---|']
+    for r in rows:
+        d = r['date']
+        md.append('| %s-%s-%s | %s | `text/%s` |' % (
+            d[:4], d[4:6], d[6:8], r['title'], r['file'].replace('.htm', '.txt')))
+    open(os.path.join(DIR, 'INDEX.md'), 'w', encoding='utf-8').write('\n'.join(md) + '\n')
+    print(f'  index.json / INDEX.md: {len(rows)} reports {span}')
+
 # ---- parsing into fiscal_series.json ----
 TAX = [('国内增值税', r'国内增值税'), ('国内消费税', r'国内消费税'), ('企业所得税', r'企业所得税'),
        ('个人所得税', r'个人所得税'), ('进口货物增值税、消费税', r'进口货物增值税、?消费税'), ('关税', r'关税'),
@@ -151,4 +190,5 @@ if __name__ == '__main__':
     print('Fetching MOF 全国财政收支情况 ...')
     fetch_listings()
     download_and_extract(article_urls())
+    write_catalog()
     parse()
