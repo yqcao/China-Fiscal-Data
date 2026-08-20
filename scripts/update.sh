@@ -8,21 +8,24 @@ set -euo pipefail
 cd "$(dirname "$0")/.."          # repo root
 PY=${PYTHON:-python3}
 
-echo "==> 1/4 General Public Budget + Government Fund"
+echo "==> 1/5 General Public Budget + Government Fund"
 $PY scripts/fetch_fiscal.py
 
-echo "==> 2/4 Local Government Bond issuance (+ new special YTD)"
+echo "==> 2/5 Local Government Bond issuance (+ new special YTD)"
 $PY scripts/fetch_bonds.py
 
-echo "==> 3/4 Principal repayment"
+echo "==> 3/5 Principal repayment"
 $PY scripts/fetch_repayment.py
 
-echo "==> 4/4 Rebuild fiscal-monitor.html"
+echo "==> 4/5 Rebuild fiscal-monitor.html"
 $PY scripts/build_monitor.py
+
+echo "==> 5/5 Rebuild fiscal-drag.html"
+$PY scripts/build_fiscal_drag.py
 
 if [[ "${1:-}" == "--commit" ]]; then
   echo "==> committing"
-  git add fiscal-monitor.html data/*/*.json data/*/raw* data/*/listing* data/*/text data/*/markdown data/*/*.txt 2>/dev/null || true
+  git add fiscal-monitor.html fiscal-drag.html index.html data/*/*.json data/*/raw* data/*/listing* data/*/text data/*/markdown data/*/*.txt 2>/dev/null || true
   git commit -m "Data refresh: $(date +%Y-%m-%d)" \
     -m "Re-scraped MOF sources and rebuilt the monitor." || { echo "nothing to commit"; exit 0; }
   git push

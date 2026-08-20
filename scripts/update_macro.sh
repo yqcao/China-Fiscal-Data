@@ -25,10 +25,11 @@ done
 
 echo "==> build pages"
 $PY scripts/build_macro.py
+$PY scripts/build_fiscal_drag.py || echo "   (build_fiscal_drag failed — continuing)"
 
 if [[ "${1:-}" == "--commit" ]]; then
   echo "==> committing"
-  git add data/macro/*.json *.html scripts/fetch_*.py scripts/build_macro.py 2>/dev/null || true
+  git add data/macro/*.json *.html scripts/fetch_*.py scripts/build_macro.py scripts/build_fiscal_drag.py 2>/dev/null || true
   git commit -m "Macro data refresh: $(date +%Y-%m-%d)" && git push || echo "nothing to commit"
 fi
 echo "Done. Open the *.html pages (or push for GitHub Pages)."
