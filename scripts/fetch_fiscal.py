@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
 """Refresh the General Public Budget / Government Fund series.
 
-Source: MOF 全国财政收支情况
-  https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhiqingkuang/
+Sources: MOF 全国财政收支情况, crawled from BOTH listings —
+  国库司 (origin, publishes first)
+    https://gks.mof.gov.cn/tongjishuju/
+  专题页 (aggregation, can lag the origin by a week or more)
+    https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhiqingkuang/
+
+The 专题 page is an aggregation and does not always pick a report up promptly —
+2026年1-7月 was live on 国库司 on 2026-08-14 but still absent from 专题 a week
+later. Crawling only 专题 therefore silently misses fresh months, so both are
+read and their article URLs merged.
 
 Re-downloads the listing pages, fetches any new monthly report (skips ones
 already on disk), extracts clean text, and regenerates data/mof-reports/
@@ -13,6 +21,10 @@ import os, re, html, time, json, urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR  = os.path.join(ROOT, 'data', 'mof-reports')
 LIST = 'https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhiqingkuang'
+GKS  = 'https://gks.mof.gov.cn/tongjishuju'
+# (tag, base url, local listing dir)
+SOURCES = [('gks', GKS, 'listing_gks'), ('topic', LIST, 'listing')]
+ART = re.compile(r'href="((?:https?://gks\.mof\.gov\.cn/tongjishuju/|\./)[^"]*?t\d{8}_\d+\.htm)"')
 UA   = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
 
 def get(url):
@@ -20,18 +32,34 @@ def get(url):
     return urllib.request.urlopen(req, timeout=60).read().decode('utf-8', 'replace')
 
 def fetch_listings():
-    os.makedirs(os.path.join(DIR, 'listing'), exist_ok=True)
-    first = get(LIST + '/index.html')
-    open(os.path.join(DIR, 'listing', 'index.html'), 'w', encoding='utf-8').write(first)
-    n = int(re.search(r'countPage\s*=\s*(\d+)', first).group(1))
-    print(f'  {n} listing pages')
-    for i in range(1, n):
+    for tag, base, sub in SOURCES:
+        d = os.path.join(DIR, sub)
+        os.makedirs(d, exist_ok=True)
         try:
-            t = get(f'{LIST}/index_{i}.html')
-            open(os.path.join(DIR, 'listing', f'index_{i}.html'), 'w', encoding='utf-8').write(t)
-            time.sleep(0.2)
+            # NB: the directory URL, not /index.html — on 国库司 the latter redirects
+            # to MOF's 404 page, which still carries stray article links and would
+            # quietly poison the URL list.
+            first = get(base + '/')
         except Exception as e:
-            print('  listing', i, 'failed:', e)
+            print(f'  {tag}: listing unreachable ({e}) — skipping')
+            continue
+        if not ART.search(first):
+            print(f'  {tag}: listing has no article links (error page?) — skipping')
+            continue
+        open(os.path.join(d, 'index.html'), 'w', encoding='utf-8').write(first)
+        m = re.search(r'countPage\s*=\s*(\d+)', first)
+        n = int(m.group(1)) if m else 1
+        print(f'  {tag}: {n} listing pages')
+        for i in range(1, n):
+            try:
+                t = get(f'{base}/index_{i}.html')
+                if not ART.search(t):
+                    print(f'  {tag} listing {i}: no article links — skipped')
+                    continue
+                open(os.path.join(d, f'index_{i}.html'), 'w', encoding='utf-8').write(t)
+                time.sleep(0.2)
+            except Exception as e:
+                print(f'  {tag} listing {i} failed:', e)
 
 def article_urls():
     # merge with the existing record: the live listing rolls (old reports scroll
@@ -39,11 +67,18 @@ def article_urls():
     path = os.path.join(DIR, 'article_urls.txt')
     urls = open(path).read().split() if os.path.exists(path) else []
     seen = set(urls)
-    for f in sorted(os.listdir(os.path.join(DIR, 'listing'))):
-        t = open(os.path.join(DIR, 'listing', f), encoding='utf-8', errors='replace').read()
-        for u in re.findall(r'href="(https?://gks\.mof\.gov\.cn/tongjishuju/[^"]+\.htm)"', t):
-            if u not in seen:
-                seen.add(u); urls.append(u)
+    for _, _, sub in SOURCES:
+        d = os.path.join(DIR, sub)
+        if not os.path.isdir(d):
+            continue
+        for f in sorted(os.listdir(d)):
+            t = open(os.path.join(d, f), encoding='utf-8', errors='replace').read()
+            for u in ART.findall(t):
+                if u.startswith('./'):                     # 国库司 uses relative hrefs
+                    u = 'http://gks.mof.gov.cn/tongjishuju/' + u[2:]
+                u = u.replace('https://gks.', 'http://gks.')   # match the archived scheme
+                if u not in seen:
+                    seen.add(u); urls.append(u)
     open(path, 'w').write('\n'.join(urls) + '\n')
     return urls
 

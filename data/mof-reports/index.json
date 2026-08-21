@@ -567,6 +567,13 @@
   "url": "http://gks.mof.gov.cn/tongjishuju/201607/t20160715_2358299.htm"
  },
  {
+  "file": "t20160812_2386335.htm",
+  "date": "20160812",
+  "title": "2016年7月财政收支情况",
+  "chars": 2214,
+  "url": "http://gks.mof.gov.cn/tongjishuju/201608/t20160812_2386335.htm"
+ },
+ {
   "file": "t20160913_2416150.htm",
   "date": "20160913",
   "title": "2016年8月财政收支情况",
@@ -1279,5 +1286,12 @@
   "title": "2026年上半年财政收支情况",
   "chars": 1412,
   "url": "http://gks.mof.gov.cn/tongjishuju/202607/t20260722_3993943.htm"
+ },
+ {
+  "file": "t20260814_3995497.htm",
+  "date": "20260814",
+  "title": "2026年1-7月财政收支情况",
+  "chars": 1411,
+  "url": "http://gks.mof.gov.cn/tongjishuju/202608/t20260814_3995497.htm"
  }
 ]
