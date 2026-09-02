@@ -5,6 +5,7 @@ DATA = json.dumps(json.load(open(base+'data/mof-reports/fiscal_series.json')), e
 LGB  = json.dumps(json.load(open(base+'data/mof-research-reports/lgb_series.json')), ensure_ascii=False, separators=(',',':'))
 NSB  = json.dumps(json.load(open(base+'data/mof-research-reports/new_special_ytd.json')), separators=(',',':'))
 REP  = json.dumps(json.load(open(base+'data/mof-debt-balance/repayment_series.json')), separators=(',',':'))
+HOLD = json.dumps(json.load(open(base+'data/mof-research-reports/lgb_holders.json')), ensure_ascii=False, separators=(',',':'))
 TGT  = json.dumps(json.load(open(base+'data/budget-targets.json'))['targets'], separators=(',',':'))
 
 HTML = r'''<!DOCTYPE html>
@@ -136,6 +137,8 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
       <p class="note" data-l="Bars: general vs special bonds (RMB bn, left) · Line: average issue rate (%, right)|柱：一般债与专项债（十亿元，左）· 线：平均发行利率（%，右）"></p><div id="c_lgb" class="chart"></div></div>
     <div class="card"><h3 data-l="Refinancing Issuance vs Principal Repayment|再融资发行 vs 到期偿还本金"></h3>
       <p class="note" data-l="Monthly principal repaid, split by funding source (bars), vs refinancing-bond issuance (line), RMB bn|当月到期偿还本金（按资金来源堆叠）与再融资债券发行（线），十亿元"></p><div id="c_lgb_refi" class="chart"></div></div>
+    <div class="card"><h3 data-l="Who Holds the Local-Government Bonds|地方政府债券投资者结构"></h3>
+      <p class="note" data-l="Share of the outstanding LGB stock by holder, % (bands sum to 100). Commercial banks still hold the bulk, but their share has fallen steadily since 2021 as funds and wealth-management products took it up.|按持有机构划分的地方政府债券存量占比，%（合计 100）。商业银行仍持有绝大部分，但占比自 2021 年以来持续下降，主要由非法人产品承接。"></p><div id="c_lgb_hold" class="chart"></div></div>
     <div class="card"><h3 data-l="New Special-Bond Issuance, YTD by Year|新增专项债发行（年初至今，分年度）"></h3>
       <p class="note" data-l="Cumulative new special-bond issuance through each month; one line per year (RMB bn)|累计新增专项债发行，每年一条线（十亿元）"></p><div id="c_lgb_ytd" class="chart"></div></div>
     <div class="subhead"><span data-l="Use of New-Bond Proceeds (investment targets)|新增债券资金投向"></span> <select id="lgbsel"></select></div>
@@ -159,6 +162,7 @@ const DATA = __DATA__;
 const LGB  = __LGB__;
 const NSB  = __NSB__;
 const REP  = __REP__;
+const HOLD = __HOLD__;
 const TGT  = __TGT__;
 // Unify units: MOF fiscal figures are in 亿元 — convert to RMB billion (十亿元, ÷10).
 const MFIELDS=['pub_rev','tax','nontax','pub_rev_central','pub_rev_local','pub_exp','pub_exp_central','pub_exp_local','fund_rev','land_rev','fund_exp'];
@@ -167,7 +171,7 @@ DATA.forEach(r=>{MFIELDS.forEach(k=>{if(r[k]&&r[k].v!=null)r[k].v=+(r[k].v/10).t
   (r.exp_items||[]).forEach(i=>i.v=+(i.v/10).toFixed(2));});
 
 const dark=matchMedia('(prefers-color-scheme: dark)').matches;
-const AX=dark?'#9aa':'#666',GRID=dark?'#2c2e33':'#eee',FG=dark?'#e6e6e6':'#1a1a1a';
+const AX=dark?'#9aa':'#666',GRID=dark?'#2c2e33':'#eee',FG=dark?'#e6e6e6':'#1a1a1a',CARD=dark?'#1e1f23':'#fff';
 const C={rev:'#c00',exp:'#1463ff',fund:'#e07b00',land:'#0a9d6b',gen:'#1463ff',spec:'#c00',rate:'#e07b00',mat:'#0a9d6b'};
 const PIE=['#c00','#1463ff','#e07b00','#0a9d6b','#7c4dff','#d81b60','#00838f','#5d4037','#558b2f','#ef6c00','#3949ab','#00897b','#c2185b','#6d4c41','#1e88e5','#43a047','#8e24aa'];
 const charts={}; const mk=id=>charts[id]=echarts.init(document.getElementById(id));
@@ -342,7 +346,7 @@ function drawLGB(){
     xAxis:{type:'category',data:lgbP,axisLabel:{color:AX,rotate:45,fontSize:10},axisLine:{lineStyle:{color:GRID}}},
     yAxis:{type:'value',name:'%',axisLabel:{color:AX,formatter:'{value}%'},splitLine:{lineStyle:{color:GRID}},nameTextStyle:{color:AX}},
     series:[{type:'line',smooth:true,showSymbol:false,lineStyle:{width:2,color:C.spec},itemStyle:{color:C.spec},data:yo,areaStyle:{opacity:.06,color:C.spec}}]},true);
-  drawRefiRepay();
+  drawRefiRepay();drawHolders();
 }
 function drawRefiRepay(){
   // monthly principal repayment derived from YTD (亿 -> RMB bn); only diff consecutive months
@@ -371,6 +375,37 @@ const USESHORT=[[/municipal.*industrial park/i,'Municipal & industrial-park infr
  [/agricultur|forestry|water/i,'Agriculture, forestry & water'],[/health/i,'Healthcare'],[/educat/i,'Education'],
  [/^others?$/i,'Others']];
 function useShort(f){for(const[re,s]of USESHORT)if(re.test(f))return s; return f.charAt(0).toUpperCase()+f.slice(1);}
+// Holder composition of the LGB stock. Bands are shares of the whole stock and
+// sum to 100, so this is a straight 100% stacked area — no normalisation needed.
+// Starts 2021-03: the two earlier reports split out 政策性银行 and folded funds
+// into "other domestic", so their bands are not the same series.
+const HOLDCAT=[  // stacked bottom-up, largest first; hues validated light & dark
+  {k:'banks',    en:'Commercial banks', zh:'商业银行',   short_en:'Banks', short_zh:'银行', l:'#2a78d6', d:'#3987e5'},
+  {k:'products', en:'Funds & WMPs',     zh:'非法人产品', short_en:'Funds', short_zh:'产品', l:'#eb6834', d:'#d95926'},
+  {k:'other_domestic', en:'Other domestic',        zh:'其他境内机构', l:'#1baf7a', d:'#199e70'},
+  {k:'other_market',   en:'Exchange market',       zh:'其他市场',    l:'#4a3aa7', d:'#9085e9'},
+  {k:'insurance',      en:'Insurance',             zh:'保险机构',    l:'#eda100', d:'#c98500'},
+  {k:'foreign',        en:'Foreign institutions',  zh:'境外机构',    l:'#e87ba4', d:'#d55181'}];
+function drawHolders(){
+  const H=HOLD.filter(r=>r.period>='2021-03'&&r.products), P=H.map(r=>r.period);
+  const pick=c=>dark?c.d:c.l;
+  const series=HOLDCAT.map((c,i)=>({
+    name:L(c.en,c.zh), type:'line', stack:'h', smooth:false, showSymbol:false,
+    // the band edge is drawn in the card colour: a 2px surface gap, not a dark rule
+    lineStyle:{width:2, color:CARD}, emphasis:{focus:'series'},
+    areaStyle:{color:pick(c), opacity:1}, itemStyle:{color:pick(c)},
+    // Direct-label the two bands that carry the story; the rest rely on legend+tooltip.
+    // The name goes in the label: it sits on the band's top edge, so a bare "11%"
+    // would read as a level on the cumulative axis rather than that band's share.
+    endLabel:(i<2)?{show:true,color:AX,fontSize:10,formatter:p=>L(c.short_en,c.short_zh)+' '+p.value.toFixed(0)+'%'}:{show:false},
+    data:H.map(r=>r[c.k]?r[c.k].pct:null)}));
+  charts.c_lgb_hold.setOption({grid:{left:44,right:96,top:30,bottom:48},textStyle:{color:FG},
+    legend:{top:0,textStyle:{color:AX},data:series.map(s=>s.name)},
+    tooltip:{trigger:'axis',valueFormatter:v=>v==null?'–':v.toFixed(2)+'%'},
+    xAxis:{type:'category',boundaryGap:false,data:P,axisLabel:{color:AX,rotate:45,fontSize:10},axisLine:{lineStyle:{color:GRID}}},
+    yAxis:{type:'value',max:100,name:'%',axisLabel:{color:AX,formatter:'{value}%'},splitLine:{lineStyle:{color:GRID}},nameTextStyle:{color:AX}},
+    series},true);
+}
 function fillLgbSel(){const s=document.getElementById('lgbsel');const cur=s.value;s.innerHTML='';
   LGB.filter(r=>r.use&&r.use.length).slice().reverse().forEach(r=>{const o=document.createElement('option');o.value=r.period;o.textContent=r.period;s.appendChild(o);});
   if(cur)s.value=cur;}
@@ -409,7 +444,7 @@ function renderKPIs(){
 
 function applyDataL(){document.querySelectorAll('[data-l]').forEach(e=>{const[en,zh]=e.getAttribute('data-l').split('|');e.textContent=lang==='en'?en:zh;});}
 
-['c_gen_rev','c_gen_exp','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_exec_gen_rev','c_exec_gen_exp','c_exec_fund_rev','c_exec_fund_exp','c_lgb','c_lgb_refi','c_lgb_ytd','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);
+['c_gen_rev','c_gen_exp','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_exec_gen_rev','c_exec_gen_exp','c_exec_fund_rev','c_exec_fund_exp','c_lgb','c_lgb_refi','c_lgb_hold','c_lgb_ytd','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);
 document.getElementById('taxsel').onchange=e=>drawComposition('c_tax_pie','c_tax_grow','tax_items',e.target.value);
 document.getElementById('expsel').onchange=e=>drawComposition('c_exp_pie','c_exp_grow','exp_items',e.target.value);
 document.getElementById('lgbsel').onchange=e=>drawUse(e.target.value);
@@ -431,6 +466,6 @@ fillSel('taxsel');fillSel('expsel');fillLgbSel();applyDataL();drawAll();
 </body>
 </html>
 '''
-HTML=HTML.replace('__DATA__',DATA).replace('__LGB__',LGB).replace('__NSB__',NSB).replace('__REP__',REP).replace('__TGT__',TGT)
+HTML=HTML.replace('__DATA__',DATA).replace('__LGB__',LGB).replace('__NSB__',NSB).replace('__REP__',REP).replace('__HOLD__',HOLD).replace('__TGT__',TGT)
 open(base+'fiscal-monitor.html','w',encoding='utf-8').write(HTML)
 print('wrote fiscal-monitor.html',round(len(HTML)/1024,1),'KB')
