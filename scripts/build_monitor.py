@@ -138,10 +138,10 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
     <div class="card"><h3 data-l="Refinancing Issuance vs Principal Repayment|再融资发行 vs 到期偿还本金"></h3>
       <p class="note" data-l="Monthly principal repaid, split by funding source (bars), vs refinancing-bond issuance (line), RMB bn|当月到期偿还本金（按资金来源堆叠）与再融资债券发行（线），十亿元"></p><div id="c_lgb_refi" class="chart"></div></div>
     <div class="subhead"><span data-l="Who Holds the Government Bonds|政府债券持有者结构"></span></div>
-    <div class="card"><p class="note" data-l="Share of each bond\u2019s outstanding stock by holder, % (bands sum to 100). Same holder split, same order in both panels. Foreign institutions hold 4.6% of central government bonds but 0.03% of local ones \u2014 offshore money buys the sovereign, not the province.|按持有机构划分的存量占比，%（合计 100）。两图口径与顺序一致。境外机构持有国债 4.6%，持有地方债仅 0.03%。"></p></div>
+    <div class="card"><p class="note" data-l="Share of each bond’s outstanding stock by holder, % (bands sum to 100). Same holder split, same order in both panels. Foreign institutions hold 4.6% of central government bonds but 0.03% of local ones — offshore money buys the sovereign, not the province.|按持有机构划分的存量占比，%（合计 100）。两图口径与顺序一致。境外机构持有国债 4.6%，持有地方债仅 0.03%。"></p></div>
     <div class="row2">
-      <div class="card"><h3 data-l="Central Government Bonds (\u56fd\u503a)|国债"></h3><div id="c_hold_cgb" class="chart sm"></div></div>
-      <div class="card"><h3 data-l="Local Government Bonds (\u5730\u65b9\u653f\u5e9c\u503a)|地方政府债"></h3><div id="c_hold_lgb" class="chart sm"></div></div>
+      <div class="card"><h3 data-l="Central Government Bonds (CGB)|国债"></h3><div id="c_hold_cgb" class="chart sm"></div></div>
+      <div class="card"><h3 data-l="Local Government Bonds (LGB)|地方政府债"></h3><div id="c_hold_lgb" class="chart sm"></div></div>
     </div>
     <div class="card"><h3 data-l="New Special-Bond Issuance, YTD by Year|新增专项债发行（年初至今，分年度）"></h3>
       <p class="note" data-l="Cumulative new special-bond issuance through each month; one line per year (RMB bn)|累计新增专项债发行，每年一条线（十亿元）"></p><div id="c_lgb_ytd" class="chart"></div></div>
