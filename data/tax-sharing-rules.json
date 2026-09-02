@@ -1,43 +1,202 @@
 {
-  "note": "Statutory central/local division of each tax line reported in the MOF monthly 全国财政收支情况. Percentages are of the tax as collected. 'mixed' means the reported line bundles items that are split differently, so no single ratio applies. Rules current as of 2026-09; superseded ratios (VAT 75/25 before 2016, securities stamp duty 97/3 before 2016) are not shown.",
+  "note": "Statutory central/local division of each tax line reported in the MOF monthly 全国财政收支情况. Percentages are of the tax as collected. Stamp duty is split using the 证券交易印花税 sub-line MOF reports beside it. 'null' means the reported line bundles items on different rules with no published component split, so no ratio applies. Rules current as of 2026-09; superseded ratios (VAT 75/25 before 2016, securities stamp duty 97/3 before 2016) are not shown.",
   "sources": {
     "1993": "国务院关于实行分税制财政管理体制的决定 (国发〔1993〕85号)",
     "2001": "国务院关于印发所得税收入分享改革方案的通知 (国发〔2001〕37号)",
     "2003": "国务院关于明确中央与地方所得税收入分享比例的通知 (国发〔2003〕26号)",
     "2016s": "国务院关于调整证券交易印花税中央与地方分享比例的通知 (2016)",
     "2016v": "国务院关于印发全面推开营改增试点后调整中央与地方增值税收入划分过渡方案的通知 (国发〔2016〕26号)",
-    "2019": "国务院关于印发实施更大规模减税降费后调整中央与地方收入划分改革推进方案的通知 (国发〔2019〕21号)"
+    "2019": "国务院关于印发实施更大规模减税降费后调整中央与地方收入划分改革推进方案的通知 (国发〔2019〕21号)",
+    "1993t": "国务院关于实行分税制财政管理体制的决定 (国发〔1993〕85号) — 船舶吨税列为中央固定收入，车船税、烟叶税列为地方固定收入"
   },
   "taxes": [
-    {"cn": "国内增值税", "en": "Domestic VAT", "central": 50, "local": 50, "src": ["2016v", "2019"],
-     "note": "Local half accrues to the place of payment. 50/50 was a 2-3 year transitional scheme in 2016 and was made permanent in 2019."},
-    {"cn": "企业所得税", "en": "Corporate income tax", "central": 60, "local": 40, "src": ["2001", "2003"],
-     "note": "60/40 since 2003 (50/50 in 2002). Tax paid by railways, the postal service, the major state banks, the policy banks, PetroChina, Sinopec and offshore oil firms stays 100% central and is outside the split."},
-    {"cn": "个人所得税", "en": "Personal income tax", "central": 60, "local": 40, "src": ["2001", "2003"],
-     "note": "Same scheme as the corporate income tax."},
-    {"cn": "国内消费税", "en": "Domestic consumption tax", "central": 100, "local": 0, "src": ["1993", "2019"],
-     "note": "Central fixed revenue. The 2019 plan moves some items from the production to the wholesale/retail stage and assigns the resulting increment to local government; the base stays central."},
-    {"cn": "进口货物增值税、消费税", "en": "Import VAT & consumption tax", "central": 100, "local": 0, "src": ["1993"],
-     "note": "Collected by customs on the state's behalf."},
-    {"cn": "关税", "en": "Customs duty", "central": 100, "local": 0, "src": ["1993"]},
-    {"cn": "出口退税", "en": "Export tax rebates", "central": 100, "local": 0, "src": ["1993"],
-     "note": "A negative revenue line — a refund, not a receipt. Borne by the central budget apart from a 1993 local base amount."},
-    {"cn": "车辆购置税", "en": "Vehicle purchase tax", "central": 100, "local": 0, "src": ["1993"],
-     "note": "Central fixed revenue, earmarked for transport spending."},
-    {"cn": "城市维护建设税", "en": "Urban maintenance & construction tax", "central": 0, "local": 100, "src": ["1993"],
-     "note": "Excluding the portion remitted centrally by bank and insurance head offices."},
-    {"cn": "资源税", "en": "Resource tax", "central": 0, "local": 100, "src": ["1993"],
-     "note": "Offshore petroleum resource tax is central; everything else is local."},
-    {"cn": "契税", "en": "Deed tax", "central": 0, "local": 100, "src": ["1993"]},
-    {"cn": "房产税", "en": "Property tax", "central": 0, "local": 100, "src": ["1993"]},
-    {"cn": "城镇土地使用税", "en": "Urban land use tax", "central": 0, "local": 100, "src": ["1993"]},
-    {"cn": "土地增值税", "en": "Land appreciation tax", "central": 0, "local": 100, "src": ["1993"]},
-    {"cn": "耕地占用税", "en": "Farmland occupation tax", "central": 0, "local": 100, "src": ["1993"]},
-    {"cn": "环境保护税", "en": "Environmental protection tax", "central": 0, "local": 100, "src": ["1993"],
-     "note": "Local fixed revenue since the tax began in 2018."},
-    {"cn": "印花税", "en": "Stamp duty", "central": null, "local": null, "src": ["2016s"],
-     "note": "The reported line bundles two different rules: securities transaction stamp duty has been 100% central since 2016 (97/3 before), while all other stamp duty is 100% local. MOF does not split the monthly line, so no single ratio applies."},
-    {"cn": "其他税收", "en": "Other taxes", "central": null, "local": null, "src": [],
-     "note": "A residual covering several small taxes on different rules."}
+    {
+      "cn": "国内增值税",
+      "en": "Domestic VAT",
+      "central": 50,
+      "local": 50,
+      "src": [
+        "2016v",
+        "2019"
+      ],
+      "note": "Local half accrues to the place of payment. 50/50 was a 2-3 year transitional scheme in 2016 and was made permanent in 2019."
+    },
+    {
+      "cn": "企业所得税",
+      "en": "Corporate income tax",
+      "central": 60,
+      "local": 40,
+      "src": [
+        "2001",
+        "2003"
+      ],
+      "note": "60/40 since 2003 (50/50 in 2002). Tax paid by railways, the postal service, the major state banks, the policy banks, PetroChina, Sinopec and offshore oil firms stays 100% central and is outside the split."
+    },
+    {
+      "cn": "个人所得税",
+      "en": "Personal income tax",
+      "central": 60,
+      "local": 40,
+      "src": [
+        "2001",
+        "2003"
+      ],
+      "note": "Same scheme as the corporate income tax."
+    },
+    {
+      "cn": "国内消费税",
+      "en": "Domestic consumption tax",
+      "central": 100,
+      "local": 0,
+      "src": [
+        "1993",
+        "2019"
+      ],
+      "note": "Central fixed revenue. The 2019 plan moves some items from the production to the wholesale/retail stage and assigns the resulting increment to local government; the base stays central."
+    },
+    {
+      "cn": "进口货物增值税、消费税",
+      "en": "Import VAT & consumption tax",
+      "central": 100,
+      "local": 0,
+      "src": [
+        "1993"
+      ],
+      "note": "Collected by customs on the state's behalf."
+    },
+    {
+      "cn": "关税",
+      "en": "Customs duty",
+      "central": 100,
+      "local": 0,
+      "src": [
+        "1993"
+      ]
+    },
+    {
+      "cn": "出口退税",
+      "en": "Export tax rebates",
+      "central": 100,
+      "local": 0,
+      "src": [
+        "1993"
+      ],
+      "note": "A negative revenue line — a refund, not a receipt. Borne by the central budget apart from a 1993 local base amount."
+    },
+    {
+      "cn": "车辆购置税",
+      "en": "Vehicle purchase tax",
+      "central": 100,
+      "local": 0,
+      "src": [
+        "1993"
+      ],
+      "note": "Central fixed revenue, earmarked for transport spending."
+    },
+    {
+      "cn": "证券交易印花税",
+      "en": "Securities transaction stamp duty",
+      "central": 100,
+      "local": 0,
+      "src": [
+        "2016s"
+      ],
+      "note": "100% central since 2016; previously 97% central / 3% to Shanghai and Shenzhen. MOF reports it monthly as a 其中 sub-line of 印花税."
+    },
+    {
+      "cn": "其他印花税",
+      "en": "Other stamp duty",
+      "central": 0,
+      "local": 100,
+      "src": [
+        "1993"
+      ],
+      "note": "Local fixed revenue. Derived as 印花税 less the 证券交易印花税 sub-line MOF reports beside it."
+    },
+    {
+      "cn": "城市维护建设税",
+      "en": "Urban maintenance & construction tax",
+      "central": 0,
+      "local": 100,
+      "src": [
+        "1993"
+      ],
+      "note": "Excluding the portion remitted centrally by bank and insurance head offices."
+    },
+    {
+      "cn": "资源税",
+      "en": "Resource tax",
+      "central": 0,
+      "local": 100,
+      "src": [
+        "1993"
+      ],
+      "note": "Offshore petroleum resource tax is central; everything else is local."
+    },
+    {
+      "cn": "契税",
+      "en": "Deed tax",
+      "central": 0,
+      "local": 100,
+      "src": [
+        "1993"
+      ]
+    },
+    {
+      "cn": "房产税",
+      "en": "Property tax",
+      "central": 0,
+      "local": 100,
+      "src": [
+        "1993"
+      ]
+    },
+    {
+      "cn": "城镇土地使用税",
+      "en": "Urban land use tax",
+      "central": 0,
+      "local": 100,
+      "src": [
+        "1993"
+      ]
+    },
+    {
+      "cn": "土地增值税",
+      "en": "Land appreciation tax",
+      "central": 0,
+      "local": 100,
+      "src": [
+        "1993"
+      ]
+    },
+    {
+      "cn": "耕地占用税",
+      "en": "Farmland occupation tax",
+      "central": 0,
+      "local": 100,
+      "src": [
+        "1993"
+      ]
+    },
+    {
+      "cn": "环境保护税",
+      "en": "Environmental protection tax",
+      "central": 0,
+      "local": 100,
+      "src": [
+        "1993"
+      ],
+      "note": "Local fixed revenue since the tax began in 2018."
+    },
+    {
+      "cn": "其他税收",
+      "en": "Other taxes",
+      "central": null,
+      "local": null,
+      "src": [
+        "1993t"
+      ],
+      "note": "MOF names this line 车船税、船舶吨税、烟叶税等其他各项税收收入合计. Of the taxes it names, 车船税 and 烟叶税 are local fixed revenue and 船舶吨税 is central, and the '等' covers further small taxes MOF does not enumerate. It is predominantly local, but MOF publishes no component figures, so no ratio is assigned rather than guessed."
+    }
   ]
 }

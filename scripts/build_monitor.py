@@ -172,6 +172,7 @@ const TGT  = __TGT__;
 const MFIELDS=['pub_rev','tax','nontax','pub_rev_central','pub_rev_local','pub_exp','pub_exp_central','pub_exp_local','fund_rev','land_rev','fund_exp'];
 DATA.forEach(r=>{MFIELDS.forEach(k=>{if(r[k]&&r[k].v!=null)r[k].v=+(r[k].v/10).toFixed(2);});
   (r.tax_items||[]).forEach(i=>i.v=+(i.v/10).toFixed(2));
+  (r.tax_sub||[]).forEach(i=>i.v=+(i.v/10).toFixed(2));   // same units as tax_items
   (r.exp_items||[]).forEach(i=>i.v=+(i.v/10).toFixed(2));});
 
 const dark=matchMedia('(prefers-color-scheme: dark)').matches;

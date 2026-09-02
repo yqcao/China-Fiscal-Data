@@ -39,13 +39,24 @@ dec  = next(r for r in fis if r['year'] == year and r['month'] == 12)
 # refund the centre pays out, so it enters the split as negative central revenue.
 REBATE = '出口退税'
 
+# MOF reports 证券交易印花税 as a 其中 sub-line of 印花税. The two halves follow
+# opposite rules — securities 100% central, everything else 100% local — so the
+# parent line is dropped and the residual becomes its own line.
+amounts = {i['name']: i['v'] for i in dec['tax_items']}
+sub     = {i['name']: i['v'] for i in dec.get('tax_sub', [])}
+if '印花税' in amounts and '证券交易印花税' in sub:
+    amounts['证券交易印花税'] = sub['证券交易印花税']
+    amounts['其他印花税'] = round(amounts['印花税'] - sub['证券交易印花税'], 2)
+    del amounts['印花税']
+else:
+    print('  WARNING stamp-duty sub-line missing; 印花税 left unallocated')
+
 taxes = []
-for it in dec['tax_items']:
-    cn = it['name']
+for cn, amt_yi in amounts.items():
     ru = RULE.get(cn)
     if not ru:
         print(f'  WARNING no rule for {cn}'); continue
-    amt = it['v'] * YI2BN * (-1 if cn == REBATE else 1)
+    amt = amt_yi * YI2BN * (-1 if cn == REBATE else 1)
     known = ru['central'] is not None
     taxes.append({
         'cn': cn, 'en': ru['en'], 'amt': round(amt, 1),
@@ -194,8 +205,8 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
   <ul>
     <li><b data-l="Estimate, not outturn.|估算，非决算。"></b>
       <span data-l="Section 1 applies the statutory ratio to the national tax take. It ignores the carve-outs written into the rules — income tax from the railways, the major state banks, the policy banks, PetroChina, Sinopec and offshore oil firms is 100% central and never enters the 60/40 split — so it overstates the local share of income tax.|第一部分以法定比例折算全国税收，未扣除规则中的例外：铁路、国有大型银行、政策性银行、中石油、中石化及海洋石油企业的所得税全额归中央，不参与六四分成，故高估了地方所得税份额。"></span></li>
-    <li><b data-l="Two lines carry no ratio.|两个税种无单一比例。"></b>
-      <span data-l="Stamp duty bundles securities transaction stamp duty (100% central since 2016) with all other stamp duty (100% local); “other taxes” is a residual of several small taxes on different rules. Both are shown as unallocated rather than guessed.|印花税包含证券交易印花税（2016年起全额归中央）与其他印花税（全额归地方）；“其他税收”为若干小税种的残差。两者列为未分配，不作推测。"></span></li>
+    <li><b data-l="One line still carries no ratio.|仅一项无单一比例。"></b>
+      <span data-l="Stamp duty is resolved: MOF reports 证券交易印花税 as a sub-line, so the securities half (100% central since 2016) is separated from all other stamp duty (100% local). Only “other taxes” is left unallocated — MOF names it 车船税、船舶吨税、烟叶税等, of which the vehicle-and-vessel and tobacco-leaf taxes are local and the tonnage tax central, but publishes no component figures. It is 0.8% of the tax take.|印花税已可拆分：财政部以“其中”形式单列证券交易印花税，故证券交易部分（2016年起全额归中央）与其他印花税（全额归地方）分列。仅“其他税收”仍未分配——财政部称其为“车船税、船舶吨税、烟叶税等”，其中车船税、烟叶税归地方、船舶吨税归中央，但未公布分项金额。该项占税收 0.8%。"></span></li>
     <li><b data-l="Local revenue here is own revenue.|地方收入为本级口径。"></b>
       <span data-l="地方一般公共预算本级收入 excludes transfers received, while 地方一般公共预算支出 includes transfer-funded spending. That is exactly why the two lines in section 2 diverge, and it is a definitional gap, not a deficit.|地方一般公共预算本级收入不含所获转移支付，而地方一般公共预算支出含转移支付所支撑的支出。这正是第二部分两线背离的原因，属口径差异而非赤字。"></span></li>
   </ul>

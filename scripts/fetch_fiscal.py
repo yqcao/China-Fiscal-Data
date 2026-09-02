@@ -169,6 +169,9 @@ TAX = [('国内增值税', r'国内增值税'), ('国内消费税', r'国内消�
        ('房产税', r'房产税'), ('城镇土地使用税', r'城镇土地使用税'), ('土地增值税', r'土地增值税'),
        ('耕地占用税', r'耕地占用税'), ('环境保护税', r'环境保护税'),
        ('其他税收', r'(?:车船税[^。]*?合计|其他各项税收收入合?计?)')]
+# Reported as "其中" sub-lines of an item already in TAX. Kept out of tax_items so
+# that list stays a clean partition — anything summing it would double-count these.
+SUBTAX = [('证券交易印花税', r'证券交易印花税')]
 EXP = [('教育支出', r'教育支出'), ('科学技术支出', r'科学技术支出'), ('文化旅游体育与传媒支出', r'文化[^。，]*?传媒支出'),
        ('社会保障和就业支出', r'社会保障和就业支出'), ('卫生健康支出', r'(?:卫生健康|医疗卫生)支出'),
        ('节能环保支出', r'节能环保支出'), ('城乡社区支出', r'城乡社区支出'), ('农林水支出', r'农林水支出'),
@@ -221,7 +224,8 @@ def parse():
             'fund_exp_central': metric(t, r'中央政府性基金预算本级支出'),
             'fund_exp_local': metric(t, r'地方政府性基金预算支出'),
             'land_exp': metric(t, r'国有土地使用权出让收入相关支出'),
-            'tax_items': items(gen_rev, TAX), 'exp_items': items(gen_exp, EXP)})
+            'tax_items': items(gen_rev, TAX), 'tax_sub': items(gen_rev, SUBTAX),
+            'exp_items': items(gen_exp, EXP)})
     rows.sort(key=lambda r: (r['year'], r['month']))
     json.dump(rows, open(os.path.join(DIR, 'fiscal_series.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
     print(f'  fiscal_series.json: {len(rows)} reports {rows[0]["period"]}..{rows[-1]["period"]}')
