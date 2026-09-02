@@ -12,7 +12,7 @@ attachments to markdown via `markitdown`, then regenerates:
         special-bond issuance, RMB bn, 2021+)
 Idempotent. Needs markitdown:  uv tool install 'markitdown[pdf,docx]'
 """
-import os, re, json, time, shutil, subprocess, urllib.request
+import os, re, json, time, shutil, difflib, subprocess, urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR  = os.path.join(ROOT, 'data', 'mof-research-reports')
@@ -92,12 +92,35 @@ def download(urls):
     return catalog
 
 # ---- parse English reports -> lgb_series.json ----
-MONTHS = {m: i + 1 for i, m in enumerate(['January','February','March','April','May','June','July','August','September','October','November','December'])}
+MONTHS = [m.lower() for m in ('January','February','March','April','May','June',
+                              'July','August','September','October','November','December')]
+def month_no(name):
+    """MOF's own titles carry typos ('Novbember 2023'): exact match, else nearest."""
+    n = name.lower()
+    if n in MONTHS: return MONTHS.index(n) + 1
+    hit = difflib.get_close_matches(n, MONTHS, n=1, cutoff=0.8)
+    return MONTHS.index(hit[0]) + 1 if hit else None
 def per_en(t):
-    m = re.search(r'\(([A-Za-z]+)\s*,?\s*(\d{4})\)', t)
-    return (int(m.group(2)), MONTHS.get(m.group(1))) if m and MONTHS.get(m.group(1)) else None
+    """(Month, YYYY) from the title; brackets and commas may be full-width."""
+    m = re.search(r'[(（]\s*([A-Za-z]+)\s*[,，]?\s*(\d{4})\s*[)）]', t)
+    if not m: return None
+    mo = month_no(m.group(1))
+    return (int(m.group(2)), mo) if mo else None
+
+# bounded: the boilerplate runs ~300 chars, and an unbounded .*? has swallowed
+# whole paragraphs when the closing phrase only reappears much later in a report
+FOOT = re.compile(r'\d?Dalianisnotincluded.{0,400}?Thefollowings?arethesame\.?\d?', re.I)
+def squeeze(t):
+    """The PDF->markdown step drops word spacing erratically ('bondswereRMB444.38
+    billion') and a footnote can cut a sentence in half. Strip all whitespace,
+    table pipes and rules, and the footnote boilerplate; match space-free below."""
+    z = re.sub(r'-{3,}', '', re.sub(r'\s+', '', t.replace('|', '')))
+    return FOOT.sub('', z)
 def num(p, t):
     m = re.search(p, t, re.I); return float(m.group(1)) if m else None
+def pair(p, t):
+    m = re.search(p, t, re.I)
+    return (float(m.group(1)), float(m.group(2))) if m else (None, None)
 def uses(t):
     seg = re.search(r'investment target.*?fields?:(.*?)(?:In terms of region|Figure|Note:|In terms of maturity)', t, re.I)
     if not seg: return []
@@ -111,28 +134,38 @@ def md_for(c):
     if not c['attachments']: return None
     return os.path.join(DIR, 'markdown', c['month'] + '_' + c['attachments'][0].rsplit('.', 1)[0] + '.md')
 
+FIELDS = ('issue','general','special','new','refi','rate','maturity','secondary','cum_issue')
 def parse_lgb(catalog):
-    rows = []
+    rows = {}
     for c in catalog:
         if 'China Local Government Bond Market Report' not in c['title']: continue
         p = per_en(c['title']); md = md_for(c)
         if not p or not md or not os.path.exists(md): continue
-        t = re.sub(r'\s+', ' ', open(md).read().replace('|', ' '))
-        g = num(r'issuance of general bonds?\s*were\s*RMB\s*([\d.]+)', t)
-        s = num(r'special bonds?\s*were\s*RMB\s*([\d.]+)', t)
-        rows.append({'year': p[0], 'month': p[1], 'period': f'{p[0]}-{p[1]:02d}',
-            'issue': round((g or 0) + (s or 0), 2) if (g is not None and s is not None) else None,
-            'general': g, 'special': s,
-            'new': num(r'new bonds?\s*were\s*RMB\s*([\d.]+)', t),
-            'refi': num(r'refinancing bonds?\s*were\s*RMB\s*([\d.]+)', t),
-            'rate': num(r'interest rate of issued LGBs\s*was\s*([\d.]+)\s*%', t),
-            'maturity': num(r'maturity of issued LGBs\s*was\s*([\d.]+)\s*years', t),
-            'secondary': num(r'spot transaction of LGBs in the\s*secondary market\s*was\s*RMB\s*([\d.]+)', t),
-            'cum_issue': num(r'total issuance of LGBs\s*were\s*RMB\s*([\d.]+)', t),
-            'use': uses(t)})
-    rows.sort(key=lambda x: (x['year'], x['month']))
-    json.dump(rows, open(os.path.join(DIR, 'lgb_series.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
-    print(f'  lgb_series.json: {len(rows)} months {rows[0]["period"]}..{rows[-1]["period"]}')
+        raw = open(md).read()
+        t = re.sub(r'\s+', ' ', raw.replace('|', ' '))   # spaced, for use-of-proceeds
+        z = squeeze(raw)                                 # space-free, for the numbers
+        # Anchor each split to its own sentence: the year-to-date paragraph carries a
+        # second "general/special bonds were RMB..." that used to be matched instead.
+        g, s = pair(r'issuanceofgeneralbondswereRMB([\d.]+)billionandthatofspecialbondswereRMB([\d.]+)', z)
+        n, f = pair(r'issuanceofnewbondswereRMB([\d.]+)billionandthatofrefinancingbondswereRMB([\d.]+)', z)
+        if g is None: g = num(r'issuanceofgeneralbondswereRMB([\d.]+)', z)
+        if s is None: s = num(r'specialbondswereRMB([\d.]+)', z)
+        if n is None: n = num(r'newbondswereRMB([\d.]+)', z)
+        if f is None: f = num(r'refinancingbondswereRMB([\d.]+)', z)
+        row = {'year': p[0], 'month': p[1], 'period': f'{p[0]}-{p[1]:02d}',
+            'issue': round(g + s, 2) if (g is not None and s is not None) else None,
+            'general': g, 'special': s, 'new': n, 'refi': f,
+            'rate': num(r'interestrateofissuedLGBswas([\d.]+)%', z),
+            'maturity': num(r'maturityofissuedLGBswas([\d.]+)years', z),
+            'secondary': num(r'spottransactionofLGBsinthesecondarymarketwasRMB([\d.]+)', z),
+            'cum_issue': num(r'totalissuanceofLGBswereRMB([\d.]+)', z),
+            'use': uses(t)}
+        prev = rows.get(row['period'])                   # keep the more complete report
+        if prev is None or sum(row[k] is not None for k in FIELDS) > sum(prev[k] is not None for k in FIELDS):
+            rows[row['period']] = row
+    out = sorted(rows.values(), key=lambda x: (x['year'], x['month']))
+    json.dump(out, open(os.path.join(DIR, 'lgb_series.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
+    print(f'  lgb_series.json: {len(out)} months {out[0]["period"]}..{out[-1]["period"]}')
 
 # ---- parse Chinese tables -> new_special_ytd.json (RMB bn) ----
 def per_cn(t):
