@@ -216,6 +216,11 @@ def parse():
             'pub_exp_central': metric(t, r'中央一般公共预算本级支出'), 'pub_exp_local': metric(t, r'地方一般公共预算支出'),
             'fund_rev': metric(t, r'全国政府性基金预算收入'), 'land_rev': metric(t, r'国有土地使用权出让收入'),
             'fund_exp': metric(t, r'全国政府性基金预算支出'),
+            # GMF expenditure splits three ways: central own-level, local land-related,
+            # and local other (the residual). Only the first two are stated explicitly.
+            'fund_exp_central': metric(t, r'中央政府性基金预算本级支出'),
+            'fund_exp_local': metric(t, r'地方政府性基金预算支出'),
+            'land_exp': metric(t, r'国有土地使用权出让收入相关支出'),
             'tax_items': items(gen_rev, TAX), 'exp_items': items(gen_exp, EXP)})
     rows.sort(key=lambda r: (r['year'], r['month']))
     json.dump(rows, open(os.path.join(DIR, 'fiscal_series.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
