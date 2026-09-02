@@ -8,25 +8,28 @@ set -euo pipefail
 cd "$(dirname "$0")/.."          # repo root
 PY=${PYTHON:-python3}
 
-echo "==> 1/7 General Public Budget + Government Fund"
+echo "==> 1/8 General Public Budget + Government Fund"
 $PY scripts/fetch_fiscal.py
 
-echo "==> 2/7 Local Government Bond issuance (+ new special YTD)"
+echo "==> 2/8 Local Government Bond issuance (+ new special YTD)"
 $PY scripts/fetch_bonds.py
 
-echo "==> 3/7 Principal repayment"
+echo "==> 3/8 Principal repayment"
 $PY scripts/fetch_repayment.py
 
-echo "==> 4/7 Rebuild fiscal-monitor.html"
+echo "==> 4/8 Government-bond holder structure (CCDC)"
+$PY scripts/fetch_holders.py
+
+echo "==> 5/8 Rebuild fiscal-monitor.html"
 $PY scripts/build_monitor.py
 
-echo "==> 5/7 Rebuild fiscal-drag.html"
+echo "==> 6/8 Rebuild fiscal-drag.html"
 $PY scripts/build_fiscal_drag.py
 
-echo "==> 6/7 Four-account annual totals"
+echo "==> 7/8 Four-account annual totals"
 $PY scripts/parse_accounts.py
 
-echo "==> 7/7 Rebuild spending.html"
+echo "==> 8/8 Rebuild spending.html"
 $PY scripts/build_spending.py
 
 if [[ "${1:-}" == "--commit" ]]; then

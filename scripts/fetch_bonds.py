@@ -191,61 +191,9 @@ def parse_nsb(catalog):
     json.dump(out, open(os.path.join(DIR, 'new_special_ytd.json'), 'w'), separators=(',', ':'))
     print(f'  new_special_ytd.json: {len(out)} months')
 
-# ---- parse Chinese investor paragraph -> lgb_holders.json ----
-# Every Chinese report carries "（二）投资者结构": one sentence splitting the LGB
-# stock across markets, then one splitting the interbank share by holder type.
-# All shares are of the TOTAL stock, so the buckets below sum to 100%.
-HOLDER = {'商业银行': 'banks', '政策性银行': 'policy_banks', '保险机构': 'insurance',
-          '非法人产品': 'products', '其他境内机构': 'other_domestic', '境外机构': 'foreign',
-          '柜台市场投资者': 'counter', '其他市场投资者': 'other_market',
-          '交易所市场投资者': 'other_market',            # renamed "其他市场" from 2021-03 on
-          '银行间债券市场投资者': 'interbank'}            # market subtotal, not a bucket
-PAIR = re.compile(r'(?:^|[；;。，,中：])([^；;。，,：]{2,12}?)持有(?:地方政府债券)?([\d,.]+)亿元[，,]?占比([\d.]+)%')
-def amount(s):
-    """'7,651.84' and the 2021-03 typo '7.651.84' both mean 7651.84."""
-    s = s.replace(',', '')
-    return float(s.replace('.', '', s.count('.') - 1)) if s.count('.') > 1 else float(s)
-
-def table_val(z, cn):
-    """Table 8 repeats the same split and outranks the sentence: MOF has twice
-    mis-stated a share in the prose (2025-01 insurance, 2026-01 banks) while the
-    table stayed right. Column glyphs of the vertical '银行间市场' label are
-    interleaved before the row names, so anchor on the name and take two decimals."""
-    j = z.find('投资者持有结构情况见')
-    m = re.search(cn + r'(\d+\.\d{2})(\d+\.\d{2})', z[j:j + 1000]) if j >= 0 else None
-    return (float(m.group(1)), float(m.group(2))) if m else None
-
-def parse_holders(catalog):
-    rows = {}
-    for c in catalog:
-        if '地方政府债券市场报告' not in c['title']: continue
-        p = per_cn(c['title']); md = md_for(c)
-        if not p or not md or not os.path.exists(md): continue
-        z = squeeze(open(md, encoding='utf-8', errors='replace').read())
-        i = z.find('银行间债券市场投资者持有地方政府债券')
-        if i < 0: continue
-        seg = z[i:i + 600].split('投资者持有结构情况见')[0]
-        rec = {'year': p[0], 'month': p[1], 'period': f'{p[0]}-{p[1]:02d}'}
-        for name, amt, pct in PAIR.findall(seg):
-            k = HOLDER.get(name)
-            if k: rec[k] = {'amt': amount(amt), 'pct': float(pct)}
-        share = lambda: sum(v['pct'] for k, v in rec.items() if k not in ('year','month','period','interbank'))
-        if abs(share() - 100) > 0.15:                    # prose disagrees with the table
-            for cn, k in HOLDER.items():
-                if k in rec and (tv := table_val(z, cn)):
-                    if abs(tv[1] - rec[k]['pct']) > 0.05: rec[k] = {'amt': tv[0], 'pct': tv[1]}
-        if len(rec) > 3: rows[(p[0], p[1])] = rec
-    out = sorted(rows.values(), key=lambda x: (x['year'], x['month']))
-    json.dump(out, open(os.path.join(DIR, 'lgb_holders.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
-    bad = [r['period'] for r in out
-           if abs(sum(v['pct'] for k, v in r.items() if k not in ('year','month','period','interbank')) - 100) > 0.15]
-    print(f'  lgb_holders.json: {len(out)} months {out[0]["period"]}..{out[-1]["period"]}'
-          + (f'  [shares off 100% in {bad}]' if bad else ''))
-
 if __name__ == '__main__':
     print('Fetching China Government Debt Center 地方政府债券市场报告 ...')
     fetch_listings()
     cat = download(article_urls())
     parse_lgb(cat)
     parse_nsb(cat)
-    parse_holders(cat)

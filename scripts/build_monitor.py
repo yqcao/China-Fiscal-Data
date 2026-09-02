@@ -5,7 +5,7 @@ DATA = json.dumps(json.load(open(base+'data/mof-reports/fiscal_series.json')), e
 LGB  = json.dumps(json.load(open(base+'data/mof-research-reports/lgb_series.json')), ensure_ascii=False, separators=(',',':'))
 NSB  = json.dumps(json.load(open(base+'data/mof-research-reports/new_special_ytd.json')), separators=(',',':'))
 REP  = json.dumps(json.load(open(base+'data/mof-debt-balance/repayment_series.json')), separators=(',',':'))
-HOLD = json.dumps(json.load(open(base+'data/mof-research-reports/lgb_holders.json')), ensure_ascii=False, separators=(',',':'))
+HOLD = json.dumps(json.load(open(base+'data/chinabond/holders.json')), ensure_ascii=False, separators=(',',':'))
 TGT  = json.dumps(json.load(open(base+'data/budget-targets.json'))['targets'], separators=(',',':'))
 
 HTML = r'''<!DOCTYPE html>
@@ -137,8 +137,12 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
       <p class="note" data-l="Bars: general vs special bonds (RMB bn, left) · Line: average issue rate (%, right)|柱：一般债与专项债（十亿元，左）· 线：平均发行利率（%，右）"></p><div id="c_lgb" class="chart"></div></div>
     <div class="card"><h3 data-l="Refinancing Issuance vs Principal Repayment|再融资发行 vs 到期偿还本金"></h3>
       <p class="note" data-l="Monthly principal repaid, split by funding source (bars), vs refinancing-bond issuance (line), RMB bn|当月到期偿还本金（按资金来源堆叠）与再融资债券发行（线），十亿元"></p><div id="c_lgb_refi" class="chart"></div></div>
-    <div class="card"><h3 data-l="Who Holds the Local-Government Bonds|地方政府债券投资者结构"></h3>
-      <p class="note" data-l="Share of the outstanding LGB stock by holder, % (bands sum to 100). Commercial banks still hold the bulk, but their share has fallen steadily since 2021 as funds and wealth-management products took it up.|按持有机构划分的地方政府债券存量占比，%（合计 100）。商业银行仍持有绝大部分，但占比自 2021 年以来持续下降，主要由非法人产品承接。"></p><div id="c_lgb_hold" class="chart"></div></div>
+    <div class="subhead"><span data-l="Who Holds the Government Bonds|政府债券持有者结构"></span></div>
+    <div class="card"><p class="note" data-l="Share of each bond\u2019s outstanding stock by holder, % (bands sum to 100). Same holder split, same order in both panels. Foreign institutions hold 4.6% of central government bonds but 0.03% of local ones \u2014 offshore money buys the sovereign, not the province.|按持有机构划分的存量占比，%（合计 100）。两图口径与顺序一致。境外机构持有国债 4.6%，持有地方债仅 0.03%。"></p></div>
+    <div class="row2">
+      <div class="card"><h3 data-l="Central Government Bonds (\u56fd\u503a)|国债"></h3><div id="c_hold_cgb" class="chart sm"></div></div>
+      <div class="card"><h3 data-l="Local Government Bonds (\u5730\u65b9\u653f\u5e9c\u503a)|地方政府债"></h3><div id="c_hold_lgb" class="chart sm"></div></div>
+    </div>
     <div class="card"><h3 data-l="New Special-Bond Issuance, YTD by Year|新增专项债发行（年初至今，分年度）"></h3>
       <p class="note" data-l="Cumulative new special-bond issuance through each month; one line per year (RMB bn)|累计新增专项债发行，每年一条线（十亿元）"></p><div id="c_lgb_ytd" class="chart"></div></div>
     <div class="subhead"><span data-l="Use of New-Bond Proceeds (investment targets)|新增债券资金投向"></span> <select id="lgbsel"></select></div>
@@ -375,36 +379,37 @@ const USESHORT=[[/municipal.*industrial park/i,'Municipal & industrial-park infr
  [/agricultur|forestry|water/i,'Agriculture, forestry & water'],[/health/i,'Healthcare'],[/educat/i,'Education'],
  [/^others?$/i,'Others']];
 function useShort(f){for(const[re,s]of USESHORT)if(re.test(f))return s; return f.charAt(0).toUpperCase()+f.slice(1);}
-// Holder composition of the LGB stock. Bands are shares of the whole stock and
-// sum to 100, so this is a straight 100% stacked area — no normalisation needed.
-// Starts 2021-03: the two earlier reports split out 政策性银行 and folded funds
-// into "other domestic", so their bands are not the same series.
-const HOLDCAT=[  // stacked bottom-up, largest first; hues validated light & dark
-  {k:'banks',    en:'Commercial banks', zh:'商业银行',   short_en:'Banks', short_zh:'银行', l:'#2a78d6', d:'#3987e5'},
-  {k:'products', en:'Funds & WMPs',     zh:'非法人产品', short_en:'Funds', short_zh:'产品', l:'#eb6834', d:'#d95926'},
-  {k:'other_domestic', en:'Other domestic',        zh:'其他境内机构', l:'#1baf7a', d:'#199e70'},
-  {k:'other_market',   en:'Exchange market',       zh:'其他市场',    l:'#4a3aa7', d:'#9085e9'},
-  {k:'insurance',      en:'Insurance',             zh:'保险机构',    l:'#eda100', d:'#c98500'},
-  {k:'foreign',        en:'Foreign institutions',  zh:'境外机构',    l:'#e87ba4', d:'#d55181'}];
+// Holder composition of the government-bond stock, from the CCDC monthly.
+// One panel per bond type, identical buckets and identical band order, so the
+// two read against each other positionally rather than by hunting the legend.
+// Hues are assigned in the fixed documented order — never re-ordered per panel.
+const HOLDCAT=[
+  {k:['banks'],                       en:'Commercial banks',  zh:'商业银行',   l:'#2a78d6', d:'#3987e5'},
+  {k:['products'],                    en:'Funds & WMPs',      zh:'非法人产品', l:'#eb6834', d:'#d95926'},
+  {k:['other_interbank','credit_unions'], en:'Other interbank', zh:'其他银行间', l:'#1baf7a', d:'#199e70'},
+  {k:['insurance'],                   en:'Insurance',         zh:'保险机构',   l:'#eda100', d:'#c98500'},
+  {k:['foreign'],                     en:'Foreign',           zh:'境外机构',   l:'#e87ba4', d:'#d55181'},
+  {k:['securities'],                  en:'Securities firms',  zh:'证券公司',   l:'#008300', d:'#008300'},
+  {k:['counter','other_market'],      en:'Exchange & OTC',    zh:'交易所及柜台', l:'#4a3aa7', d:'#9085e9'}];
 function drawHolders(){
-  const H=HOLD.filter(r=>r.period>='2021-03'&&r.products), P=H.map(r=>r.period);
-  const pick=c=>dark?c.d:c.l;
-  const series=HOLDCAT.map((c,i)=>({
-    name:L(c.en,c.zh), type:'line', stack:'h', smooth:false, showSymbol:false,
-    // the band edge is drawn in the card colour: a 2px surface gap, not a dark rule
-    lineStyle:{width:2, color:CARD}, emphasis:{focus:'series'},
-    areaStyle:{color:pick(c), opacity:1}, itemStyle:{color:pick(c)},
-    // Direct-label the two bands that carry the story; the rest rely on legend+tooltip.
-    // The name goes in the label: it sits on the band's top edge, so a bare "11%"
-    // would read as a level on the cumulative axis rather than that band's share.
-    endLabel:(i<2)?{show:true,color:AX,fontSize:10,formatter:p=>L(c.short_en,c.short_zh)+' '+p.value.toFixed(0)+'%'}:{show:false},
-    data:H.map(r=>r[c.k]?r[c.k].pct:null)}));
-  charts.c_lgb_hold.setOption({grid:{left:44,right:96,top:30,bottom:48},textStyle:{color:FG},
-    legend:{top:0,textStyle:{color:AX},data:series.map(s=>s.name)},
-    tooltip:{trigger:'axis',valueFormatter:v=>v==null?'–':v.toFixed(2)+'%'},
-    xAxis:{type:'category',boundaryGap:false,data:P,axisLabel:{color:AX,rotate:45,fontSize:10},axisLine:{lineStyle:{color:GRID}}},
-    yAxis:{type:'value',max:100,name:'%',axisLabel:{color:AX,formatter:'{value}%'},splitLine:{lineStyle:{color:GRID}},nameTextStyle:{color:AX}},
-    series},true);
+  [['c_hold_cgb','cgb'],['c_hold_lgb','lgb']].forEach(([id,bond])=>{
+    const H=HOLD.filter(r=>r[bond]&&r[bond].total), P=H.map(r=>r.period), pick=c=>dark?c.d:c.l;
+    const series=HOLDCAT.map((c,i)=>({
+      name:L(c.en,c.zh), type:'line', stack:'h', showSymbol:false, emphasis:{focus:'series'},
+      // band edge drawn in the card colour: a 2px surface gap, not a dark rule
+      lineStyle:{width:2,color:CARD}, areaStyle:{color:pick(c),opacity:1}, itemStyle:{color:pick(c)},
+      // only the bottom band is direct-labelled: its top edge equals its own
+      // share, so the number is unambiguous on a cumulative axis
+      endLabel:i===0?{show:true,color:AX,fontSize:10,formatter:p=>p.value.toFixed(0)+'%'}:{show:false},
+      data:H.map(r=>{const t=r[bond].total; const v=c.k.reduce((a,k)=>a+(r[bond][k]||0),0); return +(v/t*100).toFixed(2);})}));
+    charts[id].setOption({grid:{left:40,right:34,top:70,bottom:44},textStyle:{color:FG},
+      // plain, wrapping legend — a scrolling one hides series behind an arrow
+      legend:{top:0,width:'96%',textStyle:{color:AX,fontSize:10},itemWidth:10,itemHeight:8,itemGap:10,data:series.map(s=>s.name)},
+      tooltip:{trigger:'axis',valueFormatter:v=>v==null?'\u2013':v.toFixed(2)+'%'},
+      xAxis:{type:'category',boundaryGap:false,data:P,axisLabel:{color:AX,rotate:45,fontSize:9},axisLine:{lineStyle:{color:GRID}}},
+      yAxis:{type:'value',max:100,axisLabel:{color:AX,formatter:'{value}%',fontSize:10},splitLine:{lineStyle:{color:GRID}}},
+      series},true);
+  });
 }
 function fillLgbSel(){const s=document.getElementById('lgbsel');const cur=s.value;s.innerHTML='';
   LGB.filter(r=>r.use&&r.use.length).slice().reverse().forEach(r=>{const o=document.createElement('option');o.value=r.period;o.textContent=r.period;s.appendChild(o);});
@@ -444,7 +449,7 @@ function renderKPIs(){
 
 function applyDataL(){document.querySelectorAll('[data-l]').forEach(e=>{const[en,zh]=e.getAttribute('data-l').split('|');e.textContent=lang==='en'?en:zh;});}
 
-['c_gen_rev','c_gen_exp','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_exec_gen_rev','c_exec_gen_exp','c_exec_fund_rev','c_exec_fund_exp','c_lgb','c_lgb_refi','c_lgb_hold','c_lgb_ytd','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);
+['c_gen_rev','c_gen_exp','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_exec_gen_rev','c_exec_gen_exp','c_exec_fund_rev','c_exec_fund_exp','c_lgb','c_lgb_refi','c_hold_cgb','c_hold_lgb','c_lgb_ytd','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);
 document.getElementById('taxsel').onchange=e=>drawComposition('c_tax_pie','c_tax_grow','tax_items',e.target.value);
 document.getElementById('expsel').onchange=e=>drawComposition('c_exp_pie','c_exp_grow','exp_items',e.target.value);
 document.getElementById('lgbsel').onchange=e=>drawUse(e.target.value);
