@@ -12,9 +12,16 @@ Source policy: **every report is taken from that province's own official
 | `dept` | full text on a department subdomain of the same provincial government |
 | `summary` | official 摘要 where the full text is not reachable (Zhejiang) |
 
-`raw/{year}_{CODE}.html` is the page exactly as served; `text/` is the same with
-tags stripped; `targets.json` carries the extracted growth target plus the
-sentence it came from, so every figure can be traced back to its report.
+`raw/{year}_{CODE}.html` is the page exactly as served. **It is gitignored and
+local only** — these are third-party pages carrying other sites' embedded
+identifiers, and one of them (a public WeChat JS-SDK appId on the Heilongjiang
+portal) tripped GitHub secret scanning. `text/` is the same page with tags
+stripped and IS committed; `targets.json` carries the extracted growth target
+plus the sentence it came from, so every figure can still be traced back to its
+report and its URL without shipping anyone else's markup.
+
+Deleting `raw/` costs nothing but a re-fetch: `scripts/fetch_prov_reports.py`
+re-downloads whatever is missing.
 
 ## Known gaps
 

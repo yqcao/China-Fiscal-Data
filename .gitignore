@@ -6,3 +6,11 @@
 data/macro/*_raw/
 
 __pycache__/
+
+# provincial work reports: the pages as served, kept local only.
+# They are third-party HTML and carry other sites' embedded identifiers — one of
+# them (a public WeChat JS-SDK appId on the Heilongjiang portal) tripped GitHub
+# secret scanning. Nothing here is parsed from the raw file after the first run;
+# data/prov-reports/text/ is the committed record. Re-fetch with
+# scripts/fetch_prov_reports.py.
+data/prov-reports/raw/
