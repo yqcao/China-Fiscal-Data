@@ -1,0 +1,339 @@
+{
+ "note": "Provincial government work reports (省级政府工作报告), taken from each province's own official portal. No aggregators or news compilations: every URL below is on the province's own gov.cn domain. `reports` maps year -> source URL.",
+ "provinces": [
+  {
+   "cn": "北京市",
+   "en": "Beijing",
+   "code": "BJ",
+   "domain": "beijing.gov.cn",
+   "reports": {
+    "2026": "https://www.beijing.gov.cn/gongkai/jihua/zfgzbg/202602/t20260202_4483941.html"
+   }
+  },
+  {
+   "cn": "天津市",
+   "en": "Tianjin",
+   "code": "TJ",
+   "domain": "tj.gov.cn",
+   "reports": {
+    "2026": "https://www.tj.gov.cn/zwgk/zfgzbg/202602/t20260203_7238031.html"
+   }
+  },
+  {
+   "cn": "河北省",
+   "en": "Hebei",
+   "code": "HE",
+   "domain": "hebei.gov.cn",
+   "reports": {
+    "2026": "http://www.hebei.gov.cn/columns/580d0301-2e0b-4152-9dd1-7d7f4e0f4980/202602/02/87e9bcd8-8ea5-4134-8b54-f006ab87337b.html"
+   }
+  },
+  {
+   "cn": "山西省",
+   "en": "Shanxi",
+   "code": "SX",
+   "domain": "shanxi.gov.cn",
+   "reports": {
+    "2026": "https://wjw.shanxi.gov.cn/xwzx/szyw/202602/t20260210_10059895.shtml"
+   },
+   "tier": {
+    "2026": "dept"
+   }
+  },
+  {
+   "cn": "内蒙古自治区",
+   "en": "Inner Mongolia",
+   "code": "NM",
+   "domain": "nmg.gov.cn",
+   "reports": {
+    "2026": "http://kjt.nmg.gov.cn/kjdt/mtjj/202602/t20260212_2862873.html"
+   },
+   "tier": {
+    "2026": "dept"
+   }
+  },
+  {
+   "cn": "辽宁省",
+   "en": "Liaoning",
+   "code": "LN",
+   "domain": "ln.gov.cn",
+   "reports": {
+    "2026": "https://www.ln.gov.cn/web/zwgkx/zfgzbg/szfgzbg/2026020108425256544/index.shtml"
+   }
+  },
+  {
+   "cn": "吉林省",
+   "en": "Jilin",
+   "code": "JL",
+   "domain": "jl.gov.cn",
+   "reports": {
+    "2026": "http://www.jl.gov.cn/zcxx/gzbg/202601/t20260130_3551040.html"
+   }
+  },
+  {
+   "cn": "黑龙江省",
+   "en": "Heilongjiang",
+   "code": "HL",
+   "domain": "hlj.gov.cn",
+   "reports": {
+    "2026": "https://www.hlj.gov.cn/hlj/szfgzbg/202602/c00_31917306.shtml"
+   },
+   "tier": {
+    "2026": "portal"
+   }
+  },
+  {
+   "cn": "上海市",
+   "en": "Shanghai",
+   "code": "SH",
+   "domain": "shanghai.gov.cn",
+   "reports": {
+    "2026": "https://cdn.shanghai.gov.cn/nw12336/20260225/ced6147d03154dd586aaec06a9319987.html"
+   }
+  },
+  {
+   "cn": "江苏省",
+   "en": "Jiangsu",
+   "code": "JS",
+   "domain": "jiangsu.gov.cn",
+   "reports": {}
+  },
+  {
+   "cn": "浙江省",
+   "en": "Zhejiang",
+   "code": "ZJ",
+   "domain": "zj.gov.cn",
+   "reports": {
+    "2026": "https://zjic.zj.gov.cn/zkdt/rdzx/202601/t20260121_23912607.shtml"
+   },
+   "tier": {
+    "2026": "summary"
+   }
+  },
+  {
+   "cn": "安徽省",
+   "en": "Anhui",
+   "code": "AH",
+   "domain": "ah.gov.cn",
+   "reports": {
+    "2026": "https://www.ah.gov.cn/zwyw/jryw/565495711.html"
+   }
+  },
+  {
+   "cn": "福建省",
+   "en": "Fujian",
+   "code": "FJ",
+   "domain": "fujian.gov.cn",
+   "reports": {
+    "2026": "http://www.fujian.gov.cn/szf/gzbg/zfgzbg/202602/t20260206_7090239.htm"
+   }
+  },
+  {
+   "cn": "江西省",
+   "en": "Jiangxi",
+   "code": "JX",
+   "domain": "jiangxi.gov.cn",
+   "reports": {
+    "2026": "https://dct.jiangxi.gov.cn/jxswhhlyt/col/col14513/content/content_2019582185966669824.html"
+   },
+   "tier": {
+    "2026": "dept"
+   }
+  },
+  {
+   "cn": "山东省",
+   "en": "Shandong",
+   "code": "SD",
+   "domain": "shandong.gov.cn",
+   "reports": {
+    "2026": "http://gb.shandong.gov.cn/art/2026/3/26/art_100623_47342.html"
+   }
+  },
+  {
+   "cn": "河南省",
+   "en": "Henan",
+   "code": "HA",
+   "domain": "henan.gov.cn",
+   "reports": {
+    "2026": "https://fgw.henan.gov.cn/2026/02-03/3319580.html"
+   },
+   "tier": {
+    "2026": "dept"
+   }
+  },
+  {
+   "cn": "湖北省",
+   "en": "Hubei",
+   "code": "HB",
+   "domain": "hubei.gov.cn",
+   "reports": {
+    "2026": "http://jxt.hubei.gov.cn/bmdt/rdjj/202602/t20260205_5870841.shtml"
+   },
+   "tier": {
+    "2026": "dept"
+   }
+  },
+  {
+   "cn": "湖南省",
+   "en": "Hunan",
+   "code": "HN",
+   "domain": "hunan.gov.cn",
+   "reports": {
+    "2026": "https://www.hunan.gov.cn/topic/2026slh/slhdbg/bgqw2026/202602/t20260224_33919306.html"
+   },
+   "tier": {
+    "2026": "portal"
+   }
+  },
+  {
+   "cn": "广东省",
+   "en": "Guangdong",
+   "code": "GD",
+   "domain": "gd.gov.cn",
+   "reports": {
+    "2026": "https://www.gd.gov.cn/gkmlpt/content/4/4851/post_4851130.html"
+   }
+  },
+  {
+   "cn": "广西壮族自治区",
+   "en": "Guangxi",
+   "code": "GX",
+   "domain": "gxzf.gov.cn",
+   "reports": {
+    "2026": "http://lyj.gxzf.gov.cn/xwzx/twxj/t27237486.shtml"
+   },
+   "tier": {
+    "2026": "dept"
+   }
+  },
+  {
+   "cn": "海南省",
+   "en": "Hainan",
+   "code": "HI",
+   "domain": "hainan.gov.cn",
+   "reports": {
+    "2026": "https://www.hainan.gov.cn/hainan/szfgzbg/202602/1e6254a0a84f4ca990bdcf37948c8496.shtml"
+   },
+   "tier": {
+    "2026": "portal"
+   }
+  },
+  {
+   "cn": "重庆市",
+   "en": "Chongqing",
+   "code": "CQ",
+   "domain": "cq.gov.cn",
+   "reports": {
+    "2026": "https://www.cq.gov.cn/zwgk/zfxxgkml/zfgzbg/202603/t20260326_15569494.html"
+   },
+   "tier": {
+    "2026": "portal"
+   }
+  },
+  {
+   "cn": "四川省",
+   "en": "Sichuan",
+   "code": "SC",
+   "domain": "sc.gov.cn",
+   "reports": {
+    "2026": "https://www.sc.gov.cn/10462/c105962s/2026/2/10/c3064029fbc341e99c8ce71ce3aec20c.shtml"
+   }
+  },
+  {
+   "cn": "贵州省",
+   "en": "Guizhou",
+   "code": "GZ",
+   "domain": "guizhou.gov.cn",
+   "reports": {
+    "2026": "https://www.guizhou.gov.cn/home/tt/202602/t20260202_89362001.html"
+   },
+   "tier": {
+    "2026": "portal"
+   }
+  },
+  {
+   "cn": "云南省",
+   "en": "Yunnan",
+   "code": "YN",
+   "domain": "yn.gov.cn",
+   "reports": {
+    "2026": "https://ylbz.yn.gov.cn/index.php?c=show&id=5971"
+   },
+   "tier": {
+    "2026": "dept"
+   }
+  },
+  {
+   "cn": "西藏自治区",
+   "en": "Tibet",
+   "code": "XZ",
+   "domain": "xizang.gov.cn",
+   "reports": {
+    "2026": "https://wlt.xizang.gov.cn/xwzx_69/xydt/202602/t20260212_524973.html"
+   },
+   "tier": {
+    "2026": "dept"
+   }
+  },
+  {
+   "cn": "陕西省",
+   "en": "Shaanxi",
+   "code": "SN",
+   "domain": "shaanxi.gov.cn",
+   "reports": {
+    "2026": "https://www.shaanxi.gov.cn/zfxxgk/zfgzbg/szfgzbg/202602/t20260202_3609862.html"
+   },
+   "tier": {
+    "2026": "portal"
+   }
+  },
+  {
+   "cn": "甘肃省",
+   "en": "Gansu",
+   "code": "GS",
+   "domain": "gansu.gov.cn",
+   "reports": {
+    "2026": "http://gansu.gov.cn/gsszf/gsyw/202602/174279543.shtml"
+   },
+   "tier": {
+    "2026": "portal"
+   }
+  },
+  {
+   "cn": "青海省",
+   "en": "Qinghai",
+   "code": "QH",
+   "domain": "qinghai.gov.cn",
+   "reports": {
+    "2026": "http://www.qinghai.gov.cn/xxgk/xxgk/gzbg/202602/t20260202_393327.html"
+   },
+   "tier": {
+    "2026": "portal"
+   }
+  },
+  {
+   "cn": "宁夏回族自治区",
+   "en": "Ningxia",
+   "code": "NX",
+   "domain": "nx.gov.cn",
+   "reports": {
+    "2026": "https://www.nx.gov.cn/zwxx_11337/nxyw/202602/t20260209_5163871.html"
+   },
+   "tier": {
+    "2026": "portal"
+   }
+  },
+  {
+   "cn": "新疆维吾尔自治区",
+   "en": "Xinjiang",
+   "code": "XJ",
+   "domain": "xinjiang.gov.cn",
+   "reports": {
+    "2026": "https://www.xinjiang.gov.cn/xinjiang/xjzfgzbg/202602/b5eb4365822e461ea7452643081e11a1.shtml"
+   },
+   "tier": {
+    "2026": "portal"
+   }
+  }
+ ]
+}
