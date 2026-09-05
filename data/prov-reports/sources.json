@@ -236,7 +236,10 @@
    "code": "SC",
    "domain": "sc.gov.cn",
    "reports": {
-    "2026": "https://www.sc.gov.cn/10462/c105962s/2026/2/10/c3064029fbc341e99c8ce71ce3aec20c.shtml"
+    "2026": "http://www.scspc.gov.cn/gzbg/szfgzbg/202602/t20260210_50070.html"
+   },
+   "tier": {
+    "2026": "npc"
    }
   },
   {
