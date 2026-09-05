@@ -46,10 +46,10 @@
    "code": "NM",
    "domain": "nmg.gov.cn",
    "reports": {
-    "2026": "http://kjt.nmg.gov.cn/kjdt/mtjj/202602/t20260212_2862873.html"
+    "2026": "https://www.bynr.gov.cn/ywdt/zwdt/202602/t20260212_14993.html"
    },
    "tier": {
-    "2026": "dept"
+    "2026": "local-gov"
    }
   },
   {
@@ -160,10 +160,10 @@
    "code": "HA",
    "domain": "henan.gov.cn",
    "reports": {
-    "2026": "https://fgw.henan.gov.cn/2026/02-03/3319580.html"
+    "2026": "https://fgw.jiyuan.gov.cn/yz_ztzl/t996509.html"
    },
    "tier": {
-    "2026": "dept"
+    "2026": "local-gov"
    }
   },
   {
@@ -313,7 +313,7 @@
    "code": "QH",
    "domain": "qinghai.gov.cn",
    "reports": {
-    "2026": "http://www.qinghai.gov.cn/xxgk/xxgk/gzbg/202602/t20260202_393327.html"
+    "2026": "http://www.qinghai.gov.cn/zwgk/system/2026/01/31/030092049.shtml"
    },
    "tier": {
     "2026": "portal"
