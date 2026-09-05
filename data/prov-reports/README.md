@@ -24,7 +24,13 @@ Source policy: **every report is taken from that province's own official
 * **The 人大公报.** Where the congress site has no article, the gazette PDF may
   carry the report. `fetch_prov_reports.py` handles a `.pdf` URL directly,
   converting via markitdown.
-* **The congress's WeChat account.** Last resort — official body, non-gov domain.
+* **The congress's WeChat account.** Official body, non-gov domain. Worth noting
+  the WeChat article has to be found as a *link on the congress's own site* —
+  search engines do not index these usefully, and searching mp.weixin.qq.com
+  directly returned nothing relevant for any province.
+* **A lower-level government in the same province.** Municipal and district
+  governments republish the provincial report in full, on their own gov.cn
+  domains, and are often reachable when the provincial portal is not.
 
 Note for anyone extending this: `hnrd.gov.cn` is **Hunan**, not Henan.
 
@@ -46,7 +52,8 @@ behind a WAF that rejects any non-browser client. These are recorded with a URL
 in `sources.json` but have no downloaded report:
 
 * WAF 403/412 on every host and scheme tried — 内蒙古 安徽 河南
-* connection timeout on both the portal and the 人大 site — 海南 陕西
+* connection timeout on the portal, the 人大 site and every departmental
+  subdomain tried — 陕西
 * page served but empty once stripped (script-rendered) — 甘肃
 * 人大 site reachable, but no full text and the session documents carry no
   figures — 青海

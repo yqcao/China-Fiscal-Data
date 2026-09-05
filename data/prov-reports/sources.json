@@ -1,5 +1,5 @@
 {
- "note": "Provincial government work reports (省级政府工作报告), taken from each province's own official portal. No aggregators or news compilations: every URL below is on the province's own gov.cn domain. `reports` maps year -> source URL. `tier` says which kind of official channel: portal / dept / npc (provincial people's congress site) / npc-gazette (人大公报 PDF) / npc-wechat (the congress's own WeChat account — an official body, but hosted by Tencent, used only where no gov.cn copy of the full text exists) / summary.",
+ "note": "Provincial government work reports (省级政府工作报告), taken from each province's own official portal. No aggregators or news compilations: every URL below is on the province's own gov.cn domain. `reports` maps year -> source URL. `tier` says which kind of official channel: portal / dept / npc (provincial people's congress site) / npc-gazette (人大公报 PDF) / npc-wechat (the congress's own WeChat account — an official body, but hosted by Tencent, used only where no gov.cn copy of the full text exists) / local-gov (a lower-level government site within the same province, where no provincial-level copy is reachable) / summary.",
  "provinces": [
   {
    "cn": "北京市",
@@ -217,10 +217,10 @@
    "code": "HI",
    "domain": "hainan.gov.cn",
    "reports": {
-    "2026": "https://www.hainan.gov.cn/hainan/szfgzbg/202602/1e6254a0a84f4ca990bdcf37948c8496.shtml"
+    "2026": "https://jdxq.haikou.gov.cn/xinwen/2026/show-10556.html"
    },
    "tier": {
-    "2026": "portal"
+    "2026": "local-gov"
    }
   },
   {
