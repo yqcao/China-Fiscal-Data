@@ -67,6 +67,25 @@ def pdf_text(path):
     subprocess.run([md, path, '-o', out], check=True, capture_output=True, timeout=300)
     return open(out, encoding='utf-8', errors='replace').read()
 
+# A 人大公报 PDF carries the whole session: the work report, the budget report,
+# the plan report and the resolutions. Keeping all of it would make any text
+# analysis over the corpus compare a 400k-char gazette against 20k-char reports,
+# and attribute the budget report's vocabulary to the work report.
+HEAD  = re.compile(r'政府工作报告[—\-–]*\s*(?:20\d\d年)?\d{1,2}月\d{1,2}日在')
+AFTER = ('附件一政府工作报告名词解释', '附件政府工作报告名词解释', '名词解释',
+         '关于江苏省2025年预算执行情况', '国民经济和社会发展计划执行情况')
+
+def slice_report(text):
+    """If this is a multi-document gazette, keep only the work report."""
+    flat = re.sub(r'-{2,}', '', re.sub(r'[\s|]+', '', text))
+    m = HEAD.search(flat)
+    if not m or len(flat) < 60000:      # a normal single-report page: leave alone
+        return text
+    start = m.start()
+    ends = [flat.find(a, start + 200) for a in AFTER]
+    ends = [e for e in ends if e > start]
+    return flat[start:min(ends)] if ends else flat[start:start + 40000]
+
 def strip(raw):
     b = re.sub(r'<(script|style)[^>]*>.*?</\1>', '', raw, flags=re.S | re.I)
     b = re.sub(r'<(br|/p|/div|/tr|/h\d)\s*/?>', '\n', b, flags=re.I)
@@ -133,7 +152,7 @@ def main():
                 except Exception as e:
                     print(f'  {p["cn"]:9} {year} FETCH FAILED  {type(e).__name__}: {e}')
                     failed.append((p['cn'], year, str(e))); continue
-            txt = (pdf_text(rawp) if is_pdf
+            txt = (slice_report(pdf_text(rawp)) if is_pdf
                    else strip(open(rawp, encoding='utf-8', errors='replace').read()))
             open(txtp, 'w', encoding='utf-8').write(txt)
             t = target(txt)
