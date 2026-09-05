@@ -15,7 +15,7 @@ Provincial portals are slow and several sit behind rate limits, so fetches are
 retried with a long timeout and cached — a re-run only pulls what is missing.
 Idempotent.
 """
-import os, re, json, time, html, datetime, subprocess
+import os, re, json, time, html, shutil, datetime, subprocess
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR  = os.path.join(ROOT, 'data', 'prov-reports')
@@ -51,6 +51,22 @@ def get(url, tries=2, timeout=45):
         time.sleep(1 + 2 * i)
     raise last
 
+def get_bytes(url, tries=2, timeout=90):
+    for i in range(tries):
+        r = subprocess.run(['curl', '-sSL', '-k', '--max-time', str(timeout),
+                            '--connect-timeout', '20', '-H', 'User-Agent: ' + UA, url],
+                           capture_output=True, timeout=timeout + 20)
+        if r.returncode == 0 and r.stdout[:5] == b'%PDF-': return r.stdout
+        time.sleep(1 + 2 * i)
+    raise RuntimeError('not a PDF after %d tries' % tries)
+
+def pdf_text(path):
+    """Some reports are only published inside the 人大公报, which is a PDF."""
+    md = shutil.which('markitdown') or os.path.expanduser('~/.local/bin/markitdown')
+    out = path.rsplit('.', 1)[0] + '.md'
+    subprocess.run([md, path, '-o', out], check=True, capture_output=True, timeout=300)
+    return open(out, encoding='utf-8', errors='replace').read()
+
 def strip(raw):
     b = re.sub(r'<(script|style)[^>]*>.*?</\1>', '', raw, flags=re.S | re.I)
     b = re.sub(r'<(br|/p|/div|/tr|/h\d)\s*/?>', '\n', b, flags=re.I)
@@ -69,8 +85,9 @@ ANCHOR = re.compile(r'(?:主要)?(?:预期)?目标(?:是|为)?\s*[：:]')
 #   经济增长5.5%左右            Hubei
 #   4.5%—5%                    percent on both ends
 #   4.5-5%                     percent only on the last (Heilongjiang)
+#   地区生产总值按增长5%安排  Jiangsu, via the 人大公报 PDF
 FIGURE = re.compile(
-    r'(?:(?:地区|全市|全省|全区)?生产总值(?:增长|增速)|经济增长)'
+    r'(?:(?:地区|全市|全省|全区)?生产总值(?:按|预计)?(?:增长|增速)|经济增长)'
     r'(?:预期目标)?\s*'
     r'(\d+(?:\.\d+)?)\s*%?'
     r'(?:\s*[—–\-~－至到]\s*(\d+(?:\.\d+)?)\s*%)?'
@@ -78,7 +95,9 @@ FIGURE = re.compile(
 
 def target(text):
     """-> (low, high, phrasing, sentence) or None. A range keeps both ends."""
-    flat = re.sub(r'\s+', '', text)
+    # '|' as well as whitespace: a gazette PDF converts to markdown tables whose
+    # pipes run straight through the target sentence
+    flat = re.sub(r'[\s|]+', '', text)
     for a in ANCHOR.finditer(flat):
         seg = flat[a.end():a.end() + 260]
         f = FIGURE.search(seg)
@@ -99,19 +118,23 @@ def main():
             missing.append(p['cn']); continue
         for year, url in sorted(p['reports'].items()):
             base = f'{year}_{p["code"]}'
-            rawp, txtp = os.path.join(RAW, base + '.html'), os.path.join(TXT, base + '.txt')
+            is_pdf = url.lower().split('?')[0].endswith('.pdf')
+            rawp = os.path.join(RAW, base + ('.pdf' if is_pdf else '.html'))
+            txtp = os.path.join(TXT, base + '.txt')
             if not (os.path.exists(rawp) and os.path.getsize(rawp) > 2000):
                 try:
                     # fetch first, write second: open(...,'w') truncates, so writing
                     # inline would leave a 0-byte file that later runs treat as cached
-                    body = get(url)
-                    open(rawp, 'w', encoding='utf-8').write(body)
+                    if is_pdf:
+                        open(rawp, 'wb').write(get_bytes(url))
+                    else:
+                        open(rawp, 'w', encoding='utf-8').write(get(url))
                     time.sleep(1.0)
                 except Exception as e:
                     print(f'  {p["cn"]:9} {year} FETCH FAILED  {type(e).__name__}: {e}')
                     failed.append((p['cn'], year, str(e))); continue
-            raw = open(rawp, encoding='utf-8', errors='replace').read()
-            txt = strip(raw)
+            txt = (pdf_text(rawp) if is_pdf
+                   else strip(open(rawp, encoding='utf-8', errors='replace').read()))
             open(txtp, 'w', encoding='utf-8').write(txt)
             t = target(txt)
             if not t:

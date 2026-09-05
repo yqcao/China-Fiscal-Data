@@ -1,5 +1,5 @@
 {
- "note": "Provincial government work reports (省级政府工作报告), taken from each province's own official portal. No aggregators or news compilations: every URL below is on the province's own gov.cn domain. `reports` maps year -> source URL.",
+ "note": "Provincial government work reports (省级政府工作报告), taken from each province's own official portal. No aggregators or news compilations: every URL below is on the province's own gov.cn domain. `reports` maps year -> source URL. `tier` says which kind of official channel: portal / dept / npc (provincial people's congress site) / npc-gazette (人大公报 PDF) / npc-wechat (the congress's own WeChat account — an official body, but hosted by Tencent, used only where no gov.cn copy of the full text exists) / summary.",
  "provinces": [
   {
    "cn": "北京市",
@@ -96,7 +96,12 @@
    "en": "Jiangsu",
    "code": "JS",
    "domain": "jiangsu.gov.cn",
-   "reports": {}
+   "reports": {
+    "2026": "https://www.jsrd.gov.cn/qwfb/cwhgb/d_11277/202603/P020260409553922849316.pdf"
+   },
+   "tier": {
+    "2026": "npc-gazette"
+   }
   },
   {
    "cn": "浙江省",
@@ -200,10 +205,10 @@
    "code": "GX",
    "domain": "gxzf.gov.cn",
    "reports": {
-    "2026": "http://lyj.gxzf.gov.cn/xwzx/twxj/t27237486.shtml"
+    "2026": "https://mp.weixin.qq.com/s/KYdUC9lnj50mnl65GHsW_A"
    },
    "tier": {
-    "2026": "dept"
+    "2026": "npc-wechat"
    }
   },
   {
