@@ -67,17 +67,13 @@ Note for anyone extending this: `hnrd.gov.cn` is **Hunan**, not Henan.
 
 ## Known gaps
 
-Not every provincial portal is reachable from outside China, and several sit
-behind a WAF that rejects any non-browser client. These are recorded with a URL
-in `sources.json` but have no downloaded report:
+None for 2026 — all 31 provinces have a target. One caveat: **江西 is the single
+figure not taken from a government domain.** Every gov.cn host carrying its
+report is unreachable or WAF-blocked from outside China (the whole
+`jiangxi.gov.cn` domain, all ten subdomains tried, plus ten of twelve municipal
+domains; `ganxian.gov.cn` answers "站点不存在" from a cloud WAF). The text comes
+from 人民网江西, with 新华网江西 giving the identical figure independently. It is
+tiered `state-media` and flagged on the page.
 
-Only **江西** is missing. Its full text is demonstrably public — it sits on
-several county information-disclosure pages — but every gov.cn host carrying it
-either times out (`dct.jiangxi.gov.cn`, `xingguo.gov.cn`, `ncx.nc.gov.cn`,
-`jiangxi.gov.cn`) or sits behind a cloud WAF that answers "站点不存在"
-(`ganxian.gov.cn`). Its congress publishes through `jxnews.com.cn`, a news
-domain. Browser-saving one of those pages into `raw/2026_JX.html` closes it.
-
-To fill a gap by hand: open the URL in a browser, save the page as
-`raw/2026_<CODE>.html`, and re-run `scripts/fetch_prov_reports.py`. It parses
-whatever is already cached and never re-downloads it.
+If a gov.cn copy becomes reachable, replace the URL in `sources.json`, delete
+`raw/2026_JX.html`, and re-run — nothing else changes.

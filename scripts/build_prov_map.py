@@ -135,6 +135,8 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
       <span data-l="A third of provinces publish a range rather than a point. The map has one colour per province so it shows the midpoint; the ranked chart beside it shows the actual range. &ldquo;5% 以上&rdquo; and &ldquo;5% 左右&rdquo; are both plotted at 5.0 — the qualifier is in the tooltip and the table, because there is no defensible number to add or subtract for it.|约三分之一省份公布的是区间而非点值。地图每省仅一色，故以中值着色；右侧排序图显示实际区间。&ldquo;5%以上&rdquo;与&ldquo;5%左右&rdquo;均按 5.0 绘制——限定语见提示框与下表，因无法为其加减一个有依据的数值。"></span></li>
     <li><b data-l="Grey is missing data, not a low target.|灰色为缺失数据，非低目标。"></b>
       <span data-l="Grey provinces sit outside the colour ramp entirely. Their reports could not be retrieved: several provincial portals are unreachable from outside China, three reject non-browser clients, and one publishes its full text only through a script-rendered index. Each still has its official URL in the table below.|灰色省份完全不在色阶之内。其报告未能取得：部分省级门户在境外无法访问，三个拒绝非浏览器访问，一个仅通过脚本渲染的索引发布全文。下表仍列出各自的官方网址。"></span></li>
+    <li><b data-l="One source is not a government site.|一项来源非政府网站。"></b>
+      <span data-l="Thirty of the thirty-one figures come from a government domain — a provincial portal, a department, a lower-level government in the same province, or the provincial people&rsquo;s congress. Jiangxi is the exception: every gov.cn host carrying its report is unreachable or behind a WAF, so the text is taken from 人民网江西, with 新华网江西 giving the identical figure independently. The table marks it &ldquo;state media&rdquo;.|三十一项中有三十项来自政府域名——省级门户、部门、省内下级政府或省人大。江西为例外：承载其报告的 gov.cn 主机均无法访问或被 WAF 拦截，故取自人民网江西，并经新华网江西以相同数值独立印证。下表标注为&ldquo;中央媒体&rdquo;。"></span></li>
     <li><b data-l="Targets are not forecasts.|目标不是预测。"></b>
       <span data-l="These are the numbers each provincial government set for itself and put to its own people's congress. Provinces have historically set targets above what they then achieved, and the sum of provincial targets does not have to equal the national one.|这些是各省政府自行设定并提交本级人民代表大会的目标。历史上各省目标常高于实际完成值，且各省目标之和不必等于全国目标。"></span></li>
   </ul>
@@ -257,7 +259,14 @@ function drawBar(){
 function table(){
   const st = {ok:L('retrieved','已取得'), unreachable:L('not reachable','无法访问'),
               'no-url':L('no URL found','未找到网址')};
+  // every tier the registry can carry — a missing label renders blank, which
+  // silently hides how a figure was sourced
   const tier = {portal:L('provincial portal','省级门户'), dept:L('department site','部门网站'),
+                'local-gov':L('gov. in-province','省内下级政府'),
+                npc:L('people\u2019s congress','省人大'),
+                'npc-gazette':L('congress gazette','人大公报'),
+                'npc-wechat':L('congress WeChat','人大公众号'),
+                'state-media':L('state media','中央媒体'),
                 summary:L('official summary','官方摘要'), '':''};
   document.getElementById('srctable').innerHTML =
     `<tr><th>${L('Province','省份')}</th><th>${L('Target','目标')}</th>` +

@@ -1,5 +1,5 @@
 {
- "note": "Provincial government work reports (省级政府工作报告), taken from each province's own official portal. No aggregators or news compilations: every URL below is on the province's own gov.cn domain. `reports` maps year -> source URL. `tier` says which kind of official channel: portal / dept / npc (provincial people's congress site) / npc-gazette (人大公报 PDF) / npc-wechat (the congress's own WeChat account — an official body, but hosted by Tencent, used only where no gov.cn copy of the full text exists) / local-gov (a lower-level government site within the same province, where no provincial-level copy is reachable) / summary.",
+ "note": "Provincial government work reports (省级政府工作报告), taken from each province's own official portal. No aggregators or news compilations: every URL below is on the province's own gov.cn domain. `reports` maps year -> source URL. `tier` says which kind of official channel: portal / dept / npc (provincial people's congress site) / npc-gazette (人大公报 PDF) / npc-wechat (the congress's own WeChat account — an official body, but hosted by Tencent, used only where no gov.cn copy of the full text exists) / local-gov (a lower-level government site within the same province, where no provincial-level copy is reachable) / state-media (人民网/新华网, used for Jiangxi alone, where every gov.cn host carrying the report is unreachable or WAF-blocked; corroborated by a second state outlet) / summary.",
  "provinces": [
   {
    "cn": "北京市",
@@ -142,10 +142,10 @@
    "code": "JX",
    "domain": "jiangxi.gov.cn",
    "reports": {
-    "2026": "https://dct.jiangxi.gov.cn/jxswhhlyt/col/col14513/content/content_2019582185966669824.html"
+    "2026": "http://jx.people.com.cn/n2/2026/0209/c186330-41497802.html"
    },
    "tier": {
-    "2026": "dept"
+    "2026": "state-media"
    }
   },
   {
