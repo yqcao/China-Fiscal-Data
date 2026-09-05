@@ -121,7 +121,10 @@
    "code": "AH",
    "domain": "ah.gov.cn",
    "reports": {
-    "2026": "https://www.ah.gov.cn/zwyw/jryw/565495711.html"
+    "2026": "http://www.ahjjjc.gov.cn/ywbb/p/130379.html"
+   },
+   "tier": {
+    "2026": "local-gov"
    }
   },
   {
@@ -289,10 +292,10 @@
    "code": "SN",
    "domain": "shaanxi.gov.cn",
    "reports": {
-    "2026": "https://www.shaanxi.gov.cn/zfxxgk/zfgzbg/szfgzbg/202602/t20260202_3609862.html"
+    "2026": "https://fgw.ankang.gov.cn/Content-2893101.html"
    },
    "tier": {
-    "2026": "portal"
+    "2026": "local-gov"
    }
   },
   {
@@ -301,10 +304,10 @@
    "code": "GS",
    "domain": "gansu.gov.cn",
    "reports": {
-    "2026": "http://gansu.gov.cn/gsszf/gsyw/202602/174279543.shtml"
+    "2026": "https://www.lzxq.gov.cn/system/2026/02/02/031316628.shtml"
    },
    "tier": {
-    "2026": "portal"
+    "2026": "local-gov"
    }
   },
   {

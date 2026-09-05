@@ -45,19 +45,38 @@ report and its URL without shipping anyone else's markup.
 Deleting `raw/` costs nothing but a re-fetch: `scripts/fetch_prov_reports.py`
 re-downloads whatever is missing.
 
+## What actually works when a provincial portal is blocked
+
+Ranked by how often it paid off, from getting 20 of 31 to 30 of 31:
+
+1. **A lower-level government in the same province.** Prefectures, counties,
+   districts and departments republish the provincial report in full on their own
+   gov.cn domains, and those hosts are usually reachable when the provincial
+   portal is not. This alone recovered 内蒙古, 河南, 海南, 陕西, 安徽 and 甘肃.
+   **Check whose report it is**: a municipal site publishes its own report too,
+   and 芜湖's 5.5–6% is not 安徽's 5–5.5%. Confirm the text says 省人民政府 and
+   names the provincial congress.
+2. **Try a different URL on the same portal.** 青海's portal had the report all
+   along under /zwgk/system/ rather than the 政府信息公开 path.
+3. **Plain HTTP.** Several hosts drop TLS but answer on port 80 in two seconds.
+4. **The 人大 site, then its 公报 PDF.** 四川 and 江苏 came from these.
+5. **The congress's WeChat account.** 广西 only. Findable as a link on the
+   congress's own site — searching mp.weixin.qq.com directly finds nothing.
+
+Note for anyone extending this: `hnrd.gov.cn` is **Hunan**, not Henan.
+
 ## Known gaps
 
 Not every provincial portal is reachable from outside China, and several sit
 behind a WAF that rejects any non-browser client. These are recorded with a URL
 in `sources.json` but have no downloaded report:
 
-* WAF 403/412 on every host and scheme tried — 内蒙古 安徽 河南
-* connection timeout on the portal, the 人大 site and every departmental
-  subdomain tried — 陕西
-* page served but empty once stripped (script-rendered) — 甘肃
-* 人大 site reachable, but no full text and the session documents carry no
-  figures — 青海
-* 人大 content served from a news domain rather than gov.cn — 江西
+Only **江西** is missing. Its full text is demonstrably public — it sits on
+several county information-disclosure pages — but every gov.cn host carrying it
+either times out (`dct.jiangxi.gov.cn`, `xingguo.gov.cn`, `ncx.nc.gov.cn`,
+`jiangxi.gov.cn`) or sits behind a cloud WAF that answers "站点不存在"
+(`ganxian.gov.cn`). Its congress publishes through `jxnews.com.cn`, a news
+domain. Browser-saving one of those pages into `raw/2026_JX.html` closes it.
 
 To fill a gap by hand: open the URL in a browser, save the page as
 `raw/2026_<CODE>.html`, and re-run `scripts/fetch_prov_reports.py`. It parses
