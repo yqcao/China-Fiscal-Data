@@ -31,6 +31,16 @@ NSB  = json.dumps(nsb, separators=(',',':'))
 REP  = json.dumps(rep, separators=(',',':'))
 HOLD = json.dumps(json.load(open(base+'data/chinabond/holders.json')), ensure_ascii=False, separators=(',',':'))
 TGT  = json.dumps(json.load(open(base+'data/budget-targets.json'))['targets'], separators=(',',':'))
+lim  = json.load(open(base+'data/debt-limits.json'))['limits']
+LIM  = json.dumps(lim, ensure_ascii=False, separators=(',',':'))
+# cross-check: where a MOF monthly release restates the NPC ceiling it must equal the NPC file
+def ceiling(period):
+    return max((l for l in lim if l['from'] <= period), key=lambda l: l['from'], default=None)
+for r in rep:
+    if 'limit' in r:
+        c = ceiling(r['period'])
+        if c is None or abs(c['total']-r['limit']) > 0.01 or abs(c['gen']-r['limit_gen']) > 0.01 or abs(c['spec']-r['limit_spec']) > 0.01:
+            print(f"  WARNING ceiling mismatch {r['period']}: MOF release {r['limit']} vs NPC file {c and c['total']}")
 
 HTML = r'''<!DOCTYPE html>
 <html lang="en">
@@ -165,7 +175,7 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
     <div class="subhead"><span data-l="Debt Outstanding|地方政府债务余额"></span></div>
     <div class="kpis" id="kpi_bal"></div>
     <div class="card"><h3 data-l="Local Government Debt Outstanding vs NPC Ceiling|地方政府债务余额与全国人大批准限额"></h3>
-      <p class="note" data-l="Month-end stock of local government debt, general vs special (bars, RMB tn), against the debt ceiling approved by the NPC for the year (step line). Non-bond legacy debt (under 0.2tn) is included in the bars. Source: MOF 地方政府债券发行和债务余额情况.|月末地方政府债务余额，一般债务与专项债务堆叠（十万亿元），与全国人大批准的当年债务限额（阶梯线）对比。非政府债券形式存量政府债务（不足0.2万亿）计入柱内。来源：财政部《地方政府债券发行和债务余额情况》。"></p><div id="c_bal" class="chart"></div></div>
+      <p class="note" data-l="Month-end stock of local government debt, general vs special (bars, RMB tn), against the full-year debt ceiling approved by the NPC in its March budget report (step line; raised in Nov 2024 when the NPC Standing Committee authorised 6tn of extra special-debt ceiling for the hidden-debt swap). Non-bond legacy debt (under 0.2tn) is included in the bars. Sources: MOF 地方政府债券发行和债务余额情况 (balance); NPC budget reports and the 2024-11-08 NPCSC decision (ceiling).|月末地方政府债务余额，一般债务与专项债务堆叠（万亿元），与全国人大三月批准的全年债务限额（阶梯线）对比；2024年11月人大常委会批准增加6万亿元专项债务限额置换隐性债务，限额相应上调。非政府债券形式存量政府债务（不足0.2万亿）计入柱内。来源：财政部《地方政府债券发行和债务余额情况》（余额）；全国人大预算报告及2024年11月8日人大常委会决议（限额）。"></p><div id="c_bal" class="chart"></div></div>
     <div class="subhead"><span data-l="Who Holds the Government Bonds|政府债券持有者结构"></span></div>
     <div class="card"><p class="note" data-l="Share of each bond’s outstanding stock by holder, % (bands sum to 100). Same holder split, same order in both panels. Foreign institutions hold 4.6% of central government bonds but 0.03% of local ones — offshore money buys the sovereign, not the province.|按持有机构划分的存量占比，%（合计 100）。两图口径与顺序一致。境外机构持有国债 4.6%，持有地方债仅 0.03%。"></p></div>
     <div class="row2">
@@ -197,6 +207,7 @@ const NSB  = __NSB__;
 const REP  = __REP__;
 const HOLD = __HOLD__;
 const TGT  = __TGT__;
+const LIM  = __LIM__;
 // Unify units: MOF fiscal figures are in 亿元 — convert to RMB billion (十亿元, ÷10).
 const MFIELDS=['pub_rev','tax','nontax','pub_rev_central','pub_rev_local','pub_exp','pub_exp_central','pub_exp_local','fund_rev','land_rev','fund_exp'];
 DATA.forEach(r=>{MFIELDS.forEach(k=>{if(r[k]&&r[k].v!=null)r[k].v=+(r[k].v/10).toFixed(2);});
@@ -479,8 +490,8 @@ function renderKPIs(){
 
 function drawBal(){
   const B=REP.filter(r=>r.bal!=null), P=B.map(r=>r.period), tn=v=>v==null?null:+(v/10000).toFixed(3);
-  // carry the ceiling across months that do not restate it (Jan/Dec): same calendar year only
-  const lim={}; B.forEach(r=>{if(r.limit)lim[r.year]=r.limit;});
+  // NPC ceiling for the full calendar year (data/debt-limits.json); stepped in 2024-11 by the NPCSC's 6tn swap authorisation
+  const ceil=p=>{let c=null;LIM.forEach(l=>{if(l.from<=p)c=l;});return c?c.total:null;};
   charts.c_bal.setOption({grid:{left:56,right:18,top:30,bottom:48},textStyle:{color:FG},
     legend:{top:0,textStyle:{color:AX},data:[L('General debt','一般债务'),L('Special debt','专项债务'),L('NPC ceiling','人大限额')]},
     tooltip:{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:v=>v==null?'–':v+' tn'},
@@ -488,9 +499,9 @@ function drawBal(){
     yAxis:{type:'value',name:'RMB tn',axisLabel:{color:AX},splitLine:{lineStyle:{color:GRID}},nameTextStyle:{color:AX}},
     series:[{name:L('General debt','一般债务'),type:'bar',stack:'b',itemStyle:{color:C.gen},data:B.map(r=>tn(r.bal_gen))},
       {name:L('Special debt','专项债务'),type:'bar',stack:'b',itemStyle:{color:C.spec},data:B.map(r=>tn(r.bal_spec))},
-      {name:L('NPC ceiling','人大限额'),type:'line',step:'end',showSymbol:false,lineStyle:{width:2,type:'dashed',color:C.rate},itemStyle:{color:C.rate},data:B.map(r=>tn(lim[r.year]))}]},true);
+      {name:L('NPC ceiling','人大限额'),type:'line',step:'end',showSymbol:false,lineStyle:{width:2,type:'dashed',color:C.rate},itemStyle:{color:C.rate},data:B.map(r=>tn(ceil(r.period)))}]},true);
   const G=B[B.length-1], py=B.find(r=>r.year===G.year-1&&r.month===G.month);
-  const yoy=py?+((G.bal/py.bal-1)*100).toFixed(1):null, hr=lim[G.year]?(G.bal/lim[G.year]*100).toFixed(1)+'% '+L('of ceiling','占限额'):'';
+  const cl=ceil(G.period), yoy=py?+((G.bal/py.bal-1)*100).toFixed(1):null, hr=cl?(G.bal/cl*100).toFixed(1)+'% '+L('of ceiling','占限额'):'';
   kpi('kpi_bal',[
     [L('Debt Outstanding','Debt Outstanding'),'债务余额',tn(G.bal)+' <small>tn</small>',G.period+(hr?' · '+hr:''),yoy],
     [L('General / Special','General / Special'),'一般 / 专项',tn(G.bal_gen)+' / '+tn(G.bal_spec)+' <small>tn</small>','',null],
@@ -527,6 +538,6 @@ fillSel('taxsel');fillSel('expsel');fillLgbSel();applyDataL();drawAll();
 </body>
 </html>
 '''
-HTML=HTML.replace('__DATA__',DATA).replace('__LGB__',LGB).replace('__NSB__',NSB).replace('__REP__',REP).replace('__HOLD__',HOLD).replace('__TGT__',TGT)
+HTML=HTML.replace('__DATA__',DATA).replace('__LGB__',LGB).replace('__NSB__',NSB).replace('__REP__',REP).replace('__HOLD__',HOLD).replace('__TGT__',TGT).replace('__LIM__',LIM)
 open(base+'fiscal-monitor.html','w',encoding='utf-8').write(HTML)
 print('wrote fiscal-monitor.html',round(len(HTML)/1024,1),'KB')

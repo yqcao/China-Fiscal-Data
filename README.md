@@ -174,6 +174,11 @@ in five steps, one chart each. "Broad" throughout means the two accounts MOF rep
 5. **Track record** — full-year broad expenditure against the budget approved the previous March.
 
 Inputs: `fiscal_series.json`, `data/budget-targets.json`, and `data/macro/{fai,gdp}_series.json`.
+
+`data/debt-limits.json` holds the NPC-approved local-government debt ceilings (一般/专项债务限额)
+by year, from the March budget reports plus the 2024-11-08 NPC Standing Committee decision that
+added 6tn of special-debt ceiling. The monitor draws the ceiling for the full calendar year and
+cross-checks it against the months in which MOF's debt-balance release restates it.
 Because it consumes both the fiscal and the macro series, it is rebuilt by **both** `update.sh`
 and `update_macro.sh`.
 

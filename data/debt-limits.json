@@ -1,0 +1,19 @@
+{
+  "_note": "Local-government debt ceilings (地方政府债务限额) approved by the NPC, 亿元 RMB. Each March the NPC approves the year's general and special ceilings in the budget report; the ceiling is for the full calendar year, so it applies from January (before the March session the previous year's ceiling formally carries, but the monitor follows the NPC convention of a full-year ceiling). One intra-year change: on 2024-11-08 the NPC Standing Committee approved 60,000亿元 of extra special-debt ceiling for swapping hidden debt, booked into the 2024 ceiling in a single approval (一次报批、分三年实施). 'total' = gen + spec. MOF's monthly 地方政府债券发行和债务余额情况 restates the ceiling in most months; build_monitor.py checks those restatements against this file.",
+  "limits": [
+    {"from": "2021-01", "year": 2021, "gen": 151089.22, "spec": 181685.08, "total": 332774.30,
+     "source": "关于2020年中央和地方预算执行情况与2021年中央和地方预算草案的报告 (13th NPC 4th session, 2021-03)"},
+    {"from": "2022-01", "year": 2022, "gen": 158289.22, "spec": 218185.08, "total": 376474.30,
+     "source": "关于2021年中央和地方预算执行情况与2022年中央和地方预算草案的报告 (13th NPC 5th session, 2022-03)"},
+    {"from": "2023-01", "year": 2023, "gen": 165489.22, "spec": 256185.08, "total": 421674.30,
+     "source": "关于2022年中央和地方预算执行情况与2023年中央和地方预算草案的报告 (14th NPC 1st session, 2023-03)"},
+    {"from": "2024-01", "year": 2024, "gen": 172689.22, "spec": 295185.08, "total": 467874.30,
+     "source": "关于2023年中央和地方预算执行情况与2024年中央和地方预算草案的报告 (14th NPC 2nd session, 2024-03): new quota 一般 7200 + 专项 39000"},
+    {"from": "2024-11", "year": 2024, "gen": 172689.22, "spec": 355185.08, "total": 527874.30,
+     "source": "全国人大常委会第十二次会议 2024-11-08, 关于提请审议增加地方政府债务限额置换存量隐性债务的议案: 2024年末专项债务限额由295185.08亿元增加到355185.08亿元 (一次报批、分三年实施). http://www.npc.gov.cn/npc/c2/kgfb/202411/t20241108_440850.html"},
+    {"from": "2025-01", "year": 2025, "gen": 180689.22, "spec": 399185.08, "total": 579874.30,
+     "source": "关于2024年中央和地方预算执行情况与2025年中央和地方预算草案的报告 (14th NPC 3rd session, 2025-03)"},
+    {"from": "2026-01", "year": 2026, "gen": 188689.22, "spec": 443185.08, "total": 631874.30,
+     "source": "关于2025年中央和地方预算执行情况与2026年中央和地方预算草案的报告 (14th NPC 4th session, 2026-03): 地方政府一般债务限额188689.22亿元、专项债务限额443185.08亿元. https://www.mof.gov.cn/zhengwuxinxi/caizhengxinwen/202603/t20260316_3985331.htm"}
+  ]
+}
