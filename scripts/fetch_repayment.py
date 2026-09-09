@@ -8,7 +8,9 @@ Source: MOF monthly 地方政府债券发行和债务余额情况
 Regenerates data/mof-debt-balance/repayment_series.json: YTD principal repaid
 (亿元), split into refinancing-bond-funded and fiscal-fund-funded, plus the
 month's issuance (total / general / special / new / refinancing, 亿元), average
-issue rate (%) and maturity (years), and YTD total issuance. The issuance fields
+issue rate (%) and maturity (years), YTD total issuance, interest paid, and the
+month-end debt balance (total / general / special / bond / non-bond, 亿元) with
+remaining maturity, average coupon and the NPC debt ceiling. The issuance fields
 let the monitor show a month before the China Government Debt Center's fuller
 市场报告 for it is published (that report lags this release by 3-4 weeks).
 Idempotent.
@@ -99,6 +101,27 @@ def parse_issuance(t, yr, mo):
         if y: r['cum_new_special'] = float(y.group(3))
     return r
 
+def parse_balance(t, yr, mo):
+    """Section 二、全国地方政府债务余额情况 (亿元 / years / %), interest paid, and the
+    NPC-approved debt ceiling when the release restates it (most months; not
+    January or December, when the year's limit is not yet / no longer quoted)."""
+    z = re.sub(r'\s', '', t)
+    N = r'([\d.]+)'
+    r = {}
+    g = re.search(rf'截至{yr}年{mo}月末，全国地方政府债务余额{N}亿元?[，,。].*?其中，一般债务{N}亿元，专项债务{N}亿元；政府债券{N}亿元，非政府债券形式存量政府债务{N}亿元', z)
+    if g: r['bal'], r['bal_gen'], r['bal_spec'], r['bal_bond'], r['bal_nonbond'] = map(float, g.groups())
+    g = re.search(rf'剩余平均年限{N}年，其中一般债券{N}年[，、]专项债券{N}年；平均利率{N}%，其中一般债券{N}%[，、]专项债券{N}%', z)
+    if g:
+        r['rem_mat'], r['rem_mat_gen'], r['rem_mat_spec'], r['avg_rate'], r['avg_rate_gen'], r['avg_rate_spec'] = map(float, g.groups())
+    g = re.search(rf'{yr}年全国地方政府债务限额为{N}亿元，其中一般债务限额{N}亿元，专项债务限额{N}亿元', z)
+    if g: r['limit'], r['limit_gen'], r['limit_spec'] = map(float, g.groups())
+    g = re.search(rf'地方政府债券支付利息{N}亿元', z)
+    if g: r['interest_ytd'] = float(g.group(1))
+    g = re.search(rf'{mo}月当月地方政府债券支付利息{N}亿元', z)
+    if g: r['interest_month'] = float(g.group(1))
+    elif mo == 1 and 'interest_ytd' in r: r['interest_month'] = r['interest_ytd']
+    return r
+
 def parse():
     rows = {}
     for _, _, _, rawdir in SOURCES:
@@ -120,11 +143,13 @@ def parse():
                 if not m2: continue
                 rec['repay_ytd'] = numg(m2.group(1))
             rec.update(parse_issuance(t, yr, mo))
+            rec.update(parse_balance(t, yr, mo))
             rows[(yr, mo)] = rec      # later sources (zwgls) override earlier for duplicate months
     out = sorted(rows.values(), key=lambda x: (x['year'], x['month']))
     json.dump(out, open(os.path.join(DIR, 'repayment_series.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
     n_iss = sum(1 for r in out if 'issue' in r and 'rate' in r)
-    print(f'  repayment_series.json: {len(out)} months {out[0]["period"]}..{out[-1]["period"]} ({n_iss} with issuance)')
+    n_bal = sum(1 for r in out if 'bal' in r)
+    print(f'  repayment_series.json: {len(out)} months {out[0]["period"]}..{out[-1]["period"]} ({n_iss} with issuance, {n_bal} with debt balance)')
 
 if __name__ == '__main__':
     print('Fetching MOF 地方政府债券发行和债务余额情况 ...')

@@ -162,6 +162,10 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
       <p class="note" data-l="Bars: general vs special bonds (RMB bn, left) · Line: average issue rate (%, right)|柱：一般债与专项债（十亿元，左）· 线：平均发行利率（%，右）"></p><div id="c_lgb" class="chart"></div></div>
     <div class="card"><h3 data-l="Refinancing Issuance vs Principal Repayment|再融资发行 vs 到期偿还本金"></h3>
       <p class="note" data-l="Monthly principal repaid, split by funding source (bars), vs refinancing-bond issuance (line), RMB bn|当月到期偿还本金（按资金来源堆叠）与再融资债券发行（线），十亿元"></p><div id="c_lgb_refi" class="chart"></div></div>
+    <div class="subhead"><span data-l="Debt Outstanding|地方政府债务余额"></span></div>
+    <div class="kpis" id="kpi_bal"></div>
+    <div class="card"><h3 data-l="Local Government Debt Outstanding vs NPC Ceiling|地方政府债务余额与全国人大批准限额"></h3>
+      <p class="note" data-l="Month-end stock of local government debt, general vs special (bars, RMB tn), against the debt ceiling approved by the NPC for the year (step line). Non-bond legacy debt (under 0.2tn) is included in the bars. Source: MOF 地方政府债券发行和债务余额情况.|月末地方政府债务余额，一般债务与专项债务堆叠（十万亿元），与全国人大批准的当年债务限额（阶梯线）对比。非政府债券形式存量政府债务（不足0.2万亿）计入柱内。来源：财政部《地方政府债券发行和债务余额情况》。"></p><div id="c_bal" class="chart"></div></div>
     <div class="subhead"><span data-l="Who Holds the Government Bonds|政府债券持有者结构"></span></div>
     <div class="card"><p class="note" data-l="Share of each bond’s outstanding stock by holder, % (bands sum to 100). Same holder split, same order in both panels. Foreign institutions hold 4.6% of central government bonds but 0.03% of local ones — offshore money buys the sovereign, not the province.|按持有机构划分的存量占比，%（合计 100）。两图口径与顺序一致。境外机构持有国债 4.6%，持有地方债仅 0.03%。"></p></div>
     <div class="row2">
@@ -473,6 +477,27 @@ function renderKPIs(){
     [L('YTD Issuance','YTD Issuance'),'年初至今发行',G.cum_issue?fmtB(G.cum_issue):'–','',null]]);
 }
 
+function drawBal(){
+  const B=REP.filter(r=>r.bal!=null), P=B.map(r=>r.period), tn=v=>v==null?null:+(v/10000).toFixed(3);
+  // carry the ceiling across months that do not restate it (Jan/Dec): same calendar year only
+  const lim={}; B.forEach(r=>{if(r.limit)lim[r.year]=r.limit;});
+  charts.c_bal.setOption({grid:{left:56,right:18,top:30,bottom:48},textStyle:{color:FG},
+    legend:{top:0,textStyle:{color:AX},data:[L('General debt','一般债务'),L('Special debt','专项债务'),L('NPC ceiling','人大限额')]},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:v=>v==null?'–':v+' tn'},
+    xAxis:{type:'category',data:P,axisLabel:{color:AX,rotate:45,fontSize:10},axisLine:{lineStyle:{color:GRID}}},
+    yAxis:{type:'value',name:'RMB tn',axisLabel:{color:AX},splitLine:{lineStyle:{color:GRID}},nameTextStyle:{color:AX}},
+    series:[{name:L('General debt','一般债务'),type:'bar',stack:'b',itemStyle:{color:C.gen},data:B.map(r=>tn(r.bal_gen))},
+      {name:L('Special debt','专项债务'),type:'bar',stack:'b',itemStyle:{color:C.spec},data:B.map(r=>tn(r.bal_spec))},
+      {name:L('NPC ceiling','人大限额'),type:'line',step:'end',showSymbol:false,lineStyle:{width:2,type:'dashed',color:C.rate},itemStyle:{color:C.rate},data:B.map(r=>tn(lim[r.year]))}]},true);
+  const G=B[B.length-1], py=B.find(r=>r.year===G.year-1&&r.month===G.month);
+  const yoy=py?+((G.bal/py.bal-1)*100).toFixed(1):null, hr=lim[G.year]?(G.bal/lim[G.year]*100).toFixed(1)+'% '+L('of ceiling','占限额'):'';
+  kpi('kpi_bal',[
+    [L('Debt Outstanding','Debt Outstanding'),'债务余额',tn(G.bal)+' <small>tn</small>',G.period+(hr?' · '+hr:''),yoy],
+    [L('General / Special','General / Special'),'一般 / 专项',tn(G.bal_gen)+' / '+tn(G.bal_spec)+' <small>tn</small>','',null],
+    [L('Avg Remaining Maturity','Avg Remaining Maturity'),'剩余平均年限',G.rem_mat+' <small>yr</small>',L('gen','一般')+' '+G.rem_mat_gen+' · '+L('spec','专项')+' '+G.rem_mat_spec,null],
+    [L('Avg Coupon on Stock','Avg Coupon on Stock'),'存量平均利率',G.avg_rate+'%',L('gen','一般')+' '+G.avg_rate_gen+'% · '+L('spec','专项')+' '+G.avg_rate_spec+'%',null],
+    [L('Interest Paid YTD','Interest Paid YTD'),'年初至今付息',fmtB(G.interest_ytd/10),G.interest_month?L('month','当月')+' '+fmtB(G.interest_month/10):'',null]]);
+}
 function lgbPrelim(){const b=LGB.filter(r=>r.src==='mof').map(r=>r.period);const e=document.getElementById('lgb_prelim');
   e.hidden=!b.length; if(!b.length)return;
   e.textContent=lang==='en'
@@ -480,7 +505,7 @@ function lgbPrelim(){const b=LGB.filter(r=>r.src==='mof').map(r=>r.period);const
     :'* '+b.join('、')+'：发行额、利率、期限取自财政部《地方政府债券发行和债务余额情况》月报，早于国债登记结算公司市场报告；该月二级市场交易与资金投向暂缺。';}
 function applyDataL(){document.querySelectorAll('[data-l]').forEach(e=>{const[en,zh]=e.getAttribute('data-l').split('|');e.textContent=lang==='en'?en:zh;});}
 
-['c_gen_rev','c_gen_exp','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_exec_gen_rev','c_exec_gen_exp','c_exec_fund_rev','c_exec_fund_exp','c_lgb','c_lgb_refi','c_hold_cgb','c_hold_lgb','c_lgb_ytd','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);
+['c_gen_rev','c_gen_exp','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_exec_gen_rev','c_exec_gen_exp','c_exec_fund_rev','c_exec_fund_exp','c_lgb','c_lgb_refi','c_bal','c_hold_cgb','c_hold_lgb','c_lgb_ytd','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);
 document.getElementById('taxsel').onchange=e=>drawComposition('c_tax_pie','c_tax_grow','tax_items',e.target.value);
 document.getElementById('expsel').onchange=e=>drawComposition('c_exp_pie','c_exp_grow','exp_items',e.target.value);
 document.getElementById('lgbsel').onchange=e=>drawUse(e.target.value);
@@ -495,7 +520,7 @@ function drawAll(){applyDataL();renderKPIs();drawGen();drawFund();
   yoyChart('c_fund_yoy',[['fund_rev','Fund Revenue','基金收入',C.fund],['fund_exp','Fund Expenditure','基金支出',C.exp],['land_rev','Land-Sale','土地出让',C.land]]);
   drawComposition('c_tax_pie','c_tax_grow','tax_items',document.getElementById('taxsel').value);
   drawComposition('c_exp_pie','c_exp_grow','exp_items',document.getElementById('expsel').value);
-  drawLGB();drawNSB();drawUse(document.getElementById('lgbsel').value);lgbPrelim();}
+  drawLGB();drawNSB();drawUse(document.getElementById('lgbsel').value);lgbPrelim();drawBal();}
 addEventListener('resize',()=>Object.values(charts).forEach(c=>c.resize()));
 fillSel('taxsel');fillSel('expsel');fillLgbSel();applyDataL();drawAll();
 </script>

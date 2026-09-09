@@ -81,7 +81,10 @@ listing*/ raw*/        listing pages and report HTML from both sources
 repayment_series.json  YTD principal repaid (亿元), split into refinancing-bond-funded
                        and fiscal-fund-funded; plus each month's issuance (total /
                        general / special / new / refinancing), average rate & maturity,
-                       and YTD total and new-special issuance, from the same release
+                       and YTD total and new-special issuance, from the same release;
+                       and the month-end debt balance (total / general / special /
+                       bond / non-bond), remaining maturity, average coupon, interest
+                       paid, and the NPC debt ceiling where the release restates it
 INDEX.md               source notes
 ```
 
@@ -140,7 +143,8 @@ and **分项** (national ↔ central/local) toggles apply to the budget sections
    level, line = YoY, aligned dual axes); tax & expenditure composition pies + YTD-growth bars.
 2. **Government-Managed Fund Budget** — fund revenue (land-sale stacked) + expenditure; YoY.
 3. **Local Government Bond Issuance** — issuance by type + rate; refinancing issuance vs
-   principal repayment; new special-bond YTD by year; use of new-bond proceeds (month
+   principal repayment; debt outstanding (general/special) against the NPC ceiling, with
+   remaining maturity, average coupon and interest paid; new special-bond YTD by year; use of new-bond proceeds (month
    selector); average maturity & secondary-market turnover; issuance YoY.
 
 **Bridging the bond-report lag:** the Debt Center's 市场报告 for a month arrives 3–4 weeks after
