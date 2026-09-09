@@ -2,9 +2,33 @@ import json, os
 # repo root = parent of this scripts/ directory
 base=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))+'/'
 DATA = json.dumps(json.load(open(base+'data/mof-reports/fiscal_series.json')), ensure_ascii=False, separators=(',',':'))
-LGB  = json.dumps(json.load(open(base+'data/mof-research-reports/lgb_series.json')), ensure_ascii=False, separators=(',',':'))
-NSB  = json.dumps(json.load(open(base+'data/mof-research-reports/new_special_ytd.json')), separators=(',',':'))
-REP  = json.dumps(json.load(open(base+'data/mof-debt-balance/repayment_series.json')), separators=(',',':'))
+lgb  = json.load(open(base+'data/mof-research-reports/lgb_series.json'))
+nsb  = json.load(open(base+'data/mof-research-reports/new_special_ytd.json'))
+rep  = json.load(open(base+'data/mof-debt-balance/repayment_series.json'))
+
+# The China Government Debt Center's 市场报告 (source of lgb_series) lands 3-4 weeks
+# after MOF's own 发行和债务余额情况 release for the same month. Bridge the gap with
+# the MOF figures (亿元 -> RMB bn) so the issuance charts and KPIs stay current;
+# secondary-market turnover and use-of-proceeds only exist in the market report.
+# Rows are tagged src:'mof' and the page footnotes them.
+have = {(r['year'], r['month']) for r in lgb}
+last = max(have)
+for r in rep:
+    k = (r['year'], r['month'])
+    if k <= last or k in have or 'issue' not in r or 'rate' not in r: continue
+    lgb.append({'year': r['year'], 'month': r['month'], 'period': r['period'],
+                'issue': r['issue']/10, 'general': r['general']/10, 'special': r['special']/10,
+                'new': r['new']/10, 'refi': r['refi']/10, 'rate': r['rate'], 'maturity': r['maturity'],
+                'secondary': None, 'cum_issue': r.get('cum_issue', 0)/10 or None, 'use': [], 'src': 'mof'})
+    if 'cum_new_special' in r and not any(n['year']==r['year'] and n['month']==r['month'] for n in nsb):
+        nsb.append({'year': r['year'], 'month': r['month'], 'ytd': r['cum_new_special']/10, 'src': 'mof'})
+lgb.sort(key=lambda r: (r['year'], r['month'])); nsb.sort(key=lambda r: (r['year'], r['month']))
+bridged = [r['period'] for r in lgb if r.get('src') == 'mof']
+if bridged: print('  bridged from MOF release:', ', '.join(bridged))
+
+LGB  = json.dumps(lgb, ensure_ascii=False, separators=(',',':'))
+NSB  = json.dumps(nsb, separators=(',',':'))
+REP  = json.dumps(rep, separators=(',',':'))
 HOLD = json.dumps(json.load(open(base+'data/chinabond/holders.json')), ensure_ascii=False, separators=(',',':'))
 TGT  = json.dumps(json.load(open(base+'data/budget-targets.json'))['targets'], separators=(',',':'))
 
@@ -131,7 +155,8 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
   <!-- SECTION 3 -->
   <section>
     <div class="shead"><h2>3 · Local Government Bond Issuance <span class="zh">地方政府债券发行</span></h2>
-      <p>Monthly LGB issuance from the China Government Debt Center reports. Figures in RMB billion; natively monthly.</p></div>
+      <p>Monthly LGB issuance from the China Government Debt Center reports. Figures in RMB billion; natively monthly.</p>
+      <p class="note" id="lgb_prelim" hidden></p></div>
     <div class="kpis" id="kpi_lgb"></div>
     <div class="card"><h3>Monthly Issuance by Type & Average Rate <span class="zh">当月发行（按类型）与平均利率</span></h3>
       <p class="note" data-l="Bars: general vs special bonds (RMB bn, left) · Line: average issue rate (%, right)|柱：一般债与专项债（十亿元，左）· 线：平均发行利率（%，右）"></p><div id="c_lgb" class="chart"></div></div>
@@ -442,12 +467,17 @@ function renderKPIs(){
     [L('Balance','Balance'),'收支差额',fmtB(Lt.fund_rev.v-Lt.fund_exp.v),L('rev − exp','收入−支出'),null]]);
   const G=LGB[LGB.length-1],yo=lgbYoY()[LGB.length-1];
   kpi('kpi_lgb',[
-    [L('Monthly Issuance','Monthly Issuance'),'当月发行',fmtB(G.issue),G.period,yo],
+    [L('Monthly Issuance','Monthly Issuance'),'当月发行',fmtB(G.issue),G.period+(G.src==='mof'?' *':''),yo],
     [L('Avg Issue Rate','Avg Issue Rate'),'平均利率',G.rate+'%','',null],
     [L('Avg Maturity','Avg Maturity'),'平均期限',G.maturity+' <small>yr</small>','',null],
     [L('YTD Issuance','YTD Issuance'),'年初至今发行',G.cum_issue?fmtB(G.cum_issue):'–','',null]]);
 }
 
+function lgbPrelim(){const b=LGB.filter(r=>r.src==='mof').map(r=>r.period);const e=document.getElementById('lgb_prelim');
+  e.hidden=!b.length; if(!b.length)return;
+  e.textContent=lang==='en'
+    ?'* '+b.join(', ')+': issuance, rate and maturity taken from MOF\u2019s monthly 地方政府债券发行和债务余额情况 release, ahead of the Debt Center market report; secondary-market turnover and use of proceeds are not yet available for these months.'
+    :'* '+b.join('、')+'：发行额、利率、期限取自财政部《地方政府债券发行和债务余额情况》月报，早于国债登记结算公司市场报告；该月二级市场交易与资金投向暂缺。';}
 function applyDataL(){document.querySelectorAll('[data-l]').forEach(e=>{const[en,zh]=e.getAttribute('data-l').split('|');e.textContent=lang==='en'?en:zh;});}
 
 ['c_gen_rev','c_gen_exp','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_exec_gen_rev','c_exec_gen_exp','c_exec_fund_rev','c_exec_fund_exp','c_lgb','c_lgb_refi','c_hold_cgb','c_hold_lgb','c_lgb_ytd','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);
@@ -465,7 +495,7 @@ function drawAll(){applyDataL();renderKPIs();drawGen();drawFund();
   yoyChart('c_fund_yoy',[['fund_rev','Fund Revenue','基金收入',C.fund],['fund_exp','Fund Expenditure','基金支出',C.exp],['land_rev','Land-Sale','土地出让',C.land]]);
   drawComposition('c_tax_pie','c_tax_grow','tax_items',document.getElementById('taxsel').value);
   drawComposition('c_exp_pie','c_exp_grow','exp_items',document.getElementById('expsel').value);
-  drawLGB();drawNSB();drawUse(document.getElementById('lgbsel').value);}
+  drawLGB();drawNSB();drawUse(document.getElementById('lgbsel').value);lgbPrelim();}
 addEventListener('resize',()=>Object.values(charts).forEach(c=>c.resize()));
 fillSel('taxsel');fillSel('expsel');fillLgbSel();applyDataL();drawAll();
 </script>

@@ -79,7 +79,9 @@ Monthly local-government-bond issuance, balance, and **principal repayment** rep
 ```
 listing*/ raw*/        listing pages and report HTML from both sources
 repayment_series.json  YTD principal repaid (亿元), split into refinancing-bond-funded
-                       and fiscal-fund-funded
+                       and fiscal-fund-funded; plus each month's issuance (total /
+                       general / special / new / refinancing), average rate & maturity,
+                       and YTD total and new-special issuance, from the same release
 INDEX.md               source notes
 ```
 
@@ -140,6 +142,12 @@ and **分项** (national ↔ central/local) toggles apply to the budget sections
 3. **Local Government Bond Issuance** — issuance by type + rate; refinancing issuance vs
    principal repayment; new special-bond YTD by year; use of new-bond proceeds (month
    selector); average maturity & secondary-market turnover; issuance YoY.
+
+**Bridging the bond-report lag:** the Debt Center's 市场报告 for a month arrives 3–4 weeks after
+MOF's own 发行和债务余额情况 release for it. `build_monitor.py` fills any month the market report
+has not yet covered with the MOF release's issuance, rate, maturity and YTD figures (tagged
+`src: "mof"` and footnoted on the page); secondary-market turnover and use of proceeds stay
+blank until the market report lands, at which point its figures take over.
 
 **Caveat on data basis:** the MOF publishes cumulative figures (年初至当期). Single-month
 values are derived by differencing consecutive reports within a year; each year's first

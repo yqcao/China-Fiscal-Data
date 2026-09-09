@@ -6,7 +6,12 @@ Source: MOF monthly 地方政府债券发行和债务余额情况
   债务管理司 https://zwgls.mof.gov.cn/tjsj/                    (2024-12 onward)
 
 Regenerates data/mof-debt-balance/repayment_series.json: YTD principal repaid
-(亿元), split into refinancing-bond-funded and fiscal-fund-funded. Idempotent.
+(亿元), split into refinancing-bond-funded and fiscal-fund-funded, plus the
+month's issuance (total / general / special / new / refinancing, 亿元), average
+issue rate (%) and maturity (years), and YTD total issuance. The issuance fields
+let the monitor show a month before the China Government Debt Center's fuller
+市场报告 for it is published (that report lags this release by 3-4 weeks).
+Idempotent.
 """
 import os, re, html, json, time, urllib.request
 
@@ -55,6 +60,44 @@ def clean(t):
     b = re.sub(r'<(script|style)[^>]*>.*?</\1>', '', t, flags=re.S | re.I)
     return re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', b)))
 def numg(s): return float(re.sub(r'\s', '', s))
+def parse_issuance(t, yr, mo):
+    """Issuance for the month (and YTD total) in 亿元. All whitespace is stripped
+    first: the releases scatter spaces inside numbers ("363 5 亿元", "2.8 5 %").
+    Wordings seen 2021-2026:
+      全国发行地方政府债券X亿元。其中，发行一般债券X亿元，发行专项债券X亿元；按用途划分，
+        发行新增债券X亿元，发行再融资债券X亿元  (or 全部为再融资债券)          [2021]
+      全国发行新增(地方政府)债券X亿元，其中一般债券X亿元、专项债券X亿元。全国发行再融资债券X亿元，
+        其中…。(合计，)全国发行地方政府债券(合计)X亿元，其中一般债券X亿元、专项债券X亿元 [2022+]"""
+    z = re.sub(r'\s', '', t)
+    N = r'([\d.]+)'
+    r = {}
+    m = re.search(rf'{yr}年{mo}月，(.*?)[（(]二[）)]', z)
+    if not m: return r
+    s = m.group(1)
+    g = re.search(rf'全国发行地方政府债券(?:合计)?{N}亿元[。，]其中，?(?:发行)?一般债券{N}亿元[、，](?:发行)?专项债券{N}亿元', s)
+    if g: r['issue'], r['general'], r['special'] = map(float, g.groups())
+    g = re.search(rf'新增(?:地方政府)?债券{N}亿元', s)
+    if g: r['new'] = float(g.group(1))
+    g = re.search(rf'再融资债券{N}亿元', s)
+    if g: r['refi'] = float(g.group(1))
+    if 'issue' in r and 'new' not in r:
+        if '全部为再融资债券' in s: r['new'], r['refi'] = 0.0, r['issue']
+        elif '全部为新增债券' in s: r['new'], r['refi'] = r['issue'], 0.0
+    g = re.search(rf'平均发行期限{N}年', s)
+    if g: r['maturity'] = float(g.group(1))
+    g = re.search(rf'平均发行利率{N}%', s)
+    if g: r['rate'] = float(g.group(1))
+    # YTD total issuance from the 1-N月 section (January has none: YTD = month)
+    if mo > 1:
+        y = re.search(rf'1-{mo}月，.*?全国发行地方政府债券(?:合计)?{N}亿元', z)
+        if y: r['cum_issue'] = float(y.group(1))
+        y = re.search(rf'1-{mo}月，全国发行新增(?:地方政府)?债券{N}亿元，其中一般债券{N}亿元、专项债券{N}亿元', z)
+        if y: r['cum_new_special'] = float(y.group(3))
+    elif 'issue' in r:
+        r['cum_issue'] = r['issue']
+        y = re.search(rf'新增(?:地方政府)?债券{N}亿元，其中一般债券{N}亿元、专项债券{N}亿元', z)
+        if y: r['cum_new_special'] = float(y.group(3))
+    return r
 
 def parse():
     rows = {}
@@ -76,10 +119,12 @@ def parse():
                 m2 = re.search(r'到期偿还本金\s*([\d ]+?)\s*亿元', t)
                 if not m2: continue
                 rec['repay_ytd'] = numg(m2.group(1))
+            rec.update(parse_issuance(t, yr, mo))
             rows[(yr, mo)] = rec      # later sources (zwgls) override earlier for duplicate months
     out = sorted(rows.values(), key=lambda x: (x['year'], x['month']))
     json.dump(out, open(os.path.join(DIR, 'repayment_series.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
-    print(f'  repayment_series.json: {len(out)} months {out[0]["period"]}..{out[-1]["period"]}')
+    n_iss = sum(1 for r in out if 'issue' in r and 'rate' in r)
+    print(f'  repayment_series.json: {len(out)} months {out[0]["period"]}..{out[-1]["period"]} ({n_iss} with issuance)')
 
 if __name__ == '__main__':
     print('Fetching MOF 地方政府债券发行和债务余额情况 ...')
