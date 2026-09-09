@@ -26,7 +26,7 @@ The budget-system pages draw on data from [NPC Observer](https://npcobserver.com
 Monthly/annual fiscal reports from the MOF Treasury Department.
 
 - **Source:** https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhiqingkuang/
-- **Coverage:** 183 reports, 2008-08 → 2026-07
+- **Coverage:** 185 reports, 2008-08 → 2026-07
 - **Contents:** the data is narrative text (no attachments on these pages)
 
 ```
@@ -74,7 +74,7 @@ Monthly local-government-bond issuance, balance, and **principal repayment** rep
 
 - **Sources:** 预算司 https://yss.mof.gov.cn/zhuantilanmu/dfzgl/sjtj/ (history through 2024) ·
   债务管理司 https://zwgls.mof.gov.cn/tjsj/ (2024-12 onward)
-- **Coverage:** repayment series 2021-01 → 2026-06
+- **Coverage:** repayment series 2021-01 → 2026-07
 
 ```
 listing*/ raw*/        listing pages and report HTML from both sources
