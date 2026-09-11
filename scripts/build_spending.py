@@ -16,6 +16,7 @@ What each account can actually show, and why:
 Inputs: fiscal_series.json, accounts_annual.json, lgb_series.json, mohrss_series.json.
 """
 import json, os, collections
+from page_footer import footer
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '/'
 YI2BN = 0.1          # 亿元 -> RMB bn
@@ -424,10 +425,7 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
   </ul>
 </div>
 
-<footer>
-  <span data-l="Built for|构建于"></span>
-  <a href="https://github.com/yqcao/China-Fiscal-Data">github.com/yqcao/China-Fiscal-Data</a>
-</footer>
+__FOOTER__
 </div>
 
 <script>
@@ -678,7 +676,7 @@ all();
 </html>
 '''
 
-out = HTML.replace('__PAYLOAD__', json.dumps(PAYLOAD, ensure_ascii=False, separators=(',', ':')))
+out = HTML.replace('__FOOTER__', footer(['mof_monthly', 'mof_annual', 'debt_center', 'mohrss', 'echarts'], page='spending.html')).replace('__PAYLOAD__', json.dumps(PAYLOAD, ensure_ascii=False, separators=(',', ':')))
 open(BASE + 'spending.html', 'w').write(out)
 print('wrote spending.html %.1f KB' % (len(out) / 1024))
 print(f'  GPB   {len(gpb_periods)} periods {gpb_periods[0]}..{gpb_periods[-1]}, {len(GPB_CATS)} categories')

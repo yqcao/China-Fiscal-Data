@@ -6,6 +6,7 @@ employment, the social-insurance schemes (participants / fund revenue / fund
 expenditure / balance), labour-dispute arbitration and labour inspection.
 """
 import json, os
+from page_footer import footer
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '/'
 D = json.load(open(BASE + 'data/mohrss/mohrss_series.json'))
@@ -193,10 +194,7 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
   </ul>
 </div>
 
-<footer>
-  <span data-l="Source: Ministry of Human Resources and Social Security · built for|数据来源：人力资源和社会保障部 · 构建于"></span>
-  <a href="https://github.com/yqcao/China-Fiscal-Data">github.com/yqcao/China-Fiscal-Data</a>
-</footer>
+__FOOTER__
 </div>
 
 <script>
@@ -364,7 +362,7 @@ renderAll();
 </html>
 '''
 
-out = HTML.replace('__PAYLOAD__', json.dumps(PAYLOAD, ensure_ascii=False, separators=(',', ':')))
+out = HTML.replace('__FOOTER__', footer(['mohrss', 'echarts'], page='mohrss.html')).replace('__PAYLOAD__', json.dumps(PAYLOAD, ensure_ascii=False, separators=(',', ':')))
 open(BASE + 'mohrss.html', 'w').write(out)
 print('wrote mohrss.html %.1f KB  (%d months %s..%s)'
       % (len(out) / 1024, len(D), D[0]['period'], D[-1]['period']))

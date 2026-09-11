@@ -6,6 +6,9 @@ whose JSON is missing or empty are skipped (with a note), so this is safe to run
 before every fetcher has been validated. Styling matches the fiscal monitor.
 """
 import json, os
+from page_footer import footer
+FOOT = {'cpi':['nbs','echarts'],'retail':['nbs','echarts'],'fai':['nbs','echarts'],'pmi':['nbs','echarts'],
+        'gdp':['nbs','echarts'],'trade':['customs','nbs','echarts'],'pboc':['pboc','echarts']}
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))+'/'
 MDIR = BASE+'data/macro/'
 
@@ -70,7 +73,7 @@ h1{font-size:1.6rem;margin:0 0 .15rem}h1 .zh{font-size:1rem;color:var(--mut);fon
 <div class="controls"><span class="seg" id="lang"><button data-v="en" class="on">EN</button><button data-v="zh">中文</button></span></div>
 <div class="kpis" id="kpi"></div>
 <div class="card"><div id="c" class="chart"></div></div>
-<footer><span data-l="Data source as noted · built for|数据来源见上 · 构建于"></span> <a href="https://github.com/yqcao/China-Fiscal-Data">github.com/yqcao/China-Fiscal-Data</a></footer>
+__FOOTER__
 </div><script>
 const D=__DATA__,SER=__SER__,REF=__REF__,Y0=__Y0__,Y1=__Y1__;
 const dark=matchMedia('(prefers-color-scheme: dark)').matches;
@@ -104,6 +107,7 @@ def build(cfg):
     ser=[s for s in cfg['series'] if any(r.get(s['k']) is not None for r in data)]
     if not ser: return None,'no populated series'
     html=(TMPL
+      .replace('__FOOTER__',footer(FOOT[cfg['id']],page=cfg['id']+'.html'))
       .replace('__TITLE__',f"{cfg['title']} · {cfg['zh']}")
       .replace('__H1__',cfg['title']).replace('__ZH__',cfg['zh'])
       .replace('__SUB__',f"{cfg['sub'][0]}|{cfg['sub'][1]}")

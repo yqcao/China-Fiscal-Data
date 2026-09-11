@@ -20,6 +20,7 @@ page shows the reported outturn beside it rather than in place of it.
 Inputs: data/mof-reports/fiscal_series.json, data/tax-sharing-rules.json.
 """
 import json, os
+from page_footer import footer
 
 BASE  = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '/'
 YI2BN = 0.1                                     # 亿元 -> RMB bn
@@ -212,10 +213,7 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
   </ul>
 </div>
 
-<footer>
-  <span data-l="Rules: State Council decisions as listed. Outturn: MOF 全国财政收支情况, monthly.|规则：国务院相关决定。实际数据：财政部《全国财政收支情况》月度发布。"></span><br>
-  Data &copy; Ministry of Finance, PRC &middot; built for <a href="https://github.com/yqcao/China-Fiscal-Data">github.com/yqcao/China-Fiscal-Data</a>
-</footer>
+__FOOTER__
 </div>
 
 <script>
@@ -352,7 +350,7 @@ applyL(); all();
 </html>
 '''
 
-HTML = HTML.replace('__PAYLOAD__', P)
+HTML = HTML.replace('__FOOTER__', footer(['state_council', 'mof_monthly', 'echarts'], page='tax-split.html')).replace('__PAYLOAD__', P)
 open(BASE + 'tax-split.html', 'w', encoding='utf-8').write(HTML)
 print(f'wrote tax-split.html {round(len(HTML)/1024,1)} KB')
 print(f'  rules   {len(taxes)} tax lines, {sum(1 for t in taxes if t["c_amt"] is None)} unallocated')

@@ -251,5 +251,9 @@ reports ~early-to-mid month. Running `update.sh` monthly keeps all three section
 
 ---
 
-*Data © Ministry of Finance of the People's Republic of China. This repository is an
-archive and visualization for research and educational purposes.*
+*All data and documents archived here remain the property of the issuing agencies (MOF, NBS,
+PBOC, MOHRSS, NPC, provincial governments, IMF, ChinaBond) and are reproduced for
+non-commercial research and educational purposes only. Derived series are the maintainer's own
+calculations, not official statistics, and are provided without warranty. This project is not
+affiliated with any of the bodies named. See [DISCLAIMER.md](DISCLAIMER.md) for the full
+disclaimer (EN / 中文).*

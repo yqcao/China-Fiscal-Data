@@ -15,6 +15,7 @@ Provinces with no retrieved report are drawn in a neutral grey that is outside
 the data ramp, so "not retrieved" can never read as a low target.
 """
 import json, os
+from page_footer import footer
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '/'
 
@@ -142,10 +143,7 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
   </ul>
 </div>
 
-<footer>
-  <span data-l="Source: each province's own government work report, from that province's official website. Boundaries: DataV.GeoAtlas province boundaries.|来源：各省政府工作报告，取自该省官方网站。行政区划边界：DataV.GeoAtlas。"></span><br>
-  built for <a href="https://github.com/yqcao/China-Fiscal-Data">github.com/yqcao/China-Fiscal-Data</a>
-</footer>
+__FOOTER__
 </div>
 
 <script>
@@ -293,7 +291,7 @@ applyL(); all();
 </html>
 '''
 
-HTML = HTML.replace('__PAYLOAD__', P)
+HTML = HTML.replace('__FOOTER__', footer(['prov_reports', 'geoatlas', 'echarts'], page='growth-targets.html', map_page=True)).replace('__PAYLOAD__', P)
 open(BASE + 'growth-targets.html', 'w', encoding='utf-8').write(HTML)
 print(f'wrote growth-targets.html {round(len(HTML)/1024,1)} KB')
 print(f'  {YEAR}: {len(got)} of {len(rows)} provinces with a target, '

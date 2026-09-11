@@ -1,4 +1,7 @@
 import json, os
+from page_footer import footer
+BASIS_NOTE = [('Basis note: MOF publishes cumulative (year-to-date) figures; "Monthly" values are derived by differencing consecutive reports within a year, and each year\'s first report covers Jan–Feb combined (no standalone January). LGB figures are reported monthly in RMB billion.',
+               '口径说明：财政部公布的是年初至当期的累计值；"当月"值由同一年内相邻两期报告相减得出，每年首期报告为1–2月合计（无单独的1月值）。地方政府债券数据按月公布，单位为十亿元。')]
 # repo root = parent of this scripts/ directory
 base=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))+'/'
 DATA = json.dumps(json.load(open(base+'data/mof-reports/fiscal_series.json')), ensure_ascii=False, separators=(',',':'))
@@ -194,10 +197,7 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
     </div>
   </section>
 
-  <footer>
-    Basis note: MOF publishes cumulative (year-to-date) figures; "Monthly" values are derived by differencing consecutive reports within a year, and each year's first report covers Jan–Feb combined (no standalone January). LGB figures are reported monthly in RMB billion.<br>
-    Data © Ministry of Finance, PRC · built for <a href="https://github.com/yqcao/China-Fiscal-Data">github.com/yqcao/China-Fiscal-Data</a>
-  </footer>
+__FOOTER__
 </div>
 
 <script>
@@ -538,6 +538,6 @@ fillSel('taxsel');fillSel('expsel');fillLgbSel();applyDataL();drawAll();
 </body>
 </html>
 '''
-HTML=HTML.replace('__DATA__',DATA).replace('__LGB__',LGB).replace('__NSB__',NSB).replace('__REP__',REP).replace('__HOLD__',HOLD).replace('__TGT__',TGT).replace('__LIM__',LIM)
+HTML=HTML.replace('__FOOTER__', footer(['mof_monthly', 'debt_center', 'mof_balance', 'npc_budget', 'chinabond', 'echarts'], page='fiscal-monitor.html', notes=BASIS_NOTE)).replace('__DATA__',DATA).replace('__LGB__',LGB).replace('__NSB__',NSB).replace('__REP__',REP).replace('__HOLD__',HOLD).replace('__TGT__',TGT).replace('__LIM__',LIM)
 open(base+'fiscal-monitor.html','w',encoding='utf-8').write(HTML)
 print('wrote fiscal-monitor.html',round(len(HTML)/1024,1),'KB')

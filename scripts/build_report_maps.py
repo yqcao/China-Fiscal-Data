@@ -14,6 +14,7 @@ Inputs: data/prov-reports/text/*.txt, targets.json, sources.json,
         data/geo/china-provinces.json
 """
 import json, os, re
+from page_footer import footer
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '/'
 TXT  = BASE + 'data/prov-reports/text/'
@@ -156,10 +157,7 @@ footer{margin-top:1.5rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
   </ul>
 </div>
 
-<footer>
-  <span data-l="Source: each province&rsquo;s own 2026 government work report. Boundaries: DataV.GeoAtlas.|来源：各省2026年政府工作报告。行政区划边界：DataV.GeoAtlas。"></span><br>
-  built for <a href="https://github.com/yqcao/China-Fiscal-Data">github.com/yqcao/China-Fiscal-Data</a>
-</footer>
+__FOOTER__
 </div>
 
 <script>
@@ -282,7 +280,7 @@ applyL(); build();
 </html>
 '''
 
-HTML = HTML.replace('__PAYLOAD__', P)
+HTML = HTML.replace('__FOOTER__', footer(['prov_reports', 'geoatlas', 'echarts'], page='report-maps.html', map_page=True)).replace('__PAYLOAD__', P)
 open(BASE + 'report-maps.html', 'w', encoding='utf-8').write(HTML)
 print(f'wrote report-maps.html {round(len(HTML)/1024,1)} KB')
 for t in TOPICS:

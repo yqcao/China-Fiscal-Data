@@ -12,6 +12,7 @@ The argument in four steps, one chart each:
 the two accounts the MOF reports monthly. All levels in RMB trillion (原始数据单位: 亿元).
 """
 import json, os
+from page_footer import footer
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '/'
 YI2TN = 1e-4          # 亿元 -> RMB trillion
@@ -271,10 +272,7 @@ footer a{color:var(--mut)}
   </ul>
 </div>
 
-<footer>
-  <span data-l="Data: Ministry of Finance (fiscal), National Bureau of Statistics (FAI, GDP) · built for|数据：财政部（财政）、国家统计局（固投、GDP）· 构建于"></span>
-  <a href="https://github.com/yqcao/China-Fiscal-Data">github.com/yqcao/China-Fiscal-Data</a>
-</footer>
+__FOOTER__
 </div>
 
 <script>
@@ -496,7 +494,7 @@ renderAll();
 </html>
 '''
 
-out = HTML.replace('__PAYLOAD__', json.dumps(PAYLOAD, ensure_ascii=False, separators=(',', ':')))
+out = HTML.replace('__FOOTER__', footer(['mof_monthly', 'npc_budget', 'nbs', 'echarts'], page='fiscal-drag.html')).replace('__PAYLOAD__', json.dumps(PAYLOAD, ensure_ascii=False, separators=(',', ':')))
 path = BASE + 'fiscal-drag.html'
 open(path, 'w').write(out)
 print('wrote fiscal-drag.html %.1f KB  (latest %s)' % (len(out) / 1024, cur['p']))
