@@ -98,9 +98,8 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
 <body class="lang-en">
 <div class="wrap">
   <h1>China Fiscal Monitor <span class="zh">中国月度财政运行监测</span></h1>
-  <p class="sub">Monthly fiscal operations, 2021–<span id="lastyr"></span> · Sources:
-    <a href="https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhiqingkuang/">MOF 全国财政收支情况</a> ·
-    <a href="https://kjhx.mof.gov.cn/yjbg/">China Government Debt Center 地方政府债券市场报告</a></p>
+  <p class="sub">Monthly fiscal operations, 2021–<span id="lastyr"></span> ·
+    <a href="#sources" data-l="Sources &amp; disclaimer|数据来源与免责声明"></a></p>
 
   <div class="controls">
     <span class="lbl">Language</span>

@@ -137,7 +137,7 @@ def footer(keys, page, notes=None, map_page=False, extra_html='', static=None):
     global STATIC
     STATIC = static
     today = datetime.date.today().isoformat()
-    parts = [CSS, '<footer class="cite">']
+    parts = [CSS, '<footer class="cite" id="sources">']
     for en, zh in (notes or []):
         parts.append('<p>' + _dl(en, zh) + '</p>')
     parts.append('<p><b>' + _dl('Sources', '数据来源') + '</b></p><ul>')
