@@ -155,10 +155,6 @@ def footer(keys, page, notes=None, map_page=False, extra_html='', static=None):
     parts.append('<p>' + _dl(DISC_EN, DISC_ZH) + '</p>')
     if map_page:
         parts.append('<p>' + _dl(MAP_EN, MAP_ZH) + '</p>')
-    cite_en = (f'Suggested citation: Yongquan Cao, "China Fiscal Data: {page.replace(".html", "")}", {SITE}{page}, '
-               f'built {today}; underlying data from the sources listed above.')
-    cite_zh = f'建议引用格式：Yongquan Cao，《China Fiscal Data: {page.replace(".html", "")}》，{SITE}{page}，生成于 {today}；数据来源见上。'
-    parts.append('<p>' + _dl(cite_en, cite_zh) + '</p>')
     parts.append('<p><a href="' + DISCLAIMER + '" target="_blank" rel="noopener">' + _dl('Full disclaimer · 免责声明', '完整免责声明 · Disclaimer') + '</a>'
                  ' · <a href="' + REPO + '" target="_blank" rel="noopener">github.com/yqcao/China-Fiscal-Data</a></p>')
     parts.append('</footer>')
