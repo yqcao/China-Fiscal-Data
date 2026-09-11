@@ -5,6 +5,11 @@ sourced from the Ministry of Finance (财政部).
 
 **Live site:** https://yqcao.github.io/China-Fiscal-Data/
 
+GitHub Pages serves the **`docs/`** folder only. For now just two pages are published there —
+the Monthly Fiscal Monitor and the FY2025 budget-system page — plus a landing page; the other
+pages below are built into the repo root and are not on the live site. `build_monitor.py` writes
+the monitor to both places; the FY2025 page is a static copy.
+
 ## Pages (GitHub Pages)
 
 | Page | Description |

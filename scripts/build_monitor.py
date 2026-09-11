@@ -540,4 +540,6 @@ fillSel('taxsel');fillSel('expsel');fillLgbSel();applyDataL();drawAll();
 '''
 HTML=HTML.replace('__FOOTER__', footer(['mof_monthly', 'debt_center', 'mof_balance', 'npc_budget', 'chinabond', 'echarts'], page='fiscal-monitor.html', notes=BASIS_NOTE)).replace('__DATA__',DATA).replace('__LGB__',LGB).replace('__NSB__',NSB).replace('__REP__',REP).replace('__HOLD__',HOLD).replace('__TGT__',TGT).replace('__LIM__',LIM)
 open(base+'fiscal-monitor.html','w',encoding='utf-8').write(HTML)
+if os.path.isdir(base+'docs'):  # the published site (GitHub Pages serves docs/)
+    open(base+'docs/fiscal-monitor.html','w',encoding='utf-8').write(HTML)
 print('wrote fiscal-monitor.html',round(len(HTML)/1024,1),'KB')

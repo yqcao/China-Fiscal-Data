@@ -48,7 +48,7 @@ if [[ "${1:-}" == "--commit" ]]; then
   echo "==> committing"
   # add data/ wholesale and let .gitignore do the excluding: naming an ignored
   # path explicitly (data/prov-reports/raw) aborts the whole add
-  git add fiscal-monitor.html fiscal-drag.html spending.html tax-split.html growth-targets.html report-maps.html index.html data 2>/dev/null || true
+  git add docs fiscal-monitor.html fiscal-drag.html spending.html tax-split.html growth-targets.html report-maps.html index.html data 2>/dev/null || true
   git commit -m "Data refresh: $(date +%Y-%m-%d)" \
     -m "Re-scraped MOF sources and rebuilt the monitor." || { echo "nothing to commit"; exit 0; }
   git push
