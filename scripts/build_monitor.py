@@ -508,11 +508,18 @@ function drawBal(){
     [L('Avg Coupon on Stock','Avg Coupon on Stock'),'存量平均利率',G.avg_rate+'%',L('gen','一般')+' '+G.avg_rate_gen+'% · '+L('spec','专项')+' '+G.avg_rate_spec+'%',null],
     [L('Interest Paid YTD','Interest Paid YTD'),'年初至今付息',fmtB(G.interest_ytd/10),G.interest_month?L('month','当月')+' '+fmtB(G.interest_month/10):'',null]]);
 }
-function lgbPrelim(){const b=LGB.filter(r=>r.src==='mof').map(r=>r.period);const e=document.getElementById('lgb_prelim');
-  e.hidden=!b.length; if(!b.length)return;
-  e.textContent=lang==='en'
+function lgbPrelim(){const b=LGB.filter(r=>r.src==='mof').map(r=>r.period);
+  const c=LGB.filter(r=>r.src==='cn').map(r=>r.period);
+  const e=document.getElementById('lgb_prelim');
+  e.hidden=!(b.length||c.length); if(e.hidden)return;
+  const p=[];
+  if(b.length)p.push(lang==='en'
     ?'* '+b.join(', ')+': issuance, rate and maturity taken from MOF\u2019s monthly 地方政府债券发行和债务余额情况 release, ahead of the Debt Center market report; secondary-market turnover and use of proceeds are not yet available for these months.'
-    :'* '+b.join('、')+'：发行额、利率、期限取自财政部《地方政府债券发行和债务余额情况》月报，早于国债登记结算公司市场报告；该月二级市场交易与资金投向暂缺。';}
+    :'* '+b.join('、')+'：发行额、利率、期限取自财政部《地方政府债券发行和债务余额情况》月报，早于国债登记结算公司市场报告；该月二级市场交易与资金投向暂缺。');
+  if(c.length)p.push(lang==='en'
+    ?'* '+c.join(', ')+': from the Debt Center\u2019s Chinese 地方政府债券市场报告, which is published 3\u20134 weeks before its English translation. Figures are converted from 亿元 to RMB billion.'
+    :'* '+c.join('、')+'：取自政府债务研究和评估中心《地方政府债券市场报告》中文版，该版早于英文版3–4周发布；数据由亿元折算为十亿元。');
+  e.textContent=p.join('  ');}
 function applyDataL(){document.querySelectorAll('[data-l]').forEach(e=>{const[en,zh]=e.getAttribute('data-l').split('|');e.textContent=lang==='en'?en:zh;});}
 
 ['c_gen_rev','c_gen_exp','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_exec_gen_rev','c_exec_gen_exp','c_exec_fund_rev','c_exec_fund_exp','c_lgb','c_lgb_refi','c_bal','c_hold_cgb','c_hold_lgb','c_lgb_ytd','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);

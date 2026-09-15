@@ -134,6 +134,109 @@ def md_for(c):
     if not c['attachments']: return None
     return os.path.join(DIR, 'markdown', c['month'] + '_' + c['attachments'][0].rsplit('.', 1)[0] + '.md')
 
+
+def per_cn(t):
+    m = re.search(r'(\d{4})年(\d{1,2})月', t); return (int(m.group(1)), int(m.group(2))) if m else None
+
+# ---- parse the Chinese market report -> same fields as the English one ----
+# The Chinese edition lands 3-4 weeks before its English translation. Parsing it
+# too means a month gets its secondary-market turnover and use-of-proceeds as
+# soon as the Debt Center publishes, instead of waiting for the translation.
+# Chinese tables are in 亿元; the English report (and this series) use RMB bn.
+CN_USE = [
+ ('市政建设和产业园区基础设施', 'municipal construction and industrial park infrastructure'),
+ ('交通基础设施', 'transportation infrastructure'),
+ ('保障性安居工程及城市更新', 'government-subsidized housing projects and urban renewal'),
+ ('保障性安居工程', 'government-subsidized housing projects'),
+ ('社会事业', 'social undertaking'),
+ ('农林水利', 'agriculture, forestry and water conservancy'),
+ ('土地储备', 'land reserve'),
+ ('生态环保', 'ecological construction and environmental protection'),
+ ('城乡冷链等物流基础设施', 'infrastructure of urban and rural cold chain logistics'),
+ ('仓储物流基础设施', 'infrastructure of warehouse logistics'),
+ ('新型基础设施', 'new infrastructure'),
+ ('新能源', 'new energy'),
+ ('能源', 'energy'),
+ ('收购存量商品房用作保障性住房', 'Purchase existing commercial housing for use as affordable housing'),
+ ('前瞻性、战略性新兴产业基础设施', 'infrastructure for forward-looking and strategic emerging industries'),
+ ('支持中小银行发展', 'supporting small and medium-sized banks development'),
+ ('其他', 'others'),
+]
+def _sq(t):
+    return re.sub(r'\s+', '', re.sub(r'-{3,}', '', t.replace('|', '')))
+def _bn(v):
+    return None if v is None else round(v / 10, 2)
+def _f(line):
+    return [float(x) for x in re.findall(r'\d[\d,]*\.\d+', line.replace(',', ''))]
+
+def parse_cn_report(md):
+    """One month's row from the Chinese 地方政府债券市场报告 markdown."""
+    raw = open(md).read()
+    z = _sq(raw)
+    # the opening summary is monthly; a second paragraph repeats it year-to-date
+    m = re.search(r'\d{1,2}[-–—]\d{1,2}月，地方政府债券发行规模', z)
+    head = z[:m.start()] if m else z
+    def n(pat, s):
+        mm = re.search(pat, s)
+        return float(mm.group(1)) if mm else None
+
+    lines = raw.splitlines()
+    try:
+        a = next(i for i, l in enumerate(lines) if '地方政府债券发行额合计' in l)
+        blk = lines[a:a + 16]
+    except StopIteration:
+        return None
+    def tbl(label):
+        for i, l in enumerate(blk):
+            if label in l:
+                f = _f(l)
+                if len(f) >= 2: return f[0], f[1]
+                if len(f) == 1:
+                    nxt = _f(blk[i + 1]) if i + 1 < len(blk) else []
+                    return f[0], (nxt[0] if nxt else None)
+        return None, None
+    issue_m, issue_c = tbl('地方政府债券发行额合计')
+    new_m, _  = tbl('新增债券发行额小计')
+    refi_m, _ = tbl('再融资债券发行额小计')
+    gen_m = spec_m = None
+    for i, l in enumerate(blk):
+        if '地方政府债券发行额合计' in l:
+            for b in blk[i + 1:i + 4]:
+                f = _f(b)
+                if '一般债券' in b and f: gen_m = f[0]
+                if '专项债券' in b and f: spec_m = f[0]
+            break
+    use = []
+    seg = re.search(r'新增债券资金用于(.*?)（见图', z)
+    if seg:
+        for part in seg.group(1).split('；'):
+            mm = re.search(r'^(.*?)([\d.]+)亿元$', part)
+            if not mm: continue
+            cn, v = mm.group(1), float(mm.group(2))
+            use.append({'field': next((en for k, en in CN_USE if k in cn), cn), 'v': round(v / 10, 2)})
+    return {'issue': _bn(issue_m), 'general': _bn(gen_m), 'special': _bn(spec_m),
+            'new': _bn(new_m), 'refi': _bn(refi_m),
+            'rate': n(r'平均发行利率([\d.]+)%', head),
+            'maturity': n(r'平均发行期限([\d.]+)年', head),
+            'secondary': _bn(n(r'债券二级市场现券交易([\d.]+)亿元', head)),
+            'cum_issue': _bn(issue_c), 'use': use}
+
+def cn_rows(catalog):
+    """period -> row, from every Chinese market report on disk."""
+    out = {}
+    for c in catalog:
+        if '地方政府债券市场报告' not in c['title']: continue
+        p = per_cn(c['title']); md = md_for(c)
+        if not p or p[0] < 2021 or not md or not os.path.exists(md): continue
+        try:
+            r = parse_cn_report(md)
+        except Exception:
+            continue
+        if not r or r['issue'] is None: continue
+        r.update(year=p[0], month=p[1], period=f'{p[0]}-{p[1]:02d}', src='cn')
+        out[r['period']] = r
+    return out
+
 FIELDS = ('issue','general','special','new','refi','rate','maturity','secondary','cum_issue')
 def parse_lgb(catalog):
     rows = {}
@@ -163,13 +266,25 @@ def parse_lgb(catalog):
         prev = rows.get(row['period'])                   # keep the more complete report
         if prev is None or sum(row[k] is not None for k in FIELDS) > sum(prev[k] is not None for k in FIELDS):
             rows[row['period']] = row
+    # The English translation trails the Chinese edition by 3-4 weeks. Use the
+    # Chinese report for any month the translation has not reached, and to fill
+    # individual fields a translated report left blank.
+    cn = cn_rows(catalog)
+    added = []
+    for per, c in sorted(cn.items()):
+        if per not in rows:
+            rows[per] = c; added.append(per)
+        else:
+            r = rows[per]
+            for k in FIELDS:
+                if r.get(k) is None and c.get(k) is not None: r[k] = c[k]
+            if not r.get('use') and c.get('use'): r['use'] = c['use']
     out = sorted(rows.values(), key=lambda x: (x['year'], x['month']))
     json.dump(out, open(os.path.join(DIR, 'lgb_series.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
     print(f'  lgb_series.json: {len(out)} months {out[0]["period"]}..{out[-1]["period"]}')
+    if added: print(f'    from the Chinese report (translation pending): {", ".join(added)}')
 
 # ---- parse Chinese tables -> new_special_ytd.json (RMB bn) ----
-def per_cn(t):
-    m = re.search(r'(\d{4})年(\d{1,2})月', t); return (int(m.group(1)), int(m.group(2))) if m else None
 def floats(s): return [float(x) for x in re.findall(r'\d+\.\d+', s)]
 
 def parse_nsb(catalog):
