@@ -2,7 +2,7 @@
 
 Source: https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhiqingkuang/
 
-185 reports, 20080828–20260814
+186 reports, 20080828–20260918
 
 | Date | Title | Text file |
 |---|---|---|
@@ -191,3 +191,4 @@ Source: https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhi
 | 2026-06-22 | 2026年1-5月财政收支情况 | `text/t20260622_3992033.txt` |
 | 2026-07-22 | 2026年上半年财政收支情况 | `text/t20260722_3993943.txt` |
 | 2026-08-14 | 2026年1-7月财政收支情况 | `text/t20260814_3995497.txt` |
+| 2026-09-18 | 2026年1—8月财政收支情况 | `text/t20260918_3997709.txt` |
