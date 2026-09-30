@@ -172,6 +172,8 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
     <div class="kpis" id="kpi_lgb"></div>
     <div class="card"><h3><span id="h_lgb"></span></h3>
       <p class="note" id="note_lgb"></p><div id="c_lgb" class="chart"></div></div>
+    <div class="subhead"><span data-l="Debt Service: Principal &amp; Interest|还本付息"></span></div>
+    <div class="kpis" id="kpi_repay"></div>
     <div class="card"><h3 data-l="Refinancing Issuance vs Principal Repayment|再融资发行 vs 到期偿还本金"></h3>
       <p class="note" id="note_refi"></p><div id="c_lgb_refi" class="chart"></div></div>
     <div class="subhead"><span data-l="Debt Outstanding|地方政府债务余额"></span></div>
@@ -431,15 +433,19 @@ function drawRefiRepay(){
   const repFisc=REP.map(r=>toB(cum?ytdFisc[r.period]:mdiff(ytdFisc,r)));
   const refiAll=lgbVals('refi');
   const refiIss=P.map(p=>{const i=LGB.findIndex(x=>x.period===p);return i<0?null:refiAll[i];});
+  // interest is published as a YTD figure with the month alongside it
+  const interest=REP.map(r=>toB(cum?r.interest_ytd:r.interest_month));
+  repayKpis(repRefi,repFisc,refiIss,interest);
   charts.c_lgb_refi.setOption({grid:{left:56,right:18,top:30,bottom:48},textStyle:{color:FG},
-    legend:{top:0,textStyle:{color:AX},data:[L('Repaid via refinancing','再融资偿还'),L('Repaid via fiscal funds','财政资金偿还'),L('Refinancing issuance','再融资发行')]},
+    legend:{top:0,textStyle:{color:AX},data:[L('Repaid via refinancing','再融资偿还'),L('Repaid via fiscal funds','财政资金偿还'),L('Refinancing issuance','再融资发行'),L('Interest paid','付息')]},
     tooltip:{trigger:'axis',valueFormatter:v=>v==null?'–':'RMB '+v+'bn'},
     xAxis:{type:'category',data:P,axisLabel:{color:AX,rotate:45,fontSize:10},axisLine:{lineStyle:{color:GRID}}},
     yAxis:{type:'value',name:'RMB bn',axisLabel:{color:AX,formatter:v=>v>=1000?(v/1000)+'tn':v},splitLine:{lineStyle:{color:GRID}},nameTextStyle:{color:AX}},
     series:[
       {name:L('Repaid via refinancing','再融资偿还'),type:'bar',stack:'rp',itemStyle:{color:'#7c4dff'},data:repRefi},
       {name:L('Repaid via fiscal funds','财政资金偿还'),type:'bar',stack:'rp',itemStyle:{color:'#c9a96b'},data:repFisc},
-      {name:L('Refinancing issuance','再融资发行'),type:'line',smooth:true,showSymbol:false,lineStyle:{width:2.4,color:'#0a9d6b'},itemStyle:{color:'#0a9d6b'},data:refiIss}]},true);
+      {name:L('Refinancing issuance','再融资发行'),type:'line',smooth:true,showSymbol:false,lineStyle:{width:2.4,color:'#0a9d6b'},itemStyle:{color:'#0a9d6b'},data:refiIss},
+      {name:L('Interest paid','付息'),type:'line',smooth:true,showSymbol:false,lineStyle:{width:2,color:'#e07b00',type:'dashed'},itemStyle:{color:'#e07b00'},data:interest}]},true);
 }
 const USESHORT=[[/municipal.*industrial park/i,'Municipal & industrial-park infra'],[/transportation/i,'Transportation infra'],
  [/land reserve/i,'Land reserve'],[/social undertaking/i,'Social undertaking'],
@@ -550,15 +556,38 @@ function renderKPIs(){
   document.getElementById('note_lgb').textContent=cum
     ?T('Bars: cumulative general vs special issuance within the year (RMB bn, left) · Line: issuance-weighted average rate to date (%, right)','柱：年内累计一般债与专项债发行（十亿元，左）· 线：年初至今按发行额加权平均利率（%，右）')
     :T('Bars: general vs special bonds (RMB bn, left) · Line: average issue rate (%, right)','柱：一般债与专项债（十亿元，左）· 线：平均发行利率（%，右）');
-  document.getElementById('note_refi').textContent=cum
-    ?T('Cumulative principal repaid within the year, split by funding source (bars), vs cumulative refinancing-bond issuance (line), RMB bn','年内累计偿还本金（按资金来源堆叠）与累计再融资债券发行（线），十亿元')
-    :T('Monthly principal repaid, split by funding source (bars), vs refinancing-bond issuance (line), RMB bn','当月到期偿还本金（按资金来源堆叠）与再融资债券发行（线），十亿元');
+  const refiGap=T('Refinancing issuance runs above the principal actually repaid because refinancing special bonds also replace hidden debt under the NPC Standing Committee\u2019s November 2024 authorisation, not only roll maturing bonds.','再融资发行额高于实际偿还本金，因再融资专项债还用于置换存量隐性债务（2024年11月人大常委会授权），不止用于滚动到期债券。');
+  document.getElementById('note_refi').textContent=(cum
+    ?T('Cumulative principal repaid within the year, split by funding source (bars), vs cumulative refinancing-bond issuance and interest paid (lines), RMB bn','年内累计偿还本金（按资金来源堆叠）与累计再融资债券发行、付息（线），十亿元')
+    :T('Monthly principal repaid, split by funding source (bars), vs refinancing-bond issuance and interest paid (lines), RMB bn','当月到期偿还本金（按资金来源堆叠）与再融资债券发行、付息（线），十亿元'))+'  '+refiGap;
   document.getElementById('note_lgb_yoy').textContent=cum
     ?T('YTD issuance vs the same point a year earlier, %','年初至今发行额与上年同期比较 %')
     :T('Monthly total issuance vs same month prior year, %','当月发行额同比 %');
   document.getElementById('note_lgb2').textContent=cum
     ?T('Line: issuance-weighted average maturity to date (years, left) · Bars: cumulative secondary-market turnover (RMB bn, right)','线：年初至今加权平均期限（年，左）· 柱：年内累计二级市场现券交易（十亿元，右）')
     :T('Line: average maturity (years, left) · Bars: secondary-market spot turnover (RMB bn, right)','线：平均期限（年，左）· 柱：二级市场现券交易（十亿元，右）');
+}
+
+function repayKpis(repRefi,repFisc,refiIss,interest){
+  const cum=basis==='cum';
+  // last month that actually has a repayment split
+  let i=-1; for(let k=0;k<repRefi.length;k++) if(repRefi[k]!=null||repFisc[k]!=null) i=k;
+  if(i<0){document.getElementById('kpi_repay').innerHTML='';return;}
+  const per=REP[i].period, rr=repRefi[i], rf=repFisc[i], ri=refiIss[i], it=interest[i];
+  const prin=(rr||0)+(rf||0);
+  const pct=v=>v==null?'–':v.toFixed(1)+'%';
+  const share=prin?(rr||0)/prin*100:null;          // how much of principal was rolled
+  const cover=prin?(ri==null?null:ri/prin*100):null; // refinancing issued per unit repaid
+  const svc=prin+(it||0);                           // principal + interest
+  const tag=per+(cum?' '+L('YTD','年初至今'):'');
+  kpi('kpi_repay',[
+    [L('Principal Repaid',''),'偿还本金',fmtB(prin),tag,null],
+    [L('via Refinancing / Fiscal Funds',''),'再融资 / 财政资金',fmtB(rr)+' / '+fmtB(rf),
+      share==null?'':L('refinanced ','再融资占 ')+pct(share),null],
+    [L('Refinancing Issued',''),'再融资发行',ri==null?'–':fmtB(ri),
+      cover==null?'':pct(cover)+L(' of principal repaid','（占偿还本金）'),null],
+    [L('Interest Paid',''),'付息',it==null?'–':fmtB(it),tag,null],
+    [L('Total Debt Service',''),'还本付息合计',fmtB(svc),L('principal + interest','本金+利息'),null]]);
 }
 
 function drawBal(){
