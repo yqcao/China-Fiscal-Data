@@ -167,13 +167,13 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
   <!-- SECTION 3 -->
   <section>
     <div class="shead"><h2>3 · Local Government Bond Issuance <span class="zh">地方政府债券发行</span></h2>
-      <p>Monthly LGB issuance from the China Government Debt Center reports. Figures in RMB billion; natively monthly.</p>
+      <p id="lgb_sub">LGB issuance from the China Government Debt Center reports, in RMB billion. The reports publish single months; the Cumulative YTD view accumulates them within each calendar year, and re-weights the rate and maturity averages by issuance rather than adding them.</p>
       <p class="note" id="lgb_prelim" hidden></p></div>
     <div class="kpis" id="kpi_lgb"></div>
-    <div class="card"><h3>Monthly Issuance by Type & Average Rate <span class="zh">当月发行（按类型）与平均利率</span></h3>
-      <p class="note" data-l="Bars: general vs special bonds (RMB bn, left) · Line: average issue rate (%, right)|柱：一般债与专项债（十亿元，左）· 线：平均发行利率（%，右）"></p><div id="c_lgb" class="chart"></div></div>
+    <div class="card"><h3><span id="h_lgb"></span></h3>
+      <p class="note" id="note_lgb"></p><div id="c_lgb" class="chart"></div></div>
     <div class="card"><h3 data-l="Refinancing Issuance vs Principal Repayment|再融资发行 vs 到期偿还本金"></h3>
-      <p class="note" data-l="Monthly principal repaid, split by funding source (bars), vs refinancing-bond issuance (line), RMB bn|当月到期偿还本金（按资金来源堆叠）与再融资债券发行（线），十亿元"></p><div id="c_lgb_refi" class="chart"></div></div>
+      <p class="note" id="note_refi"></p><div id="c_lgb_refi" class="chart"></div></div>
     <div class="subhead"><span data-l="Debt Outstanding|地方政府债务余额"></span></div>
     <div class="kpis" id="kpi_bal"></div>
     <div class="card"><h3 data-l="Local Government Debt Outstanding vs NPC Ceiling|地方政府债务余额与全国人大批准限额"></h3>
@@ -187,12 +187,12 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
     <div class="card"><h3 data-l="New Special-Bond Issuance, YTD by Year|新增专项债发行（年初至今，分年度）"></h3>
       <p class="note" data-l="Cumulative new special-bond issuance through each month; one line per year (RMB bn)|累计新增专项债发行，每年一条线（十亿元）"></p><div id="c_lgb_ytd" class="chart"></div></div>
     <div class="subhead"><span data-l="Use of New-Bond Proceeds (investment targets)|新增债券资金投向"></span> <select id="lgbsel"></select></div>
-    <div class="card"><p class="note" data-l="New special-bond proceeds by investment field for the selected month, RMB bn|所选月份新增专项债券按投向分布，十亿元"></p><div id="c_lgb_use" class="chart"></div></div>
+    <div class="card"><p class="note" id="note_use"></p><div id="c_lgb_use" class="chart"></div></div>
     <div class="row2">
       <div class="card"><h3 data-l="Average Maturity & Secondary-Market Turnover|平均期限与二级市场现券交易"></h3>
-        <p class="note" data-l="Line: average maturity (years, left) · Bars: secondary-market spot turnover (RMB bn, right)|线：平均期限（年，左）· 柱：二级市场现券交易（十亿元，右）"></p><div id="c_lgb2" class="chart sm"></div></div>
+        <p class="note" id="note_lgb2"></p><div id="c_lgb2" class="chart sm"></div></div>
       <div class="card"><h3 data-l="Issuance YoY Growth|发行额同比增速"></h3>
-        <p class="note" data-l="Monthly total issuance vs same month prior year, %|当月发行额同比 %"></p><div id="c_lgb_yoy" class="chart sm"></div></div>
+        <p class="note" id="note_lgb_yoy"></p><div id="c_lgb_yoy" class="chart sm"></div></div>
     </div>
   </section>
 
@@ -367,24 +367,51 @@ function drawNSB(){
     series:sers},true);
 }
 const lgbP=LGB.map(r=>r.period);
-function lgbYoY(){const by={};LGB.forEach(r=>by[r.year+'-'+r.month]=r.issue);
-  return LGB.map(r=>{const py=by[(r.year-1)+'-'+r.month];return py?+((r.issue/py-1)*100).toFixed(1):null;});}
+/* Year-to-date view of the bond series. The market report publishes single
+   months, so YTD is accumulated within each calendar year; the reported
+   cum_issue is used for the total where it exists (it agrees with the running
+   sum to a rounding cent). Rates and maturities are averages, not sums, so they
+   are re-weighted by issuance rather than added. */
+function lgbCum(field){const run={},out=[];
+  LGB.forEach(r=>{const v=r[field];
+    if(v==null){out.push(run[r.year]==null?null:+run[r.year].toFixed(2));return;}
+    run[r.year]=(run[r.year]||0)+v; out.push(+run[r.year].toFixed(2));});
+  return out;}
+function lgbCumIssue(){const c=lgbCum('issue');
+  return LGB.map((r,i)=>r.cum_issue!=null?r.cum_issue:c[i]);}
+function lgbWtd(field){/* issuance-weighted average to date, within the year */
+  const num={},den={},out=[];
+  LGB.forEach(r=>{const v=r[field],w=r.issue;
+    if(v!=null&&w!=null){num[r.year]=(num[r.year]||0)+v*w; den[r.year]=(den[r.year]||0)+w;}
+    out.push(den[r.year]?+(num[r.year]/den[r.year]).toFixed(2):null);});
+  return out;}
+function lgbVals(field){
+  if(basis==='mom')return LGB.map(r=>r[field]);
+  if(field==='issue')return lgbCumIssue();
+  if(field==='rate'||field==='maturity')return lgbWtd(field);
+  return lgbCum(field);}
+function lgbYoY(){
+  if(basis==='mom'){const by={};LGB.forEach(r=>by[r.year+'-'+r.month]=r.issue);
+    return LGB.map(r=>{const py=by[(r.year-1)+'-'+r.month];return py?+((r.issue/py-1)*100).toFixed(1):null;});}
+  const c=lgbCumIssue(),by={};LGB.forEach((r,i)=>by[r.year+'-'+r.month]=c[i]);
+  return LGB.map(r=>{const py=by[(r.year-1)+'-'+r.month],cu=by[r.year+'-'+r.month];
+    return(py&&cu)?+((cu/py-1)*100).toFixed(1):null;});}
 function drawLGB(){
   charts.c_lgb.setOption({grid:{left:56,right:56,top:30,bottom:48},textStyle:{color:FG},
     legend:{top:0,textStyle:{color:AX},data:[L('General','一般债'),L('Special','专项债'),L('Avg Rate','平均利率')]},
     tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},xAxis:{type:'category',data:lgbP,axisLabel:{color:AX,rotate:45,fontSize:10},axisLine:{lineStyle:{color:GRID}}},
     yAxis:[{type:'value',name:'RMB bn',axisLabel:{color:AX},splitLine:{lineStyle:{color:GRID}},nameTextStyle:{color:AX}},
            {type:'value',name:'%',axisLabel:{color:AX,formatter:'{value}%'},splitLine:{show:false},nameTextStyle:{color:AX}}],
-    series:[{name:L('General','一般债'),type:'bar',stack:'b',itemStyle:{color:C.gen},data:LGB.map(r=>r.general)},
-      {name:L('Special','专项债'),type:'bar',stack:'b',itemStyle:{color:C.spec},data:LGB.map(r=>r.special)},
-      {name:L('Avg Rate','平均利率'),type:'line',yAxisIndex:1,smooth:true,showSymbol:false,lineStyle:{width:2.4,color:C.rate},itemStyle:{color:C.rate},data:LGB.map(r=>r.rate)}]},true);
+    series:[{name:L('General','一般债'),type:'bar',stack:'b',itemStyle:{color:C.gen},data:lgbVals('general')},
+      {name:L('Special','专项债'),type:'bar',stack:'b',itemStyle:{color:C.spec},data:lgbVals('special')},
+      {name:L('Avg Rate','平均利率'),type:'line',yAxisIndex:1,smooth:true,showSymbol:false,lineStyle:{width:2.4,color:C.rate},itemStyle:{color:C.rate},data:lgbVals('rate')}]},true);
   charts.c_lgb2.setOption({grid:{left:54,right:56,top:30,bottom:48},textStyle:{color:FG},
     legend:{top:0,textStyle:{color:AX},data:[L('Avg Maturity','平均期限'),L('Secondary Turnover','二级市场交易')]},tooltip:{trigger:'axis'},
     xAxis:{type:'category',data:lgbP,axisLabel:{color:AX,rotate:45,fontSize:10},axisLine:{lineStyle:{color:GRID}}},
     yAxis:[{type:'value',name:L('years','年'),axisLabel:{color:AX},splitLine:{lineStyle:{color:GRID}},nameTextStyle:{color:AX}},
            {type:'value',name:'RMB bn',axisLabel:{color:AX},splitLine:{show:false},nameTextStyle:{color:AX}}],
-    series:[{name:L('Secondary Turnover','二级市场交易'),type:'bar',yAxisIndex:1,itemStyle:{color:'#8ab4ff',opacity:.75},data:LGB.map(r=>r.secondary)},
-      {name:L('Avg Maturity','平均期限'),type:'line',smooth:true,showSymbol:false,lineStyle:{width:2.4,color:C.mat},itemStyle:{color:C.mat},data:LGB.map(r=>r.maturity)}]},true);
+    series:[{name:L('Secondary Turnover','二级市场交易'),type:'bar',yAxisIndex:1,itemStyle:{color:'#8ab4ff',opacity:.75},data:lgbVals('secondary')},
+      {name:L('Avg Maturity','平均期限'),type:'line',smooth:true,showSymbol:false,lineStyle:{width:2.4,color:C.mat},itemStyle:{color:C.mat},data:lgbVals('maturity')}]},true);
   const yo=lgbYoY();
   charts.c_lgb_yoy.setOption({grid:{left:48,right:18,top:18,bottom:48},textStyle:{color:FG},tooltip:{trigger:'axis',valueFormatter:v=>v==null?'–':v+'%'},
     xAxis:{type:'category',data:lgbP,axisLabel:{color:AX,rotate:45,fontSize:10},axisLine:{lineStyle:{color:GRID}}},
@@ -399,8 +426,11 @@ function drawRefiRepay(){
   const pk=r=>r.year+'-'+String(r.month-1).padStart(2,'0');
   const mdiff=(map,r)=>{const c=map[r.period]; if(c==null)return null; if(r.month===1)return c; const p=map[pk(r)]; return p==null?null:+(c-p).toFixed(0);};
   const P=REP.map(r=>r.period), toB=v=>v==null?null:+(v/10).toFixed(1);
-  const repRefi=REP.map(r=>toB(mdiff(ytdRefi,r))), repFisc=REP.map(r=>toB(mdiff(ytdFisc,r)));
-  const refiIss=P.map(p=>{const r=LGB.find(x=>x.period===p);return r?r.refi:null;});
+  const cum=basis==='cum';
+  const repRefi=REP.map(r=>toB(cum?ytdRefi[r.period]:mdiff(ytdRefi,r)));
+  const repFisc=REP.map(r=>toB(cum?ytdFisc[r.period]:mdiff(ytdFisc,r)));
+  const refiAll=lgbVals('refi');
+  const refiIss=P.map(p=>{const i=LGB.findIndex(x=>x.period===p);return i<0?null:refiAll[i];});
   charts.c_lgb_refi.setOption({grid:{left:56,right:18,top:30,bottom:48},textStyle:{color:FG},
     legend:{top:0,textStyle:{color:AX},data:[L('Repaid via refinancing','再融资偿还'),L('Repaid via fiscal funds','财政资金偿还'),L('Refinancing issuance','再融资发行')]},
     tooltip:{trigger:'axis',valueFormatter:v=>v==null?'–':'RMB '+v+'bn'},
@@ -451,11 +481,32 @@ function drawHolders(){
       series},true);
   });
 }
+/* Use of proceeds is reported per month. The YTD entries add the months of one
+   calendar year together, field by field, so the mix can be read for the year
+   so far and not only for the latest month. */
+function useYTD(year){
+  const rows=LGB.filter(r=>r.year===year&&r.use&&r.use.length);
+  if(!rows.length)return null;
+  const by={};rows.forEach(r=>r.use.forEach(u=>{by[u.field]=(by[u.field]||0)+u.v;}));
+  return {months:rows.length,
+          use:Object.keys(by).map(k=>({field:k,v:+by[k].toFixed(2)}))};
+}
 function fillLgbSel(){const s=document.getElementById('lgbsel');const cur=s.value;s.innerHTML='';
+  const years=[...new Set(LGB.filter(r=>r.use&&r.use.length).map(r=>r.year))].sort((a,b)=>b-a);
+  years.forEach(y=>{const y2=useYTD(y);if(!y2)return;
+    const o=document.createElement('option');o.value='ytd-'+y;
+    o.textContent=y+' '+L('YTD','年初至今')+' ('+y2.months+L('mo','个月')+')';s.appendChild(o);});
   LGB.filter(r=>r.use&&r.use.length).slice().reverse().forEach(r=>{const o=document.createElement('option');o.value=r.period;o.textContent=r.period;s.appendChild(o);});
-  if(cur)s.value=cur;}
+  if(cur&&[...s.options].some(o=>o.value===cur))s.value=cur;}
 function drawUse(period){
-  const r=LGB.find(x=>x.period===period&&x.use&&x.use.length)||[...LGB].reverse().find(x=>x.use&&x.use.length);
+  let r,lab;
+  if(period&&period.startsWith('ytd-')){const y=+period.slice(4);r=useYTD(y);lab=y+' '+L('YTD','年初至今');}
+  if(!r){r=LGB.find(x=>x.period===period&&x.use&&x.use.length)||[...LGB].reverse().find(x=>x.use&&x.use.length);lab=r.period;}
+  document.getElementById('note_use').textContent=period&&period.startsWith('ytd-')
+    ?L('New-bond proceeds by investment field, summed over the months of '+lab+', RMB bn',
+        lab+'各月新增债券资金投向合计，十亿元')
+    :L('New special-bond proceeds by investment field for '+lab+', RMB bn',
+        lab+'新增专项债券按投向分布，十亿元');
   const u=r.use.slice().sort((a,b)=>a.v-b.v);
   charts.c_lgb_use.setOption({grid:{left:210,right:60,top:8,bottom:24},textStyle:{color:FG},
     tooltip:{trigger:'item',formatter:p=>useShort(u[p.dataIndex].field)+'：RMB '+p.value+'bn'},
@@ -479,12 +530,35 @@ function renderKPIs(){
     [L('Fund Expenditure','Fund Expenditure'),'基金支出',fmtB(Lt.fund_exp.v),'',Lt.fund_exp.g],
     [L('Land-Sale Revenue','Land-Sale Revenue'),'土地出让收入',Lt.land_rev?fmtB(Lt.land_rev.v):'–','',Lt.land_rev?Lt.land_rev.g:null],
     [L('Balance','Balance'),'收支差额',fmtB(Lt.fund_rev.v-Lt.fund_exp.v),L('rev − exp','收入−支出'),null]]);
-  const G=LGB[LGB.length-1],yo=lgbYoY()[LGB.length-1];
+  const i=LGB.length-1,G=LGB[i],yo=lgbYoY()[i],cum=basis==='cum';
+  const iss=lgbVals('issue')[i],rt=lgbVals('rate')[i],mt=lgbVals('maturity')[i],
+        gen=lgbVals('general')[i],spec=lgbVals('special')[i],
+        nw=lgbVals('new')[i],rf=lgbVals('refi')[i];
+  const tag=G.period+(G.src==='mof'?' *':'')+(cum?' '+L('YTD','年初至今'):'');
   kpi('kpi_lgb',[
-    [L('Monthly Issuance','Monthly Issuance'),'当月发行',fmtB(G.issue),G.period+(G.src==='mof'?' *':''),yo],
-    [L('Avg Issue Rate','Avg Issue Rate'),'平均利率',G.rate+'%','',null],
-    [L('Avg Maturity','Avg Maturity'),'平均期限',G.maturity+' <small>yr</small>','',null],
-    [L('YTD Issuance','YTD Issuance'),'年初至今发行',G.cum_issue?fmtB(G.cum_issue):'–','',null]]);
+    [L(cum?'YTD Issuance':'Monthly Issuance',''),cum?'年初至今发行':'当月发行',fmtB(iss),tag,yo],
+    [L('General / Special',''),'一般债 / 专项债',fmtB(gen)+' / '+fmtB(spec),'',null],
+    [L('New / Refinancing',''),'新增 / 再融资',fmtB(nw)+' / '+fmtB(rf),'',null],
+    [L(cum?'Avg Rate YTD':'Avg Issue Rate',''),cum?'年初至今平均利率':'平均利率',(rt==null?'–':rt+'%'),
+      cum?L('issuance-weighted','按发行额加权'):'',null],
+    [L(cum?'Avg Maturity YTD':'Avg Maturity',''),cum?'年初至今平均期限':'平均期限',
+      (mt==null?'–':mt+' <small>yr</small>'),cum?L('issuance-weighted','按发行额加权'):'',null]]);
+  const T=(en,zh)=>L(en,zh);
+  document.getElementById('h_lgb').textContent=cum
+    ?T('YTD Issuance by Type & Average Rate','年初至今发行（按类型）与平均利率')
+    :T('Monthly Issuance by Type & Average Rate','当月发行（按类型）与平均利率');
+  document.getElementById('note_lgb').textContent=cum
+    ?T('Bars: cumulative general vs special issuance within the year (RMB bn, left) · Line: issuance-weighted average rate to date (%, right)','柱：年内累计一般债与专项债发行（十亿元，左）· 线：年初至今按发行额加权平均利率（%，右）')
+    :T('Bars: general vs special bonds (RMB bn, left) · Line: average issue rate (%, right)','柱：一般债与专项债（十亿元，左）· 线：平均发行利率（%，右）');
+  document.getElementById('note_refi').textContent=cum
+    ?T('Cumulative principal repaid within the year, split by funding source (bars), vs cumulative refinancing-bond issuance (line), RMB bn','年内累计偿还本金（按资金来源堆叠）与累计再融资债券发行（线），十亿元')
+    :T('Monthly principal repaid, split by funding source (bars), vs refinancing-bond issuance (line), RMB bn','当月到期偿还本金（按资金来源堆叠）与再融资债券发行（线），十亿元');
+  document.getElementById('note_lgb_yoy').textContent=cum
+    ?T('YTD issuance vs the same point a year earlier, %','年初至今发行额与上年同期比较 %')
+    :T('Monthly total issuance vs same month prior year, %','当月发行额同比 %');
+  document.getElementById('note_lgb2').textContent=cum
+    ?T('Line: issuance-weighted average maturity to date (years, left) · Bars: cumulative secondary-market turnover (RMB bn, right)','线：年初至今加权平均期限（年，左）· 柱：年内累计二级市场现券交易（十亿元，右）')
+    :T('Line: average maturity (years, left) · Bars: secondary-market spot turnover (RMB bn, right)','线：平均期限（年，左）· 柱：二级市场现券交易（十亿元，右）');
 }
 
 function drawBal(){
@@ -527,9 +601,9 @@ document.getElementById('taxsel').onchange=e=>drawComposition('c_tax_pie','c_tax
 document.getElementById('expsel').onchange=e=>drawComposition('c_exp_pie','c_exp_grow','exp_items',e.target.value);
 document.getElementById('lgbsel').onchange=e=>drawUse(e.target.value);
 function seg(id,cb){document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#'+id+' button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cb(b.dataset.v);});}
-seg('basis',v=>{basis=v;drawGen();drawFund();});
+seg('basis',v=>{basis=v;drawGen();drawFund();drawLGB();drawRefiRepay();kpis();});
 seg('split',v=>{split=v;drawGen();});
-seg('lang',v=>{lang=v;document.body.classList.toggle('lang-en',v==='en');document.body.classList.toggle('lang-zh',v==='zh');applyDataL();fillSel('taxsel');fillSel('expsel');drawAll();});
+seg('lang',v=>{lang=v;document.body.classList.toggle('lang-en',v==='en');document.body.classList.toggle('lang-zh',v==='zh');applyDataL();fillSel('taxsel');fillSel('expsel');fillLgbSel();drawAll();});
 
 function drawAll(){applyDataL();renderKPIs();drawGen();drawFund();
   drawExecYear('c_exec_gen_rev','pub_rev'); drawExecYear('c_exec_gen_exp','pub_exp');
