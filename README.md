@@ -18,7 +18,6 @@ the monitor to both places; the FY2025 page is a static copy.
 | [`fiscal-monitor.html`](fiscal-monitor.html) | **Monthly Fiscal Monitor** — interactive ECharts dashboard: general public budget, government-managed fund, and local-government bond issuance/repayment, 2021–2026 |
 | [`fiscal-drag.html`](fiscal-drag.html) | **Fiscal Drag Monitor** — is budget execution adding to demand or subtracting from it? Execution pace vs. budget, fiscal impulse, and the pass-through to FAI and GDP |
 | [`mohrss.html`](mohrss.html) | **Employment & Social Insurance** — every indicator in the MOHRSS monthly release: jobs, unemployment rate, and the social-insurance schemes' participants, fund revenue, expenditure and balance, 2013–2026 |
-| [`prov-debt.html`](prov-debt.html) | **Provincial Debt Quota & Execution** — new-debt quota allocated to each province vs what it issued, execution rate, refinancing, debt outstanding and debt/GDP, 2015–2025 (annual) |
 | [`imf-augmented.html`](imf-augmented.html) | **IMF Augmented Debt & Deficit** — how the IMF builds China's augmented general-government debt and deficit (IMF Table 2) |
 | [`budget-system.html`](budget-system.html) | China Budget System — overview of the four-account budget system (四本账) |
 | [`budget-system-fy2025.html`](budget-system-fy2025.html) | China Budget System — FY2025 execution figures |
@@ -133,9 +132,20 @@ new-bond issuance (7,005 general + 40,188 special) matches both the national tab
 independent `parse_prov_bonds.py` appendix parse. Total 2024 local debt outstanding,
 475,394 亿元, matches the 47.5 万亿 in 国务院关于2024年度政府债务管理情况的报告.
 
-**Completeness caveat.** The platform carries what each region reports, so the current year
-fills in gradually: 2025 has 33 of 37 regions and several with issuance but no quota, so 2025
-execution ratios are not yet meaningful. `prov_panel` flags this per row (`year_complete`).
+**Completeness, and how the gap is filled.** The platform carries what each region reports, so
+the current year has holes. `build_prov_debt_panel.py` fills missing *issuance* from
+`parse_prov_bonds.py` — the bond-by-bond appendix of the Debt Center market report, which covers
+every issuer — and tags those rows `issue_source="market-report"`. The fill is a continuation of
+the same figures, not a different measure: for 2025 the platform's own ZYZB summary and the
+appendix parse agree to the yuan for all 32 regions that have reported. It never overwrites a
+reported value.
+
+With that, **2025 issuance is complete for all 37 issuers** and sums to 53,817 亿元 of new bonds,
+matching the December 2025 market report exactly. **Quota has no second source** — only the
+platform and each province's own budget report publish it, and this repo does not collect the
+latter — so 10 issuers have no 2025 quota and no execution rate. The monitor states this, and
+computes the aggregate execution rate only across issuers that reported both, so the ratio stays
+like-for-like.
 
 ### `data/mohrss/` — 人力资源和社会保障主要统计快报数据 (employment & social insurance)
 
@@ -250,8 +260,7 @@ scripts/
   build_monitor.py       rebuild fiscal-monitor.html from the four JSON series
   build_fiscal_drag.py   rebuild fiscal-drag.html (fiscal series + budget targets + FAI/GDP)
   fetch_celma.py         MOF 地方政府债券信息公开平台 → data/celma/ (province quota + issuance)
-  build_prov_debt_panel.py  tidy data/celma/ into prov_panel.json/.csv
-  build_prov_debt.py     rebuild prov-debt.html from the province panel
+  build_prov_debt_panel.py  tidy data/celma/ into prov_panel.json/.csv (feeds the monitor's Section 4)
   parse_mohrss.py        parse data/mohrss/files/ → mohrss_series.json (browser-collected)
   build_mohrss.py        rebuild mohrss.html from mohrss_series.json
   update.sh              run all of the above in order
