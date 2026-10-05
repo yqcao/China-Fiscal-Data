@@ -1,0 +1,822 @@
+{
+ "source": "https://www.celma.org.cn/ (中国地方政府债券信息公开平台)",
+ "api": "https://www.governbond.org.cn:4443/api/loadBondData.action",
+ "unit": "亿元",
+ "fetched": "2026-10-05",
+ "trees": {
+  "year_fdq": [
+   {
+    "id": "01",
+    "parent": null,
+    "name": "债务限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0101",
+    "parent": "01",
+    "name": "债务限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "010101",
+    "parent": "0101",
+    "name": "一般债务限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "010102",
+    "parent": "0101",
+    "name": "专项债务限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0102",
+    "parent": "01",
+    "name": "新增限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "010201",
+    "parent": "0102",
+    "name": "新增一般债务限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "010202",
+    "parent": "0102",
+    "name": "新增专项债务限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "03",
+    "parent": null,
+    "name": "债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "0301",
+    "parent": "03",
+    "name": "债券发行额小计",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030101",
+    "parent": "0301",
+    "name": "一般债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030102",
+    "parent": "0301",
+    "name": "专项债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0302",
+    "parent": "03",
+    "name": "新增债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030201",
+    "parent": "0302",
+    "name": "新增一般债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030202",
+    "parent": "0302",
+    "name": "新增专项债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0304",
+    "parent": "03",
+    "name": "再融资债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030401",
+    "parent": "0304",
+    "name": "再融资一般债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030402",
+    "parent": "0304",
+    "name": "再融资专项债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "04",
+    "parent": null,
+    "name": "债券还本",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "0401",
+    "parent": "04",
+    "name": "债券还本额小计",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "040101",
+    "parent": "0401",
+    "name": "一般债券还本额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "040102",
+    "parent": "0401",
+    "name": "专项债券还本额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "05",
+    "parent": null,
+    "name": "债券付息",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "0501",
+    "parent": "05",
+    "name": "债券付息额小计",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "050101",
+    "parent": "0501",
+    "name": "一般债券付息额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "050102",
+    "parent": "0501",
+    "name": "专项债券付息额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "06",
+    "parent": null,
+    "name": "债务余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.债务余额按月公开的汇总数与全国数据有部分差异。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市。&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n<br/>&nbsp; &nbsp; &nbsp;5.2015、2016、2017年末地方政府债务中包括一部分非政府债券形式地方政府债务，主要是银行贷款等非政府债券形式的债务，由于债&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务举借主体分布在融资平台公司等企事业单位，债务资金的举借和使用未经政府总预算会计核算。在完成地方政府债券置换并收回债权&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人不同意置换的存量债务限额前，2015-2017年末债务余额数为地方统计数，非地方执行数。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "0601",
+    "parent": "06",
+    "name": "债务余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.债务余额按月公开的汇总数与全国数据有部分差异。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市。&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n<br/>&nbsp; &nbsp; &nbsp;5.2015、2016、2017年末地方政府债务中包括一部分非政府债券形式地方政府债务，主要是银行贷款等非政府债券形式的债务，由于债&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务举借主体分布在融资平台公司等企事业单位，债务资金的举借和使用未经政府总预算会计核算。在完成地方政府债券置换并收回债权&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人不同意置换的存量债务限额前，2015-2017年末债务余额数为地方统计数，非地方执行数。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "060101",
+    "parent": "0601",
+    "name": "一般债务余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.债务余额按月公开的汇总数与全国数据有部分差异。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市。&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n<br/>&nbsp; &nbsp; &nbsp;5.2015、2016、2017年末地方政府债务中包括一部分非政府债券形式地方政府债务，主要是银行贷款等非政府债券形式的债务，由于债&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务举借主体分布在融资平台公司等企事业单位，债务资金的举借和使用未经政府总预算会计核算。在完成地方政府债券置换并收回债权&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人不同意置换的存量债务限额前，2015-2017年末债务余额数为地方统计数，非地方执行数。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "060102",
+    "parent": "0601",
+    "name": "专项债务余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.债务余额按月公开的汇总数与全国数据有部分差异。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市。&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n<br/>&nbsp; &nbsp; &nbsp;5.2015、2016、2017年末地方政府债务中包括一部分非政府债券形式地方政府债务，主要是银行贷款等非政府债券形式的债务，由于债&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务举借主体分布在融资平台公司等企事业单位，债务资金的举借和使用未经政府总预算会计核算。在完成地方政府债券置换并收回债权&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人不同意置换的存量债务限额前，2015-2017年末债务余额数为地方统计数，非地方执行数。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "07",
+    "parent": null,
+    "name": "债券余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.地方政府债券余额为地方统计数据。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "0701",
+    "parent": "07",
+    "name": "债券余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.地方政府债券余额为地方统计数据。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "070101",
+    "parent": "0701",
+    "name": "一般债券余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.地方政府债券余额为地方统计数据。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "070102",
+    "parent": "0701",
+    "name": "专项债券余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.地方政府债券余额为地方统计数据。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "08",
+    "parent": null,
+    "name": "一级市场",
+    "note": null
+   },
+   {
+    "id": "0801",
+    "parent": "08",
+    "name": "银行间债券市场",
+    "note": null
+   },
+   {
+    "id": "0802",
+    "parent": "08",
+    "name": "柜台市场",
+    "note": null
+   },
+   {
+    "id": "0803",
+    "parent": "08",
+    "name": "交易所市场",
+    "note": null
+   },
+   {
+    "id": "0804",
+    "parent": "08",
+    "name": "自贸区市场",
+    "note": null
+   },
+   {
+    "id": "0805",
+    "parent": "08",
+    "name": "香港",
+    "note": null
+   },
+   {
+    "id": "0806",
+    "parent": "08",
+    "name": "澳门",
+    "note": null
+   },
+   {
+    "id": "11",
+    "parent": null,
+    "name": "财政收支",
+    "note": "财政收支数据来源于各地年度财政年鉴、各地财政年度决算。"
+   },
+   {
+    "id": "1101",
+    "parent": "11",
+    "name": "一般公共预算收入",
+    "note": "财政收支数据来源于各地年度财政年鉴、各地财政年度决算。"
+   },
+   {
+    "id": "1103",
+    "parent": "11",
+    "name": "政府性基金预算收入",
+    "note": "财政收支数据来源于各地年度财政年鉴、各地财政年度决算。"
+   },
+   {
+    "id": "1104",
+    "parent": "11",
+    "name": "一般公共预算支出",
+    "note": "财政收支数据来源于各地年度财政年鉴、各地财政年度决算。"
+   },
+   {
+    "id": "1106",
+    "parent": "11",
+    "name": "政府性基金预算支出",
+    "note": "财政收支数据来源于各地年度财政年鉴、各地财政年度决算。"
+   },
+   {
+    "id": "12",
+    "parent": null,
+    "name": "经济社会发展",
+    "note": "经济社会发展数据来源于各地统计年鉴、统计公报。"
+   },
+   {
+    "id": "1201",
+    "parent": "12",
+    "name": "国内生产总值（亿元）",
+    "note": "经济社会发展数据来源于各地统计年鉴、统计公报。"
+   },
+   {
+    "id": "1204",
+    "parent": "12",
+    "name": "进出口总额（亿元）",
+    "note": "经济社会发展数据来源于各地统计年鉴、统计公报。"
+   },
+   {
+    "id": "1205",
+    "parent": "12",
+    "name": "社会消费品零售总额（亿元）",
+    "note": "经济社会发展数据来源于各地统计年鉴、统计公报。"
+   },
+   {
+    "id": "1206",
+    "parent": "12",
+    "name": "城镇（常住）居民人均可支配收入（元）",
+    "note": "经济社会发展数据来源于各地统计年鉴、统计公报。"
+   },
+   {
+    "id": "1207",
+    "parent": "12",
+    "name": "农村（常住）居民人均可支配收入（元）",
+    "note": "经济社会发展数据来源于各地统计年鉴、统计公报。"
+   }
+  ],
+  "year_qg": [
+   {
+    "id": "01",
+    "parent": null,
+    "name": "债务限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0101",
+    "parent": "01",
+    "name": "债务限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "010101",
+    "parent": "0101",
+    "name": "一般债务限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "010102",
+    "parent": "0101",
+    "name": "专项债务限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0102",
+    "parent": "01",
+    "name": "新增限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "010201",
+    "parent": "0102",
+    "name": "新增一般债务限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "010202",
+    "parent": "0102",
+    "name": "新增专项债务限额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "03",
+    "parent": null,
+    "name": "债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0301",
+    "parent": "03",
+    "name": "债券发行额小计",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030101",
+    "parent": "0301",
+    "name": "一般债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030102",
+    "parent": "0301",
+    "name": "专项债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0302",
+    "parent": "03",
+    "name": "新增债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030201",
+    "parent": "0302",
+    "name": "新增一般债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030202",
+    "parent": "0302",
+    "name": "新增专项债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0304",
+    "parent": "03",
+    "name": "再融资债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030401",
+    "parent": "0304",
+    "name": "再融资一般债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030402",
+    "parent": "0304",
+    "name": "再融资专项债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "04",
+    "parent": null,
+    "name": "债券还本",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0401",
+    "parent": "04",
+    "name": "债券还本额小计",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "040101",
+    "parent": "0401",
+    "name": "一般债券还本额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "040102",
+    "parent": "0401",
+    "name": "专项债券还本额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "05",
+    "parent": null,
+    "name": "债券付息",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0501",
+    "parent": "05",
+    "name": "债券付息额小计",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "050101",
+    "parent": "0501",
+    "name": "一般债券付息额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "050102",
+    "parent": "0501",
+    "name": "专项债券付息额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "06",
+    "parent": null,
+    "name": "债务余额",
+    "note": "\n<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.全国年度债务余额为决算数据，全国季度、月度债务余额为年度执行中数据。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0601",
+    "parent": "06",
+    "name": "债务余额",
+    "note": "\n<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.全国年度债务余额为决算数据，全国季度、月度债务余额为年度执行中数据。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "060101",
+    "parent": "0601",
+    "name": "一般债务余额",
+    "note": "\n<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.全国年度债务余额为决算数据，全国季度、月度债务余额为年度执行中数据。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "060102",
+    "parent": "0601",
+    "name": "专项债务余额",
+    "note": "\n<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.全国年度债务余额为决算数据，全国季度、月度债务余额为年度执行中数据。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "07",
+    "parent": null,
+    "name": "债券余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.地方政府债券余额为地方统计数据。\n<br/>&nbsp; &nbsp; &nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0701",
+    "parent": "07",
+    "name": "债券余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.地方政府债券余额为地方统计数据。\n<br/>&nbsp; &nbsp; &nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "070101",
+    "parent": "0701",
+    "name": "一般债券余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.地方政府债券余额为地方统计数据。\n<br/>&nbsp; &nbsp; &nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "070102",
+    "parent": "0701",
+    "name": "专项债券余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.地方政府债券余额为地方统计数据。\n<br/>&nbsp; &nbsp; &nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "08",
+    "parent": null,
+    "name": "一级市场",
+    "note": null
+   },
+   {
+    "id": "0801",
+    "parent": "08",
+    "name": "银行间债券市场",
+    "note": null
+   },
+   {
+    "id": "0802",
+    "parent": "08",
+    "name": "柜台市场",
+    "note": null
+   },
+   {
+    "id": "0803",
+    "parent": "08",
+    "name": "交易所市场",
+    "note": null
+   },
+   {
+    "id": "0804",
+    "parent": "08",
+    "name": "自贸区市场",
+    "note": null
+   },
+   {
+    "id": "0805",
+    "parent": "08",
+    "name": "香港",
+    "note": null
+   },
+   {
+    "id": "0806",
+    "parent": "08",
+    "name": "澳门",
+    "note": null
+   },
+   {
+    "id": "11",
+    "parent": null,
+    "name": "财政收支",
+    "note": "全国数据来源于年度全国财政决算"
+   },
+   {
+    "id": "1101",
+    "parent": "11",
+    "name": "地方一般公共预算收入",
+    "note": "全国数据来源于年度全国财政决算"
+   },
+   {
+    "id": "110101",
+    "parent": "1101",
+    "name": "地方本级收入",
+    "note": "全国数据来源于年度全国财政决算"
+   },
+   {
+    "id": "110102",
+    "parent": "1101",
+    "name": "中央对地方转移支付",
+    "note": "全国数据来源于年度全国财政决算"
+   },
+   {
+    "id": "1102",
+    "parent": "11",
+    "name": "地方一般公共预算支出",
+    "note": "全国数据来源于年度全国财政决算"
+   },
+   {
+    "id": "1103",
+    "parent": "11",
+    "name": "地方政府性基金收入",
+    "note": "全国数据来源于年度全国财政决算"
+   },
+   {
+    "id": "110301",
+    "parent": "1103",
+    "name": "地方政府性基金本级收入",
+    "note": "全国数据来源于年度全国财政决算"
+   },
+   {
+    "id": "110302",
+    "parent": "1103",
+    "name": "中央政府性基金转移支付",
+    "note": "全国数据来源于年度全国财政决算"
+   },
+   {
+    "id": "1104",
+    "parent": "11",
+    "name": "地方政府性基金支出",
+    "note": "全国数据来源于年度全国财政决算"
+   },
+   {
+    "id": "12",
+    "parent": null,
+    "name": "经济社会发展",
+    "note": "全国数据来源于年度国民经济和社会发展统计公报。"
+   },
+   {
+    "id": "1201",
+    "parent": "12",
+    "name": "国内生产总值（亿元）",
+    "note": "全国数据来源于年度国民经济和社会发展统计公报。"
+   },
+   {
+    "id": "1204",
+    "parent": "12",
+    "name": "进出口总额（亿元）",
+    "note": "全国数据来源于年度国民经济和社会发展统计公报。"
+   },
+   {
+    "id": "1205",
+    "parent": "12",
+    "name": "社会消费品零售总额（亿元）",
+    "note": "全国数据来源于年度国民经济和社会发展统计公报。"
+   },
+   {
+    "id": "1206",
+    "parent": "12",
+    "name": "城镇（常住）居民人均可支配收入（元）",
+    "note": "全国数据来源于年度国民经济和社会发展统计公报。"
+   },
+   {
+    "id": "1207",
+    "parent": "12",
+    "name": "农村（常住）居民人均可支配收入（元）",
+    "note": "全国数据来源于年度国民经济和社会发展统计公报。"
+   }
+  ],
+  "month_fdq": [
+   {
+    "id": "03",
+    "parent": null,
+    "name": "债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "0301",
+    "parent": "03",
+    "name": "债券发行额小计",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030101",
+    "parent": "0301",
+    "name": "一般债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030102",
+    "parent": "0301",
+    "name": "专项债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0302",
+    "parent": "03",
+    "name": "新增债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030201",
+    "parent": "0302",
+    "name": "新增一般债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030202",
+    "parent": "0302",
+    "name": "新增专项债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "0304",
+    "parent": "03",
+    "name": "再融资债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030401",
+    "parent": "0304",
+    "name": "再融资一般债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "030402",
+    "parent": "0304",
+    "name": "再融资专项债券发行额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "04",
+    "parent": null,
+    "name": "债券还本",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "0401",
+    "parent": "04",
+    "name": "债券还本额小计",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "040101",
+    "parent": "0401",
+    "name": "一般债券还本额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "040102",
+    "parent": "0401",
+    "name": "专项债券还本额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "05",
+    "parent": null,
+    "name": "债券付息",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "0501",
+    "parent": "05",
+    "name": "债券付息额小计",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "050101",
+    "parent": "0501",
+    "name": "一般债券付息额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "050102",
+    "parent": "0501",
+    "name": "专项债券付息额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;2.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;3.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "06",
+    "parent": null,
+    "name": "债务余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.债务余额按月公开的汇总数与全国数据有部分差异。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市。&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n<br/>&nbsp; &nbsp; &nbsp;5.2015、2016、2017年末地方政府债务中包括一部分非政府债券形式地方政府债务，主要是银行贷款等非政府债券形式的债务，由于债&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务举借主体分布在融资平台公司等企事业单位，债务资金的举借和使用未经政府总预算会计核算。在完成地方政府债券置换并收回债权&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人不同意置换的存量债务限额前，2015-2017年末债务余额数为地方统计数，非地方执行数。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "0601",
+    "parent": "06",
+    "name": "债务余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.债务余额按月公开的汇总数与全国数据有部分差异。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市。&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n<br/>&nbsp; &nbsp; &nbsp;5.2015、2016、2017年末地方政府债务中包括一部分非政府债券形式地方政府债务，主要是银行贷款等非政府债券形式的债务，由于债&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务举借主体分布在融资平台公司等企事业单位，债务资金的举借和使用未经政府总预算会计核算。在完成地方政府债券置换并收回债权&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人不同意置换的存量债务限额前，2015-2017年末债务余额数为地方统计数，非地方执行数。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "060101",
+    "parent": "0601",
+    "name": "一般债务余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.债务余额按月公开的汇总数与全国数据有部分差异。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市。&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n<br/>&nbsp; &nbsp; &nbsp;5.2015、2016、2017年末地方政府债务中包括一部分非政府债券形式地方政府债务，主要是银行贷款等非政府债券形式的债务，由于债&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务举借主体分布在融资平台公司等企事业单位，债务资金的举借和使用未经政府总预算会计核算。在完成地方政府债券置换并收回债权&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人不同意置换的存量债务限额前，2015-2017年末债务余额数为地方统计数，非地方执行数。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "060102",
+    "parent": "0601",
+    "name": "专项债务余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.债务余额按月公开的汇总数与全国数据有部分差异。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市。&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n<br/>&nbsp; &nbsp; &nbsp;5.2015、2016、2017年末地方政府债务中包括一部分非政府债券形式地方政府债务，主要是银行贷款等非政府债券形式的债务，由于债&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务举借主体分布在融资平台公司等企事业单位，债务资金的举借和使用未经政府总预算会计核算。在完成地方政府债券置换并收回债权&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人不同意置换的存量债务限额前，2015-2017年末债务余额数为地方统计数，非地方执行数。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "07",
+    "parent": null,
+    "name": "债券余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.地方政府债券余额为地方统计数据。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>"
+   },
+   {
+    "id": "0701",
+    "parent": "07",
+    "name": "债券余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.地方政府债券余额为地方统计数据。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "070101",
+    "parent": "0701",
+    "name": "一般债券余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.地方政府债券余额为地方统计数据。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   },
+   {
+    "id": "070102",
+    "parent": "0701",
+    "name": "专项债券余额",
+    "note": "<p>\n&nbsp; &nbsp;&nbsp;&nbsp;1.地方政府债券余额为地方统计数据。<br/>\n&nbsp; &nbsp;&nbsp;&nbsp;2.部分数据因四舍五入的原因，存在合计与分项合计不等的情况。\n<br/>&nbsp; &nbsp; &nbsp;3.新疆生产建设兵团在核定的额度内，以新疆维吾尔自治区名义发行地方政府债券。\n<br/>&nbsp; &nbsp; &nbsp;4.辽宁省不含大连市，浙江省不含宁波市，福建省不含厦门市，山东省不含青岛市，广东省不含深圳市，新疆维吾尔自治区不含新疆生产&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建设兵团。\n</p>\n<p>\n    <br/>\n</p>\n"
+   }
+  ]
+ },
+ "skipped_malformed": [
+  {
+   "zb": "0805",
+   "AD_CODE": "21",
+   "AD_NAME": "辽宁省",
+   "ZB_ID": "0805",
+   "AMOUNT": 0.0
+  },
+  {
+   "zb": "0806",
+   "AD_CODE": "21",
+   "AD_NAME": "辽宁省",
+   "ZB_ID": "0806",
+   "AMOUNT": 0.0
+  }
+ ]
+}

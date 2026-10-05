@@ -103,6 +103,39 @@ repayment_series.json  YTD principal repaid (亿元), split into refinancing-bon
 INDEX.md               source notes
 ```
 
+### `data/celma/` — 中国地方政府债券信息公开平台 (province-level debt panel)
+
+The MOF-run local-government bond disclosure platform, mandated by
+《地方政府债券信息公开平台管理办法》. It is the only official source that publishes the
+**new-debt quota allocated to each province** (新增一般/专项债务限额) next to that province's
+actual issuance, which is what makes province-level execution computable — the Debt Center's
+market report carries issuance only, and its by-province table is an image.
+
+- **Source:** https://www.celma.org.cn/ (JSON API behind the 年度/季度/月度数据 pages)
+- **Coverage:** 37 regions (31 provinces + 5 计划单列市 + XPCC), 2015–2025 annual,
+  2025-02→ monthly; 33 indicators
+
+```
+annual_by_region.json   region x year x indicator: quota, issuance (new/refi x general/special),
+                        repayment, interest, debt limit and balance, plus GDP, budget revenue and
+                        expenditure, government-fund revenue and expenditure, retail sales, trade
+annual_national.json    the same indicators at national level
+monthly_by_region.json  the flow indicators, monthly
+prov_panel.json/.csv    tidied panel + per-year completeness flag (build_prov_debt_panel.py)
+meta.json               indicator trees, fetch date, any malformed rows skipped
+```
+
+`scripts/fetch_celma.py` pulls it; `scripts/build_prov_debt_panel.py` tidies it.
+
+**Validation.** By-region sums reproduce the national totals exactly for 2015–2024, and 2024
+new-bond issuance (7,005 general + 40,188 special) matches both the national table and the
+independent `parse_prov_bonds.py` appendix parse. Total 2024 local debt outstanding,
+475,394 亿元, matches the 47.5 万亿 in 国务院关于2024年度政府债务管理情况的报告.
+
+**Completeness caveat.** The platform carries what each region reports, so the current year
+fills in gradually: 2025 has 33 of 37 regions and several with issuance but no quota, so 2025
+execution ratios are not yet meaningful. `prov_panel` flags this per row (`year_complete`).
+
 ### `data/mohrss/` — 人力资源和社会保障主要统计快报数据 (employment & social insurance)
 
 Monthly statistical release from the Ministry of Human Resources and Social Security.
