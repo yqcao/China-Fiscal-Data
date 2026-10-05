@@ -164,8 +164,18 @@ clean case: 2,785 of new special bonds issued against a 2,485 quota, and the 300
 exactly the carried-over tranche recorded in its November 2025 adjustment report.
 
 With that, **2025 issuance is complete for all 37 issuers** and sums to 53,817 亿元 of new bonds,
-matching the December 2025 market report exactly. Quota now covers **35 of 37** for 2025: 27 from the platform plus 8 sourced from budget
-documents. The monitor states the remaining gap, marks sourced rows, and computes the aggregate
+matching the December 2025 market report exactly. Quota now covers **all 37** issuers for 2025: 27 from the platform plus 10 sourced from budget
+documents. That total is itself a check on the sourcing — the 37 region-reported quotas sum to
+**52,212 亿元** against the NPC's headline 2025 new quota of 52,000 亿元 (8,000 general +
+44,000 special), 0.4% above it. Ten figures gathered independently from ten different documents
+landing that close to the national total is strong evidence they are right.
+
+Entries carry a `verification` field. Nine are `direct`, read from the source document fetched
+from its official URL. One, 青岛市, is `indirect`: www.qingdao.gov.cn refuses connections from
+outside mainland China and there is no Wayback snapshot, so it rests on search readings of the
+official PDF URL plus corroboration. That corroboration is strong — the same report's issuance
+figures match this repo's own independent parse of the bond appendix to the cent (1,094.98 total,
+730 new, 364.98 refinancing + swap) — but it is not the same standard as the other nine. The monitor states the remaining gap, marks sourced rows, and computes the aggregate
 execution rate only across issuers that have both quota and issuance, so the ratio stays
 like-for-like.
 
