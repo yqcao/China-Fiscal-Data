@@ -122,6 +122,7 @@ def main():
             o['quota_special'] = ov.get('special')
             o['quota_source'] = 'budget-report'
             o['quota_url'] = ov.get('url')
+            o['quota_verification'] = ov.get('verification', 'direct')
         q = (o['quota_general'] or 0) + (o['quota_special'] or 0)
         i = (o['issue_new_general'] or 0) + (o['issue_new_special'] or 0)
         o['quota_total'] = q or None
@@ -153,6 +154,7 @@ def main():
     json.dump({'unit': '亿元', 'source': 'celma.org.cn', 'completeness': comp, 'rows': out},
               open(D + 'prov_panel.json', 'w'), ensure_ascii=False, separators=(',', ':'))
     cols = (['region', 'code', 'year', 'year_complete', 'issue_source', 'quota_source',
+             'quota_verification',
              'quota_total', 'issue_new_total',
              'execution_pct', 'issue_refi_total', 'bal_total', 'debt_to_gdp_pct']
             + [k for k, _ in FIELDS])
