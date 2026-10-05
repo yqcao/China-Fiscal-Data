@@ -1,0 +1,56 @@
+# Publish docs/ to GitHub Pages.
+#
+# Replaces the legacy Jekyll builder, which kept failing on this repo: the repo
+# carries ~68 MB of archived source documents across ~1,300 files, the last
+# successful legacy build took 6 minutes against a 10-minute limit, and four
+# consecutive builds then errored or hung. This workflow skips Jekyll entirely
+# and uploads docs/ as-is, checking out only that folder at depth 1 so the
+# archive never has to be fetched.
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it; queue the next one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out docs/ only
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: docs
+          sparse-checkout-cone-mode: false
+
+      - name: Confirm the site is there
+        run: |
+          test -f docs/index.html || { echo "docs/index.html missing"; exit 1; }
+          test -f docs/fiscal-monitor.html || { echo "docs/fiscal-monitor.html missing"; exit 1; }
+          echo "publishing:"; ls -lh docs/
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
