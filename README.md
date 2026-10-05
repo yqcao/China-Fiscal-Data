@@ -69,6 +69,16 @@ INDEX.md            human-readable, date-sorted table
 > URL so the binaries can be re-downloaded. The text-only `markdown/` conversions
 > are committed for searchability.
 
+**Province-level issuance.** The report's own by-province table (表2) and YTD chart (图3) are
+images in the PDF with no extractable text, so `scripts/parse_prov_bonds.py` rebuilds the split
+from the 发行明细表 appendix instead: every individual bond, classified to one of the 36 issuers
+(31 provinces + 5 计划单列市 + the XPCC) and to new/refinancing × general/special from its name.
+Writes `prov_bonds_<year>.json` and `lgb_provinces_<year>.csv`. 2024 and 2025 reconcile to the
+reports' own published totals to within rounding (2025: 103,101.21 vs 103,101 亿元; refinancing
+49,284.12 vs 49,284.07). Needs the gitignored PDFs under `files/` — re-fetch with
+`fetch_bonds.py`. Caveat: bonds replacing hidden debt are issued as ordinary 再融资专项债券 and
+cannot be told apart by name, so `refi_special` is an upper bound on the swap.
+
 Parsed series for the monitor: `lgb_series.json` (issuance, general/special, new/refinancing,
 average rate & maturity, secondary-market turnover, use-of-proceeds) and `new_special_ytd.json`
 (YTD new special-bond issuance, RMB bn).
