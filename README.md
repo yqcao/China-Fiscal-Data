@@ -18,6 +18,7 @@ the monitor to both places; the FY2025 page is a static copy.
 | [`fiscal-monitor.html`](fiscal-monitor.html) | **Monthly Fiscal Monitor** — interactive ECharts dashboard: general public budget, government-managed fund, and local-government bond issuance/repayment, 2021–2026 |
 | [`fiscal-drag.html`](fiscal-drag.html) | **Fiscal Drag Monitor** — is budget execution adding to demand or subtracting from it? Execution pace vs. budget, fiscal impulse, and the pass-through to FAI and GDP |
 | [`mohrss.html`](mohrss.html) | **Employment & Social Insurance** — every indicator in the MOHRSS monthly release: jobs, unemployment rate, and the social-insurance schemes' participants, fund revenue, expenditure and balance, 2013–2026 |
+| [`prov-debt.html`](prov-debt.html) | **Provincial Debt Quota & Execution** — new-debt quota allocated to each province vs what it issued, execution rate, refinancing, debt outstanding and debt/GDP, 2015–2025 (annual) |
 | [`imf-augmented.html`](imf-augmented.html) | **IMF Augmented Debt & Deficit** — how the IMF builds China's augmented general-government debt and deficit (IMF Table 2) |
 | [`budget-system.html`](budget-system.html) | China Budget System — overview of the four-account budget system (四本账) |
 | [`budget-system-fy2025.html`](budget-system-fy2025.html) | China Budget System — FY2025 execution figures |
@@ -248,6 +249,9 @@ scripts/
   fetch_repayment.py   地方政府债券发行和债务余额情况 → repayment_series.json
   build_monitor.py       rebuild fiscal-monitor.html from the four JSON series
   build_fiscal_drag.py   rebuild fiscal-drag.html (fiscal series + budget targets + FAI/GDP)
+  fetch_celma.py         MOF 地方政府债券信息公开平台 → data/celma/ (province quota + issuance)
+  build_prov_debt_panel.py  tidy data/celma/ into prov_panel.json/.csv
+  build_prov_debt.py     rebuild prov-debt.html from the province panel
   parse_mohrss.py        parse data/mohrss/files/ → mohrss_series.json (browser-collected)
   build_mohrss.py        rebuild mohrss.html from mohrss_series.json
   update.sh              run all of the above in order

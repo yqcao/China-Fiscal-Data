@@ -79,6 +79,14 @@ SOURCES = {
    'NPC Observer (npcobserver.com), explanatory material on the National People\'s Congress and China\'s budget process, used as background; all rights remain with NPC Observer',
    'NPC Observer（npcobserver.com）关于全国人大及预算程序的说明性材料，仅作背景参考；权利归 NPC Observer 所有',
    [('npcobserver.com', 'https://npcobserver.com/about-npc/')]),
+ 'celma': (
+   'Ministry of Finance, 中国地方政府债券信息公开平台 (China Local Government Bond Information Disclosure Platform), annual data by region — new-debt quota, issuance, repayment, debt balance, and the provincial fiscal and macro denominators',
+   '财政部《中国地方政府债券信息公开平台》年度分地区数据——新增债务限额、债券发行、还本付息、债务余额及各省财政与宏观分母指标',
+   [('celma.org.cn', 'https://www.celma.org.cn/')]),
+ 'geoatlas2': (
+   'Province boundary geometry: DataV.GeoAtlas (Alibaba Cloud), used for drawing only',
+   '省级行政区划边界几何数据：DataV.GeoAtlas（阿里云），仅用于绘图',
+   [('datav.aliyun.com', 'https://datav.aliyun.com/portal/school/atlas/area_selector')]),
  'echarts': (
    'Charts rendered with Apache ECharts 5.5.0 (Apache License 2.0)',
    '图表由 Apache ECharts 5.5.0 绘制（Apache 2.0 许可）',
