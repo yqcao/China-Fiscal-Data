@@ -46,6 +46,18 @@ FIELDS = [
 ]
 
 
+def quota_overrides():
+    """2025+ quota taken from each region's own budget documents, for issuers the
+    platform has not published. Never overrides a platform figure."""
+    f = D + 'quota_sources.json'
+    if not os.path.exists(f):
+        return {}
+    out = collections.defaultdict(dict)
+    for e in json.load(open(f, encoding='utf-8')).get('entries', []):
+        out[e['region']][int(e['year'])] = e
+    return out
+
+
 def appendix_issuance():
     """region -> year -> issuance from the market-report appendix, where parsed."""
     out = collections.defaultdict(dict)
@@ -69,6 +81,7 @@ def appendix_issuance():
 def main():
     rows = json.load(open(D + 'annual_by_region.json'))
     appx = appendix_issuance()
+    qov = quota_overrides()
     nat = collections.defaultdict(dict)
     for r in json.load(open(D + 'annual_national.json')):
         nat[r['year']][r['zb_name']] = r['amount']
@@ -101,6 +114,14 @@ def main():
                 if o.get(k) is None:
                     o[k] = v
             o['issue_source'] = 'market-report'
+        # quota from the region's own budget document, only where the platform has none
+        o['quota_source'] = 'platform' if (o['quota_general'] or o['quota_special']) else None
+        ov = qov.get(reg, {}).get(yr)
+        if ov and not o['quota_source']:
+            o['quota_general'] = ov.get('general')
+            o['quota_special'] = ov.get('special')
+            o['quota_source'] = 'budget-report'
+            o['quota_url'] = ov.get('url')
         q = (o['quota_general'] or 0) + (o['quota_special'] or 0)
         i = (o['issue_new_general'] or 0) + (o['issue_new_special'] or 0)
         o['quota_total'] = q or None
@@ -124,13 +145,15 @@ def main():
                     'complete': bool(want) and abs(got - want) < max(1.0, want * 0.001),
                     'with_issuance': sum(1 for r in yrows if r['issue_new_total']),
                     'with_quota': sum(1 for r in yrows if r['quota_total']),
-                    'filled': sum(1 for r in yrows if r.get('issue_source') == 'market-report')}
+                    'filled': sum(1 for r in yrows if r.get('issue_source') == 'market-report'),
+                    'quota_sourced': sum(1 for r in yrows if r.get('quota_source') == 'budget-report')}
     for r in out:
         r['year_complete'] = comp[r['year']]['complete']
 
     json.dump({'unit': '亿元', 'source': 'celma.org.cn', 'completeness': comp, 'rows': out},
               open(D + 'prov_panel.json', 'w'), ensure_ascii=False, separators=(',', ':'))
-    cols = (['region', 'code', 'year', 'year_complete', 'issue_source', 'quota_total', 'issue_new_total',
+    cols = (['region', 'code', 'year', 'year_complete', 'issue_source', 'quota_source',
+             'quota_total', 'issue_new_total',
              'execution_pct', 'issue_refi_total', 'bal_total', 'debt_to_gdp_pct']
             + [k for k, _ in FIELDS])
     with open(D + 'prov_panel.csv', 'w', newline='') as f:
@@ -141,7 +164,9 @@ def main():
     for yr, c in comp.items():
         print(f"    {yr}  {c['regions']:2d} regions | issuance {c['with_issuance']:2d}"
               f"{(' (+' + str(c['filled']) + ' from market report)') if c['filled'] else ''}"
-              f" | quota {c['with_quota']:2d} | new-bond {c['region_sum']:>10,.0f}"
+              f" | quota {c['with_quota']:2d}"
+              f"{(' (+' + str(c['quota_sourced']) + ' from budget reports)') if c['quota_sourced'] else ''}"
+              f" | new-bond {c['region_sum']:>10,.0f}"
               f" vs national {c['national']:>10,.0f}"
               f"  {'complete' if c['complete'] else 'PARTIAL'}")
 

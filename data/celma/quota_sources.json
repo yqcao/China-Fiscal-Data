@@ -1,0 +1,101 @@
+{
+ "_note": "2025 新增债务限额 for issuers the MOF disclosure platform (celma.org.cn) has not yet published, taken from each region's own official budget documents. Same source policy as data/prov-reports: the region's own gov.cn domain only, no aggregator, news site or commercial database. Each entry records the exact URL and the sentence the figures come from, so any reader can check it. build_prov_debt_panel.py merges these and tags the row quota_source='budget-report'; a figure here never overrides one the platform publishes. Amounts are 亿元.",
+ "_fields": {
+  "general": "新增一般债务限额",
+  "special": "新增专项债务限额",
+  "url": "official source URL on the region's own gov.cn domain",
+  "title": "document title",
+  "date": "publication or session date",
+  "quote": "verbatim sentence carrying the figures",
+  "scope": "what the figure covers, e.g. excludes 计划单列市",
+  "note": "anything a reader needs to interpret it"
+ },
+ "entries": [
+  {
+   "region": "新疆维吾尔自治区",
+   "year": 2025,
+   "general": 299.0,
+   "special": 1583.0,
+   "url": "https://czt.xinjiang.gov.cn/xjczt/c116119/202602/9311000a2f024ed89041ca1f6c2852e5/files/01.关于2025年自治区预算执行情况和2026年自治区预算草案的报告.pdf",
+   "title": "关于2025年自治区预算执行情况和2026年自治区预算草案的报告",
+   "date": "2026-01-27",
+   "venue": "新疆维吾尔自治区第十四届人民代表大会第四次会议 · 自治区财政厅",
+   "quote": "2025 年新疆维吾尔自治区新增地方政府债务限额 2093 亿元，具体包括：自治区新增地方政府债务限额 1882 亿元，其中新增一般债务限额 299 亿元、新增专项债务限额 1583 亿元；新疆生产建设兵团新增地方政府债务限额 211 亿元，其中新增一般债务限额 80 亿元、新增专项债务限额 131 亿元。",
+   "scope": "自治区本级及地州市，不含新疆生产建设兵团（兵团 211 亿元单列，平台已有）",
+   "corroboration": "https://czt.xinjiang.gov.cn/xjczt/c115511/202511/5e5686af4300445084a45544b22b5d16.shtml 《关于2025年自治区级预算调整方案（草案）的报告》附件6 地方政府债务限额情况表 restates 1882 / 299 / 1583",
+   "note": "XPCC's 80/131 in the same sentence matches the disclosure platform exactly, confirming the two sources carry the same measure."
+  },
+  {
+   "region": "吉林省",
+   "year": 2025,
+   "general": 221.0,
+   "special": 583.0,
+   "url": "https://czt.jl.gov.cn/yjs/zfyjs/zfysjtz/2025/202508/t20250804_3487352.html",
+   "title": "吉林省人民政府关于提请审议《吉林省发行2025年新增地方政府债券有关情况及预算调整方案（草案）》的议案",
+   "date": "2025-07-29",
+   "venue": "吉林省第十四届人大常委会第十八次会议 · 吉林省财政厅（2025-08-04 公开）",
+   "quote": "经国务院同意，2025年，财政部分两批次下达我省新增地方政府债务限额804亿元，其中，一般债务限额221亿元（含政府债务外贷2.28亿元），专项债务限额583亿元。",
+   "scope": "全省",
+   "corroboration": "https://czt.jl.gov.cn/yjs/zfyjs/zfysjtz/2025/202508/t20250804_3487353.html restates 804 / 221 / 583; batches 442 + 362 = 804, and 122+99=221, 320+263=583",
+   "note": "一般 221 includes 2.28 亿元 政府债务外贷 (foreign-loan on-lending); domestic-only would be 218.72. New general issuance of 220 against a 221 quota is a 99.5% match, which corroborates the figure. New special issuance of 843 against 583 exceeds the allocation, consistent with use of carried-over headroom (结存限额)."
+  },
+  {
+   "region": "广东省",
+   "year": 2025,
+   "general": 305.0,
+   "special": 4500.0,
+   "url": "https://czt.gd.gov.cn/czysjs/content/post_4720426.html",
+   "pdf": "https://czt.gd.gov.cn/attachment/0/581/581885/4720426.pdf",
+   "title": "广东省人民政府关于2025年省级财政预算调整方案的报告",
+   "date": "2025-05-27",
+   "venue": "广东省第十四届人民代表大会常务委员会第十八次会议 · 广东省财政厅",
+   "quote": "财政部下达我省 2025 年地方政府新增债务限额 5686 亿元（广东地区 4805 亿元、深圳市 881 亿元），包括：一是新增一般债务限额 320 亿元，其中广东地区 305 亿元、深圳市 15 亿元；二是新增专项债务限额 5366 亿元，其中广东地区 4500 亿元、深圳市 866 亿元。",
+   "scope": "广东地区，不含深圳市（深圳 15/866 由平台单列，与本报告拆分一致）",
+   "corroboration": "https://czt.gd.gov.cn/ztjj/2026gdlh/lhsd/content/post_4858035.html 《广东省2025年预算执行情况和2026年预算草案的报告》restates 新增债务限额 5686（一般 320、专项 5366）and separately 结存债务限额 644",
+   "note": "Entered on the Shenzhen-excluded basis to match the platform, which lists Shenzhen as its own issuer. Special issuance of 4,760 exceeds the 4,500 quota; the province also received 644 亿元 of 结存限额, of which 370 was issued as new special bonds."
+  },
+  {
+   "region": "江苏省",
+   "year": 2025,
+   "general": 316.0,
+   "special": 2485.0,
+   "url": "https://czt.jiangsu.gov.cn/art/2025/8/6/art_77316_11695953.html",
+   "pdf": "https://czt.jiangsu.gov.cn/attach/-1/2508061215373413359.pdf",
+   "title": "关于提请审议《江苏省2025年地方政府债务限额及省级预算调整方案（草案）》议案的说明",
+   "date": "2025-07-28",
+   "venue": "江苏省第十四届人大常委会第十六次会议 · 江苏省财政厅",
+   "quote": "经国务院同意，财政部下达我省 2025 年地方政府新增债务限额 2801 亿元，其中，新增一般债务限额 316 亿元，新增专项债务限额 2485 亿元。",
+   "scope": "全省（江苏无计划单列市）",
+   "corroboration": "https://czt.jiangsu.gov.cn/art/2026/2/13/art_77316_11730064.html 《关于江苏省2025年预算执行情况与2026年预算草案的报告》restates 新增一般 316、专项 2485",
+   "note": "New general issuance of 316 equals the quota exactly. Special issuance of 2,785 exceeds the 2,485 quota by 300, which equals the 300 亿元 of 结存限额 allocated for project construction in the 2025-11-26 provincial adjustment report (https://czt.jiangsu.gov.cn/art/2025/11/28/art_77316_11695965.html)."
+  },
+  {
+   "region": "贵州省",
+   "year": 2025,
+   "general": 157.0,
+   "special": 485.0,
+   "url": "https://czt.guizhou.gov.cn/zwgk/zfxxgk/fdzdgknr/zcfg/wjca/202508/t20250811_88441433.html",
+   "title": "省人民政府关于提请审议2025年省本级财政预算调整方案（草案）的议案的说明",
+   "date": "2025-08-11",
+   "venue": "贵州省财政厅",
+   "quote": "截至目前，财政部下达我省2025年新增地方政府债务限额642亿元，其中：新增一般债务限额157亿元（86亿元为提前下达数已纳入年初预算安排、本次下达71亿元），新增专项债务限额485亿元（257亿元为提前下达数已纳入年初预算安排、本次下达228亿元）。",
+   "scope": "全省",
+   "note": "Figure is as of 2025-08 and reads 截至目前. Confirmed as the full-year figure by outturn: new special issuance of 485.0 equals the special quota exactly, and new general issuance of 145 sits inside the 157 general quota."
+  },
+  {
+   "region": "西藏自治区",
+   "year": 2025,
+   "general": 84.0,
+   "special": 192.0,
+   "url": "https://www.xizang.gov.cn/zwgk/xxgk_424/zxxxgk/202509/W020250930430205392780.pdf",
+   "title": "西藏自治区人民政府关于今年以来预算执行情况的报告",
+   "date": "2025-09-23",
+   "venue": "西藏自治区第十二届人民代表大会常务委员会第十九次会议",
+   "quote": "争取政府一般债务限额84亿元，较上年增长68%……争取政府专项债务限额192亿元",
+   "scope": "全区",
+   "note": "WEAKEST of the sourced entries: the wording is 争取…限额 rather than the usual 财政部下达, and no Tibet document using the standard phrasing for 2025 could be found on an official domain. Supported by outturn and arithmetic: new general issuance of 84.0 equals the 84 quota exactly, and end-2024 limit 1,242.6 + 276 new + ~135 swap = 1,653.6, the 2025 limit stated in Tibet's FY2026 budget report."
+  }
+ ],
+ "_validation": "Same-measure check: 新疆生产建设兵团 2025 appears in BOTH sources -- the disclosure platform publishes 新增一般债务限额 80 / 新增专项债务限额 131, and the Xinjiang finance department's 2026 budget report states the identical 80 / 131 for the XPCC. So the quota a region reports to the platform and the quota 财政部下达 in its budget report are the same figure, and the two sources can be used in one series. Second check: 深圳市 2025 appears in both sources too -- the platform publishes 15 / 866, and Guangdong's own budget-adjustment report breaks its 5,686 亿元 into 广东地区 305 / 4,500 and 深圳市 15 / 866. The Shenzhen halves match exactly, so Guangdong is entered here on the Shenzhen-excluded basis the platform uses.",
+ "_carryover_note": "Why issuance can exceed quota: 结存限额 (unused ceiling carried over from earlier years) is allocated separately and is NOT part of 新增限额. Guangdong received 644 亿元 of it in 2025 (370 of that issued as new special bonds), and Jiangsu a net 119 亿元 (300 for project construction). Those tranches account for the special-bond overshoot in both provinces: Jiangsu issued 2,785 against a 2,485 quota, and 2,785-2,485 = 300 exactly. Execution above 100% in this series therefore means carried-over headroom was used, not that a quota was breached."
+}

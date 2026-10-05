@@ -60,14 +60,15 @@ _prow = [{'cn': r['region'], 'en': _PEN.get(r['region'], r['region']),
           'ns': r['issue_new_special'],
           'rep': ((r['repay_general'] or 0) + (r['repay_special'] or 0)) or None,
           'int': ((r['interest_general'] or 0) + (r['interest_special'] or 0)) or None,
-          'src': r.get('issue_source', 'platform')}
+          'src': r.get('issue_source', 'platform'),
+          'qsrc': r.get('quota_source'), 'qurl': r.get('quota_url')}
          for r in _pp['rows']
          if any(r.get(k) for k in ('quota_total', 'issue_new_total', 'bal_total'))]
 _pyrs = sorted({r['year'] for r in _prow})
 PROV = json.dumps({'rows': _prow, 'years': _pyrs,
                    'complete': {str(y): _pp['completeness'][str(y)]['complete'] for y in _pyrs},
-                   'report': {str(y): {k: _pp['completeness'][str(y)][k]
-                                       for k in ('regions','with_issuance','with_quota','filled')}
+                   'report': {str(y): {k: _pp['completeness'][str(y)].get(k)
+                                       for k in ('regions','with_issuance','with_quota','filled','quota_sourced')}
                               for y in _pyrs},
                    'en': _PEN,
                    'geo': json.load(open(base+'data/geo/china-provinces-min.json', encoding='utf-8'))},
@@ -262,14 +263,14 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
         <p class="note" data-l="Annual, not monthly: the quota is set once a year. The five 计划单列市 and the XPCC issue separately and have no boundary of their own, so the map folds them into their province and the table keeps them apart.|年度数据（限额按年下达）。五个计划单列市与新疆生产建设兵团单独发行且无独立边界，地图并入所属省份，表格单列。"></p>
         <div id="c_provmap" class="chart"></div></div>
       <div class="card"><h3 data-l="Quota vs issuance, ranked|限额与发行额排序"></h3>
-        <p class="note" data-l="Pale bar = quota allocated, solid bar = new bonds issued. A short solid bar inside a long pale one is unused quota. Refinancing is excluded: it rolls maturing debt and replaces hidden debt, and is not measured against the new-debt quota.|浅色柱为下达限额，实色柱为实际新增发行；实色明显短于浅色即限额未用完。不含再融资（用于偿还到期债券及置换隐性债务，不计入新增限额执行率）。"></p>
+        <p class="note" data-l="Pale bar = quota allocated, solid bar = new bonds issued. A short solid bar inside a long pale one is unused quota. Refinancing is excluded: it rolls maturing debt and replaces hidden debt, and is not measured against the new-debt quota. Issuance above quota is not a breach: 结存限额, unused ceiling carried over from earlier years, is allocated separately and can be issued on top. Jiangsu 2025 is the clean example — it issued 2,785 of new special bonds against a 2,485 quota, and the 300 difference is exactly the carried-over tranche its November 2025 budget-adjustment report records.|浅色柱为下达限额，实色柱为实际新增发行；实色明显短于浅色即限额未用完。不含再融资（用于偿还到期债券及置换隐性债务，不计入新增限额执行率）。发行额超过限额并非超限：往年未用完的结存限额单独下达，可在新增限额之外发行。以江苏2025年为例，新增专项债发行2785亿元、新增限额2485亿元，差额300亿元恰为该省2025年11月预算调整报告所载的结存限额。"></p>
         <div id="c_provbar" class="chart tall"></div></div>
     </div>
     <div class="card"><h3 data-l="Debt burden vs quota execution|债务率与限额执行率"></h3>
       <p class="note" data-l="Debt outstanding as % of provincial GDP (x) against the share of the new-debt quota issued (y); bubble area = quota size. The provinces leaving quota unused are not the least indebted ones.|债务余额占本省GDP比重（横轴）与新增限额执行率（纵轴）；气泡面积为限额规模。未用完限额的并非债务率最低的省份。"></p>
       <div id="c_provsc" class="chart"></div></div>
     <div class="card"><h3 data-l="All issuers|全部发行主体"></h3>
-      <p class="note" data-l="Click a column heading to sort. 亿元 unless marked. † = issuance taken from the Debt Center market report because the platform has no entry for that issuer and year.|点击表头排序。单位亿元（另有标注除外）。† 表示该主体该年度平台无数据，发行额取自债务中心市场报告。"></p>
+      <p class="note" data-l="Click a column heading to sort. 亿元 unless marked. † = issuance taken from the Debt Center market report, ‡ = quota taken from that region&#39;s own budget report, both where the disclosure platform has no entry.|点击表头排序。单位亿元（另有标注除外）。† 发行额取自债务中心市场报告；‡ 限额取自该地区预算报告；均因平台无该项数据。"></p>
       <div style="overflow-x:auto"><table class="ptbl" id="provtbl"></table></div></div>
   </section>
 
@@ -811,8 +812,9 @@ function provKpis(){
   const under=d.filter(r=>r.exec!=null&&r.exec<95).sort((a,b)=>a.exec-b.exec);
   kpi('kpi_prov',[
     [L('New-debt quota',''),'新增债务限额',fmtB(q/10),
-      qAll?provYear+' · '+d.length+L(' issuers','个主体')
-          :provYear+' · '+withQ.length+L(' of ','/')+d.length+L(' issuers reporting','个主体已报'),null],
+      (qAll?provYear+' · '+d.length+L(' issuers','个主体')
+           :provYear+' · '+withQ.length+L(' of ','/')+d.length+L(' issuers reporting','个主体已报'))
+      +(rep.quota_sourced?' · '+rep.quota_sourced+L(' from budget reports','项取自预算报告'):''),null],
     [L('New bonds issued',''),'新增债券发行',fmtB(i/10),
       d.length+L(' issuers','个主体')+(rep.filled?' · '+rep.filled+L(' filled','项补录'):''),null],
     [L('Execution',''),'执行率',q?pPct(iq/q*100):'–',
@@ -851,8 +853,11 @@ function provTable(){
   prov.sort((a,b)=>pSortKey==='cn'
     ? pSortDir*pName(a).localeCompare(pName(b))
     : pSortDir*(((a[pSortKey]==null)?-Infinity:a[pSortKey])-((b[pSortKey]==null)?-Infinity:b[pSortKey])));
-  const cell=(r,k)=>k==='cn'
-    ? pName(r)+(r.src==='market-report'?' <span title="'+L('from the Debt Center market report','取自债务中心市场报告')+'" style="opacity:.55">†</span>':'')
+  const mark=r=>(r.src==='market-report'
+      ? ' <span title="'+L('issuance from the Debt Center market report','发行额取自债务中心市场报告')+'" style="opacity:.55">†</span>' : '')
+    +(r.qsrc==='budget-report'
+      ? ' <span title="'+L('quota from the region\u2019s own budget report','限额取自该地区预算报告')+'" style="opacity:.55">\u2021</span>' : '');
+  const cell=(r,k)=>k==='cn' ? pName(r)+mark(r)
     : (k==='exec'||k==='dgdp')?pPct(r[k]):fmtB((r[k]||0)/10);
   let h='<thead><tr>'+PCOLS.map(c=>'<th data-k="'+c[0]+'">'+L(c[1],c[2])+
     (pSortKey===c[0]?(pSortDir<0?' \u25be':' \u25b4'):'')+'</th>').join('')+'</tr></thead><tbody>';
