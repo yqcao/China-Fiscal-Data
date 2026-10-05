@@ -140,11 +140,33 @@ the same figures, not a different measure: for 2025 the platform's own ZYZB summ
 appendix parse agree to the yuan for all 32 regions that have reported. It never overwrites a
 reported value.
 
+`quota_sources.json` fills the *quota* side the same way, from each region's own official budget
+documents — the mid-year 预算调整方案 report, the 人大常委会 budget-execution report, or the
+provincial 人大财经委 review report, whichever carries the sentence 「财政部下达我省/我区2025年新增
+地方政府债务限额…」. Same source policy as `data/prov-reports`: the region's own `gov.cn` domain
+only, no aggregator, news site or commercial database. Every entry records the URL, document
+title, session date and the verbatim sentence, so a reader can check each figure.
+
+**The two sources carry the same measure**, confirmed three ways rather than assumed:
+
+| Check | Document says | Platform says |
+|---|---|---|
+| 新疆生产建设兵团 2025 | 80 / 131 | 80 / 131 |
+| 深圳市 2025 (inside Guangdong's 5,686) | 15 / 866 | 15 / 866 |
+| 湖北省 2024, 河南省 2024 | 372 / 1,661 · 323 / 1,907 | 372 / 1,661 · 323 / 1,907 |
+
+Guangdong is therefore entered Shenzhen-excluded (305 / 4,500), matching how the platform splits
+the two issuers. A sourced figure never overrides one the platform publishes.
+
+**Execution above 100% is not a breached quota.** 结存限额 — unused ceiling carried over from
+earlier years — is allocated separately and issued on top of the new quota. Jiangsu 2025 is the
+clean case: 2,785 of new special bonds issued against a 2,485 quota, and the 300 difference is
+exactly the carried-over tranche recorded in its November 2025 adjustment report.
+
 With that, **2025 issuance is complete for all 37 issuers** and sums to 53,817 亿元 of new bonds,
-matching the December 2025 market report exactly. **Quota has no second source** — only the
-platform and each province's own budget report publish it, and this repo does not collect the
-latter — so 10 issuers have no 2025 quota and no execution rate. The monitor states this, and
-computes the aggregate execution rate only across issuers that reported both, so the ratio stays
+matching the December 2025 market report exactly. Quota now covers **35 of 37** for 2025: 27 from the platform plus 8 sourced from budget
+documents. The monitor states the remaining gap, marks sourced rows, and computes the aggregate
+execution rate only across issuers that have both quota and issuance, so the ratio stays
 like-for-like.
 
 ### `data/mohrss/` — 人力资源和社会保障主要统计快报数据 (employment & social insurance)
