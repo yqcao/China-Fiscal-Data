@@ -36,6 +36,38 @@ HOLD = json.dumps(json.load(open(base+'data/chinabond/holders.json')), ensure_as
 TGT  = json.dumps(json.load(open(base+'data/budget-targets.json'))['targets'], separators=(',',':'))
 lim  = json.load(open(base+'data/debt-limits.json'))['limits']
 LIM  = json.dumps(lim, ensure_ascii=False, separators=(',',':'))
+
+# ---- Section 4: provincial quota vs issuance (annual) ----------------------
+# data/celma/ comes from MOF's 地方政府债券信息公开平台, the only official source
+# that publishes the new-debt quota allocated to each region next to that
+# region's issuance. Boundaries are the Douglas-Peucker-simplified copy: the full
+# DataV geometry is 569 KB and would triple this page.
+_pp = json.load(open(base+'data/celma/prov_panel.json', encoding='utf-8'))
+_PEN = {'北京市':'Beijing','天津市':'Tianjin','河北省':'Hebei','山西省':'Shanxi','内蒙古自治区':'Inner Mongolia',
+ '辽宁省':'Liaoning','吉林省':'Jilin','黑龙江省':'Heilongjiang','上海市':'Shanghai','江苏省':'Jiangsu',
+ '浙江省':'Zhejiang','安徽省':'Anhui','福建省':'Fujian','江西省':'Jiangxi','山东省':'Shandong',
+ '河南省':'Henan','湖北省':'Hubei','湖南省':'Hunan','广东省':'Guangdong','广西壮族自治区':'Guangxi',
+ '海南省':'Hainan','重庆市':'Chongqing','四川省':'Sichuan','贵州省':'Guizhou','云南省':'Yunnan',
+ '西藏自治区':'Tibet','陕西省':'Shaanxi','甘肃省':'Gansu','青海省':'Qinghai','宁夏回族自治区':'Ningxia',
+ '新疆维吾尔自治区':'Xinjiang','大连市':'Dalian','宁波市':'Ningbo','厦门市':'Xiamen','青岛市':'Qingdao',
+ '深圳市':'Shenzhen','新疆生产建设兵团':'Xinjiang Corps'}
+_PAR = {'大连市':'辽宁省','宁波市':'浙江省','厦门市':'福建省','青岛市':'山东省','深圳市':'广东省'}
+_prow = [{'cn': r['region'], 'en': _PEN.get(r['region'], r['region']),
+          'parent': _PAR.get(r['region']), 'year': r['year'],
+          'quota': r['quota_total'], 'issue': r['issue_new_total'],
+          'exec': r['execution_pct'], 'refi': r['issue_refi_total'],
+          'bal': r['bal_total'], 'dgdp': r['debt_to_gdp_pct'], 'gdp': r['gdp'],
+          'ns': r['issue_new_special'],
+          'rep': ((r['repay_general'] or 0) + (r['repay_special'] or 0)) or None,
+          'int': ((r['interest_general'] or 0) + (r['interest_special'] or 0)) or None}
+         for r in _pp['rows']
+         if any(r.get(k) for k in ('quota_total', 'issue_new_total', 'bal_total'))]
+_pyrs = sorted({r['year'] for r in _prow})
+PROV = json.dumps({'rows': _prow, 'years': _pyrs,
+                   'complete': {str(y): _pp['completeness'][str(y)]['complete'] for y in _pyrs},
+                   'en': _PEN,
+                   'geo': json.load(open(base+'data/geo/china-provinces-min.json', encoding='utf-8'))},
+                  ensure_ascii=False, separators=(',',':'))
 # cross-check: where a MOF monthly release restates the NPC ceiling it must equal the NPC file
 def ceiling(period):
     return max((l for l in lim if l['from'] <= period), key=lambda l: l['from'], default=None)
@@ -92,6 +124,13 @@ section{margin:2.2rem 0}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
 @media(max-width:760px){.row2{grid-template-columns:1fr}}
 select{background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:8px;padding:.35rem .5rem;font-size:.82rem}
+.chart.tall{height:620px}
+table.ptbl{width:100%;border-collapse:collapse;font-size:.79rem}
+table.ptbl th{text-align:right;font-weight:650;padding:.38rem .45rem;border-bottom:1px solid var(--bd);color:var(--mut);cursor:pointer;white-space:nowrap}
+table.ptbl th:first-child,table.ptbl td:first-child{text-align:left}
+table.ptbl td{padding:.32rem .45rem;border-top:1px solid var(--bd);text-align:right;white-space:nowrap}
+table.ptbl tr.sub td:first-child{padding-left:1.3rem;color:var(--mut)}
+#prov_partial{color:#e07b00}
 footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--mut)}
 </style>
 </head>
@@ -198,6 +237,38 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
     </div>
   </section>
 
+  <!-- SECTION 4 -->
+  <section>
+    <div class="shead"><h2>4 · Provincial Quota &amp; Execution <span class="zh">各省新增债务限额与发行</span></h2>
+      <p id="prov_sub"></p>
+      <p class="note" id="prov_partial" hidden></p></div>
+    <div class="controls" style="margin-bottom:.9rem">
+      <span class="lbl" data-l="Year|年份"></span>
+      <select id="provyear"></select>
+      <span class="lbl" style="margin-left:.5rem" data-l="Map shows|地图指标"></span>
+      <span class="seg" id="provmetric">
+        <button data-v="exec" class="on" data-l="Execution %|执行率 %"></button>
+        <button data-v="quota" data-l="Quota|限额"></button>
+        <button data-v="dgdp" data-l="Debt / GDP|债务率"></button>
+      </span>
+    </div>
+    <div class="kpis" id="kpi_prov"></div>
+    <div class="row2">
+      <div class="card"><h3 id="h_provmap"></h3>
+        <p class="note" data-l="Annual, not monthly: the quota is set once a year. The five 计划单列市 and the XPCC issue separately and have no boundary of their own, so the map folds them into their province and the table keeps them apart.|年度数据（限额按年下达）。五个计划单列市与新疆生产建设兵团单独发行且无独立边界，地图并入所属省份，表格单列。"></p>
+        <div id="c_provmap" class="chart"></div></div>
+      <div class="card"><h3 data-l="Quota vs issuance, ranked|限额与发行额排序"></h3>
+        <p class="note" data-l="Pale bar = quota allocated, solid bar = new bonds issued. A short solid bar inside a long pale one is unused quota. Refinancing is excluded: it rolls maturing debt and replaces hidden debt, and is not measured against the new-debt quota.|浅色柱为下达限额，实色柱为实际新增发行；实色明显短于浅色即限额未用完。不含再融资（用于偿还到期债券及置换隐性债务，不计入新增限额执行率）。"></p>
+        <div id="c_provbar" class="chart tall"></div></div>
+    </div>
+    <div class="card"><h3 data-l="Debt burden vs quota execution|债务率与限额执行率"></h3>
+      <p class="note" data-l="Debt outstanding as % of provincial GDP (x) against the share of the new-debt quota issued (y); bubble area = quota size. The provinces leaving quota unused are not the least indebted ones.|债务余额占本省GDP比重（横轴）与新增限额执行率（纵轴）；气泡面积为限额规模。未用完限额的并非债务率最低的省份。"></p>
+      <div id="c_provsc" class="chart"></div></div>
+    <div class="card"><h3 data-l="All issuers|全部发行主体"></h3>
+      <p class="note" data-l="Click a column heading to sort. 亿元 unless marked.|点击表头排序。单位亿元（另有标注除外）。"></p>
+      <div style="overflow-x:auto"><table class="ptbl" id="provtbl"></table></div></div>
+  </section>
+
 __FOOTER__
 </div>
 
@@ -208,6 +279,8 @@ const NSB  = __NSB__;
 const REP  = __REP__;
 const HOLD = __HOLD__;
 const TGT  = __TGT__;
+const PROV = __PROV__;
+
 const LIM  = __LIM__;
 // Unify units: MOF fiscal figures are in 亿元 — convert to RMB billion (十亿元, ÷10).
 const MFIELDS=['pub_rev','tax','nontax','pub_rev_central','pub_rev_local','pub_exp','pub_exp_central','pub_exp_local','fund_rev','land_rev','fund_exp'];
@@ -611,6 +684,176 @@ function drawBal(){
     [L('Avg Coupon on Stock','Avg Coupon on Stock'),'存量平均利率',G.avg_rate+'%',L('gen','一般')+' '+G.avg_rate_gen+'% · '+L('spec','专项')+' '+G.avg_rate_spec+'%',null],
     [L('Interest Paid YTD','Interest Paid YTD'),'年初至今付息',fmtB(G.interest_ytd/10),G.interest_month?L('month','当月')+' '+fmtB(G.interest_month/10):'',null]]);
 }
+/* ---- Section 4: provincial quota vs execution (annual) -------------------
+   This section is annual by nature -- the quota is allocated once a year -- so it
+   deliberately does NOT follow the page's cumulative/monthly basis toggle, which
+   only means something for the monthly flows in sections 1-3. */
+const PSEQ = dark ? ['#15243f','#1d3a6b','#2b5fa8','#4e8fd6','#8dbdf0']
+                  : ['#eaf1fb','#c3daf4','#8dbdf0','#4e8fd6','#1d3a6b'];
+const PDIV = ['#b4472f','#d99a62','#e8e2d4','#79b39a','#2f7d5f'];
+const PACC = C.spec;   // the page's accent red, from the shared palette
+const PCOMPLETE = PROV.years.filter(y=>PROV.complete[y]);
+let provYear = PCOMPLETE.length ? PCOMPLETE[PCOMPLETE.length-1] : PROV.years[PROV.years.length-1];
+let provMetric = 'exec';
+const pRows = y => PROV.rows.filter(r=>r.year===y);
+const pName = r => L(r.en, r.cn);
+const pPct = v => v==null ? '\u2013' : v.toFixed(1)+'%';
+const PMETRIC = {
+  exec:{en:'Execution rate, % of new-debt quota issued', zh:'执行率：新增限额已发行比例', div:true},
+  quota:{en:'New-debt quota allocated', zh:'下达新增债务限额'},
+  dgdp:{en:'Debt outstanding / provincial GDP', zh:'债务余额占本省GDP比重', unit:'%'}};
+
+function pMapData(y){
+  const by={};
+  pRows(y).forEach(r=>{
+    const key=r.parent||r.cn;
+    if(!PROV.geo.features.some(f=>f.properties.name===key))return;
+    const o=by[key]||(by[key]={cn:key,quota:0,issue:0,bal:0,gdp:0,parts:[]});
+    o.quota+=r.quota||0; o.issue+=r.issue||0; o.bal+=r.bal||0;
+    if(!r.parent)o.gdp=r.gdp||0; else o.parts.push(pName(r));
+  });
+  return Object.values(by).map(o=>({...o,
+    exec:o.quota?+(o.issue/o.quota*100).toFixed(1):null,
+    dgdp:o.gdp?+(o.bal/o.gdp*100).toFixed(1):null}));
+}
+
+function drawProvMap(){
+  const d=pMapData(provYear), M=PMETRIC[provMetric];
+  const vals=d.map(o=>o[provMetric]).filter(v=>v!=null);
+  const lo=vals.length?Math.min(...vals):0, hi=vals.length?Math.max(...vals):1;
+  /* Execution is bimodal: most provinces sit within a point of 100 and a few fall
+     far short, so a continuous ramp wide enough to hold the laggards leaves
+     everyone else an identical neutral. Explicit bins keep the real thresholds. */
+  const BINS=[{max:50,label:L('under 50%','低于50%'),color:PDIV[0]},
+              {min:50,max:80,label:'50\u201380%',color:PDIV[1]},
+              {min:80,max:95,label:'80\u201395%',color:PDIV[2]},
+              {min:95,max:105,label:L('95\u2013105% (full)','95\u2013105%（用满）'),color:PDIV[3]},
+              {min:105,label:L('over 105%','超过105%'),color:PDIV[4]}];
+  charts.c_provmap.setOption({backgroundColor:'transparent',
+    tooltip:{trigger:'item',formatter:p=>{const o=d.find(x=>x.cn===p.name);
+      if(!o)return p.name+'<br>'+L('no data','无数据');
+      return '<b>'+L(PROV.en[o.cn]||o.cn,o.cn)+'</b><br>'+
+        L('Quota','限额')+' '+fmtB(o.quota/10)+'<br>'+
+        L('Issued','发行')+' '+fmtB(o.issue/10)+'<br>'+
+        L('Execution','执行率')+' '+pPct(o.exec)+'<br>'+
+        L('Debt/GDP','债务率')+' '+pPct(o.dgdp)+
+        (o.parts.length?'<br><span style="opacity:.7">'+L('incl. ','含 ')+o.parts.join('、')+'</span>':'');}},
+    visualMap: M.div
+      ? {type:'piecewise',left:8,bottom:10,itemGap:3,
+         pieces:BINS.map(b=>({min:b.min,max:b.max,label:b.label,color:b.color})),
+         textStyle:{color:AX,fontSize:10.5},outOfRange:{color:dark?'#23252b':'#f0f0f2'}}
+      : {min:lo,max:hi,left:8,bottom:16,calculable:true,inRange:{color:PSEQ},
+         textStyle:{color:AX,fontSize:10.5},
+         formatter:v=>M.unit==='%'?v.toFixed(0)+'%':fmtB(v/10)},
+    series:[{type:'map',map:'chinaprov',roam:false,
+      data:d.map(o=>({name:o.cn,value:o[provMetric]})),label:{show:false},
+      itemStyle:{borderColor:dark?'#2c2e33':'#fff',borderWidth:.6,
+                 areaColor:dark?'#23252b':'#f0f0f2'},
+      emphasis:{label:{show:false},itemStyle:{borderColor:PACC,borderWidth:1.4}},
+      select:{disabled:true}}]},true);
+  document.getElementById('h_provmap').textContent=L(M.en,M.zh);
+}
+
+function drawProvBar(){
+  const d=pRows(provYear).filter(r=>r.quota||r.issue).sort((a,b)=>(a.quota||0)-(b.quota||0));
+  charts.c_provbar.setOption({grid:{left:110,right:52,top:28,bottom:30},textStyle:{color:FG},
+    legend:{top:0,textStyle:{color:AX},data:[L('Quota','限额'),L('New-bond issuance','新增发行')]},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:ps=>{const r=d[ps[0].dataIndex];
+      return '<b>'+pName(r)+'</b><br>'+L('Quota','限额')+' '+fmtB(r.quota/10)+'<br>'+
+        L('Issued','发行')+' '+fmtB(r.issue/10)+'<br>'+L('Execution','执行率')+' '+pPct(r.exec)+
+        '<br>'+L('Refinancing','再融资')+' '+fmtB((r.refi||0)/10);}},
+    xAxis:{type:'value',name:'亿元',axisLabel:{color:AX,formatter:v=>v>=10000?(v/10000)+'万亿':v},
+      splitLine:{lineStyle:{color:GRID}},nameTextStyle:{color:AX}},
+    yAxis:{type:'category',data:d.map(pName),axisLabel:{color:AX,fontSize:10},axisLine:{lineStyle:{color:GRID}}},
+    series:[{name:L('Quota','限额'),type:'bar',itemStyle:{color:dark?'#3a4556':'#cfd8e6'},
+             barGap:'-100%',data:d.map(r=>r.quota)},
+            {name:L('New-bond issuance','新增发行'),type:'bar',itemStyle:{color:PACC,opacity:.9},
+             barWidth:'52%',data:d.map(r=>r.issue)}]},true);
+}
+
+function drawProvScatter(){
+  const d=pRows(provYear).filter(r=>r.exec!=null&&r.dgdp!=null);
+  const mx=d.length?Math.max(1,...d.map(r=>r.quota||0)):1;
+  charts.c_provsc.setOption({grid:{left:56,right:24,top:22,bottom:44},textStyle:{color:FG},
+    tooltip:{trigger:'item',formatter:p=>{const r=p.data.r;
+      return '<b>'+pName(r)+'</b><br>'+L('Debt/GDP','债务率')+' '+pPct(r.dgdp)+'<br>'+
+        L('Execution','执行率')+' '+pPct(r.exec)+'<br>'+L('Quota','限额')+' '+fmtB(r.quota/10);}},
+    xAxis:{type:'value',name:L('Debt / GDP, %','债务率 %'),axisLabel:{color:AX,formatter:v=>v+'%'},
+      splitLine:{lineStyle:{color:GRID}},nameLocation:'middle',nameGap:28,nameTextStyle:{color:AX}},
+    yAxis:{type:'value',name:L('Execution, %','执行率 %'),axisLabel:{color:AX,formatter:v=>v+'%'},
+      splitLine:{lineStyle:{color:GRID}},nameTextStyle:{color:AX}},
+    series:[{type:'scatter',
+      symbolSize:(v,pm)=>8+32*Math.sqrt(((pm.data&&pm.data.r&&pm.data.r.quota)||0)/mx),
+      itemStyle:{color:PACC,opacity:.55,borderColor:PACC,borderWidth:1},
+      label:{show:true,position:'top',color:AX,fontSize:9.5,formatter:p=>pName(p.data.r)},
+      labelLayout:{hideOverlap:true},
+      data:d.map(r=>({value:[r.dgdp,r.exec],r})),
+      markLine:{silent:true,symbol:'none',lineStyle:{color:AX,type:'dashed',width:1},
+        label:{color:AX,fontSize:10,formatter:L('full quota','限额用满')},data:[{yAxis:100}]}}]},true);
+}
+
+function provKpis(){
+  const d=pRows(provYear), sum=k=>d.reduce((a,r)=>a+(r[k]||0),0);
+  const q=sum('quota'), i=sum('issue'), rf=sum('refi'), bal=sum('bal');
+  const both=d.filter(r=>r.bal&&r.gdp), gdpOK=both.length>=d.length-2;
+  const bg=both.reduce((a,r)=>a+r.bal,0), gd=both.reduce((a,r)=>a+r.gdp,0);
+  const under=d.filter(r=>r.exec!=null&&r.exec<95).sort((a,b)=>a.exec-b.exec);
+  kpi('kpi_prov',[
+    [L('New-debt quota',''),'新增债务限额',fmtB(q/10),provYear+' · '+d.length+L(' issuers','个主体'),null],
+    [L('New bonds issued',''),'新增债券发行',fmtB(i/10),
+      (q&&PROV.complete[provYear])?L('execution ','执行率 ')+pPct(i/q*100)
+        :L('execution n/a, year incomplete','执行率不适用，数据未报齐'),null],
+    [L('Refinancing issued',''),'再融资发行',fmtB(rf/10),L('not in execution','不计入执行率'),null],
+    [L('Debt outstanding',''),'债务余额',fmtB(bal/10),
+      (gdpOK&&gd)?'= '+pPct(bg/gd*100)+L(' of GDP','（占GDP）'):'',null],
+    [L('Below 95% execution',''),'执行率低于95%',String(under.length),
+      under.slice(0,3).map(r=>pName(r)+' '+pPct(r.exec)).join(' · '),null]]);
+  document.getElementById('prov_sub').textContent=L(
+    'How much new borrowing each province was allowed for the year, and how much it actually issued. Annual; from MOF\u2019s bond disclosure platform.',
+    '各省当年获批的新增债务限额与实际新增发行额。年度数据，来源于财政部地方政府债券信息公开平台。');
+  const pe=document.getElementById('prov_partial'), ok=PROV.complete[provYear];
+  pe.hidden=!!ok;
+  if(!ok){
+    const noQ=d.filter(r=>!r.quota&&r.issue).map(pName);
+    pe.textContent=L(
+      provYear+' is still filling in: '+d.length+' of 37 issuers have reported'+
+        (noQ.length?', and '+noQ.length+' show issuance with no quota yet ('+noQ.slice(0,5).join(', ')+')':'')+
+        '. Execution rates for this year are not yet meaningful.',
+      provYear+'年数据尚未报齐：37个发行主体中已报'+d.length+'个'+
+        (noQ.length?'，其中'+noQ.length+'个已有发行但尚未报限额（'+noQ.slice(0,5).join('、')+'）':'')+
+        '。该年执行率暂不具参考意义。');
+  }
+}
+
+let pSortKey='quota', pSortDir=-1;
+const PCOLS=[['cn','Issuer','发行主体'],['quota','Quota','新增限额'],['issue','Issued','新增发行'],
+  ['exec','Exec %','执行率'],['ns','of which special','其中专项'],['refi','Refinancing','再融资'],
+  ['rep','Principal repaid','还本'],['int','Interest','付息'],['bal','Debt balance','债务余额'],
+  ['dgdp','Debt/GDP','债务率']];
+function provTable(){
+  const d=pRows(provYear), prov=d.filter(r=>!r.parent), sub=d.filter(r=>r.parent);
+  prov.sort((a,b)=>pSortKey==='cn'
+    ? pSortDir*pName(a).localeCompare(pName(b))
+    : pSortDir*(((a[pSortKey]==null)?-Infinity:a[pSortKey])-((b[pSortKey]==null)?-Infinity:b[pSortKey])));
+  const cell=(r,k)=>k==='cn'?pName(r):(k==='exec'||k==='dgdp')?pPct(r[k]):fmtB((r[k]||0)/10);
+  let h='<thead><tr>'+PCOLS.map(c=>'<th data-k="'+c[0]+'">'+L(c[1],c[2])+
+    (pSortKey===c[0]?(pSortDir<0?' \u25be':' \u25b4'):'')+'</th>').join('')+'</tr></thead><tbody>';
+  const line=(r,cls)=>'<tr'+(cls?' class="'+cls+'"':'')+'>'+
+    PCOLS.map(c=>'<td>'+cell(r,c[0])+'</td>').join('')+'</tr>';
+  prov.forEach(r=>{h+=line(r);sub.filter(x=>x.parent===r.cn).forEach(x=>{h+=line(x,'sub');});});
+  sub.filter(x=>!prov.some(r=>r.cn===x.parent)).forEach(x=>{h+=line(x,'sub');});
+  const t=document.getElementById('provtbl'); t.innerHTML=h+'</tbody>';
+  t.querySelectorAll('th').forEach(th=>th.onclick=()=>{
+    const k=th.dataset.k;
+    if(k===pSortKey)pSortDir=-pSortDir; else {pSortKey=k;pSortDir=k==='cn'?1:-1;}
+    provTable();});
+}
+
+function drawProv(){
+  [provKpis,drawProvMap,drawProvBar,drawProvScatter,provTable].forEach(fn=>{
+    try{fn();}catch(e){console.error(fn.name,e);}});
+}
+
 function lgbPrelim(){const b=LGB.filter(r=>r.src==='mof').map(r=>r.period);
   const c=LGB.filter(r=>r.src==='cn').map(r=>r.period);
   const e=document.getElementById('lgb_prelim');
@@ -625,7 +868,7 @@ function lgbPrelim(){const b=LGB.filter(r=>r.src==='mof').map(r=>r.period);
   e.textContent=p.join('  ');}
 function applyDataL(){document.querySelectorAll('[data-l]').forEach(e=>{const[en,zh]=e.getAttribute('data-l').split('|');e.textContent=lang==='en'?en:zh;});}
 
-['c_gen_rev','c_gen_exp','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_exec_gen_rev','c_exec_gen_exp','c_exec_fund_rev','c_exec_fund_exp','c_lgb','c_lgb_refi','c_bal','c_hold_cgb','c_hold_lgb','c_lgb_ytd','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);
+['c_provmap','c_provbar','c_provsc','c_gen_rev','c_gen_exp','c_tax_pie','c_tax_grow','c_exp_pie','c_exp_grow','c_fund','c_fund_yoy','c_exec_gen_rev','c_exec_gen_exp','c_exec_fund_rev','c_exec_fund_exp','c_lgb','c_lgb_refi','c_bal','c_hold_cgb','c_hold_lgb','c_lgb_ytd','c_lgb2','c_lgb_yoy','c_lgb_use'].forEach(mk);
 document.getElementById('taxsel').onchange=e=>drawComposition('c_tax_pie','c_tax_grow','tax_items',e.target.value);
 document.getElementById('expsel').onchange=e=>drawComposition('c_exp_pie','c_exp_grow','exp_items',e.target.value);
 document.getElementById('lgbsel').onchange=e=>drawUse(e.target.value);
@@ -640,14 +883,22 @@ function drawAll(){applyDataL();renderKPIs();drawGen();drawFund();
   yoyChart('c_fund_yoy',[['fund_rev','Fund Revenue','基金收入',C.fund],['fund_exp','Fund Expenditure','基金支出',C.exp],['land_rev','Land-Sale','土地出让',C.land]]);
   drawComposition('c_tax_pie','c_tax_grow','tax_items',document.getElementById('taxsel').value);
   drawComposition('c_exp_pie','c_exp_grow','exp_items',document.getElementById('expsel').value);
-  drawLGB();drawNSB();drawUse(document.getElementById('lgbsel').value);lgbPrelim();drawBal();}
+  drawLGB();drawNSB();drawUse(document.getElementById('lgbsel').value);lgbPrelim();drawBal();
+  drawProv();}
+echarts.registerMap('chinaprov', PROV.geo);
+const pysel=document.getElementById('provyear');
+PROV.years.slice().reverse().forEach(y=>{const o=document.createElement('option');
+  o.value=y;o.textContent=y+(PROV.complete[y]?'':' *');pysel.appendChild(o);});
+pysel.value=provYear;
+pysel.onchange=e=>{provYear=+e.target.value;drawProv();};
+seg('provmetric',v=>{provMetric=v;drawProvMap();});
 addEventListener('resize',()=>Object.values(charts).forEach(c=>c.resize()));
 fillSel('taxsel');fillSel('expsel');fillLgbSel();applyDataL();drawAll();
 </script>
 </body>
 </html>
 '''
-HTML=HTML.replace('__FOOTER__', footer(['mof_monthly', 'debt_center', 'mof_balance', 'npc_budget', 'chinabond', 'echarts'], page='fiscal-monitor.html', notes=BASIS_NOTE)).replace('__DATA__',DATA).replace('__LGB__',LGB).replace('__NSB__',NSB).replace('__REP__',REP).replace('__HOLD__',HOLD).replace('__TGT__',TGT).replace('__LIM__',LIM)
+HTML=HTML.replace('__FOOTER__', footer(['mof_monthly', 'debt_center', 'mof_balance', 'npc_budget', 'chinabond', 'celma', 'geoatlas', 'echarts'], page='fiscal-monitor.html', notes=BASIS_NOTE, map_page=True)).replace('__DATA__',DATA).replace('__LGB__',LGB).replace('__NSB__',NSB).replace('__REP__',REP).replace('__HOLD__',HOLD).replace('__TGT__',TGT).replace('__LIM__',LIM).replace('__PROV__',PROV)
 open(base+'fiscal-monitor.html','w',encoding='utf-8').write(HTML)
 if os.path.isdir(base+'docs'):  # the published site (GitHub Pages serves docs/)
     open(base+'docs/fiscal-monitor.html','w',encoding='utf-8').write(HTML)
