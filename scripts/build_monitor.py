@@ -726,9 +726,11 @@ function pMapData(y){
 
 function drawProvMap(){
   const d=pMapData(provYear);
-  // execution is meaningless without a quota; show issuance instead
-  const anyQ=d.some(o=>o.quota);
-  const key=(provMetric==='exec'&&!anyQ)?'issue':provMetric;
+  // an execution map drawn from a handful of issuers is mostly blank space;
+  // require a majority before colouring the country by it
+  const withQ=d.filter(o=>o.quota).length;
+  const enoughQ=withQ*2>=d.length;
+  const key=(provMetric==='exec'&&!enoughQ)?'issue':provMetric;
   const M=PMETRIC[key]||PMETRIC.issue;
   const provMetricEff=key;
   const vals=d.map(o=>o[provMetricEff]).filter(v=>v!=null);
@@ -821,7 +823,7 @@ function provKpis(){
   const under=d.filter(r=>r.exec!=null&&r.exec<95).sort((a,b)=>a.exec-b.exec);
   const ytd=rep.ytd_through||null;
   kpi('kpi_prov',[
-    [L(ytd?'New-debt quota (none yet)':'New-debt quota',''),'新增债务限额',q?fmtB(q/10):'–',
+    [L((ytd&&!q)?'New-debt quota (none yet)':'New-debt quota',''),'新增债务限额',q?fmtB(q/10):'–',
       (ytd&&!q)?L('not published for '+provYear+' yet','该年度尚未公布')
         :((qAll?provYear+' · '+d.length+L(' issuers','个主体')
              :provYear+' · '+withQ.length+L(' of ','/')+d.length+L(' issuers reporting','个主体已报'))
@@ -829,9 +831,14 @@ function provKpis(){
     [L(ytd?'New bonds issued YTD':'New bonds issued',''),'新增债券发行',fmtB(i/10),
       (ytd?L('through ','截至 ')+ytd+' · ':'')+d.length+L(' issuers','个主体')
         +(rep.filled?' · '+rep.filled+L(' filled','项补录'):''),null],
-    [L('Execution',''),'执行率',q?pPct(iq/q*100):'–',
-      q?(qAll?L('all issuers','全部主体'):L('among the issuers reporting a quota','仅限已报限额的主体'))
-       :L('needs a quota to compute','无限额，无法计算'),null],
+    [L('Execution',''),'执行率',
+      (q&&withQ.length*2>=d.length)?pPct(iq/q*100):'–',
+      !q ? L('needs a quota to compute','无限额，无法计算')
+         : withQ.length*2<d.length
+           ? withQ.length+L(' of ','/')+d.length+L(' issuers have a quota — too few to aggregate',
+                                                   '个主体已报限额，样本过少不作合计')
+           : (qAll?L('all issuers','全部主体')
+                  :L('among the issuers reporting a quota','仅限已报限额的主体')),null],
     [L(ytd?'Refinancing issued YTD':'Refinancing issued',''),'再融资发行',fmtB(rf/10),
       L('not in execution','不计入执行率'),null],
     [L('Debt outstanding',''),'债务余额',fmtB(bal/10),
@@ -847,11 +854,19 @@ function provKpis(){
     pe.textContent=L(
       provYear+' is in progress. Issuance is year-to-date through '+ytd+' for all '+d.length+
         ' issuers, built from the platform\u2019s monthly series and cut at the last month whose '+
-        'regions still sum to MOF\u2019s national release. The '+provYear+' quota has not been '+
-        'published by region yet, so there is no execution rate and the map falls back to issuance.',
+        'regions still sum to MOF\u2019s national release. '+
+        (withQ.length
+          ? 'The '+provYear+' quota is published for only '+withQ.length+' of '+d.length+
+            ' issuers so far ('+withQ.map(pName).join(', ')+'), so there is no national execution '+
+            'rate; those issuers do show one individually.'
+          : 'The '+provYear+' quota has not been published by region yet, so there is no execution rate.')+
+        ' The map falls back to issuance.',
       provYear+'年度进行中。发行额为截至'+ytd+'的年初至今数据，覆盖全部'+d.length+
         '个主体，取自平台月度分地区序列，并截至分地区合计仍与财政部全国数一致的最后一个月。'+
-        provYear+'年分地区新增限额尚未公布，故无执行率，地图改用发行额。');
+        (withQ.length
+          ? provYear+'年分地区新增限额目前仅'+withQ.length+'/'+d.length+'个主体已公布（'+
+            withQ.map(pName).join('、')+'），故不计算全国执行率，该等主体单独显示执行率。'
+          : provYear+'年分地区新增限额尚未公布，故无执行率。')+'地图改用发行额。');
   } else if(noQ.length){
     pe.textContent=L(
       'Issuance for '+provYear+' is complete for all '+d.length+' issuers'+

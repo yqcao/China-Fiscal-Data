@@ -9,7 +9,9 @@
   "quote": "verbatim sentence carrying the figures",
   "scope": "what the figure covers, e.g. excludes 计划单列市",
   "note": "anything a reader needs to interpret it",
-  "verification": "direct = the figure was read from the source document fetched from its official URL. indirect = the host refuses connections from outside mainland China and the document could not be opened, so the figure rests on corroboration; the note says what that is."
+  "verification": "direct = the figure was read from the source document fetched from its official URL. indirect = the host refuses connections from outside mainland China and the document could not be opened, so the figure rests on corroboration; the note says what that is.",
+  "stage": "cumulative = the full amount allocated to the region so far this year (the figure to use). advance = 提前下达 only, a subset allocated the previous autumn. A year in progress may have only the advance batch published.",
+  "as_of": "the date the figure is stated as of; a year in progress can still be topped up."
  },
  "entries": [
   {
@@ -25,7 +27,8 @@
    "scope": "自治区本级及地州市，不含新疆生产建设兵团（兵团 211 亿元单列，平台已有）",
    "corroboration": "https://czt.xinjiang.gov.cn/xjczt/c115511/202511/5e5686af4300445084a45544b22b5d16.shtml 《关于2025年自治区级预算调整方案（草案）的报告》附件6 地方政府债务限额情况表 restates 1882 / 299 / 1583",
    "note": "XPCC's 80/131 in the same sentence matches the disclosure platform exactly, confirming the two sources carry the same measure.",
-   "verification": "direct"
+   "verification": "direct",
+   "stage": "cumulative"
   },
   {
    "region": "吉林省",
@@ -40,7 +43,8 @@
    "scope": "全省",
    "corroboration": "https://czt.jl.gov.cn/yjs/zfyjs/zfysjtz/2025/202508/t20250804_3487353.html restates 804 / 221 / 583; batches 442 + 362 = 804, and 122+99=221, 320+263=583",
    "note": "一般 221 includes 2.28 亿元 政府债务外贷 (foreign-loan on-lending); domestic-only would be 218.72. New general issuance of 220 against a 221 quota is a 99.5% match, which corroborates the figure. New special issuance of 843 against 583 exceeds the allocation, consistent with use of carried-over headroom (结存限额).",
-   "verification": "direct"
+   "verification": "direct",
+   "stage": "cumulative"
   },
   {
    "region": "广东省",
@@ -56,7 +60,8 @@
    "scope": "广东地区，不含深圳市（深圳 15/866 由平台单列，与本报告拆分一致）",
    "corroboration": "https://czt.gd.gov.cn/ztjj/2026gdlh/lhsd/content/post_4858035.html 《广东省2025年预算执行情况和2026年预算草案的报告》restates 新增债务限额 5686（一般 320、专项 5366）and separately 结存债务限额 644",
    "note": "Entered on the Shenzhen-excluded basis to match the platform, which lists Shenzhen as its own issuer. Special issuance of 4,760 exceeds the 4,500 quota; the province also received 644 亿元 of 结存限额, of which 370 was issued as new special bonds.",
-   "verification": "direct"
+   "verification": "direct",
+   "stage": "cumulative"
   },
   {
    "region": "江苏省",
@@ -72,7 +77,8 @@
    "scope": "全省（江苏无计划单列市）",
    "corroboration": "https://czt.jiangsu.gov.cn/art/2026/2/13/art_77316_11730064.html 《关于江苏省2025年预算执行情况与2026年预算草案的报告》restates 新增一般 316、专项 2485",
    "note": "New general issuance of 316 equals the quota exactly. Special issuance of 2,785 exceeds the 2,485 quota by 300, which equals the 300 亿元 of 结存限额 allocated for project construction in the 2025-11-26 provincial adjustment report (https://czt.jiangsu.gov.cn/art/2025/11/28/art_77316_11695965.html).",
-   "verification": "direct"
+   "verification": "direct",
+   "stage": "cumulative"
   },
   {
    "region": "贵州省",
@@ -86,7 +92,8 @@
    "quote": "截至目前，财政部下达我省2025年新增地方政府债务限额642亿元，其中：新增一般债务限额157亿元（86亿元为提前下达数已纳入年初预算安排、本次下达71亿元），新增专项债务限额485亿元（257亿元为提前下达数已纳入年初预算安排、本次下达228亿元）。",
    "scope": "全省",
    "note": "Figure is as of 2025-08 and reads 截至目前. Confirmed as the full-year figure by outturn: new special issuance of 485.0 equals the special quota exactly, and new general issuance of 145 sits inside the 157 general quota.",
-   "verification": "direct"
+   "verification": "direct",
+   "stage": "cumulative"
   },
   {
    "region": "西藏自治区",
@@ -100,7 +107,8 @@
    "quote": "争取政府一般债务限额84亿元，较上年增长68%……争取政府专项债务限额192亿元",
    "scope": "全区",
    "note": "WEAKEST of the sourced entries: the wording is 争取…限额 rather than the usual 财政部下达, and no Tibet document using the standard phrasing for 2025 could be found on an official domain. Supported by outturn and arithmetic: new general issuance of 84.0 equals the 84 quota exactly, and end-2024 limit 1,242.6 + 276 new + ~135 swap = 1,653.6, the 2025 limit stated in Tibet's FY2026 budget report.",
-   "verification": "direct"
+   "verification": "direct",
+   "stage": "cumulative"
   },
   {
    "region": "河南省",
@@ -114,7 +122,8 @@
    "quote": "2025年财政部下达我省新增地方政府债务限额2334亿元，其中一般债务限额363亿元，专项债务限额1971亿元。经省十四届人大常委会第十七次会议审议通过，新增债务限额已分配下达1791亿元（一般272.4亿元、专项1518.6亿元）。",
    "scope": "全省",
    "note": "Hosted on the provincial government's file server because czt.henan.gov.cn returns 403 outside mainland China. The same document's 2024 edition states 323/1,907, which the platform publishes exactly, confirming the measure. New special issuance of 2,121 exceeds the 1,971 quota, consistent with the separate late-2025 release of 结存限额.",
-   "verification": "direct"
+   "verification": "direct",
+   "stage": "cumulative"
   },
   {
    "region": "湖北省",
@@ -129,7 +138,8 @@
    "scope": "全省",
    "corroboration": "The 2024 edition of the same report (https://www.hppc.gov.cn/rdgz/zyfb/bgjh/1859217683644854273.html) states 2033（一般372、专项1661）, matching the platform's 2024 figures for Hubei exactly.",
    "note": "Reads 截至目前 as of 2025-09-22; the 年初预算 assumed only the 1,214 advance batch, raised by 927. The finance department's own report exists only as a scan without a text layer, so this is the 财经委 review report carrying the same figures. New special issuance of 1,872 exceeds the 1,722 quota, consistent with 结存限额.",
-   "verification": "direct"
+   "verification": "direct",
+   "stage": "cumulative"
   },
   {
    "region": "宁波市",
@@ -144,7 +154,8 @@
    "quote": "财政部下达我市2025年新增地方政府债务限额559亿元，其中：一般债务限额16亿元，专项债务限额543亿元。",
    "scope": "全市（计划单列市，不含浙江省其余地区）",
    "corroboration": "New general issuance of 16.00 equals the 16 general quota exactly. The February 2025 disclosure states the advance batch as 285（一般5、专项280）, a subset of this figure, not an addition to it.",
-   "note": "AS OF MID-AUGUST 2025, not a year-end figure. Ningbo's 人大常委会 approved a 2025 budget adjustment on 2025-10-29 tied to the new-debt quota (https://www.nbrd.gov.cn/art/2025/11/4/art_1229575855_43440.html), but the resolution carries no figures and the underlying 说明 is not published, so a Q4 top-up cannot be ruled out. New special issuance of 593 exceeds the 543 quota, which is consistent either with such a top-up or with 结存限额."
+   "note": "AS OF MID-AUGUST 2025, not a year-end figure. Ningbo's 人大常委会 approved a 2025 budget adjustment on 2025-10-29 tied to the new-debt quota (https://www.nbrd.gov.cn/art/2025/11/4/art_1229575855_43440.html), but the resolution carries no figures and the underlying 说明 is not published, so a Q4 top-up cannot be ruled out. New special issuance of 593 exceeds the 543 quota, which is consistent either with such a top-up or with 结存限额.",
+   "stage": "cumulative"
   },
   {
    "region": "青岛市",
@@ -159,9 +170,57 @@
    "quote": "经国务院批准，财政部下达我市2025年政府债务限额755亿元，其中一般债务限额78亿元，专项债务限额677亿元；收回我市政府专项债务限额26亿元。",
    "scope": "全市（计划单列市，不含山东省其余地区）",
    "corroboration": "The same report's issuance figures match this repo's own independent parse of the Debt Center bond appendix to the cent: total 1,094.98 (parse 1,094.98), new 730 (parse 730.00), refinancing 222.98 + swap 142 = 364.98 (parse 364.98). Its limit arithmetic also closes exactly: 1,224.45-1,146.45 = 78, 4,230.50-3,579.50 = 651 = 677-26, 5,454.95-4,725.95 = 729.",
-   "note": "VERIFICATION IS INDIRECT: www.qingdao.gov.cn refuses connections from outside mainland China, so neither this session nor the agent could open the PDF, and there is no Wayback snapshot. The figures come from search-tool readings of that URL across five differently phrased queries returning identical numbers, plus the corroboration above. Entered gross as 下达 (78 + 677 = 755) for consistency with the other entries; 26 亿元 of special limit was recalled, so the net increase in the limit was 729, against which new issuance of 730 is 100.1%."
+   "note": "VERIFICATION IS INDIRECT: www.qingdao.gov.cn refuses connections from outside mainland China, so neither this session nor the agent could open the PDF, and there is no Wayback snapshot. The figures come from search-tool readings of that URL across five differently phrased queries returning identical numbers, plus the corroboration above. Entered gross as 下达 (78 + 677 = 755) for consistency with the other entries; 26 亿元 of special limit was recalled, so the net increase in the limit was 729, against which new issuance of 730 is 100.1%.",
+   "stage": "cumulative"
+  },
+  {
+   "region": "四川省",
+   "year": 2026,
+   "general": 437.0,
+   "special": 2266.0,
+   "stage": "cumulative",
+   "as_of": "2026-07-27",
+   "verification": "direct",
+   "url": "http://czt.sc.gov.cn/scczt/c102371/2026/8/4/484ee93dba7448eeb7eca179e0197916.shtml",
+   "title": "关于2026年预算调整方案的报告",
+   "date": "2026-07-27",
+   "venue": "四川省第十四届人民代表大会常务委员会第二十八次会议 · 四川省财政厅",
+   "quote": "财政部明确我省 2026 年新增地方政府债务限额 2703 亿元。其中：一般债务限额 437 亿元；专项债务限额 2266 亿元。",
+   "scope": "全省（四川无计划单列市）",
+   "corroboration": "Advance batch of 1,619（一般260、专项1,359）in the 2026 budget report (https://www.scspc.gov.cn/czbg/202602/153402.html) plus this round's 1,084（一般177、专项907）reconciles exactly: 260+177=437, 1,359+907=2,266.",
+   "note": "The separate 2024-2026 多年度置换存量隐性债务 allocation (1,148 亿元 drawn in 2026) sits outside the 新增限额 and is not included here."
+  },
+  {
+   "region": "河北省",
+   "year": 2026,
+   "general": 532.0,
+   "special": 2180.0,
+   "stage": "cumulative",
+   "as_of": "2026-05-28",
+   "verification": "direct",
+   "url": "http://www.hebei.gov.cn/columns/faa0e062-09f9-4519-b152-616a9ef8c6de/202606/08/d4700eb6-7ec2-4544-b1f0-2fc3c69c8683.html",
+   "title": "河北省2026年地方政府债务限额调整情况表（2026年地方政府债务限额调整预算公开情况表）",
+   "date": "2026-06-08",
+   "venue": "河北省人民政府 · 预算公开",
+   "quote": "二、2026年新增地方政府债务限额 2712.00；其中：一般债务限额 532.00、专项债务限额 2180.00；附：提前下达的2026年新增地方政府债务限额 1623.00（一般317.00、专项1306.00）",
+   "scope": "全省，含雄安新区及省直管县（河北无计划单列市）",
+   "corroboration": "https://www.hbrd.gov.cn/system/2026/05/29/102187407.shtml 省人大财经委审查结果报告 states 「财政部下达我省2026年新增地方政府债务限额2712亿元，其中：去年底提前下达的限额1623亿元……还有1089亿元新增债务限额可以安排使用」. Reconciles: 317+215=532, 1,306+874=2,180, and the limit table adds up (24,421.60+2,712=27,133.60).",
+   "note": "A separate 280 亿元 of 2026 置换存量隐性债务 quota is parked in the 2025 limit line and is outside this figure, per the table's own footnote."
   }
  ],
  "_validation": "Same-measure check: 新疆生产建设兵团 2025 appears in BOTH sources -- the disclosure platform publishes 新增一般债务限额 80 / 新增专项债务限额 131, and the Xinjiang finance department's 2026 budget report states the identical 80 / 131 for the XPCC. So the quota a region reports to the platform and the quota 财政部下达 in its budget report are the same figure, and the two sources can be used in one series. Second check: 深圳市 2025 appears in both sources too -- the platform publishes 15 / 866, and Guangdong's own budget-adjustment report breaks its 5,686 亿元 into 广东地区 305 / 4,500 and 深圳市 15 / 866. The Shenzhen halves match exactly, so Guangdong is entered here on the Shenzhen-excluded basis the platform uses. Third check: the Hubei and Henan documents have 2024 equivalents stating 372/1,661 and 323/1,907, and the platform publishes exactly those figures for 2024. Three independent confirmations that the two sources carry the same measure.",
- "_carryover_note": "Why issuance can exceed quota: 结存限额 (unused ceiling carried over from earlier years) is allocated separately and is NOT part of 新增限额. Guangdong received 644 亿元 of it in 2025 (370 of that issued as new special bonds), and Jiangsu a net 119 亿元 (300 for project construction). Those tranches account for the special-bond overshoot in both provinces: Jiangsu issued 2,785 against a 2,485 quota, and 2,785-2,485 = 300 exactly. Execution above 100% in this series therefore means carried-over headroom was used, not that a quota was breached."
+ "_carryover_note": "Why issuance can exceed quota: 结存限额 (unused ceiling carried over from earlier years) is allocated separately and is NOT part of 新增限额. Guangdong received 644 亿元 of it in 2025 (370 of that issued as new special bonds), and Jiangsu a net 119 亿元 (300 for project construction). Those tranches account for the special-bond overshoot in both provinces: Jiangsu issued 2,785 against a 2,485 quota, and 2,785-2,485 = 300 exactly. Execution above 100% in this series therefore means carried-over headroom was used, not that a quota was breached.",
+ "_not_entered": [
+  {
+   "region": "山东省",
+   "year": 2026,
+   "reason": "Only the 提前下达 advance batch is published (一般126 + 专项2,364 = 2,490, 山东省2025年预算执行情况与2026年预算草案, 表57, http://czt.shandong.gov.cn/art/2026/2/14/art_10575_10329198.html), and it is stated 含青岛市 — Shandong's own documents say 「财政部核定山东省（含青岛市，下同）」. The platform treats 山东省 and 青岛市 as separate issuers, so entering 2,490 would double-count Qingdao. The 不含青岛 split is not disclosed for 2026. The 2026 adjustment plan was approved on 2026-07-23 (https://www.sdrd.gov.cn/articles/ch00628/202607/a149c09e-e29f-4c62-9512-b64aa73d7e5b.shtml) but the report carrying the figures has not been posted; in 2025 it appeared about four weeks after approval, so it is overdue. Re-check czt.shandong.gov.cn/col/col10575."
+  }
+ ],
+ "_access_notes": {
+  "czt.shandong.gov.cn": "Reachable over plain http:// only — its HTTPS certificate is for another host, so any fetcher that forces HTTPS fails. Article lists are embedded in the column page inside <script type=\"text/xml\"><datastore>, and PDF links point at an internal IP (172.20.232.124) that must be swapped back to the hostname.",
+  "czt.hebei.gov.cn": "Returns 403 from outside mainland China; use www.hebei.gov.cn and www.hbrd.gov.cn instead.",
+  "czt.henan.gov.cn": "Returns 403 from outside mainland China; the same documents are on the provincial file server xcoss.henan.gov.cn.",
+  "www.qingdao.gov.cn": "Refuses connections from outside mainland China, with no Wayback snapshot."
+ }
 }
