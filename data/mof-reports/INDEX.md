@@ -2,7 +2,7 @@
 
 Source: https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhiqingkuang/
 
-186 reports, 20080828–20260918
+187 reports, 20080828–20260928
 
 | Date | Title | Text file |
 |---|---|---|
@@ -192,3 +192,4 @@ Source: https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhi
 | 2026-07-22 | 2026年上半年财政收支情况 | `text/t20260722_3993943.txt` |
 | 2026-08-14 | 2026年1-7月财政收支情况 | `text/t20260814_3995497.txt` |
 | 2026-09-18 | 2026年1—8月财政收支情况 | `text/t20260918_3997709.txt` |
+| 2026-09-28 | 2025年全国政府采购简要情况 | `text/t20260928_3998199.txt` |

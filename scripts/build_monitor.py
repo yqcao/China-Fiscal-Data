@@ -68,7 +68,8 @@ _pyrs = sorted({r['year'] for r in _prow})
 PROV = json.dumps({'rows': _prow, 'years': _pyrs,
                    'complete': {str(y): _pp['completeness'][str(y)]['complete'] for y in _pyrs},
                    'report': {str(y): {k: _pp['completeness'][str(y)].get(k)
-                                       for k in ('regions','with_issuance','with_quota','filled','quota_sourced')}
+                                       for k in ('regions','with_issuance','with_quota','filled',
+                                                 'quota_sourced','ytd_through','months')}
                               for y in _pyrs},
                    'en': _PEN,
                    'geo': json.load(open(base+'data/geo/china-provinces-min.json', encoding='utf-8'))},
@@ -706,7 +707,8 @@ const pPct = v => v==null ? '\u2013' : v.toFixed(1)+'%';
 const PMETRIC = {
   exec:{en:'Execution rate, % of new-debt quota issued', zh:'执行率：新增限额已发行比例', div:true},
   quota:{en:'New-debt quota allocated', zh:'下达新增债务限额'},
-  dgdp:{en:'Debt outstanding / provincial GDP', zh:'债务余额占本省GDP比重', unit:'%'}};
+  dgdp:{en:'Debt outstanding / provincial GDP', zh:'债务余额占本省GDP比重', unit:'%'},
+  issue:{en:'New-bond issuance', zh:'新增债券发行额'}};
 
 function pMapData(y){
   const by={};
@@ -723,8 +725,13 @@ function pMapData(y){
 }
 
 function drawProvMap(){
-  const d=pMapData(provYear), M=PMETRIC[provMetric];
-  const vals=d.map(o=>o[provMetric]).filter(v=>v!=null);
+  const d=pMapData(provYear);
+  // execution is meaningless without a quota; show issuance instead
+  const anyQ=d.some(o=>o.quota);
+  const key=(provMetric==='exec'&&!anyQ)?'issue':provMetric;
+  const M=PMETRIC[key]||PMETRIC.issue;
+  const provMetricEff=key;
+  const vals=d.map(o=>o[provMetricEff]).filter(v=>v!=null);
   const lo=vals.length?Math.min(...vals):0, hi=vals.length?Math.max(...vals):1;
   /* Execution is bimodal: most provinces sit within a point of 100 and a few fall
      far short, so a continuous ramp wide enough to hold the laggards leaves
@@ -751,7 +758,7 @@ function drawProvMap(){
          textStyle:{color:AX,fontSize:10.5},
          formatter:v=>M.unit==='%'?v.toFixed(0)+'%':fmtB(v/10)},
     series:[{type:'map',map:'chinaprov',roam:false,
-      data:d.map(o=>({name:o.cn,value:o[provMetric]})),label:{show:false},
+      data:d.map(o=>({name:o.cn,value:o[provMetricEff]})),label:{show:false},
       itemStyle:{borderColor:dark?'#2c2e33':'#fff',borderWidth:.6,
                  areaColor:dark?'#23252b':'#f0f0f2'},
       emphasis:{label:{show:false},itemStyle:{borderColor:PACC,borderWidth:1.4}},
@@ -760,7 +767,9 @@ function drawProvMap(){
 }
 
 function drawProvBar(){
-  const d=pRows(provYear).filter(r=>r.quota||r.issue).sort((a,b)=>(a.quota||0)-(b.quota||0));
+  const rs=pRows(provYear).filter(r=>r.quota||r.issue);
+  const byQuota=rs.some(r=>r.quota);
+  const d=rs.sort((a,b)=>byQuota?((a.quota||0)-(b.quota||0)):((a.issue||0)-(b.issue||0)));
   charts.c_provbar.setOption({grid:{left:110,right:52,top:28,bottom:30},textStyle:{color:FG},
     legend:{top:0,textStyle:{color:AX},data:[L('Quota','限额'),L('New-bond issuance','新增发行')]},
     tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:ps=>{const r=d[ps[0].dataIndex];
@@ -810,16 +819,21 @@ function provKpis(){
   const both=d.filter(r=>r.bal&&r.gdp), gdpOK=both.length>=d.length-2;
   const bg=both.reduce((a,r)=>a+r.bal,0), gd=both.reduce((a,r)=>a+r.gdp,0);
   const under=d.filter(r=>r.exec!=null&&r.exec<95).sort((a,b)=>a.exec-b.exec);
+  const ytd=rep.ytd_through||null;
   kpi('kpi_prov',[
-    [L('New-debt quota',''),'新增债务限额',fmtB(q/10),
-      (qAll?provYear+' · '+d.length+L(' issuers','个主体')
-           :provYear+' · '+withQ.length+L(' of ','/')+d.length+L(' issuers reporting','个主体已报'))
-      +(rep.quota_sourced?' · '+rep.quota_sourced+L(' from budget reports','项取自预算报告'):''),null],
-    [L('New bonds issued',''),'新增债券发行',fmtB(i/10),
-      d.length+L(' issuers','个主体')+(rep.filled?' · '+rep.filled+L(' filled','项补录'):''),null],
+    [L(ytd?'New-debt quota (none yet)':'New-debt quota',''),'新增债务限额',q?fmtB(q/10):'–',
+      (ytd&&!q)?L('not published for '+provYear+' yet','该年度尚未公布')
+        :((qAll?provYear+' · '+d.length+L(' issuers','个主体')
+             :provYear+' · '+withQ.length+L(' of ','/')+d.length+L(' issuers reporting','个主体已报'))
+          +(rep.quota_sourced?' · '+rep.quota_sourced+L(' from budget reports','项取自预算报告'):'')),null],
+    [L(ytd?'New bonds issued YTD':'New bonds issued',''),'新增债券发行',fmtB(i/10),
+      (ytd?L('through ','截至 ')+ytd+' · ':'')+d.length+L(' issuers','个主体')
+        +(rep.filled?' · '+rep.filled+L(' filled','项补录'):''),null],
     [L('Execution',''),'执行率',q?pPct(iq/q*100):'–',
-      qAll?L('all issuers','全部主体'):L('among the issuers reporting a quota','仅限已报限额的主体'),null],
-    [L('Refinancing issued',''),'再融资发行',fmtB(rf/10),L('not in execution','不计入执行率'),null],
+      q?(qAll?L('all issuers','全部主体'):L('among the issuers reporting a quota','仅限已报限额的主体'))
+       :L('needs a quota to compute','无限额，无法计算'),null],
+    [L(ytd?'Refinancing issued YTD':'Refinancing issued',''),'再融资发行',fmtB(rf/10),
+      L('not in execution','不计入执行率'),null],
     [L('Debt outstanding',''),'债务余额',fmtB(bal/10),
       (gdpOK&&gd)?'= '+pPct(bg/gd*100)+L(' of GDP','（占GDP）'):'',null]]);
   document.getElementById('prov_sub').textContent=L(
@@ -828,7 +842,17 @@ function provKpis(){
   const pe=document.getElementById('prov_partial');
   const noQ=d.filter(r=>!r.quota).map(pName);
   pe.hidden=!noQ.length;
-  if(noQ.length){
+  if(ytd){
+    pe.hidden=false;
+    pe.textContent=L(
+      provYear+' is in progress. Issuance is year-to-date through '+ytd+' for all '+d.length+
+        ' issuers, built from the platform\u2019s monthly series and cut at the last month whose '+
+        'regions still sum to MOF\u2019s national release. The '+provYear+' quota has not been '+
+        'published by region yet, so there is no execution rate and the map falls back to issuance.',
+      provYear+'年度进行中。发行额为截至'+ytd+'的年初至今数据，覆盖全部'+d.length+
+        '个主体，取自平台月度分地区序列，并截至分地区合计仍与财政部全国数一致的最后一个月。'+
+        provYear+'年分地区新增限额尚未公布，故无执行率，地图改用发行额。');
+  } else if(noQ.length){
     pe.textContent=L(
       'Issuance for '+provYear+' is complete for all '+d.length+' issuers'+
         (rep.filled?' ('+rep.filled+' taken from the Debt Center market report, which the platform has not yet restated)':'')+
@@ -850,6 +874,8 @@ const PCOLS=[['cn','Issuer','发行主体'],['quota','Quota','新增限额'],['i
   ['dgdp','Debt/GDP','债务率']];
 function provTable(){
   const d=pRows(provYear), prov=d.filter(r=>!r.parent), sub=d.filter(r=>r.parent);
+  // a year with no published quota would otherwise sort every row on a zero
+  if(pSortKey==='quota'&&!d.some(r=>r.quota))pSortKey='issue';
   prov.sort((a,b)=>pSortKey==='cn'
     ? pSortDir*pName(a).localeCompare(pName(b))
     : pSortDir*(((a[pSortKey]==null)?-Infinity:a[pSortKey])-((b[pSortKey]==null)?-Infinity:b[pSortKey])));
@@ -911,7 +937,10 @@ function drawAll(){applyDataL();renderKPIs();drawGen();drawFund();
 echarts.registerMap('chinaprov', PROV.geo);
 const pysel=document.getElementById('provyear');
 PROV.years.slice().reverse().forEach(y=>{const o=document.createElement('option');
-  o.value=y;o.textContent=y+(PROV.complete[y]?'':' *');pysel.appendChild(o);});
+  const rp=PROV.report[y]||{};
+  o.value=y;
+  o.textContent=y+(rp.ytd_through?' (YTD '+rp.ytd_through.slice(5)+')':(PROV.complete[y]?'':' *'));
+  pysel.appendChild(o);});
 pysel.value=provYear;
 pysel.onchange=e=>{provYear=+e.target.value;drawProv();};
 seg('provmetric',v=>{provMetric=v;drawProvMap();});

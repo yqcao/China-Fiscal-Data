@@ -46,6 +46,68 @@ FIELDS = [
 ]
 
 
+def ytd_from_monthly(have_years):
+    """
+    Year-to-date rows for a year the platform has not published annually yet.
+
+    The platform posts by-region monthly data well before it posts the annual
+    table, so the current year can be tracked from the monthly series. It is only
+    usable up to the last month where the 37 regions still add up to MOF's own
+    national release -- regions report at their own pace, and a month missing four
+    of them understates the country by ~20%. So each month is reconciled against
+    data/mof-debt-balance/repayment_series.json and the series is cut at the last
+    month that agrees within 0.5%.
+    """
+    f = D + 'monthly_by_region.json'
+    if not os.path.exists(f):
+        return {}, {}
+    mon = json.load(open(f, encoding='utf-8'))
+    nat = {r['period']: r for r in json.load(
+        open(BASE + 'data/mof-debt-balance/repayment_series.json', encoding='utf-8'))}
+
+    ISS = ('一般债券发行额', '专项债券发行额')
+    by_period = collections.defaultdict(float)
+    for r in mon:
+        if r['zb_name'] in ISS:
+            by_period[r['period']] += r['amount']
+
+    out, meta = {}, {}
+    for yr in sorted({int(p[:4]) for p in by_period} - set(have_years)):
+        months = sorted(p for p in by_period if p.startswith(str(yr)))
+        good = []
+        for p in months:
+            k = f'{p[:4]}-{p[4:]}'
+            want = (nat.get(k) or {}).get('issue')
+            got = by_period[p]
+            if not want or abs(got - want) > max(1.0, want * 0.005):
+                break
+            good.append(p)
+        if not good:
+            continue
+        # Flows accumulate across the months; stocks do not -- a balance is a
+        # level at a point in time, so take the latest month's value instead of
+        # adding seven of them together.
+        STOCK = ('一般债务余额', '专项债务余额', '一般债券余额', '专项债券余额',
+                 '一般债务限额', '专项债务限额')
+        last = good[-1]
+        cell = collections.defaultdict(lambda: collections.defaultdict(float))
+        code = {}
+        for r in mon:
+            if r['period'] not in good:
+                continue
+            code[r['region']] = r['code']
+            if r['zb_name'] in STOCK:
+                if r['period'] == last:
+                    cell[r['region']][r['zb_name']] = r['amount']
+            else:
+                cell[r['region']][r['zb_name']] += r['amount']
+        out[yr] = {reg: (dict(d), code[reg]) for reg, d in cell.items()}
+        meta[yr] = {'ytd_through': f'{good[-1][:4]}-{good[-1][4:]}',
+                    'months': len(good),
+                    'dropped': [f'{p[:4]}-{p[4:]}' for p in months if p not in good]}
+    return out, meta
+
+
 def quota_overrides():
     """2025+ quota taken from each region's own budget documents, for issuers the
     platform has not published. Never overrides a platform figure."""
@@ -82,6 +144,9 @@ def main():
     rows = json.load(open(D + 'annual_by_region.json'))
     appx = appendix_issuance()
     qov = quota_overrides()
+    annual_years = {r['year'] for r in rows
+                    if r['zb_name'] in ('新增一般债券发行额', '新增专项债券发行额') and r['amount']}
+    ytd, ytd_meta = ytd_from_monthly(annual_years)
     nat = collections.defaultdict(dict)
     for r in json.load(open(D + 'annual_national.json')):
         nat[r['year']][r['zb_name']] = r['amount']
@@ -92,6 +157,12 @@ def main():
         cell[(r['region'], r['year'])][r['zb_name']] = r['amount']
         code[r['region']] = r['code']
 
+    # a current year the platform has not published annually, built from monthly
+    for yr, regs in ytd.items():
+        for reg, (d, c) in regs.items():
+            cell[(reg, yr)] = d
+            code.setdefault(reg, c)
+
     # years and regions the platform has not reached but the appendix has
     for reg, yrs in appx.items():
         for yr in yrs:
@@ -101,7 +172,9 @@ def main():
 
     out = []
     for (reg, yr), d in sorted(cell.items(), key=lambda kv: (kv[0][1], kv[0][0])):
-        o = {'region': reg, 'code': code.get(reg, ''), 'year': yr}
+        o = {'region': reg, 'code': code.get(reg, ''), 'year': yr,
+             'basis': 'ytd' if yr in ytd else 'annual',
+             'ytd_through': (ytd_meta.get(yr) or {}).get('ytd_through')}
         for key, cn in FIELDS:
             o[key] = d.get(cn)
         # fill issuance from the market-report appendix only where the platform
@@ -151,10 +224,13 @@ def main():
     for r in out:
         r['year_complete'] = comp[r['year']]['complete']
 
+    for yr, mm in ytd_meta.items():
+        if yr in comp:
+            comp[yr].update(mm)
     json.dump({'unit': '亿元', 'source': 'celma.org.cn', 'completeness': comp, 'rows': out},
               open(D + 'prov_panel.json', 'w'), ensure_ascii=False, separators=(',', ':'))
-    cols = (['region', 'code', 'year', 'year_complete', 'issue_source', 'quota_source',
-             'quota_verification',
+    cols = (['region', 'code', 'year', 'basis', 'ytd_through', 'year_complete',
+             'issue_source', 'quota_source', 'quota_verification',
              'quota_total', 'issue_new_total',
              'execution_pct', 'issue_refi_total', 'bal_total', 'debt_to_gdp_pct']
             + [k for k, _ in FIELDS])
@@ -168,6 +244,7 @@ def main():
               f"{(' (+' + str(c['filled']) + ' from market report)') if c['filled'] else ''}"
               f" | quota {c['with_quota']:2d}"
               f"{(' (+' + str(c['quota_sourced']) + ' from budget reports)') if c['quota_sourced'] else ''}"
+              f"{(' | YTD thru ' + c['ytd_through']) if c.get('ytd_through') else ''}"
               f" | new-bond {c['region_sum']:>10,.0f}"
               f" vs national {c['national']:>10,.0f}"
               f"  {'complete' if c['complete'] else 'PARTIAL'}")
