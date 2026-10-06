@@ -206,6 +206,73 @@
    "scope": "全省，含雄安新区及省直管县（河北无计划单列市）",
    "corroboration": "https://www.hbrd.gov.cn/system/2026/05/29/102187407.shtml 省人大财经委审查结果报告 states 「财政部下达我省2026年新增地方政府债务限额2712亿元，其中：去年底提前下达的限额1623亿元……还有1089亿元新增债务限额可以安排使用」. Reconciles: 317+215=532, 1,306+874=2,180, and the limit table adds up (24,421.60+2,712=27,133.60).",
    "note": "A separate 280 亿元 of 2026 置换存量隐性债务 quota is parked in the 2025 limit line and is outside this figure, per the table's own footnote."
+  },
+  {
+   "region": "广东省",
+   "year": 2026,
+   "general": 308.0,
+   "special": 4907.0,
+   "stage": "cumulative",
+   "as_of": "2026-07-29",
+   "verification": "direct",
+   "url": "https://www.gd.gov.cn/attachment/0/622/622511/4943745.pdf",
+   "title": "广东省人民政府关于2026年省级财政预算调整方案的报告",
+   "date": "2026-07-29",
+   "venue": "广东省第十四届人民代表大会常务委员会第二十六次会议 · 广东省财政厅",
+   "quote": "截至目前，财政部共下达我省 2026 年地方政府新增债务限额 6215 亿元，其中：广东地区 5215 亿元，包括一般债务限额 308 亿元（含外债转贷 5.41 亿元），专项债务限额 4907 亿元；深圳市 1000 亿元（深圳市实行财政计划单列，自行发债并报本级人大常委会审批，下同）。",
+   "scope": "广东地区，不含深圳市（与平台口径一致；深圳 15/985 单列见下）",
+   "note": "一般 308 includes 5.41 亿元 外债转贷. Advance batch for 广东地区 was 2,883（一般183、专项2,700）, a subset of this."
+  },
+  {
+   "region": "深圳市",
+   "year": 2026,
+   "general": 15.0,
+   "special": 985.0,
+   "stage": "cumulative",
+   "as_of": "2026-07-29",
+   "verification": "direct",
+   "url": "https://www.gd.gov.cn/attachment/0/622/622511/4943745.pdf",
+   "title": "广东省人民政府关于2026年省级财政预算调整方案的报告",
+   "date": "2026-07-29",
+   "venue": "广东省第十四届人民代表大会常务委员会第二十六次会议 · 广东省财政厅",
+   "quote": "二是新增专项债务限额 5892 亿元，其中广东地区 4907 亿元、深圳市 985 亿元。……一是新增一般债务限额 323 亿元，其中广东地区 308 亿元、深圳市 15 亿元。",
+   "scope": "深圳市（计划单列市，自行发债并报本级人大常委会审批）",
+   "note": "Stated inside Guangdong's report, which breaks the province total of 6,215 into 广东地区 5,215 and 深圳市 1,000. The same document's 2025 split matched the platform's own Shenzhen figures exactly (15/866), which is why this source is trusted for Shenzhen."
+  },
+  {
+   "region": "江苏省",
+   "year": 2026,
+   "general": 319.0,
+   "special": 2719.0,
+   "stage": "cumulative",
+   "as_of": "2026-07-30",
+   "verification": "direct",
+   "url": "https://www.jsrd.gov.cn/qwfb/cwhgb/d_23172/202609/P020260928308702849178.pdf",
+   "title": "关于提请审议《江苏省2026年地方政府债务限额及省级预算调整方案（草案）》议案的说明",
+   "date": "2026-07-30",
+   "venue": "江苏省第十四届人大常委会第二十三次会议 · 江苏省人大常委会公报 2026·5、6",
+   "quote": "经国务院同意，财政部下达我省 2026 年地方政府新增债务限额 3038 亿元，其中，新增一般债务限额 319 亿元，新增专项债务限额 2719 亿元。",
+   "scope": "全省（江苏无计划单列市）",
+   "corroboration": "The finance committee's review report in the same gazette restates 3038 and the 1,357 adjustment tranche. Advance batch of 1,681（一般190、专项1,491）from 《江苏省2025年预算执行情况与2026年预算草案》表六十四 reconciles exactly: 190+129=319, 1,491+1,228=2,719.",
+   "note": "The finance department's own 政府预决算 column has not published the adjustment documents; the full text surfaced in the 人大常委会公报."
+  },
+  {
+   "region": "浙江省",
+   "year": 2026,
+   "general": 312.0,
+   "special": 2534.0,
+   "stage": "cumulative",
+   "as_of": "2026-09-22",
+   "verification": "direct",
+   "url": "https://czt.zj.gov.cn/col/col1229887695/art/2026/art_2065de4848b74df7b23a94f1697988b8.html",
+   "pdf": "https://zjjcmspublicnew.oss-cn-hangzhou-zwynet-d01-a.internet.cloud.zj.gov.cn/cms_files/filemanager/1514430/attach/20269/a47bd9e899f5431dbda17479480bb6e1.pdf",
+   "title": "2026年浙江省政府专项债券（三十五至四十一期）信息披露文件",
+   "date": "2026-09-22",
+   "venue": "浙江省财政厅",
+   "quote": "2026 年，财政部下达浙江省新增地方政府债务限额 2846 亿元，其中：一般债务限额 312 亿元、专项债务限额 2534 亿元。",
+   "scope": "浙江省，不含宁波市（该文件债务章节标题为「五、地方政府性债务状况（不含宁波）」）",
+   "corroboration": "The same document's 2025 figure of 3,229 (不含宁波) checks out against the 含宁波 total of 3,788 less Ningbo's 559.",
+   "note": "The source PDF is a scan with no text layer, so the figures were read from rendered page images rather than extracted text. Legible and unambiguous, but a shade less certain than text extraction. Zhejiang's 2026 advance batch could not be found on any official source and is not entered."
   }
  ],
  "_validation": "Same-measure check: 新疆生产建设兵团 2025 appears in BOTH sources -- the disclosure platform publishes 新增一般债务限额 80 / 新增专项债务限额 131, and the Xinjiang finance department's 2026 budget report states the identical 80 / 131 for the XPCC. So the quota a region reports to the platform and the quota 财政部下达 in its budget report are the same figure, and the two sources can be used in one series. Second check: 深圳市 2025 appears in both sources too -- the platform publishes 15 / 866, and Guangdong's own budget-adjustment report breaks its 5,686 亿元 into 广东地区 305 / 4,500 and 深圳市 15 / 866. The Shenzhen halves match exactly, so Guangdong is entered here on the Shenzhen-excluded basis the platform uses. Third check: the Hubei and Henan documents have 2024 equivalents stating 372/1,661 and 323/1,907, and the platform publishes exactly those figures for 2024. Three independent confirmations that the two sources carry the same measure.",
@@ -215,12 +282,20 @@
    "region": "山东省",
    "year": 2026,
    "reason": "Only the 提前下达 advance batch is published (一般126 + 专项2,364 = 2,490, 山东省2025年预算执行情况与2026年预算草案, 表57, http://czt.shandong.gov.cn/art/2026/2/14/art_10575_10329198.html), and it is stated 含青岛市 — Shandong's own documents say 「财政部核定山东省（含青岛市，下同）」. The platform treats 山东省 and 青岛市 as separate issuers, so entering 2,490 would double-count Qingdao. The 不含青岛 split is not disclosed for 2026. The 2026 adjustment plan was approved on 2026-07-23 (https://www.sdrd.gov.cn/articles/ch00628/202607/a149c09e-e29f-4c62-9512-b64aa73d7e5b.shtml) but the report carrying the figures has not been posted; in 2025 it appeared about four weeks after approval, so it is overdue. Re-check czt.shandong.gov.cn/col/col10575."
+  },
+  {
+   "region": "浙江省",
+   "year": 2026,
+   "field": "提前下达 advance batch",
+   "reason": "Not found on any zj.gov.cn source. A figure of 1,937 亿元 (专项1,752) circulates on finance.sina.com.cn, yicai.com and sohu.com, but this repo does not use non-government sources, so it is recorded here as uncorroborated and is NOT entered. The cumulative figure below is sourced and is the one in use."
   }
  ],
  "_access_notes": {
   "czt.shandong.gov.cn": "Reachable over plain http:// only — its HTTPS certificate is for another host, so any fetcher that forces HTTPS fails. Article lists are embedded in the column page inside <script type=\"text/xml\"><datastore>, and PDF links point at an internal IP (172.20.232.124) that must be swapped back to the hostname.",
   "czt.hebei.gov.cn": "Returns 403 from outside mainland China; use www.hebei.gov.cn and www.hbrd.gov.cn instead.",
   "czt.henan.gov.cn": "Returns 403 from outside mainland China; the same documents are on the provincial file server xcoss.henan.gov.cn.",
-  "www.qingdao.gov.cn": "Refuses connections from outside mainland China, with no Wayback snapshot."
+  "www.qingdao.gov.cn": "Refuses connections from outside mainland China, with no Wayback snapshot.",
+  "czt.zj.gov.cn attachments": "Served from an OSS bucket that returns 403 to IPv6 clients; use IPv4 (curl -4). Newer columns render their item lists through a JS api-gateway call that does not return a listing to a plain fetch.",
+  "www.zjrd.gov.cn": "Times out entirely from outside mainland China on both IPv4 and IPv6."
  }
 }

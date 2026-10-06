@@ -822,23 +822,23 @@ function provKpis(){
   const bg=both.reduce((a,r)=>a+r.bal,0), gd=both.reduce((a,r)=>a+r.gdp,0);
   const under=d.filter(r=>r.exec!=null&&r.exec<95).sort((a,b)=>a.exec-b.exec);
   const ytd=rep.ytd_through||null;
+    const shr=i?Math.round(iq/i*100):0;
+    const execLabel = !q ? L('needs a quota to compute','无限额，无法计算')
+      : qAll ? L('all issuers','全部主体')
+      : withQ.length*2>=d.length ? L('among the issuers reporting a quota','仅限已报限额的主体')
+      : L(withQ.length+' issuers with a quota — '+shr+'% of issuance, not national',
+          withQ.length+'个已报限额主体，占发行额'+shr+'%，非全国口径');
   kpi('kpi_prov',[
     [L((ytd&&!q)?'New-debt quota (none yet)':'New-debt quota',''),'新增债务限额',q?fmtB(q/10):'–',
       (ytd&&!q)?L('not published for '+provYear+' yet','该年度尚未公布')
         :((qAll?provYear+' · '+d.length+L(' issuers','个主体')
              :provYear+' · '+withQ.length+L(' of ','/')+d.length+L(' issuers reporting','个主体已报'))
           +(rep.quota_sourced?' · '+rep.quota_sourced+L(' from budget reports','项取自预算报告'):'')),null],
+    [L('Execution',''),'执行率',q?pPct(iq/q*100):'–',execLabel,null],
     [L(ytd?'New bonds issued YTD':'New bonds issued',''),'新增债券发行',fmtB(i/10),
       (ytd?L('through ','截至 ')+ytd+' · ':'')+d.length+L(' issuers','个主体')
         +(rep.filled?' · '+rep.filled+L(' filled','项补录'):''),null],
-    [L('Execution',''),'执行率',
-      (q&&withQ.length*2>=d.length)?pPct(iq/q*100):'–',
-      !q ? L('needs a quota to compute','无限额，无法计算')
-         : withQ.length*2<d.length
-           ? withQ.length+L(' of ','/')+d.length+L(' issuers have a quota — too few to aggregate',
-                                                   '个主体已报限额，样本过少不作合计')
-           : (qAll?L('all issuers','全部主体')
-                  :L('among the issuers reporting a quota','仅限已报限额的主体')),null],
+
     [L(ytd?'Refinancing issued YTD':'Refinancing issued',''),'再融资发行',fmtB(rf/10),
       L('not in execution','不计入执行率'),null],
     [L('Debt outstanding',''),'债务余额',fmtB(bal/10),
