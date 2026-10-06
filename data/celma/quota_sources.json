@@ -9,7 +9,7 @@
   "quote": "verbatim sentence carrying the figures",
   "scope": "what the figure covers, e.g. excludes 计划单列市",
   "note": "anything a reader needs to interpret it",
-  "verification": "direct = the figure was read from the source document fetched from its official URL. indirect = the host refuses connections from outside mainland China and the document could not be opened, so the figure rests on corroboration; the note says what that is.",
+  "verification": "direct = the figure was read from the source document fetched from its official URL. indirect = the host refuses connections from outside mainland China and the document could not be opened, so the figure rests on corroboration; the note says what that is. A figure read from the MOF disclosure platform's 预决算公开 channel (celma.org.cn / governbond.org.cn) counts as direct: that platform is this dataset's own primary source, and the tables there are the region's own statutory disclosure filed under its area code.",
   "stage": "cumulative = the full amount allocated to the region so far this year (the figure to use). advance = 提前下达 only, a subset allocated the previous autumn. A year in progress may have only the advance batch published.",
   "as_of": "the date the figure is stated as of; a year in progress can still be topped up."
  },
@@ -273,6 +273,41 @@
    "scope": "浙江省，不含宁波市（该文件债务章节标题为「五、地方政府性债务状况（不含宁波）」）",
    "corroboration": "The same document's 2025 figure of 3,229 (不含宁波) checks out against the 含宁波 total of 3,788 less Ningbo's 559.",
    "note": "The source PDF is a scan with no text layer, so the figures were read from rendered page images rather than extracted text. Legible and unambiguous, but a shade less certain than text extraction. Zhejiang's 2026 advance batch could not be found on any official source and is not entered."
+  },
+  {
+   "region": "湖南省",
+   "year": 2026,
+   "general": 331.0,
+   "special": 1487.0,
+   "stage": "cumulative",
+   "as_of": "2026-07-31",
+   "verification": "direct",
+   "url": "https://czt.hunan.gov.cn/czt/ztzl/hnczysgk/ysjsbg/202608/t20260812_34043804.html",
+   "title": "关于2026年省级预算调整方案（草案）的报告",
+   "date": "2026-07-31",
+   "venue": "湖南省第十四届人大常委会第二十四次会议 · 湖南省财政厅",
+   "quote": "经积极争取，财政部分两批下达我省全年新增债务限额1818亿元……包括：一般债务331亿元，同口径增加3亿元；专项债务1487亿元，增加22亿元，其中用于项目建设782亿元，补充政府性基金财力509亿元，化解拖欠企业账款196亿元。",
+   "scope": "全省（湖南无计划单列市）",
+   "corroboration": "Two batches reconcile: 1,094（一般215、专项879）in the February budget plus 724 in this adjustment equals 1,818, and 215+116=331.",
+   "note": "The report notes the comparable-basis increase is only 25 亿元 once the prior year's one-off central support for post-disaster reconstruction in Zixing is stripped out."
+  },
+  {
+   "region": "安徽省",
+   "year": 2026,
+   "general": 171.0,
+   "special": 1762.0,
+   "stage": "cumulative",
+   "as_of": "2026-07-24",
+   "verification": "direct",
+   "url": "https://www.celma.org.cn/yjsxxgk/69924.jhtml",
+   "pdf": "https://www.governbond.org.cn/uploadFiles/34/attachFiles/202607/edcbc056-3de9-44e8-b8de-464f89390acb.pdf",
+   "title": "表1-6 安徽省2026年地方政府债务限额调整情况表",
+   "date": "2026-07-31",
+   "venue": "安徽省财政厅，经省十四届人大常委会第二十五次会议（2026-07-24）批准后公开",
+   "quote": "二、2026年新增地方政府债务限额 1,933.00；其中：一般债务限额 171.00；专项债务限额 1,762.00。附：提前下达的2026年新增地方政府债务限额 1,158.00；其中：一般债务限额 102.00；专项债务限额 1,056.00。",
+   "scope": "本地区 = 本级 + 下级，即全省（安徽无计划单列市）",
+   "corroboration": "Stock limits tie: 22,701.59 + 1,933.00 = 24,634.59, with 5,102.88+171=5,273.88 and 17,598.71+1,762=19,360.71. The advance batch of 1,158 also appears in 表1-5 published 2026-02-24 (https://www.celma.org.cn/yjsxxgk/68059.jhtml).",
+   "note": "Anhui's own domains return 403 to requests from outside mainland China, so this comes from the MOF disclosure platform's 预决算公开 channel — the same platform that is this dataset's primary source, carrying Anhui's own statutory table filed under its area code."
   }
  ],
  "_validation": "Same-measure check: 新疆生产建设兵团 2025 appears in BOTH sources -- the disclosure platform publishes 新增一般债务限额 80 / 新增专项债务限额 131, and the Xinjiang finance department's 2026 budget report states the identical 80 / 131 for the XPCC. So the quota a region reports to the platform and the quota 财政部下达 in its budget report are the same figure, and the two sources can be used in one series. Second check: 深圳市 2025 appears in both sources too -- the platform publishes 15 / 866, and Guangdong's own budget-adjustment report breaks its 5,686 亿元 into 广东地区 305 / 4,500 and 深圳市 15 / 866. The Shenzhen halves match exactly, so Guangdong is entered here on the Shenzhen-excluded basis the platform uses. Third check: the Hubei and Henan documents have 2024 equivalents stating 372/1,661 and 323/1,907, and the platform publishes exactly those figures for 2024. Three independent confirmations that the two sources carry the same measure.",
@@ -288,6 +323,11 @@
    "year": 2026,
    "field": "提前下达 advance batch",
    "reason": "Not found on any zj.gov.cn source. A figure of 1,937 亿元 (专项1,752) circulates on finance.sina.com.cn, yicai.com and sohu.com, but this repo does not use non-government sources, so it is recorded here as uncorroborated and is NOT entered. The cumulative figure below is sourced and is the one in use."
+  },
+  {
+   "region": "湖北省",
+   "year": 2026,
+   "reason": "Only the 提前下达 advance batch is published: 1,285（一般252、专项1,033）, from 《关于湖北省2025年预算执行情况和2026年预算草案的报告》 (https://www.hppc.gov.cn/upload/hppc/2026/07/02/202607020928421515.pdf) for the total, and 表1-5《湖北省2026年地方政府债务限额提前下达情况表》 (https://www.celma.org.cn/yjsxxgk/68970.jhtml) for the split. Not entered because every other 2026 entry is the cumulative figure and mixing the two would make execution rates incomparable. The 2026 adjustment was approved 2026-09-24, so the statutory 表1-6 is due about 2026-10-14; the 人大财经委 review report of 2026-09-21 gives only cumulative stock limits, not a 新增 figure. Re-check https://www.celma.org.cn/yjsxxgk/ and czt.hubei.gov.cn after mid-October. Note: 25,530.7 - 23,396.69 = 2,134 is an upper bound, not the 新增 quota, because the limit increase also carries any 2026 置换 tranche."
   }
  ],
  "_access_notes": {
@@ -296,6 +336,7 @@
   "czt.henan.gov.cn": "Returns 403 from outside mainland China; the same documents are on the provincial file server xcoss.henan.gov.cn.",
   "www.qingdao.gov.cn": "Refuses connections from outside mainland China, with no Wayback snapshot.",
   "czt.zj.gov.cn attachments": "Served from an OSS bucket that returns 403 to IPv6 clients; use IPv4 (curl -4). Newer columns render their item lists through a JS api-gateway call that does not return a listing to a plain fetch.",
-  "www.zjrd.gov.cn": "Times out entirely from outside mainland China on both IPv4 and IPv6."
+  "www.zjrd.gov.cn": "Times out entirely from outside mainland China on both IPv4 and IPv6.",
+  "czt.ah.gov.cn and other ah.gov.cn hosts": "Return 403 with reason:GeoBL from outside mainland China, including via proxies. Anhui's statutory limit tables are reachable on the MOF platform instead."
  }
 }
