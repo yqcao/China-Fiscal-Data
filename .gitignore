@@ -14,3 +14,6 @@ __pycache__/
 # data/prov-reports/text/ is the committed record. Re-fetch with
 # scripts/fetch_prov_reports.py.
 data/prov-reports/raw/
+
+# celma scan cache: article pages and PDFs, regenerable by fetch_celma_limits.py
+data/celma/_cache/

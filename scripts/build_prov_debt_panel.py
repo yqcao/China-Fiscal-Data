@@ -132,6 +132,39 @@ def prior_same_period(year, months):
     return dict(out)
 
 
+ADCODE = {'11':'北京市','12':'天津市','13':'河北省','14':'山西省','15':'内蒙古自治区','21':'辽宁省',
+ '2102':'大连市','22':'吉林省','23':'黑龙江省','31':'上海市','32':'江苏省','33':'浙江省','3302':'宁波市',
+ '34':'安徽省','35':'福建省','3502':'厦门市','36':'江西省','37':'山东省','3702':'青岛市','41':'河南省',
+ '42':'湖北省','43':'湖南省','44':'广东省','4403':'深圳市','45':'广西壮族自治区','46':'海南省','50':'重庆市',
+ '51':'四川省','52':'贵州省','53':'云南省','54':'西藏自治区','61':'陕西省','62':'甘肃省','63':'青海省',
+ '64':'宁夏回族自治区','65':'新疆维吾尔自治区','66':'新疆生产建设兵团'}
+
+
+def limit_tables(year):
+    """
+    Quota from the statutory 表1-6 filings scraped by fetch_celma_limits.py.
+
+    These are the primary source: each region files the table with the MOF
+    platform after its people's congress approves the budget adjustment. A region
+    can file more than once in a year as further tranches are allocated, so the
+    LATEST cumulative filing wins. Advance-batch filings (表1-5) are ignored --
+    mixing an advance figure in with cumulative ones would make execution rates
+    incomparable.
+    """
+    f = D + f'limit_tables_{year}.json'
+    if not os.path.exists(f):
+        return {}
+    best = {}
+    for t in json.load(open(f, encoding='utf-8')).get('tables', []):
+        if t.get('stage') != 'cumulative':
+            continue
+        reg = ADCODE.get(t['adcode']) or t.get('region') or t['adcode']
+        prev = best.get(reg)
+        if prev is None or (t.get('published') or '') > (prev.get('published') or ''):
+            best[reg] = t
+    return best
+
+
 def quota_overrides():
     """2025+ quota taken from each region's own budget documents, for issuers the
     platform has not published. Never overrides a platform figure."""
@@ -168,6 +201,7 @@ def main():
     rows = json.load(open(D + 'annual_by_region.json'))
     appx = appendix_issuance()
     qov = quota_overrides()
+    ltab = {y: limit_tables(y) for y in (2025, 2026)}
     annual_years = {r['year'] for r in rows
                     if r['zb_name'] in ('新增一般债券发行额', '新增专项债券发行额') and r['amount']}
     ytd, ytd_meta = ytd_from_monthly(annual_years)
@@ -214,12 +248,26 @@ def main():
         # quota from the region's own budget document, only where the platform has none
         o['quota_source'] = 'platform' if (o['quota_general'] or o['quota_special']) else None
         ov = qov.get(reg, {}).get(yr)
-        if ov and not o['quota_source']:
+        lt = (ltab.get(yr) or {}).get(reg)
+        if lt and not o['quota_source']:
+            # the statutory filing is the primary source
+            o['quota_general'] = lt.get('general')
+            o['quota_special'] = lt.get('special')
+            o['quota_source'] = 'limit-table'
+            o['quota_url'] = lt.get('article')
+            o['quota_verification'] = 'direct'
+            o['quota_as_of'] = lt.get('published')
+            if ov:  # both sources exist -- they must agree
+                dg = abs((ov.get('general') or 0) - (lt.get('general') or 0))
+                ds = abs((ov.get('special') or 0) - (lt.get('special') or 0))
+                o['quota_crosscheck'] = 'agree' if dg < 0.5 and ds < 0.5 else 'DISAGREE'
+        elif ov and not o['quota_source']:
             o['quota_general'] = ov.get('general')
             o['quota_special'] = ov.get('special')
             o['quota_source'] = 'budget-report'
             o['quota_url'] = ov.get('url')
             o['quota_verification'] = ov.get('verification', 'direct')
+            o['quota_as_of'] = ov.get('as_of')
         q = (o['quota_general'] or 0) + (o['quota_special'] or 0)
         i = (o['issue_new_general'] or 0) + (o['issue_new_special'] or 0)
         o['quota_total'] = q or None
@@ -248,7 +296,10 @@ def main():
                     'with_issuance': sum(1 for r in yrows if r['issue_new_total']),
                     'with_quota': sum(1 for r in yrows if r['quota_total']),
                     'filled': sum(1 for r in yrows if r.get('issue_source') == 'market-report'),
-                    'quota_sourced': sum(1 for r in yrows if r.get('quota_source') == 'budget-report')}
+                    'quota_sourced': sum(1 for r in yrows
+                                         if r.get('quota_source') in ('budget-report', 'limit-table')),
+                    'quota_disagree': [r['region'] for r in yrows
+                                       if r.get('quota_crosscheck') == 'DISAGREE']}
     for r in out:
         r['year_complete'] = comp[r['year']]['complete']
 
@@ -259,7 +310,7 @@ def main():
               open(D + 'prov_panel.json', 'w'), ensure_ascii=False, separators=(',', ':'))
     cols = (['region', 'code', 'year', 'basis', 'ytd_through', 'prior_same_new', 'yoy_pct',
              'year_complete',
-             'issue_source', 'quota_source', 'quota_verification',
+             'issue_source', 'quota_source', 'quota_verification', 'quota_as_of', 'quota_crosscheck',
              'quota_total', 'issue_new_total',
              'execution_pct', 'issue_refi_total', 'bal_total', 'debt_to_gdp_pct']
             + [k for k, _ in FIELDS])
