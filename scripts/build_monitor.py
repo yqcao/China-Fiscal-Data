@@ -61,7 +61,8 @@ _prow = [{'cn': r['region'], 'en': _PEN.get(r['region'], r['region']),
           'rep': ((r['repay_general'] or 0) + (r['repay_special'] or 0)) or None,
           'int': ((r['interest_general'] or 0) + (r['interest_special'] or 0)) or None,
           'src': r.get('issue_source', 'platform'),
-          'qsrc': r.get('quota_source'), 'qurl': r.get('quota_url')}
+          'qsrc': r.get('quota_source'), 'qurl': r.get('quota_url'),
+          'yoy': r.get('yoy_pct'), 'prior': r.get('prior_same_new')}
          for r in _pp['rows']
          if any(r.get(k) for k in ('quota_total', 'issue_new_total', 'bal_total'))]
 _pyrs = sorted({r['year'] for r in _prow})
@@ -256,6 +257,7 @@ footer{margin-top:1.6rem;font-size:.78rem;color:var(--mut)}footer a{color:var(--
         <button data-v="exec" class="on" data-l="Execution %|执行率 %"></button>
         <button data-v="quota" data-l="Quota|限额"></button>
         <button data-v="dgdp" data-l="Debt / GDP|债务率"></button>
+        <button data-v="yoy" id="btn_yoy" data-l="vs last year|同比" hidden></button>
       </span>
     </div>
     <div class="kpis" id="kpi_prov"></div>
@@ -702,26 +704,31 @@ const PCOMPLETE = PROV.years.filter(y=>PROV.complete[y]);
 let provYear = PCOMPLETE.length ? PCOMPLETE[PCOMPLETE.length-1] : PROV.years[PROV.years.length-1];
 let provMetric = 'exec';
 const pRows = y => PROV.rows.filter(r=>r.year===y);
+const ytdLabel = () => {const t=(PROV.report[provYear]||{}).ytd_through;
+  return t?(lang==='en'?MON[+t.slice(5)]:(+t.slice(5))+'月'):null;};
 const pName = r => L(r.en, r.cn);
 const pPct = v => v==null ? '\u2013' : v.toFixed(1)+'%';
 const PMETRIC = {
   exec:{en:'Execution rate, % of new-debt quota issued', zh:'执行率：新增限额已发行比例', div:true},
   quota:{en:'New-debt quota allocated', zh:'下达新增债务限额'},
   dgdp:{en:'Debt outstanding / provincial GDP', zh:'债务余额占本省GDP比重', unit:'%'},
-  issue:{en:'New-bond issuance', zh:'新增债券发行额'}};
+  issue:{en:'New-bond issuance', zh:'新增债券发行额'},
+  yoy:{en:'New-bond issuance vs the same months of the previous year',
+       zh:'新增债券发行额同比（与上年同期对比）', unit:'%', div:true}};
 
 function pMapData(y){
   const by={};
   pRows(y).forEach(r=>{
     const key=r.parent||r.cn;
     if(!PROV.geo.features.some(f=>f.properties.name===key))return;
-    const o=by[key]||(by[key]={cn:key,quota:0,issue:0,bal:0,gdp:0,parts:[]});
-    o.quota+=r.quota||0; o.issue+=r.issue||0; o.bal+=r.bal||0;
+    const o=by[key]||(by[key]={cn:key,quota:0,issue:0,bal:0,gdp:0,prior:0,parts:[]});
+    o.quota+=r.quota||0; o.issue+=r.issue||0; o.bal+=r.bal||0; o.prior+=r.prior||0;
     if(!r.parent)o.gdp=r.gdp||0; else o.parts.push(pName(r));
   });
   return Object.values(by).map(o=>({...o,
     exec:o.quota?+(o.issue/o.quota*100).toFixed(1):null,
-    dgdp:o.gdp?+(o.bal/o.gdp*100).toFixed(1):null}));
+    dgdp:o.gdp?+(o.bal/o.gdp*100).toFixed(1):null,
+    yoy:o.prior?+(o.issue/o.prior*100).toFixed(1):null}));
 }
 
 function drawProvMap(){
@@ -738,11 +745,17 @@ function drawProvMap(){
   /* Execution is bimodal: most provinces sit within a point of 100 and a few fall
      far short, so a continuous ramp wide enough to hold the laggards leaves
      everyone else an identical neutral. Explicit bins keep the real thresholds. */
-  const BINS=[{max:50,label:L('under 50%','低于50%'),color:PDIV[0]},
-              {min:50,max:80,label:'50\u201380%',color:PDIV[1]},
-              {min:80,max:95,label:'80\u201395%',color:PDIV[2]},
-              {min:95,max:105,label:L('95\u2013105% (full)','95\u2013105%（用满）'),color:PDIV[3]},
-              {min:105,label:L('over 105%','超过105%'),color:PDIV[4]}];
+  const BINS = key==='yoy'
+    ? [{max:60,label:L('under 60% of last year','不足上年60%'),color:PDIV[0]},
+       {min:60,max:85,label:'60\u201385%',color:PDIV[1]},
+       {min:85,max:100,label:'85\u2013100%',color:PDIV[2]},
+       {min:100,max:120,label:L('100\u2013120% (above last year)','100\u2013120%（高于上年）'),color:PDIV[3]},
+       {min:120,label:L('over 120%','超过120%'),color:PDIV[4]}]
+    : [{max:50,label:L('under 50%','低于50%'),color:PDIV[0]},
+       {min:50,max:80,label:'50\u201380%',color:PDIV[1]},
+       {min:80,max:95,label:'80\u201395%',color:PDIV[2]},
+       {min:95,max:105,label:L('95\u2013105% (full)','95\u2013105%（用满）'),color:PDIV[3]},
+       {min:105,label:L('over 105%','超过105%'),color:PDIV[4]}];
   charts.c_provmap.setOption({backgroundColor:'transparent',
     tooltip:{trigger:'item',formatter:p=>{const o=d.find(x=>x.cn===p.name);
       if(!o)return p.name+'<br>'+L('no data','无数据');
@@ -750,6 +763,7 @@ function drawProvMap(){
         L('Quota','限额')+' '+fmtB(o.quota/10)+'<br>'+
         L('Issued','发行')+' '+fmtB(o.issue/10)+'<br>'+
         L('Execution','执行率')+' '+pPct(o.exec)+'<br>'+
+        (o.yoy!=null?L('vs same months last year','同比')+' '+pPct(o.yoy)+'<br>':'')+
         L('Debt/GDP','债务率')+' '+pPct(o.dgdp)+
         (o.parts.length?'<br><span style="opacity:.7">'+L('incl. ','含 ')+o.parts.join('、')+'</span>':'');}},
     visualMap: M.div
@@ -765,7 +779,8 @@ function drawProvMap(){
                  areaColor:dark?'#23252b':'#f0f0f2'},
       emphasis:{label:{show:false},itemStyle:{borderColor:PACC,borderWidth:1.4}},
       select:{disabled:true}}]},true);
-  document.getElementById('h_provmap').textContent=L(M.en,M.zh);
+  document.getElementById('h_provmap').textContent=L(M.en,M.zh)+
+    (key==='yoy'&&ytdLabel()?L(' · Jan\u2013'+ytdLabel()+', both years',' · 两年均为1\u2013'+ytdLabel()):'');
 }
 
 function drawProvBar(){
@@ -913,7 +928,16 @@ function provTable(){
     provTable();});
 }
 
+function provControls(){
+  const d=pRows(provYear), has=d.some(r=>r.yoy!=null);
+  const b=document.getElementById('btn_yoy');
+  b.hidden=!has;
+  if(!has&&provMetric==='yoy'){provMetric='exec';
+    document.querySelectorAll('#provmetric button').forEach(x=>x.classList.remove('on'));
+    document.querySelector('#provmetric button[data-v="exec"]').classList.add('on');}
+}
 function drawProv(){
+  provControls();
   [provKpis,drawProvMap,drawProvBar,drawProvScatter,provTable].forEach(fn=>{
     try{fn();}catch(e){console.error(fn.name,e);}});
 }

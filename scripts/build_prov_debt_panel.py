@@ -104,8 +104,32 @@ def ytd_from_monthly(have_years):
         out[yr] = {reg: (dict(d), code[reg]) for reg, d in cell.items()}
         meta[yr] = {'ytd_through': f'{good[-1][:4]}-{good[-1][4:]}',
                     'months': len(good),
-                    'dropped': [f'{p[:4]}-{p[4:]}' for p in months if p not in good]}
+                    'dropped': [f'{p[:4]}-{p[4:]}' for p in months if p not in good],
+                    'prior': prior_same_period(yr, {int(p[4:]) for p in good})}
     return out, meta
+
+
+def prior_same_period(year, months):
+    """
+    Prior-year new-bond issuance over the SAME months, by region.
+
+    A year-to-date figure is only comparable to the matching slice of the year
+    before, so this reads the month-level appendix parse for year-1 and sums the
+    same months. The appendix is used rather than the platform's monthly series
+    because that series is missing January 2025, which would silently understate
+    the base.
+    """
+    import glob
+    f = BASE + f'data/mof-research-reports/prov_bonds_{year - 1}.json'
+    if not os.path.exists(f):
+        return {}
+    d = json.load(open(f, encoding='utf-8'))
+    cn = {r['region']: r['cn'] for r in d['by_region']}
+    out = collections.defaultdict(float)
+    for r in d.get('by_region_month', []):
+        if r['month'] in months:
+            out[cn.get(r['region'], r['region'])] += r['new']
+    return dict(out)
 
 
 def quota_overrides():
@@ -205,6 +229,10 @@ def main():
         o['bal_total'] = ((o['bal_general'] or 0) + (o['bal_special'] or 0)) or None
         o['debt_to_gdp_pct'] = (round(o['bal_total'] / o['gdp'] * 100, 1)
                                 if o['bal_total'] and o['gdp'] else None)
+        # like-for-like year on year: same months of the previous year
+        prior = (ytd_meta.get(yr) or {}).get('prior', {}).get(reg)
+        o['prior_same_new'] = round(prior, 2) if prior else None
+        o['yoy_pct'] = (round(i / prior * 100, 1) if prior and i else None)
         out.append(o)
 
     # a year is complete when the regions reproduce the national issuance totals
@@ -226,10 +254,11 @@ def main():
 
     for yr, mm in ytd_meta.items():
         if yr in comp:
-            comp[yr].update(mm)
+            comp[yr].update({k: v for k, v in mm.items() if k != 'prior'})
     json.dump({'unit': '亿元', 'source': 'celma.org.cn', 'completeness': comp, 'rows': out},
               open(D + 'prov_panel.json', 'w'), ensure_ascii=False, separators=(',', ':'))
-    cols = (['region', 'code', 'year', 'basis', 'ytd_through', 'year_complete',
+    cols = (['region', 'code', 'year', 'basis', 'ytd_through', 'prior_same_new', 'yoy_pct',
+             'year_complete',
              'issue_source', 'quota_source', 'quota_verification',
              'quota_total', 'issue_new_total',
              'execution_pct', 'issue_refi_total', 'bal_total', 'debt_to_gdp_pct']
