@@ -98,6 +98,18 @@ def parse_limits(text, year):
         out['total'] = after(r'年新增地方政府债务限额', head)
         out['general'] = after(r'一般债务限额', head)
         out['special'] = after(r'专项债务限额', head)
+        # A 表1-6 filed before any second tranche states 新增 == 提前下达. The figure
+        # is real, but it is the advance batch wearing the year's label and will
+        # rise, so mark it rather than let it read as the full-year allocation.
+        adv = None
+        ma = re.search(r'附[：:]\s*提前下达的\s*%d\s*年新增地方政府债务限额' % year, flat)
+        if ma:
+            seg = flat[ma.end():ma.end() + 160]
+            n = re.search(NUM, seg)
+            adv = float(n.group(0).replace(',', '')) if n else None
+        out['advance_total'] = adv
+        if adv is not None and out['total'] is not None and abs(adv - out['total']) < 0.5:
+            out['stage'] = 'advance-only'
     else:
         # 表1-5: only the advance batch exists
         m = re.search(r'提前下达的\s*%d\s*年(?:地方政府债务新增限额|新增地方政府债务限额)' % year, flat)
@@ -111,6 +123,15 @@ def parse_limits(text, year):
         out['general'] = after(r'一般债务限额', head)
         out['special'] = after(r'专项债务限额', head)
     if out.get('general') is None or out.get('special') is None:
+        return None
+    # The layout varies between filings, so guard against a mis-read: the two
+    # components must add to the total the table itself states, and a quota of
+    # zero is never meaningful. Without this a garbled row (e.g. Yunnan parsed as
+    # 2.2 / 2.2) would pass straight through.
+    tot = out.get('total')
+    if tot is None or out['general'] <= 0 or out['special'] <= 0:
+        return None
+    if abs((out['general'] + out['special']) - tot) > 1.0:
         return None
     return out
 
@@ -133,6 +154,8 @@ def main(year=2026, first=None, last=None):
             continue
         txt = subprocess.run(['pdftotext', '-layout', '-', '-'], input=pdf,
                              capture_output=True).stdout.decode('utf-8', 'replace')
+        if not re.search(r'%d\s*年地方政府债务(?:新增)?限额' % year, txt):
+            continue
         got = parse_limits(txt, year)
         if not got:
             continue
@@ -145,10 +168,22 @@ def main(year=2026, first=None, last=None):
               f"gen {got['general']:>9,.2f}  spec {got['special']:>10,.2f}  (id {i})")
         if scanned % 200 == 0:
             print(f'   … scanned {scanned}, found {len(found)}')
-    json.dump({'year': year, 'unit': '亿元', 'scanned': [first, last],
+    # merge with whatever earlier ranges already found, keyed by article
+    path = OUT + f'limit_tables_{year}.json'
+    prev, ranges = [], []
+    if os.path.exists(path):
+        old = json.load(open(path, encoding='utf-8'))
+        prev = old.get('tables', [])
+        ranges = old.get('ranges') or ([old['scanned']] if old.get('scanned') else [])
+    by_art = {t['article']: t for t in prev}
+    by_art.update({t['article']: t for t in found})
+    merged = sorted(by_art.values(), key=lambda t: (t['adcode'], t.get('published', '')))
+    ranges = sorted(set(tuple(r) for r in ranges) | {(first, last)})
+    json.dump({'year': year, 'unit': '亿元', 'ranges': [list(r) for r in ranges],
                'source': 'celma.org.cn 预决算公开 (MOF disclosure platform)',
-               'tables': found},
-              open(OUT + f'limit_tables_{year}.json', 'w'), ensure_ascii=False, indent=1)
+               'tables': merged},
+              open(path, 'w'), ensure_ascii=False, indent=1)
+    found = merged
     cum = [t for t in found if t['stage'] == 'cumulative']
     print(f'\n  limit_tables_{year}.json: {len(found)} tables '
           f'({len(cum)} cumulative) across {len({t["adcode"] for t in found})} regions')

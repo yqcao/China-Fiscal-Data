@@ -319,15 +319,17 @@
    "reason": "Only the 提前下达 advance batch is published (一般126 + 专项2,364 = 2,490, 山东省2025年预算执行情况与2026年预算草案, 表57, http://czt.shandong.gov.cn/art/2026/2/14/art_10575_10329198.html), and it is stated 含青岛市 — Shandong's own documents say 「财政部核定山东省（含青岛市，下同）」. The platform treats 山东省 and 青岛市 as separate issuers, so entering 2,490 would double-count Qingdao. The 不含青岛 split is not disclosed for 2026. The 2026 adjustment plan was approved on 2026-07-23 (https://www.sdrd.gov.cn/articles/ch00628/202607/a149c09e-e29f-4c62-9512-b64aa73d7e5b.shtml) but the report carrying the figures has not been posted; in 2025 it appeared about four weeks after approval, so it is overdue. Re-check czt.shandong.gov.cn/col/col10575."
   },
   {
+   "region": "湖北省",
+   "year": 2026,
+   "status": "RESOLVED 2026-10-14",
+   "reason": "Hubei filed its 表1-6 on 2026-10-10, within days of the predicted date, and fetch_celma_limits.py now picks it up: 新增一般 422 + 专项 1,712 = 2,134. That matches the upper bound derived earlier from the change in its stock limits (25,530.7 - 23,396.69 = 2,134.01), so in Hubei's case the limit increase carried no separate 置换 tranche."
+  },
+  {
    "region": "浙江省",
    "year": 2026,
    "field": "提前下达 advance batch",
-   "reason": "Not found on any zj.gov.cn source. A figure of 1,937 亿元 (专项1,752) circulates on finance.sina.com.cn, yicai.com and sohu.com, but this repo does not use non-government sources, so it is recorded here as uncorroborated and is NOT entered. The cumulative figure below is sourced and is the one in use."
-  },
-  {
-   "region": "湖北省",
-   "year": 2026,
-   "reason": "Only the 提前下达 advance batch is published: 1,285（一般252、专项1,033）, from 《关于湖北省2025年预算执行情况和2026年预算草案的报告》 (https://www.hppc.gov.cn/upload/hppc/2026/07/02/202607020928421515.pdf) for the total, and 表1-5《湖北省2026年地方政府债务限额提前下达情况表》 (https://www.celma.org.cn/yjsxxgk/68970.jhtml) for the split. Not entered because every other 2026 entry is the cumulative figure and mixing the two would make execution rates incomparable. The 2026 adjustment was approved 2026-09-24, so the statutory 表1-6 is due about 2026-10-14; the 人大财经委 review report of 2026-09-21 gives only cumulative stock limits, not a 新增 figure. Re-check https://www.celma.org.cn/yjsxxgk/ and czt.hubei.gov.cn after mid-October. Note: 25,530.7 - 23,396.69 = 2,134 is an upper bound, not the 新增 quota, because the limit increase also carries any 2026 置换 tranche."
+   "status": "RESOLVED 2026-10-14",
+   "reason": "The 1,937 亿元 figure that circulated only on news sites is confirmed by Zhejiang's own 表1-5 filed 2026-02-06 on the MOF platform: 一般 185 + 专项 1,752 = 1,937. Recorded in limit_tables_2026.json. The cumulative 2,846 remains the figure in use."
   }
  ],
  "_access_notes": {

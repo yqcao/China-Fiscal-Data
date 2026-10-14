@@ -216,5 +216,14 @@
 "url": "https://www.stats.gov.cn/sj/zxfb/202609/t20260909_1965263.html",
 "yoy": 0.8,
 "mom": 0.4
+},
+{
+"period": "2026-09",
+"year": 2026,
+"month": 9,
+"title": "2026年9月份居民消费价格同比上涨0.9%",
+"url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261014_1965477.html",
+"yoy": 0.9,
+"mom": 0.2
 }
 ]
