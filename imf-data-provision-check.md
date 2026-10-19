@@ -61,9 +61,85 @@ Decision No. 17692-(24/33), 1 April 2024, expanded Annex A from 12 items to 27. 
 
 **Item 13 is the live question.** A total general-government debt stock became a mandatory provision item with first reporting period 2025 — precisely the aggregate China does not publish (see B-10). Whether China has provided it privately to the Fund cannot be determined from public sources.
 
-**A structural gap in the monitoring.** CR 26/44's Table 3 has 16 rows: the 12 original Annex A items (item 4 expanding to three rows) plus international investment position and exchange rates. It therefore tracks **only items 1–12**. Items 13–15 appear nowhere in it, and I found no IMF statement of how compliance with them is monitored instead. Anyone checking against the *current* obligation set cannot rely on the Article IV table alone.
+**A structural gap in the monitoring.** CR 26/44's Table 3 has 16 rows: the 12 original Annex A items (item 4 expanding to three rows) plus international investment position and exchange rates. It therefore tracks **only items 1–12**. Items 13–15 appear nowhere in the version printed in CR 26/44. **The 2026 guidance note resolves this** (§1.4.5): the table has since been extended to carry item 13's headline and item 15, while item 14 and item 13's decompositions are tracked on an internal platform still under development. Anyone checking against the *current* obligation set still cannot rely on the published Article IV table alone.
 
 **What the Board declined to require**, from the 2024 staff report footnote 25: staff proposed mandatory provision of aggregated debt and profit/loss data on **non-financial public corporations**, and proposed including **general-government-guaranteed debt** in the mandatory perimeter. Directors raised concerns on both and neither was adopted. **LGFVs therefore remain outside the mandatory perimeter**, which is why the Fund's LGFV criticism cannot be a compliance finding.
+
+
+### 1.4 The 2026 Operational Guidance Note — the current operational standard
+
+**Citation.** *Data Provision to the Fund for Surveillance Purposes — Operational Guidance Note*, IMF Policy Paper No. 2026/001, **16 January 2026**, 67 pages. Its ¶2 states: *"This note supersedes the 2013 operational guidance note on data provision to the Fund for surveillance purposes."* Note the IMF's own typo: the landing page, PDF metadata and URL slug all read "Purposed," while the document header reads "Purposes."
+
+- Landing page: [`[GN2026]`](https://www.imf.org/en/publications/policy-papers/issues/2026/01/16/data-provision-to-the-fund-for-surveillance-purposed-operational-guidance-note-573266)
+- Full text, **reachable by plain request, tables rendered as HTML**: [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml)
+
+This note did not exist when the first pass of this check was written, and checking against it changes four things below.
+
+#### 1.4.1 Item 4 now has published periodicity and timeliness understandings — and China meets all three
+
+Appendix VII Table 1 publishes, for the first time in an operational Fund document, the general understandings governing the pre-2024 Annex A items. The fiscal row reads, verbatim:
+
+> **Frequency:** *"Quarterly for central government. Annually for general government and debt stocks"*
+> **Time lag:** *"Three months for central government. Three quarters for general government and debt stocks."*
+> **Methodology:** *"Government Finance Statistics Manual 2014 and Quarterly Government Finance Statistics-Guide for Compilers and Users."*
+
+Note what this corrects. Central-government **flows** are quarterly on a three-month lag. Central-government **debt stocks** are annual on a three-quarter lag — they group with general government, not with central-government flows. An earlier reading that attached a two-quarter lag to central government was taking a figure that actually belongs to the dissemination benchmark columns, not to the obligation.
+
+| # | Item 4 element | Understanding | China provides (CR 26/44 Table 3) | Lag achieved | Verdict | Verify |
+|---|---|---|---|---|---|---|
+| A-11 | Central government flows | Quarterly, 3-month lag | **Monthly**; Nov 2025 observation received Dec 2025 | **31 days** vs ~91 allowed | **Exceeds** on both frequency and lag | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) App. VII Tbl 1 |
+| A-12 | General government flows | Annual, 3-quarter lag | Annual; 2024 observation received September 2025 | **273 days** vs ~273 allowed | **Meets, exactly at the limit** | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) App. VII Tbl 1 |
+| A-13 | Central government and CG-guaranteed debt stocks | Annual, 3-quarter lag | **Quarterly**; 2025Q3 observation received Dec 2025 | **92 days** vs ~273 allowed | **Exceeds** on both | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) App. VII Tbl 1 |
+
+**A-12 deserves a flag.** China's general-government provision lands on the allowance almost to the day. There is no margin, so any slippage becomes a breach rather than a near miss. The guidance note is explicit that *"the 'late provision' of information is considered a category of nonprovision of information"* (¶24).
+
+#### 1.4.2 Items 13 to 15, operationalised
+
+Appendix VII Table 2 unpacks the three Annex A lines into eight reporting lines, all annual. Item 13's headline carries a three-quarter lag. Items 14 and 15 carry **three quarters for general government and two quarters for central government**.
+
+The 80% coverage threshold is defined precisely: the denominator is total gross debt at the relevant level of government **excluding guaranteed debt**, measured separately for central and general government, tested **each reporting year**. The uncovered remainder is not a free pass — the member must still state what instrument types or which issuing government units it consists of.
+
+| # | Requirement | China's position | Verdict | Verify |
+|---|---|---|---|---|
+| A-14 | Item 13 headline — total general government debt stock, annual, 3-quarter lag, first reporting period **2025** | Provision is not public. China publishes no general-government debt aggregate (see B-4) | **Could not verify** | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) App. VII Tbl 2 |
+| A-15 | Capacity defence available even for a first reporting period | Table 2 footnote: first reporting applies *"except when capacity limitations prevent them from doing so. In these circumstances, members would be expected to improve their statistical reporting systems over time."* | Escape valve exists | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) App. VII Tbl 2 fn |
+| A-16 | Central-government-first ramp permitted where capacity constrains | Footnote 2: members able to report only at central level *"would be expected to expand capacity to cover the general government over time"* | Escape valve exists | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) App. VII Tbl 2 fn 2 |
+| A-17 | Country-specific understandings may replace the general ones | ¶30: specific understandings may offer *"longer lags or less frequent provision … so long as the frequency and lag are still sufficient"*; written register with SPR, STA and LEG; existing ones to be documented by **end-2026** | Whether China has any is **not public** | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) ¶30 |
+
+**A-15 to A-17 matter for interpretation.** Two distinct escape valves exist: the capacity defence, which means no breach at all, and a negotiated specific understanding, which changes what is owed. Neither is published per country, so no outside observer can know China's true benchmark with certainty.
+
+#### 1.4.3 LGFVs: the note is silent, which settles the point
+
+A full-text search of the 67-page note returns **zero** occurrences of "public corporation," "nonfinancial public," "state-owned," "SOE," "public sector debt" or "financing vehicle." The mandatory perimeter is stated three times as general government per the 2004 Decision and nothing wider.
+
+The only adjacent language sits in the **data adequacy questionnaire**, not the obligation: *"Is the coverage of government operations and debt statistics sufficiently comprehensive for the team's analysis … including risks from quasi-fiscal activities?"* That is regime C again.
+
+One further provision reinforces this. ¶26: *"Since the obligation to provide data lies with the member, **staff should not be the source of the data**; staff may assist the authorities to estimate required data only when capacity constraints prevent the member from fulfilling its obligation."* The Fund's augmented aggregates, built from WIND and Zero2IPO, are therefore staff estimates supplementing its own analysis — not data China is obliged to supply, and not a measure against which China can be found in breach.
+
+#### 1.4.4 A hard escalation clock, which is new
+
+¶33–34 impose a timetable the 2004 and 2024 Decisions did not: one month for the area department to escalate internally; four months at the staff due-diligence stage; a further six months at the pre-letter stage; two months for the Managing Director's letter. Target overall is twelve months, with an absolute cap: *"all steps to the conclusion of the Letter Stage … should not exceed 18 months."* Where staff judge non-compliance is *"due to unwillingness rather than inability,"* the steps compress. SPR owns the timeline.
+
+Management involvement is triggered specifically by moving from step 1 to step 2. The note also closes a loophole on accuracy: supplying correct data does **not** resolve an inaccuracy case unless the inaccuracy was capacity-driven (¶35).
+
+**No step has been triggered against China on fiscal data**, so far as any public record shows.
+
+#### 1.4.5 How items 13 to 15 are monitored — my earlier open question, answered
+
+¶8 states the surveillance table *"has been extended to include a select number of newly required indicators from the 2024 Review."* Reading the new template, the fiscal position is:
+
+| New indicator | In the published surveillance table? |
+|---|---|
+| Item 13 headline — total general government debt stock | **Yes** |
+| Item 15 — liquid financial assets | **Yes** |
+| Item 13 decompositions by maturity, currency, residency | **No** |
+| Item 14 in any form | **No** |
+
+What covers the rest, from footnote 38: *"A platform currently under development for the DAA will be expanded to allow country teams to comprehensively record and monitor members' compliance with data provision obligations under Article VIII, Section 5 … completing this process for each member would ideally be done in parallel during the completion of the TCIRS form."*
+
+So monitoring runs on two tracks, and **the fuller one is internal and not published**. The note does not say it ever will be. For an outside observer this caps what can be verified about regime A: the published table shows part, an unbuilt internal system is to hold the rest.
+
+One further detail worth knowing: the new table's footnote 4 records that the total general government debt stock is *"required for SDDS Plus countries and encouraged for SDDS and e-GDDS countries."* China is SDDS, not SDDS Plus, so **publishing** that aggregate is encouraged rather than required — while **providing** it to the Fund became mandatory with reporting year 2025. The two regimes point opposite ways on the same number.
 
 ---
 
@@ -231,18 +307,23 @@ So **93.6%** of general-government expenditure has some monthly release and **6.
 Listed so they are not mistaken for findings.
 
 1. **Item 13 provision (A-7).** Whether China has furnished a total general-government debt stock to the Fund, mandatory from reporting year 2025. Provision is not public; CR 26/44 is silent; the DSBB governs a different obligation.
-2. **How items 13–15 are monitored.** The Article IV table covers only Annex A items 1–12. No IMF statement found explaining the alternative mechanism.
+2. ~~**How items 13–15 are monitored.**~~ **RESOLVED** by the 2026 guidance note — see §1.4.5. The surveillance table now carries item 13's headline and item 15; item 14 and the item-13 decompositions go to an internal platform still under development. What remains unverifiable is the internal record itself, which is not published.
 3. **The stale general-government entry on the NSDP.** China's National Summary Data Page carries a last-update date of 2026-10-19 while its newest general-government observation is **2024**. Under China's own NLT 7M flexibility, 2025 data were due by end-July 2026 — an apparent slip of about two and a half months. The *fact* is verified; the *cause* is not. It could be an NSDP posting lag rather than non-publication by MOF. I could not resolve it from this archive: the repository scrapes only MOF's monthly topic page, which does not carry the annual final accounts (决算), and I could not locate the final-accounts column on the MOF site in the time available. **Resolving this is the single highest-value follow-up**, because if MOF did not publish by end-July 2026 it is a genuine breach of China's own declared flexibility terms.
 4. **Whether China's central-government-debt maturity split is residual or original** (B-7), **whether CGD coverage matches CGO** (B-8), and **which central government units CGO covers** (B-9). All three are metadata silences, which is itself the finding.
 5. **The flexibility-option count** (§2.1). Whether labour market is one category or two determines whether China is at two of two or three of two. The Guide does not resolve it.
-6. **The periodicity and timeliness understanding attached to Annex A item 4 itself**, as distinct from the SDDS prescription. CR 26/44 shows 2024 general-government data received September 2025 — three quarters — but I could not confirm whether a three-quarter understanding formally governs item 4.
+6. ~~**The periodicity and timeliness understanding attached to Annex A item 4.**~~ **RESOLVED** by the 2026 guidance note — see §1.4.1. Quarterly on a three-month lag for central-government flows; annual on a three-quarter lag for general-government flows and for debt stocks. China meets all three, though general government lands exactly on the limit with no margin.
+
+8. **Whether China has any country-specific understandings** under ¶30 that replace the general ones, and whether it has invoked the capacity defence on any fiscal item. Neither is published per country, so the true benchmark cannot be known from outside.
+9. **Whether China has provided item 13** is doubly unverifiable: provision is not public, and the internal compliance record that would track it does not yet exist.
 7. **Whether the social-insurance series gap is China's or ours.** This repository's series stops at 2026-06, but the ministry's site does not answer automated requests and this project deliberately ships no bypass, so I could not establish what has been published since. **Do not read our gap as a Chinese publication failure.**
 
 ---
 
 ## 6. Bottom line
 
-**On the binding obligation (regime A): compliant so far as can be established.** All three fiscal rows of the Article IV surveillance table show China providing data at the expected frequency. No breach has been declared, and a declaration would be public. The one genuine unknown is the new item 13, mandatory from 2025, which asks for exactly the general-government debt aggregate China does not publish.
+**On the binding obligation (regime A): compliant so far as can be established, and now measurable.** The 2026 guidance note published the periodicity and timeliness understandings for Annex A item 4 for the first time, so these verdicts no longer rest on inference. China **exceeds** the requirement on central-government flows and on central-government debt stocks, and **meets** it on general-government flows — the last of these exactly on the three-quarter limit, with no margin, in a regime where late provision counts as nonprovision. No breach has been declared, and a declaration would be public.
+
+The genuine unknown is item 13, the total general-government debt stock, mandatory from reporting year 2025 — exactly the aggregate China does not publish. It is doubly unverifiable from outside: provision to the Fund is not public, and the internal system meant to record compliance with it is still under development.
 
 **On SDDS publication (regime B): substantially compliant, with one real failure and several disclosure gaps.** China meets or beats every prescribed fiscal periodicity and timeliness, over-delivers on central-government debt disaggregation, and has one properly declared and justified flexibility option. Against that: **no advance release calendar for general government operations**, which is prescribed, has no available flexibility option, and is currently flagged by the Fund (B-11); a central-government-operations timeliness miss and two punctuality misses in 2025; an undeclared omission of guaranteed debt; and three metadata disclosures the Guide requires that China's filing does not make.
 
@@ -263,6 +344,8 @@ Each verdict row above carries a short link label. They resolve here.
 | `[AoA]` | IMF Articles of Agreement (current edition) | https://www.imf.org/external/pubs/ft/aa/pdf/aa.pdf |
 | `[Dec13183]` | Decision No. 13183-(04/10), Strengthening the Effectiveness of Article VIII, Section 5 | https://www.imf.org/en/publications/selected-decisions/description/13183-(04/10) |
 | `[Rev2024]` | Review of Data Provision to the Fund for Surveillance Purposes, Policy Paper 2024/016 (contains Decision 17692-(24/33) and the 27-item Annex A) | https://www.imf.org/en/Publications/Policy-Papers/Issues/2024/04/12/Review-of-Data-Provision-to-the-Fund-for-Surveillance-Purposes-547697 |
+| `[GN2026]` | **Data Provision to the Fund for Surveillance Purposes — Operational Guidance Note**, Policy Paper 2026/001, 16 Jan 2026. Supersedes the 2013 note. The current operational standard | https://www.imf.org/en/publications/policy-papers/issues/2026/01/16/data-provision-to-the-fund-for-surveillance-purposed-operational-guidance-note-573266 |
+| `[GN2026-xml]` | The same note, full text, unblocked, tables as HTML — **use this one** | https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml |
 | `[SDDSGuide]` | SDDS Guide for Subscribers and Users, 2013 edition — the operative prescriptions | https://dsbb.imf.org/content/pdfs/sddsguide13.pdf |
 
 ### China's declared practice (IMF Dissemination Standards Bulletin Board)
@@ -292,7 +375,11 @@ Each verdict row above carries a short link label. They resolve here.
 | `[CR2644-T1]` | Annex VII **Table 1**, Data Adequacy Assessment heatmap | same PDF, Annex VII |
 | `[CR2644-A8]` | Appendix VIII, Data Annex — the government-finance gap narrative, ¶4–¶6 | same PDF, from PDF page 99 |
 
-**Fetching note.** imf.org returns an Akamai 403 to ordinary automated download. The `r.jina.ai` reader proxy **no longer works** on imf.org. What works as of 2026-10-19: Claude Code's WebFetch tool passes Akamai and saves the real file to disk — point it at the PDF, ignore the prose answer, take the saved path, run `pdftotext -layout` on it.
+**Fetching note, as of 2026-10-19.** `www.imf.org` returns an Akamai 403 to ordinary automated download, and the `r.jina.ai` reader proxy **no longer works** on it either. Three routes that do work:
+
+1. **`elibrary.imf.org` is no longer blocked** and is now the best route for policy papers — a plain request returns the full document body with every table rendered as HTML, which beats wrestling with the PDF. Pattern: `https://www.elibrary.imf.org/view/journals/007/<YYYY>/<III>/article-A001-en.xml`.
+2. **`dsbb.imf.org` is not blocked**, but its pages are a single-page app; use the JSON API given above.
+3. **WebFetch passes Akamai on www.imf.org** and saves the real file to disk — point it at a PDF, ignore the prose answer, take the saved path, run `pdftotext -layout`. Expect occasional HTTP 429; retry.
 
 ### The Chinese releases behind §4's measurements
 
