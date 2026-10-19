@@ -39,12 +39,39 @@ Reference period for the annual items is calendar 2025, ending 2025-12-31. Three
 |---|---|---|---|---|---|---|
 | 1 | **Central government** revenue and expenditure | Quarterly / 3 months | [全国财政收支情况 — monthly, with central and local split](https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhiqingkuang/) | Monthly | **19 d** median, max 24 d across 13 releases since 2024-01 | **Met, exceeded** — monthly against quarterly, 19 days against 91 |
 | 2 | Central government, annual confirmation | — | [2025年中央一般公共预算支出决算表](http://yss.mof.gov.cn/2025zyjs/202607/t20260716_3993603.htm) · [收入决算表](http://yss.mof.gov.cn/2025zyjs/202607/t20260716_3993605.htm) | 2026-07-16 | 197 d | **Met** |
-| 3 | **General government** revenue and expenditure | Annual / 3 quarters | [2025年全国一般公共预算支出决算表](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997526.htm) · [收入决算表](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997529.htm) | **2026-09-16** | **259 d** | **Met, 14 days to spare** |
+| 3 | **General government** revenue and expenditure | Annual / 3 quarters | **Provisional, all four accounts:** [2026 budget report](https://www.mof.gov.cn/zhengwuxinxi/caizhengxinwen/202603/t20260316_3985331.htm) · **Provisional, three accounts:** [2025年财政收支情况](http://gks.mof.gov.cn/tongjishuju/202601/t20260130_3982923.htm) · **Final:** [全国一般公共预算支出决算表](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997526.htm) · [收入决算表](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997529.htm) | **2026-03-05** provisional · 2026-09-16 final | **64 d** provisional · 259 d final | **Met, 209 days to spare** on provisional data; final accounts also inside the lag |
 | 4 | General government — the other three accounts, needed for the full perimeter | Annual / 3 quarters | [政府性基金支出](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997520.htm) · [国有资本经营支出](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997514.htm) · [社会保险基金支出](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997510.htm) · [社保基金结余](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997508.htm) | 2026-09-16 | 259 d | **Met** — all four accounts present |
 
-**Line 3 is the binding one and it is tight.** China's general-government final accounts cleared the three-quarter allowance by about two weeks. The note is explicit that *"the 'late provision' of information is considered a category of nonprovision of information"* (¶24), so there is no grace beyond the lag.
+#### 2.1.1 Line 3 — general government arrives in three stages, and the first already satisfies the obligation
 
-**Worth separating from the verdict.** The central-government accounts appeared two months earlier, on 2026-07-15/16, with the national and local tables following on 2026-09-16. Under this obligation only the later date matters, and it passes. Under China's *separate* SDDS publication commitment of not later than seven months, the same date was about 47 days late. That is a dissemination matter, outside this check, and is noted only so the two are not conflated.
+An earlier draft scored line 3 on the final accounts alone and called it the tightest line in the check, with 14 days to spare. **That understated China's position.** General-government outturns for 2025 were published three times:
+
+| Stage | Document | Published | Lag | Accounts covered |
+|---|---|---|---|---|
+| **1. Preliminary** | [2025年财政收支情况](http://gks.mof.gov.cn/tongjishuju/202601/t20260130_3982923.htm), Ministry of Finance Treasury Department | **2026-01-30** | **30 d** | Three of four: general public budget, government fund, state capital operations |
+| **2. Provisional, complete** | [关于2025年中央和地方预算执行情况与2026年中央和地方预算草案的报告](https://www.mof.gov.cn/zhengwuxinxi/caizhengxinwen/202603/t20260316_3985331.htm), delivered to the NPC | **2026-03-05** | **64 d** | **All four**, social insurance included |
+| **3. Final** | [2025年全国财政决算](http://yss.mof.gov.cn/2025zyjs/), Budget Department | 2026-07-15/16 central · **2026-09-16** national and local | 197 d · 259 d | All four, final |
+
+**Provisional data counts.** Paragraph 3 of the binding Decision — Decision No. 13183-(04/10) as amended in 2024, reproduced in the guidance note's Appendix V — states: *"a member that is unable to provide final data is obligated to provide provisional data to the best of its ability until it is in a position to provide the Fund with final data."* The obligation therefore expects provisional figures before final ones. China's complete provisional outturn arrived at 64 days, against an allowance of about 273. **The effective margin is 209 days, not 14.** The final accounts, also inside the lag, then replace the provisional figures.
+
+**How much the provisional figures moved, March to September,** 亿元:
+
+| Account | Provisional (Mar 5) | Final (Sep 16) | Revision |
+|---|---|---|---|
+| General public budget — revenue | 216,044.88 | 216,049.86 | +0.00% |
+| General public budget — expenditure | 287,395.42 | 287,243.42 | −0.05% |
+| Government fund — revenue | 57,703.55 | 57,718.02 | +0.03% |
+| Government fund — expenditure | 112,873.54 | 112,923.10 | +0.04% |
+| State capital operations — revenue | 8,546.95 | 8,546.39 | −0.01% |
+| State capital operations — expenditure | 2,647.31 | 2,643.90 | −0.13% |
+| Social insurance — revenue | 126,033.68 | 127,849.52 | **+1.44%** |
+| Social insurance — expenditure | 111,414.10 | 110,698.51 | −0.64% |
+| **Four accounts, revenue** | 408,329.06 | 410,163.79 | +0.45% |
+| **Four accounts, expenditure** | 514,330.37 | 513,508.93 | −0.16% |
+
+The three budget accounts were essentially final by March: no revision exceeds 0.13%. Only social insurance moved materially, its revenue by 1.44%. The guidance note asks country teams to describe *"the size of revisions"* when assessing data quality; on this evidence China's provisional fiscal outturns are reliable.
+
+**Still worth separating from the verdict.** Under China's *separate* SDDS publication commitment, a voluntary dissemination standard outside this check, the national final accounts on 2026-09-16 were about 47 days past its not-later-than-seven-months target. That concerns publication of final data under a different regime and does not affect this obligation.
 
 ### 2.2 Financing composition
 
@@ -55,7 +82,7 @@ The note requires, for each of central and general government: *net lending (+)/
 | # | Required | Where it is | Latest | Verdict |
 |---|---|---|---|---|
 | 5 | Net lending / net borrowing | NSDP, "- balance", for central government **and** general government | CG **Aug-2026**; GG 2024 | **Met** |
-| 6 | Net acquisition of financial assets, split domestic and external | **Not on the NSDP**, which is labelled *"For subscribers using the GFSM 1986 framework"* — a framework with no such line. **But its core component is published monthly by the central bank:** government fiscal deposits (财政性存款) in the [credit-funds table](https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/10/2026101417461893946.htm), and the bank's [September 2026 release](https://www.pbc.gov.cn/diaochatongjisi/116219/116225/2026101417073743604/index.html) states *"财政性存款增加1.63万亿元"* for January–September. See §2.2.1 | Monthly, **Sep-2026** | **Partly met** — the deposits instrument, domestically, is public; securities and other instruments are not |
+| 6 | Net acquisition of financial assets, split domestic and external | **Not on the NSDP**, which is labelled *"For subscribers using the GFSM 1986 framework"* — a framework with no such line. **But its core component is published monthly by the central bank:** government fiscal deposits (财政性存款) in the [credit-funds table](https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/10/2026101417461893946.htm), and the bank's [September 2026 release](https://www.pbc.gov.cn/diaochatongjisi/116219/116225/2026101417073743604/index.html) states *"财政性存款增加1.63万亿元"* for January–September. See §2.2.1 | Deposits monthly, **Sep-2026**; equity annual, **2025** | **Partly met** — deposits published monthly (§2.2.1); equity injections identifiable annually but booked as expenditure (§2.2.2); securities and loans not public |
 | 7 | Net incurrence of liabilities, split domestic and external | NSDP, "- financing" → "- domestic" / "- foreign", and again under "- By residence of the creditor" → domestic / external creditors. Also broken out by maturity, by instrument and by currency | CG **Aug-2026**; GG 2024 | **Met** |
 
 So line 7, which an earlier draft could not verify, is published monthly for central government and annually for general government, with four separate decompositions.
@@ -75,7 +102,30 @@ The stock change and the bank's published flow agree to within rounding of the p
 
 **Two traps, both avoided.** First, fiscal deposits already *contain* the government's deposits at the central bank and the treasury time deposits at banks; the three components sum to 77,459.78 against the 79,489.30 total, with the 2.6% residual being other fiscal deposits at banks. Adding them would double-count. Second, the "domestic" side is the whole of this: government deposits abroad are negligible.
 
-**What this does and does not prove.** It establishes the largest component of net acquisition of financial assets, monthly, with a published flow. It does not cover government purchases of securities, loans extended, or equity, and it is drawn from monetary rather than fiscal statistics. Verdict: **partly met**, with the gap now narrowed to non-deposit instruments.
+**What this does and does not prove.** It establishes the largest component of net acquisition of financial assets, monthly, with a published flow. It does not cover government purchases of securities, loans extended, or equity, and it is drawn from monetary rather than fiscal statistics. Equity is taken up in §2.2.2.
+
+#### 2.2.2 Line 6 — the equity component, from the budget
+
+**Equity injections are published, but China books them as spending, not as asset purchases.** Under GFSM 2014, net acquisition of financial assets includes equity. When government puts capital into a corporation and expects a return on it, that is an asset purchase, recorded below the line. When it expects no return, it is a capital transfer, recorded as expense. This is the *capital injection test*. China's budgets make no such split: every injection is an expenditure item, inside the deficit. The amounts can still be read from three published places. All figures 亿元, 2025.
+
+| Equity-type outlay | 2025 | Where | Instrument, under GFSM |
+|---|---|---|---|
+| **SOE capital injections** (国有企业资本金注入), state-capital budget | **1,522.36** | [2025 national state-capital expenditure final accounts](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997514.htm) | Equity, *if* the return test is passed |
+| **Bank recapitalisation** (中央金融机构注资特别国债), government-fund budget | **5,000** | [2026 budget report](https://www.mof.gov.cn/zhengwuxinxi/caizhengxinwen/202603/t20260316_3985331.htm): *"发行5000亿元特别国债支持国有大型商业银行补充核心一级资本"* | Equity — the banks are profitable and pay dividends, so the test is likely met |
+| **Special bonds used as project capital** (专项债券用作项目资本金) | **> 3,000** | Same report: *"用作项目资本金超过3000亿元"* | Equity if the project company is outside government; consolidates out if it is inside (see §5) |
+| **Identifiable total** | **≈ 9,500** | | About 0.7% of GDP (140.2 万亿) |
+
+**The share you asked about.** SOE capital injections were **57.6%** of national state-capital spending in 2025 — 1,522.36 of 2,643.90 亿. The rest was 775.63 in public-service subsidies to SOEs, 140.16 for legacy and reform costs, 205.37 other, and 0.38 to the social security fund. Those are current or capital transfers, not asset purchases. Within the injections, the largest named uses were economic restructuring (422.67) and strategic emerging industries (316.45); financial-enterprise capital was 84.13, and 530.70 was unclassified "other". The budget plans 3,000 亿 more of bank recapitalisation in 2026.
+
+**Does it count? Partly — as evidence on the equity instrument, not as the line itself.** Three things stop it counting in full:
+
+1. **Classification.** The note asks for net acquisition of financial assets on the GFSM basis. China's figures sit above the line, so a user would have to reclassify them, and the capital injection test cannot be applied from the published lines. The note's carve-out for a *"sound national methodology"* (Appendix VII ¶1) does not help, because the national methodology does not present this line at all.
+2. **Frequency.** These are annual. For central government the note asks for quarterly data, and the monthly releases do not break out injections.
+3. **Coverage.** It covers equity only, and only domestically. Loans extended and purchases of securities are still not published.
+
+**One consequence worth noting.** If most of these injections pass the return test, China's deficit on the GFSM basis would be *smaller* than its published deficit, because a GFSM deficit counts asset purchases as financing rather than spending. The bank recapitalisation alone is about 0.36% of GDP.
+
+Verdict for line 6 stays **partly met**. The gap is now narrower: deposits are published monthly and equity can be identified annually; loans and securities are the remaining unknowns.
 
 ### 2.3 Debt stocks
 
@@ -85,7 +135,7 @@ The stock change and the bank's published flow agree to within rounding of the p
 | 9 | Composition **by currency** | Annual / 3 quarters | Same table — carries an explicit 内债 / 外债 (domestic / external) split | 2026-07-15 | 197 d | **Met** |
 | 10 | Composition **by maturity** | Annual / 3 quarters | [**NSDP**](https://www.stats.gov.cn/english/Statisticaldata/nsdp/201508/t20150819_1232260.html), Central Government Debt: "- Domestic debt by maturity" and "- Foreign debt by maturity", each split long-term / short-term | **Q2/2026**, quarterly | — | **Met, exceeded** — quarterly against an annual requirement |
 | 11 | Holdings by **residents / non-residents** | Annual / 3 quarters | [**NSDP**](https://www.stats.gov.cn/english/Statisticaldata/nsdp/201508/t20150819_1232260.html), Central Government Debt: "- By residence of the creditor" → domestic creditors / external creditors. Corroborated independently by the central depository's monthly holder tables at [chinabond.com.cn](https://www.chinabond.com.cn/zzsj/zzsj_tjsj/tjsj_tjyb/) | **Q2/2026**, quarterly | — | **Met** — from the fiscal source itself, not only the market source |
-| 12 | **Central-government-guaranteed** debt stock | Annual / 3 quarters | **No current stock published, and no statement that it is nil.** Last official figure: **2,600.72 亿**, National Audit Office announcement No. 32 of 2013, as of end-June 2013. See §2.3.1 | 2013 | — | **Not met by publication; not nil by law** |
+| 12 | **Central-government-guaranteed** debt stock | Annual / 3 quarters | **No stock published, but the law caps it.** Only State-Council-approved guarantees for on-lending foreign official loans are legally valid; that loan stock is published at **US$50.03bn ≈ 3,517 亿**. See §2.3.1 | — | — | **Not published; legally capped at ≤ 0.37% of government debt** |
 
 **Lines 10 and 11 were both marked unverified in the previous draft.** They are in fact published quarterly on the National Summary Data Page, against an annual requirement. The debt block there also carries instrument and currency splits, so the central-government debt stock is disclosed four ways: maturity, instrument, currency and creditor residency.
 
@@ -97,13 +147,30 @@ The stock change and the bank's published flow agree to within rounding of the p
 
 **The last official figure is thirteen years old.** The National Audit Office's announcement No. 32 of 2013 put central government 负有担保责任的债务 — debt for which it bears guarantee responsibility — at **2,600.72 亿** as of end-June 2013. Of that, 1,090 亿 were Central Huijin bonds *"由财政部提供担保"*, guaranteed by the Ministry of Finance. A 20-year Huijin tranche issued in 2010 would not mature until around 2030, so part of that stock may still be outstanding; whether the guarantee still applies could not be confirmed. *(The original audit.gov.cn page now returns 404; the text was read from a government mirror at panzhihua.gov.cn.)*
 
-**The law does not make the stock nil, so a nil return is not available.** The Budget Law's Article 35 bans guarantees by *local* government only: *"地方政府及其所属部门不得为任何单位和个人的债务以任何方式提供担保"*. Article 34, on central borrowing, contains no equivalent ban. The Supreme People's Court interpretation 法释〔2020〕28号, Article 5, voids guarantees by state organs *"但是经国务院批准为使用外国政府或者国际经济组织贷款进行转贷的除外"* — except State-Council-approved on-lending of foreign-government and international-organisation loans. So central guarantees are legally confined to that on-lending category and to State Council approvals: plausibly small, but not nil.
+**Is it zero by law? No — but the law confines it to one narrow category, and that category is measurable.**
+
+| Rule | What it says | Effect |
+|---|---|---|
+| **Civil Code, Article 683** (in force 2021) | 机关法人不得为保证人，但是经国务院批准为使用外国政府或者国际经济组织贷款进行转贷的除外 — state organs may not act as guarantors, except for State-Council-approved on-lending of foreign-government or international-economic-organisation loans | Bars central ministries, the Ministry of Finance included, from guaranteeing anything else. The same article also bars public-interest non-profit legal persons, such as public schools and hospitals. *Text confirmed from legal commentaries; the official NPC page did not render the article. The court interpretation below, read from an official copy, restates the same exception* |
+| **Supreme People's Court interpretation 法释〔2020〕28号, Article 5** (in force 2021) | A guarantee given by a state organ is void — *"人民法院应当认定担保合同无效"* — subject to the same on-lending exception ([text, sh.gov.cn](https://fgw.sh.gov.cn/cmsres/96/9614496170c34f4c9eae21f66e730b58/90f0ab0d0aaef26da78c2a1f9e0b275e.pdf)) | Makes the bar enforceable: a non-qualifying guarantee has no legal effect |
+| **Guarantee Law of 1995, Article 8** (replaced by the Civil Code) | 国家机关不得为保证人 — same rule, same exception | The restriction has stood since 1995, not only since 2021 |
+| **Budget Law, Article 35** | 除法律另有规定外，地方政府及其所属部门不得为任何单位和个人的债务以任何方式提供担保 | Bans *local* government guarantees outright, save as another law provides — which again leads to the same on-lending exception |
+
+**So the legally valid stock is bounded by the on-lent foreign official loans,** and those are published. The Ministry of Finance's [foreign-loan table](https://gjs.mof.gov.cn/zhengcefabu/202604/t20260420_3987899.htm) puts all multilateral and foreign-government loans outstanding at **US$50.03bn at end-2025**, about **3,517 亿** at 7.029 yuan per dollar. That is the absolute ceiling, and the true guaranteed figure is smaller: the part on-lent to local governments is already counted as local government debt, and the part borrowed directly by the State is direct central debt rather than guaranteed debt.
+
+| Ceiling | 亿元 | Share |
+|---|---|---|
+| All foreign official loans outstanding, end-2025 | ≤ 3,517 | — |
+| as a share of general government debt (960,550 亿) | | **≤ 0.37%** |
+| as a share of central government debt (412,318 亿) | | **≤ 0.85%** |
+
+**One caveat on the 2013 figure.** The audit's 2,600.72 亿 included 1,090 亿 of Central Huijin bonds *"由财政部提供担保"*. Those are domestic bonds, outside the on-lending exception, and the 1995 rule already applied in 2010 when they were issued. Either the State Council specifically approved them, or the audit's category 负有担保责任 — *bearing guarantee responsibility* — was an economic classification broader than a formal legal guarantee. I could not establish which. The legal ceiling above bounds valid legal guarantees; it does not necessarily bound that wider audit concept.
 
 **A related international series exists but does not substitute.** The World Bank's International Debt Statistics carry "private debt guaranteed by the public sector" (series DT.DOD.PRPG.CD) for China at US$25.86bn in 2024, up from US$17.14bn in 2021 and about zero before. The guarantor there is any public entity, not necessarily central government, so it cannot stand in for line 12.
 
 **A related coverage caveat in the final accounts.** Footnote 2 of the 2025 central debt table states that certain other repayable central liabilities — bank-related debts and borrowing by departments — sit outside the reported stock until *"规范管理后纳入"*, brought in once their management is standardised. That is not a guarantee line, but it is a stated gap in the central perimeter.
 
-**Verdict: not met by publication.** China may well report this to the Fund privately; the IMF's surveillance table records the combined row as received quarterly. But no public source supports either a figure or a nil.
+**Verdict: not met by publication, but immaterial and bounded.** No current stock and no nil statement is published. The law, however, confines valid central guarantees to on-lent foreign official loans, whose published stock caps the figure at about 0.37% of general government debt. China may well report the exact number to the Fund privately; the IMF's surveillance table records the combined row as received quarterly.
 
 ### 2.4 Methodological basis
 
@@ -225,7 +292,7 @@ China is unusually well placed here. It already publishes local government debt 
 | 20 | Capacity defence — no breach where capacity genuinely prevents provision; assessed by the area department with STA and SPR, *"benefit of any doubt"* to the member (¶25) | Whether China has invoked it on any fiscal item is **not published** | **Not public** |
 | 21 | Country-specific understandings may replace the general ones, including *"longer lags or less frequent provision"*; written register with SPR, STA and LEG; pre-existing ones to be documented by **end-2026** (¶30) | Whether China has any is **not published** | **Not public** |
 | 22 | Manner of provision — publication on a government website counts, if staff can access it and an understanding is in place. Commercial providers such as Haver or Bloomberg **do not** discharge the obligation (¶31, fn 35) | The ministry pages cited throughout this check are publicly accessible | Satisfiable by publication |
-| 23 | Late provision counts as nonprovision (¶24) | Bears directly on line 3, which cleared by 14 days | Noted |
+| 23 | Late provision counts as nonprovision (¶24) | Bears on line 3; met with 209 days' margin on provisional data | Noted |
 | 24 | Escalation clock — 1 month to escalate internally, 4 months at due diligence, 6 at pre-letter, 2 for the Managing Director's letter; 12-month target, **18-month cap**; compressed where non-compliance is *"due to unwillingness rather than inability"*; SPR owns the timeline (¶33–34) | **No step is known to have been triggered** against China on fiscal data | No action on record |
 | 25 | Staff may not substitute for the member: *"staff should not be the source of the data"* (¶26) | The Fund's augmented debt aggregates are built from WIND and Zero2IPO. They are staff estimates supplementing staff analysis, **not** data China is obliged to supply | Confirms the LGFV figures sit outside the obligation |
 
@@ -248,8 +315,8 @@ The only adjacent language in the whole note sits in the **data adequacy questio
 Listed so they are not read as findings either way.
 
 1. **Provision itself is not public.** Everything here tests publication, which ¶31 accepts as a manner of provision. What cannot be checked is whether anything *not* published was supplied privately.
-2. **Line 12, guaranteed debt.** No current stock and no nil statement anywhere; last official figure 2013. China may report it privately — the IMF's surveillance table records the combined row as received quarterly — but no public source supports a figure or a nil.
-3. **Line 6, the non-deposit part of net acquisition of financial assets.** Deposits are published monthly; government purchases of securities, loans extended and equity are not. China reports on the GFSM 1986 framework, which has no such line.
+2. **Line 12, guaranteed debt — the exact figure.** No stock and no nil statement is published. The law caps valid central guarantees at the on-lent foreign official loans, about 3,517 亿 or 0.37% of government debt, so the figure is bounded and immaterial — but the precise number is not public.
+3. **Line 6, loans and securities in net acquisition of financial assets.** Deposits are published monthly. Equity injections can be identified annually, about 9,500 亿 in 2025, but they are booked as spending and cannot be put through the return test from public data. Loans extended and securities purchased are not published. China reports on the GFSM 1986 framework, which has no such line.
 4. **Item 15, government holdings of debt securities** — due 2027. Buried in the social funds' financial assets without an instrument split. Likely available internally in MOF's unpublished accrual-basis government financial report.
 5. **Item 14, the foreign official/private split of non-resident bond holdings.** Not published by any source. Immaterial to compliance, since the domestic buckets already clear the 80% rule.
 6. **Specific understandings and the capacity defence** (lines 20 and 21). Neither is published per country, so China's actual benchmark may differ from the general understandings used here.
@@ -262,30 +329,30 @@ Listed so they are not read as findings either way.
 | Requirement | Verdict | Evidence |
 |---|---|---|
 | Central government flows — quarterly, 3-month lag | **Met, exceeded** | Monthly, 19-day median |
-| General government flows — annual, 3-quarter lag | **Met** | 259 days of 273 |
+| General government flows — annual, 3-quarter lag | **Met** | Provisional at **64 days**, all four accounts; final at 259 days |
 | Central government debt stock — annual, 3-quarter lag | **Met** | 197 days |
 | Maturity composition | **Met** | NSDP, quarterly |
 | Currency composition | **Met** | Final accounts and NSDP |
 | Residency of holders | **Met** | NSDP, quarterly |
 | Net incurrence of liabilities, domestic and external | **Met** | NSDP, monthly for central government |
 | Net lending / net borrowing | **Met** | NSDP and final accounts |
-| Net acquisition of financial assets | **Partly met** | Deposits published monthly by the central bank; other instruments not |
-| Guaranteed debt stock | **Not met by publication** | Last figure 2013; legally not nil |
+| Net acquisition of financial assets | **Partly met** | Deposits monthly from the central bank; equity injections annually from the budget (≈ 9,500 亿, booked as spending); loans and securities not |
+| Guaranteed debt stock | **Not published; legally capped** | Valid guarantees confined by Civil Code Art. 683 to on-lent foreign loans: ≤ 3,517 亿, 0.37% of government debt |
 | **Item 13** — total general government debt, 2025 | **Met** | **96 万亿**, State Council report, 237 days; components from 64 days |
 | Item 14 — by instrument | **Already met** | NSDP, three years early |
 | Item 14 — by creditor type | **Met for four of five buckets** | Closes to one cent; 95.4% against the 80% rule |
 | Item 14 — individual creditors | **Will not apply**; published anyway | Official creditors 0.80% / 0.37% against 20% |
 | Item 15 — liquid financial assets | **Three of four instruments accounted for** | Deposits published; gold and SDR nil; securities the gap |
 
-**Nothing in this check amounts to a finding of breach.** Of the 11 requirements that bear on China now — item 4 and item 13 — 9 are fully met by publication, most of them with large margins, and one is partly met. The single requirement not met by any public source is central-government-guaranteed debt. Items 14 and 15 are not due until 2027.
+**Nothing in this check amounts to a finding of breach.** Of the 11 requirements that bear on China now — item 4 and item 13 — 9 are fully met by publication, most of them with large margins, and one is partly met. The single requirement not met by any public source is central-government-guaranteed debt, and the law bounds that at under 0.4% of government debt. Items 14 and 15 are not due until 2027.
 
 **Every line once marked unverifiable has now been resolved one way or the other.** Evidence came from six independent public sources: the Ministry of Finance's final accounts and budget report, the National Bureau of Statistics' National Summary Data Page, the State Council's debt report to the legislature, the central bank's monetary statistics, the central depository's holder tables, and the ministry's foreign-loan table.
 
 **The item I previously called the real exposure is met.** Item 13, the 2025 general-government debt total, was stated as a single figure — 96 万亿 — in the State Council's report of 25 August 2026, and visible in components from 5 March.
 
-**The tightest line is general-government flows.** China cleared a three-quarter allowance by fourteen days, in a regime where late provision is treated as nonprovision. If the 2026 final accounts slip by more than two weeks relative to this year's timing, that margin is gone.
+**No line is tight.** An earlier draft called general-government flows the tightest, at fourteen days' margin on the final accounts. Because the binding Decision expects provisional data before final, and China publishes a complete four-account provisional outturn at 64 days, the real margin is 209 days. The provisional figures were also close to final: the three budget accounts moved by no more than 0.13%.
 
-**The genuine gaps are narrow.** Guaranteed debt has not been published since 2013. Government holdings of debt securities, needed for item 15 from 2027, are not broken out. Both are the kind of data China likely holds internally — the first in its debt-management records, the second in its unpublished accrual-basis government financial report.
+**The genuine gaps are narrow.** Guaranteed debt has not been published since 2013, but the Civil Code confines valid central guarantees to on-lent foreign official loans, which caps the stock at about 0.37% of government debt. Government holdings of debt securities, needed for item 15 from 2027, are not broken out. Both are the kind of data China likely holds internally — the first in its debt-management records, the second in its unpublished accrual-basis government financial report.
 
 **Two corrections made during this check**, recorded so the reasoning can be audited. The final-accounts debt tables were first read with their 2024 opening balances taken as 2025 figures; reading them column by column fixed it before any wrong number reached the document. And the 20% creditor trigger was first tested on a place-of-issue measure described as covering every foreign creditor; it is now tested on the official-creditor measure the note specifies, and on the strictest residency reading, and is not met on either.
 
