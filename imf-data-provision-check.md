@@ -26,10 +26,10 @@ A second trap: SDDS flexibility options legitimately move the goalposts, and the
 
 ### 1.1 The treaty itself contains no fiscal item
 
-| # | Requirement | Verified position | Verdict |
-|---|---|---|---|
-| A-1 | Article VIII §5(a) enumerates twelve categories a member must furnish | The list runs (i)–(xii) and contains **no government-finance item**. No revenue, no expenditure, no balance, no public debt. "National income" is item (viii). | **Not applicable** — the fiscal obligation is not in the treaty |
-| A-2 | Article VIII §5(b): furnish "in as detailed and accurate a manner as is practicable and, so far as possible, to avoid mere estimates"; the Fund shall consider members' "varying ability" | Governs all provision. Decision 13183 ¶3: obligation is "to the best of its ability," and "the Fund will give the member the benefit of any doubt." | Standard of conduct, not a line item |
+| # | Requirement | Verified position | Verdict | Verify |
+|---|---|---|---|---|
+| A-1 | Article VIII §5(a) enumerates twelve categories a member must furnish | The list runs (i)–(xii) and contains **no government-finance item**. No revenue, no expenditure, no balance, no public debt. "National income" is item (viii). | **Not applicable** — the fiscal obligation is not in the treaty | [`[AoA]`](https://www.imf.org/external/pubs/ft/aa/pdf/aa.pdf) Art. VIII §5(a) |
+| A-2 | Article VIII §5(b): furnish "in as detailed and accurate a manner as is practicable and, so far as possible, to avoid mere estimates"; the Fund shall consider members' "varying ability" | Governs all provision. Decision 13183 ¶3: obligation is "to the best of its ability," and "the Fund will give the member the benefit of any doubt." | Standard of conduct, not a line item | [`[AoA]`](https://www.imf.org/external/pubs/ft/aa/pdf/aa.pdf) §5(b) · [`[Dec13183]`](https://www.imf.org/en/publications/selected-decisions/description/13183-(04/10)) ¶3 |
 
 The IMF acknowledged the gap itself: PIN 04/10 states that the Article VIII §5 list "excluded some key categories of fiscal and monetary information." That is why the real obligation sits in the 2004 Decision.
 
@@ -39,12 +39,12 @@ The IMF acknowledged the gap itself: PIN 04/10 states that the Article VIII §5 
 
 Footnote 2 defines the perimeter: *"The general government consists of the central government (budgetary funds, extrabudgetary funds, and social security funds) and state and local governments."* CR 26/44 Annex VII Table 3 footnote 4 reproduces this word for word, so the obligation and the surveillance table use an identical perimeter.
 
-| # | Component of item 4 | China's position, per CR 26/44 Table 3 | Verdict |
-|---|---|---|---|
-| A-3 | General government: revenue, expenditure, balance, composition of financing | Latest observation **2024**, received **September 2025**; frequency of data A, frequency of reporting A | **Met** — provided annually, as reported |
-| A-4 | Central government: same four elements | Latest observation **November 2025**, received **December 2025**; M / M | **Met** |
-| A-5 | Stocks of central government and central government-guaranteed debt, incl. currency and maturity composition | Latest observation **2025Q3**, received **December 2025**; Q / Q | **Met** as reported to the Fund |
-| A-6 | Residency split of holders, where data are amenable | China declares resident/non-resident on its SDDS metadata (§2.4) | **Met** |
+| # | Component of item 4 | China's position, per CR 26/44 Table 3 | Verdict | Verify |
+|---|---|---|---|---|
+| A-3 | General government: revenue, expenditure, balance, composition of financing | Latest observation **2024**, received **September 2025**; frequency of data A, frequency of reporting A | **Met** — provided annually, as reported | [`[CR2644-T3]`](https://www.imf.org/-/media/files/publications/cr/2026/english/1chnea2026001-source-pdf.pdf) row 1, PDF p.97 |
+| A-4 | Central government: same four elements | Latest observation **November 2025**, received **December 2025**; M / M | **Met** | [`[CR2644-T3]`](https://www.imf.org/-/media/files/publications/cr/2026/english/1chnea2026001-source-pdf.pdf) row 2 |
+| A-5 | Stocks of central government and central government-guaranteed debt, incl. currency and maturity composition | Latest observation **2025Q3**, received **December 2025**; Q / Q | **Met** as reported to the Fund | [`[CR2644-T3]`](https://www.imf.org/-/media/files/publications/cr/2026/english/1chnea2026001-source-pdf.pdf) row 3 |
+| A-6 | Residency split of holders, where data are amenable | China declares resident/non-resident on its SDDS metadata (§2.4) | **Met** | [`[DSBB-CGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00) §5.1.1 |
 
 **Caveat on A-3 to A-6.** These verdicts rest on the Fund's own record of what it received. Provision to the Fund is not public, so there is no independent way to audit it. No breach of Article VIII §5 has been declared against China; a declaration would be public under Decision 13183 ¶17.
 
@@ -52,12 +52,12 @@ Footnote 2 defines the perimeter: *"The general government consists of the centr
 
 Decision No. 17692-(24/33), 1 April 2024, expanded Annex A from 12 items to 27. **Items 13, 14 and 15 are all fiscal.**
 
-| # | New obligation | First reporting period | China's position | Verdict |
-|---|---|---|---|---|
-| A-7 | **Item 13** — total stock of **general government** debt | **2025** | Not addressed in CR 26/44; not covered by the DSBB, which governs publication rather than provision | **Could not verify** |
-| A-8 | Item 13 decomposition by maturity, currency, residency, covering ≥80% of the general-government debt stock | 2027 | Not yet due | Not yet due |
-| A-9 | **Item 14** — central and general government debt by creditor type, instrument, and individual multilateral and official bilateral creditors | 2027 | Not yet due | Not yet due |
-| A-10 | **Item 15** — liquid financial assets of central and general government | 2027 | Not yet due | Not yet due |
+| # | New obligation | First reporting period | China's position | Verdict | Verify |
+|---|---|---|---|---|---|
+| A-7 | **Item 13** — total stock of **general government** debt | **2025** | Not addressed in CR 26/44; not covered by the DSBB, which governs publication rather than provision | **Could not verify** | [`[Rev2024]`](https://www.imf.org/en/Publications/Policy-Papers/Issues/2024/04/12/Review-of-Data-Provision-to-the-Fund-for-Surveillance-Purposes-547697) Annex A item 13 |
+| A-8 | Item 13 decomposition by maturity, currency, residency, covering ≥80% of the general-government debt stock | 2027 | Not yet due | Not yet due | [`[Rev2024]`](https://www.imf.org/en/Publications/Policy-Papers/Issues/2024/04/12/Review-of-Data-Provision-to-the-Fund-for-Surveillance-Purposes-547697) |
+| A-9 | **Item 14** — central and general government debt by creditor type, instrument, and individual multilateral and official bilateral creditors | 2027 | Not yet due | Not yet due | [`[Rev2024]`](https://www.imf.org/en/Publications/Policy-Papers/Issues/2024/04/12/Review-of-Data-Provision-to-the-Fund-for-Surveillance-Purposes-547697) |
+| A-10 | **Item 15** — liquid financial assets of central and general government | 2027 | Not yet due | Not yet due | [`[Rev2024]`](https://www.imf.org/en/Publications/Policy-Papers/Issues/2024/04/12/Review-of-Data-Provision-to-the-Fund-for-Surveillance-Purposes-547697) |
 
 **Item 13 is the live question.** A total general-government debt stock became a mandatory provision item with first reporting period 2025 — precisely the aggregate China does not publish (see B-10). Whether China has provided it privately to the Fund cannot be determined from public sources.
 
@@ -75,12 +75,12 @@ China subscribed on **2015-10-07**, confirmed three ways: Press Release 15/466, 
 
 *Prescriptions from the SDDS Guide (2013) ¶1.10 and ¶4.2. China's practice from the DSBB API and corroborated independently by CR 26/44 Table 3 — two sources, identical values.*
 
-| # | Category | Prescribed periodicity | Prescribed timeliness | China declares | Verdict |
-|---|---|---|---|---|---|
-| B-1 | General government operations | Annual | **Two quarters** | A / **NLT 7 months** | **Met via declared flexibility option** |
-| B-2 | Central government operations | **Monthly** | **One month** | M / **25 days** | **Met, with margin** |
-| B-3 | Central government debt | **Quarterly** | **One quarter** | Q / 1Q | **Met, exactly, no margin** |
-| B-4 | General government gross debt | Quarterly *(encouraged)* | 4 months *(encouraged)* | **Nothing declared** | **Not a breach** — encouraged only |
+| # | Category | Prescribed periodicity | Prescribed timeliness | China declares | Verdict | Verify |
+|---|---|---|---|---|---|---|
+| B-1 | General government operations | Annual | **Two quarters** | A / **NLT 7 months** | **Met via declared flexibility option** | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.2 · [`[DSBB-GGO]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/GGO00) |
+| B-2 | Central government operations | **Monthly** | **One month** | M / **25 days** | **Met, with margin** | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.2 · [`[DSBB-CGO]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGO00) |
+| B-3 | Central government debt | **Quarterly** | **One quarter** | Q / 1Q | **Met, exactly, no margin** | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.2 · [`[DSBB-CGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00) |
+| B-4 | General government gross debt | Quarterly *(encouraged)* | 4 months *(encouraged)* | **Nothing declared** | **Not a breach** — encouraged only | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶1.10 · [`[DSBB-GGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/GGD00) |
 
 **On B-1.** The flexibility option is properly taken and justified. China's declared reason, verbatim from its DSBB metadata: *"According to the Budget Law, the Ministry of Finance is allowed to publish central government and national final revenue and expenditure data for the previous year after approval by the NPC, which generally occurs in the middle of July."* The SDDS Guide ¶2.26 requires a justification; one is on file. **Do not score the 2Q-versus-7M gap as non-compliance.**
 
@@ -88,14 +88,14 @@ China subscribed on **2015-10-07**, confirmed three ways: Press Release 15/466, 
 
 ### 2.2 Prescribed components
 
-| # | Requirement | China's position | Verdict |
-|---|---|---|---|
-| B-5 | GGO/CGO financing disaggregated into domestic (bank, nonbank) and foreign; the maturity-plus-instrument-or-currency fallback applies only **if that split is "not feasible"** | The NSDP general-government row shows **no bank/nonbank split**; China uses the fallback but declares **no infeasibility justification** | **Technically unsatisfied condition.** The 2025 Observance Report ¶9 records China as meeting coverage for all categories, so the Fund accepts it. Flagged, not scored as breach |
-| B-6 | Central government debt disaggregated by maturity **and** at least one of residency, instrument, or currency | China declares **all four**: maturity, residency, instrument, currency | **Exceeds requirement** |
-| B-7 | Guide ¶4.32 — state whether maturity is **residual or original** | Metadata silent | **Not met** (disclosure requirement) |
-| B-8 | Guide ¶4.31 — state whether CGD coverage is identical to CGO coverage | Metadata silent | **Not met** (disclosure requirement) |
-| B-9 | Guide ¶4.19 — describe which central government units CGO covers and excludes | Metadata says only "the monthly accounting statement of the central government" | **Not met** (disclosure requirement) |
-| B-10 | Non-central-government debt guaranteed by central government, "as relevant" | No guaranteed-debt line anywhere; the 2025 Observance Report ¶8 states China took **no "as relevant" coverage flexibility options**, so the omission is undeclared | **Undeclared omission** |
+| # | Requirement | China's position | Verdict | Verify |
+|---|---|---|---|---|
+| B-5 | GGO/CGO financing disaggregated into domestic (bank, nonbank) and foreign; the maturity-plus-instrument-or-currency fallback applies only **if that split is "not feasible"** | The NSDP general-government row shows **no bank/nonbank split**; China uses the fallback but declares **no infeasibility justification** | **Technically unsatisfied condition.** The 2025 Observance Report ¶9 records China as meeting coverage for all categories, so the Fund accepts it. Flagged, not scored as breach | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) Table 2.1 · [`[NSDP]`](http://www.stats.gov.cn/english/Statisticaldata/nsdp/201508/t20150819_1232260.html) |
+| B-6 | Central government debt disaggregated by maturity **and** at least one of residency, instrument, or currency | China declares **all four**: maturity, residency, instrument, currency | **Exceeds requirement** | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) Table 2.1 · [`[DSBB-CGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00) |
+| B-7 | Guide ¶4.32 — state whether maturity is **residual or original** | Metadata silent | **Not met** (disclosure requirement) | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.32 · [`[DSBB-CGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00) |
+| B-8 | Guide ¶4.31 — state whether CGD coverage is identical to CGO coverage | Metadata silent | **Not met** (disclosure requirement) | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.31 · [`[DSBB-CGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00) |
+| B-9 | Guide ¶4.19 — describe which central government units CGO covers and excludes | Metadata says only "the monthly accounting statement of the central government" | **Not met** (disclosure requirement) | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.19 · [`[DSBB-CGO]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGO00) |
+| B-10 | Non-central-government debt guaranteed by central government, "as relevant" | No guaranteed-debt line anywhere; the 2025 Observance Report ¶8 states China took **no "as relevant" coverage flexibility options**, so the omission is undeclared | **Undeclared omission** | [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶8 · [`[DSBB-CGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00) |
 
 B-7 through B-9 are small but real: each is an explicit metadata obligation in the Guide that China's filing does not satisfy.
 
@@ -103,30 +103,30 @@ B-7 through B-9 are small but real: each is an explicit metadata obligation in t
 
 Guide ¶8.6: ARCs are **required for all prescribed categories**, which includes all three prescribed fiscal ones. The ARC flexibility option **was phased out at end-2017**, so since January 2018 the "Friday rule" applies with no escape.
 
-| # | Requirement | China's position | Verdict |
-|---|---|---|---|
-| B-11 | ARC for general government operations | **None provided.** All 13 ARC month slots null. The 2025 Annual Observance Report ¶7 names GGO explicitly among categories where China did not meet the ARC requirement | **NOT MET — a current, Fund-flagged non-observance on a fiscal category** |
-| B-12 | ARC for central government operations | Provided (26 Sep 2026, 25 Oct 2026, 25 Nov 2026) | **Met** |
-| B-13 | ARC for central government debt | Provided | **Met** |
+| # | Requirement | China's position | Verdict | Verify |
+|---|---|---|---|---|
+| B-11 | ARC for general government operations | **None provided.** All 13 ARC month slots null. The 2025 Annual Observance Report ¶7 names GGO explicitly among categories where China did not meet the ARC requirement | **NOT MET — a current, Fund-flagged non-observance on a fiscal category** | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶8.6 · [`[DSBB-ARC]`](https://dsbb.imf.org/sdds/advance-release-calendar-base/country/CHN/category/ARC#baseGGO00) · [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶7 |
+| B-12 | ARC for central government operations | Provided (26 Sep 2026, 25 Oct 2026, 25 Nov 2026) | **Met** | [`[DSBB-ARC]`](https://dsbb.imf.org/sdds/advance-release-calendar-base/country/CHN/category/ARC#baseGGO00) |
+| B-13 | ARC for central government debt | Provided | **Met** | [`[DSBB-ARC]`](https://dsbb.imf.org/sdds/advance-release-calendar-base/country/CHN/category/ARC#baseGGO00) |
 
 **B-11 is the clearest single failure in this entire check.** It is a prescribed requirement, on a fiscal category, with no flexibility option available, currently flagged by the Fund in a published report.
 
 ### 2.4 Observance during 2025
 
-| # | Test | Result | Verdict |
-|---|---|---|---|
-| B-14 | CGO timeliness met every month | **No** — missed for the September reference month by 3 days | **Not met in 2025** |
-| B-15 | CGO punctual against its own ARC | **No** — 3 days and 7 days late on two occasions | **Not met in 2025** |
-| B-16 | GGO punctual against ARC | Listed among non-punctual categories | **Not met in 2025** |
-| B-17 | GGO timeliness met | Yes, judged against the NLT 7M flexibility | **Met** |
-| B-18 | CGD timeliness and punctuality | Met all four quarters | **Met** |
+| # | Test | Result | Verdict | Verify |
+|---|---|---|---|---|
+| B-14 | CGO timeliness met every month | **No** — missed for the September reference month by 3 days | **Not met in 2025** | [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶13 |
+| B-15 | CGO punctual against its own ARC | **No** — 3 days and 7 days late on two occasions | **Not met in 2025** | [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶14 |
+| B-16 | GGO punctual against ARC | Listed among non-punctual categories | **Not met in 2025** | [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶14 |
+| B-17 | GGO timeliness met | Yes, judged against the NLT 7M flexibility | **Met** | [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶13 |
+| B-18 | CGD timeliness and punctuality | Met all four quarters | **Met** | [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶13–14 |
 
 ### 2.5 Methodological basis
 
-| # | Requirement | China's position | Verdict |
-|---|---|---|---|
-| B-19 | SDDS **encourages** GFSM 2001 classification; GFSM 1986 presentation remains compliant | China uses **GFSM 1986** | **Compliant** — the newer framework is encouraged, not prescribed |
-| B-20 | Guide ¶4.20 — budget projections "do not conform to the Standard"; data must be actual or preliminary actual | No indication China disseminates projections as actuals | **Met** |
+| # | Requirement | China's position | Verdict | Verify |
+|---|---|---|---|---|
+| B-19 | SDDS **encourages** GFSM 2001 classification; GFSM 1986 presentation remains compliant | China uses **GFSM 1986** | **Compliant** — the newer framework is encouraged, not prescribed | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.4 · [`[DSBB-GGO]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/GGO00) |
+| B-20 | Guide ¶4.20 — budget projections "do not conform to the Standard"; data must be actual or preliminary actual | No indication China disseminates projections as actuals | **Met** | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.20 |
 
 The SDDS fiscal prescription has **never been updated to GFSM 2014** — neither the 2013 nor the 2007 edition of the Guide mentions it. So China's use of a 1986-vintage framework, while a genuine analytical limitation, is not an SDDS breach.
 
@@ -249,6 +249,74 @@ Listed so they are not mistaken for findings.
 **On adequacy for surveillance (regime C): this is where the real problem is, and it is not a compliance problem.** Government finance statistics is rated C, the joint-worst sector, with four of five sub-dimensions at C. The Fund's own general-government debt measure sits 30.5 percentage points of GDP above China's official figure, and it builds that measure from commercial data vendors because the Board declined in 2024 to make the off-budget perimeter a mandatory reporting obligation.
 
 **The sharpest way to put it:** China meets the letter of what the IMF requires on fiscal data while leaving the Fund unable to see roughly a third of GDP in government debt. That is a deficiency in the requirements, not in the compliance — and the 2024 Review's item 13 is the first move to close it.
+
+---
+
+## 7. Source links — where to verify every line
+
+Each verdict row above carries a short link label. They resolve here.
+
+### IMF requirement texts
+
+| Label | Document | URL |
+|---|---|---|
+| `[AoA]` | IMF Articles of Agreement (current edition) | https://www.imf.org/external/pubs/ft/aa/pdf/aa.pdf |
+| `[Dec13183]` | Decision No. 13183-(04/10), Strengthening the Effectiveness of Article VIII, Section 5 | https://www.imf.org/en/publications/selected-decisions/description/13183-(04/10) |
+| `[Rev2024]` | Review of Data Provision to the Fund for Surveillance Purposes, Policy Paper 2024/016 (contains Decision 17692-(24/33) and the 27-item Annex A) | https://www.imf.org/en/Publications/Policy-Papers/Issues/2024/04/12/Review-of-Data-Provision-to-the-Fund-for-Surveillance-Purposes-547697 |
+| `[SDDSGuide]` | SDDS Guide for Subscribers and Users, 2013 edition — the operative prescriptions | https://dsbb.imf.org/content/pdfs/sddsguide13.pdf |
+
+### China's declared practice (IMF Dissemination Standards Bulletin Board)
+
+`dsbb.imf.org` is an AngularJS single-page app, so a plain fetch of a `/sdds/...` route returns only a template shell. The JSON API below is the reliable route and is **not** blocked to ordinary requests.
+
+| Label | What it shows | URL |
+|---|---|---|
+| `[DSBB-CHN]` | China's SDDS country page | https://dsbb.imf.org/sdds/country/CHN |
+| `[DSBB-GGO]` | General government operations metadata | https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/GGO00 |
+| `[DSBB-CGO]` | Central government operations metadata | https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGO00 |
+| `[DSBB-CGD]` | Central government debt metadata | https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00 |
+| `[DSBB-GGD]` | General government gross debt (encouraged category — China's record is essentially empty) | https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/GGD00 |
+| `[DSBB-ARC]` | China's advance release calendars, all categories | https://dsbb.imf.org/sdds/advance-release-calendar-base/country/CHN/category/ARC#baseGGO00 |
+| `[AR2025]` | China SDDS Annual Observance Report 2025 — the Fund's own scoring of 2025 | https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf |
+| `[NSDP]` | China's National Summary Data Page, maintained by the National Bureau of Statistics | http://www.stats.gov.cn/english/Statisticaldata/nsdp/201508/t20150819_1232260.html |
+| `[API]` | JSON API pattern for any category: swap `GGO00` for `CGO00`, `CGD00`, `GGD00` | https://dsbb.imf.org/api/report/getCountryCategoryBase?countryCode=CHN&countryType=SDDS&categoryCode=GGO00 |
+| `[API-Plus]` | SDDS Plus adherent list — confirms China is absent | https://dsbb.imf.org/api/country/getcountrybytype?countryType=SDDSPLUS |
+
+### The Article IV report
+
+| Label | What it shows | URL |
+|---|---|---|
+| `[CR2644]` | IMF Country Report No. 26/44, China 2025 Article IV — landing page | https://www.imf.org/en/publications/cr/issues/2026/02/17/peoples-republic-of-china-2025-article-iv-consultation-press-release-staff-report-and-574028 |
+| `[CR2644-pdf]` | The source PDF | https://www.imf.org/-/media/files/publications/cr/2026/english/1chnea2026001-source-pdf.pdf |
+| `[CR2644-T3]` | Annex VII **Table 3**, Common Indicators Required for Surveillance — "As of January 5th, 2026". PDF pages 97–98 | same PDF, Annex VII |
+| `[CR2644-T1]` | Annex VII **Table 1**, Data Adequacy Assessment heatmap | same PDF, Annex VII |
+| `[CR2644-A8]` | Appendix VIII, Data Annex — the government-finance gap narrative, ¶4–¶6 | same PDF, from PDF page 99 |
+
+**Fetching note.** imf.org returns an Akamai 403 to ordinary automated download. The `r.jina.ai` reader proxy **no longer works** on imf.org. What works as of 2026-10-19: Claude Code's WebFetch tool passes Akamai and saves the real file to disk — point it at the PDF, ignore the prose answer, take the saved path, run `pdftotext -layout` on it.
+
+### The Chinese releases behind §4's measurements
+
+| Label | Release | URL |
+|---|---|---|
+| `[MOF-monthly]` | 全国财政收支情况, the monthly fiscal release | https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhiqingkuang/ |
+| `[MOF-debt]` | 地方政府债券发行和债务余额情况, Debt Management Department | https://zwgls.mof.gov.cn/tjsj/ |
+| `[MOF-debt-yss]` | The same series, Budget Department, history through 2024 | https://yss.mof.gov.cn/zhuantilanmu/dfzgl/sjtj/ |
+| `[DebtCentre]` | 地方政府债券市场报告, China Government Debt Research and Evaluation Center | https://kjhx.mof.gov.cn/yjbg/ |
+| `[MOHRSS]` | 人力资源和社会保障主要统计快报数据 | https://www.mohrss.gov.cn/SYrlzyhshbzb/zwgk/szrs/tjsj/ |
+| `[CELMA]` | 中国地方政府债券信息公开平台, the MOF disclosure platform | https://www.celma.org.cn/ |
+
+### Reproducing §4 from this repository
+
+Every figure in §4 is computed from the archive in this repo, not asserted. To regenerate:
+
+| Measurement | Data | Builder |
+|---|---|---|
+| Monthly fiscal publication lags | `data/mof-reports/index.json` — `date` field against the period in each `title` | `scripts/fetch_fiscal.py` |
+| Debt-balance lags | `data/mof-debt-balance/raw*/` filenames carry the publication date as `tYYYYMMDD_` | `scripts/fetch_repayment.py` |
+| Bond-report lags, both editions | `data/mof-research-reports/catalog.json` — `date` against the period in `title` | `scripts/fetch_bonds.py` |
+| Social-insurance lags | `data/mohrss/catalog.json` | `scripts/parse_mohrss.py` |
+| Four-account coverage shares | `data/mof-reports/accounts_annual.json` + `data/mohrss/mohrss_series.json` | `scripts/parse_accounts.py` |
+| Official vs augmented debt | `imf-augmented.html`, reconciled to CR 26/44 Table 2 | — |
 
 ---
 
