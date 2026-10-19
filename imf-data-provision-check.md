@@ -1,410 +1,190 @@
-# China's fiscal data provision to the IMF — line-by-line verification
+# China's fiscal data against the IMF 2026 Operational Guidance Note
 
-*Prepared 2026-10-19. Checks China's fiscal data against the IMF's formal requirements as they stand today, using IMF primary sources plus publication lags measured from this repository's own archive.*
-
----
-
-## 0. How to read this, and the one distinction that governs everything
-
-Three different things get called "IMF data requirements." They have different legal force, different tests, and China sits in a different place on each. Conflating them is the most common error in this kind of check.
-
-| Regime | What it is | Enforceable? | Where the test lives |
-|---|---|---|---|
-| **A. Provision to the Fund** | Article VIII, Section 5 + Decision 13183-(04/10) Annex A | **Yes** — censure → ineligibility → suspension of voting rights → compulsory withdrawal | Left four columns of CR 26/44 Annex VII Table 3 |
-| **B. Publication via SDDS** | Voluntary subscription China joined 2015-10-07 | No — but observance is published annually | Right four columns of the same table, plus the DSBB |
-| **C. Adequacy for surveillance** | Staff judgment in the Article IV report | **No** — not an obligation at all | Annex VII Table 1 Data Adequacy Assessment |
-
-**The headline finding.** China is broadly compliant in regimes A and B. Almost every substantive criticism the Fund makes of Chinese fiscal data — the LGFV perimeter, the missing current/capital expenditure split, the legal rather than economic definition of hidden debt — lives in regime C, where **there is no requirement to breach**. A check that reports those as non-compliance is wrong. The one place the criticism is becoming an obligation is the 2024 Review's new Annex A item 13, covered in §1.2.
-
-A second trap: SDDS flexibility options legitimately move the goalposts, and the Article IV table does **not** reflect them (CR 26/44 Annex VII Table 3, footnote 7). The general-government row shows "2Q" expected against "NLT 7M" for China. That gap is **compliant**, not a breach, because the option is declared and justified.
-
-**Sources.** Requirements are from the IMF Articles of Agreement; Decision No. 13183-(04/10) as amended through No. 17692-(24/33); the *SDDS Guide for Subscribers and Users* (2013); the IMF Dissemination Standards Bulletin Board (`dsbb.imf.org`, including its JSON API); China's SDDS Annual Observance Report 2025; and IMF Country Report No. 26/44 (China 2025 Article IV, staff report completed 2026-01-28, Board 2026-02-13). Lag measurements are my own, computed from the release archive in this repository. Every line states which.
+*Verified 2026-10-19. Checks China's published fiscal data against the requirements of the current operational standard only. Every line names the Chinese data page that satisfies it, or records that none was found.*
 
 ---
 
-## 1. Regime A — Provision to the Fund (legally binding)
+## 1. What is being checked, and what is not
 
-### 1.1 The treaty itself contains no fiscal item
+**The standard.** *Data Provision to the Fund for Surveillance Purposes — Operational Guidance Note*, IMF Policy Paper No. **2026/001**, 16 January 2026, 67 pages. Its ¶2: *"This note supersedes the 2013 operational guidance note on data provision to the Fund for surveillance purposes."*
 
-| # | Requirement | Verified position | Verdict | Verify |
-|---|---|---|---|---|
-| A-1 | Article VIII §5(a) enumerates twelve categories a member must furnish | The list runs (i)–(xii) and contains **no government-finance item**. No revenue, no expenditure, no balance, no public debt. "National income" is item (viii). | **Not applicable** — the fiscal obligation is not in the treaty | [`[AoA]`](https://www.imf.org/external/pubs/ft/aa/pdf/aa.pdf) Art. VIII §5(a) |
-| A-2 | Article VIII §5(b): furnish "in as detailed and accurate a manner as is practicable and, so far as possible, to avoid mere estimates"; the Fund shall consider members' "varying ability" | Governs all provision. Decision 13183 ¶3: obligation is "to the best of its ability," and "the Fund will give the member the benefit of any doubt." | Standard of conduct, not a line item | [`[AoA]`](https://www.imf.org/external/pubs/ft/aa/pdf/aa.pdf) §5(b) · [`[Dec13183]`](https://www.imf.org/en/publications/selected-decisions/description/13183-(04/10)) ¶3 |
+- Landing page — https://www.imf.org/en/publications/policy-papers/issues/2026/01/16/data-provision-to-the-fund-for-surveillance-purposed-operational-guidance-note-573266
+- **Full text, unblocked, tables rendered as HTML** — https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml
 
-The IMF acknowledged the gap itself: PIN 04/10 states that the Article VIII §5 list "excluded some key categories of fiscal and monetary information." That is why the real obligation sits in the 2004 Decision.
+*(The IMF's own landing page, PDF metadata and URL slug read "Purposed"; the document header reads "Purposes.")*
 
-### 1.2 Decision 13183-(04/10) Annex A — the actual fiscal obligation
+**Scope.** This version checks **only** against the guidance note. An earlier draft also scored China against the SDDS dissemination standard and against the Article IV data-adequacy rating. Both are out: the SDDS is a voluntary publication subscription, and the adequacy rating is a staff judgment, not an obligation. Neither can produce a breach. They appear below only where they would otherwise be confused with the obligation.
 
-**Item 4 (the long-standing one), verbatim:** *"revenue, expenditure, balance and composition of financing (i.e., foreign financing and domestic bank and nonbank financing) for the general and central governments respectively; the stocks of central government and central government-guaranteed debt, including currency and maturity composition and, if the debt data are amenable to classification on the basis of the residency or nonresidency of the holder, the extent to which the debt is held by residents or nonresidents."*
+**The two tests.** For each required item the note sets a **frequency** and a **time lag**. The obligation is to *provide* data to the Fund. Provision is not public, so what can be checked from outside is whether China **publishes** data that would satisfy the requirement, and whether it does so inside the allowed lag. Where publication clears the bar, provision is very likely to as well. Where it does not, the item is recorded as unverifiable, not as a breach.
 
-Footnote 2 defines the perimeter: *"The general government consists of the central government (budgetary funds, extrabudgetary funds, and social security funds) and state and local governments."* CR 26/44 Annex VII Table 3 footnote 4 reproduces this word for word, so the obligation and the surveillance table use an identical perimeter.
+**One carve-out to keep in mind.** Appendix VII ¶1: *"The methodologies identified as the basis for the general understandings are not the only acceptable methodologies; countries would still meet their obligation if specific understandings are reached on the use of older international compilation manuals or sound national methodology, where adequate for surveillance."*
 
-| # | Component of item 4 | China's position, per CR 26/44 Table 3 | Verdict | Verify |
-|---|---|---|---|---|
-| A-3 | General government: revenue, expenditure, balance, composition of financing | Latest observation **2024**, received **September 2025**; frequency of data A, frequency of reporting A | **Met** — provided annually, as reported | [`[CR2644-T3]`](https://www.imf.org/-/media/files/publications/cr/2026/english/1chnea2026001-source-pdf.pdf) row 1, PDF p.97 |
-| A-4 | Central government: same four elements | Latest observation **November 2025**, received **December 2025**; M / M | **Met** | [`[CR2644-T3]`](https://www.imf.org/-/media/files/publications/cr/2026/english/1chnea2026001-source-pdf.pdf) row 2 |
-| A-5 | Stocks of central government and central government-guaranteed debt, incl. currency and maturity composition | Latest observation **2025Q3**, received **December 2025**; Q / Q | **Met** as reported to the Fund | [`[CR2644-T3]`](https://www.imf.org/-/media/files/publications/cr/2026/english/1chnea2026001-source-pdf.pdf) row 3 |
-| A-6 | Residency split of holders, where data are amenable | China declares resident/non-resident on its SDDS metadata (§2.4) | **Met** | [`[DSBB-CGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00) §5.1.1 |
+---
 
-**Caveat on A-3 to A-6.** These verdicts rest on the Fund's own record of what it received. Provision to the Fund is not public, so there is no independent way to audit it. No breach of Article VIII §5 has been declared against China; a declaration would be public under Decision 13183 ¶17.
+## 2. Item 4 — the standing fiscal obligation
 
-### 1.3 The 2024 Review added three new fiscal obligations — this is where the ground is moving
-
-Decision No. 17692-(24/33), 1 April 2024, expanded Annex A from 12 items to 27. **Items 13, 14 and 15 are all fiscal.**
-
-| # | New obligation | First reporting period | China's position | Verdict | Verify |
-|---|---|---|---|---|---|
-| A-7 | **Item 13** — total stock of **general government** debt | **2025** | Not addressed in CR 26/44; not covered by the DSBB, which governs publication rather than provision | **Could not verify** | [`[Rev2024]`](https://www.imf.org/en/Publications/Policy-Papers/Issues/2024/04/12/Review-of-Data-Provision-to-the-Fund-for-Surveillance-Purposes-547697) Annex A item 13 |
-| A-8 | Item 13 decomposition by maturity, currency, residency, covering ≥80% of the general-government debt stock | 2027 | Not yet due | Not yet due | [`[Rev2024]`](https://www.imf.org/en/Publications/Policy-Papers/Issues/2024/04/12/Review-of-Data-Provision-to-the-Fund-for-Surveillance-Purposes-547697) |
-| A-9 | **Item 14** — central and general government debt by creditor type, instrument, and individual multilateral and official bilateral creditors | 2027 | Not yet due | Not yet due | [`[Rev2024]`](https://www.imf.org/en/Publications/Policy-Papers/Issues/2024/04/12/Review-of-Data-Provision-to-the-Fund-for-Surveillance-Purposes-547697) |
-| A-10 | **Item 15** — liquid financial assets of central and general government | 2027 | Not yet due | Not yet due | [`[Rev2024]`](https://www.imf.org/en/Publications/Policy-Papers/Issues/2024/04/12/Review-of-Data-Provision-to-the-Fund-for-Surveillance-Purposes-547697) |
-
-**Item 13 is the live question.** A total general-government debt stock became a mandatory provision item with first reporting period 2025 — precisely the aggregate China does not publish (see B-10). Whether China has provided it privately to the Fund cannot be determined from public sources.
-
-**A structural gap in the monitoring.** CR 26/44's Table 3 has 16 rows: the 12 original Annex A items (item 4 expanding to three rows) plus international investment position and exchange rates. It therefore tracks **only items 1–12**. Items 13–15 appear nowhere in the version printed in CR 26/44. **The 2026 guidance note resolves this** (§1.4.5): the table has since been extended to carry item 13's headline and item 15, while item 14 and item 13's decompositions are tracked on an internal platform still under development. Anyone checking against the *current* obligation set still cannot rely on the published Article IV table alone.
-
-**What the Board declined to require**, from the 2024 staff report footnote 25: staff proposed mandatory provision of aggregated debt and profit/loss data on **non-financial public corporations**, and proposed including **general-government-guaranteed debt** in the mandatory perimeter. Directors raised concerns on both and neither was adopted. **LGFVs therefore remain outside the mandatory perimeter**, which is why the Fund's LGFV criticism cannot be a compliance finding.
-
-
-### 1.4 The 2026 Operational Guidance Note — the current operational standard
-
-**Citation.** *Data Provision to the Fund for Surveillance Purposes — Operational Guidance Note*, IMF Policy Paper No. 2026/001, **16 January 2026**, 67 pages. Its ¶2 states: *"This note supersedes the 2013 operational guidance note on data provision to the Fund for surveillance purposes."* Note the IMF's own typo: the landing page, PDF metadata and URL slug all read "Purposed," while the document header reads "Purposes."
-
-- Landing page: [`[GN2026]`](https://www.imf.org/en/publications/policy-papers/issues/2026/01/16/data-provision-to-the-fund-for-surveillance-purposed-operational-guidance-note-573266)
-- Full text, **reachable by plain request, tables rendered as HTML**: [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml)
-
-This note did not exist when the first pass of this check was written, and checking against it changes four things below.
-
-#### 1.4.1 Item 4 now has published periodicity and timeliness understandings — and China meets all three
-
-Appendix VII Table 1 publishes, for the first time in an operational Fund document, the general understandings governing the pre-2024 Annex A items. The fiscal row reads, verbatim:
+The note publishes, for the first time in an operational Fund document, the general understandings for the pre-2024 Annex A items. Appendix VII Table 1, fiscal row, verbatim:
 
 > **Frequency:** *"Quarterly for central government. Annually for general government and debt stocks"*
 > **Time lag:** *"Three months for central government. Three quarters for general government and debt stocks."*
 > **Methodology:** *"Government Finance Statistics Manual 2014 and Quarterly Government Finance Statistics-Guide for Compilers and Users."*
 
-Note what this corrects. Central-government **flows** are quarterly on a three-month lag. Central-government **debt stocks** are annual on a three-quarter lag — they group with general government, not with central-government flows. An earlier reading that attached a two-quarter lag to central government was taking a figure that actually belongs to the dissemination benchmark columns, not to the obligation.
+Note the grouping, which is easy to get wrong: **central-government debt stocks are annual on a three-quarter lag**, bracketed with general government, not with central-government flows. A two-quarter figure for central government does appear in the Fund's surveillance table, but that is a dissemination benchmark, not this obligation.
 
-| # | Item 4 element | Understanding | China provides (CR 26/44 Table 3) | Lag achieved | Verdict | Verify |
+Reference period for the annual items is calendar 2025, ending 2025-12-31. Three quarters runs to about 2026-09-30; three months, for the quarterly item, to about 91 days after each quarter end.
+
+### 2.1 Flows
+
+| # | Required | Frequency / lag | Chinese data page | Published | Lag | Verdict |
 |---|---|---|---|---|---|---|
-| A-11 | Central government flows | Quarterly, 3-month lag | **Monthly**; Nov 2025 observation received Dec 2025 | **31 days** vs ~91 allowed | **Exceeds** on both frequency and lag | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) App. VII Tbl 1 |
-| A-12 | General government flows | Annual, 3-quarter lag | Annual; 2024 observation received September 2025 | **273 days** vs ~273 allowed | **Meets, exactly at the limit** | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) App. VII Tbl 1 |
-| A-13 | Central government and CG-guaranteed debt stocks | Annual, 3-quarter lag | **Quarterly**; 2025Q3 observation received Dec 2025 | **92 days** vs ~273 allowed | **Exceeds** on both | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) App. VII Tbl 1 |
+| 1 | **Central government** revenue and expenditure | Quarterly / 3 months | [全国财政收支情况 — monthly, with central and local split](https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhiqingkuang/) | Monthly | **19 d** median, max 24 d across 13 releases since 2024-01 | **Met, exceeded** — monthly against quarterly, 19 days against 91 |
+| 2 | Central government, annual confirmation | — | [2025年中央一般公共预算支出决算表](http://yss.mof.gov.cn/2025zyjs/202607/t20260716_3993603.htm) · [收入决算表](http://yss.mof.gov.cn/2025zyjs/202607/t20260716_3993605.htm) | 2026-07-16 | 197 d | **Met** |
+| 3 | **General government** revenue and expenditure | Annual / 3 quarters | [2025年全国一般公共预算支出决算表](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997526.htm) · [收入决算表](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997529.htm) | **2026-09-16** | **259 d** | **Met, 14 days to spare** |
+| 4 | General government — the other three accounts, needed for the full perimeter | Annual / 3 quarters | [政府性基金支出](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997520.htm) · [国有资本经营支出](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997514.htm) · [社会保险基金支出](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997510.htm) · [社保基金结余](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997508.htm) | 2026-09-16 | 259 d | **Met** — all four accounts present |
 
-**A-12 deserves a flag.** China's general-government provision lands on the allowance almost to the day. There is no margin, so any slippage becomes a breach rather than a near miss. The guidance note is explicit that *"the 'late provision' of information is considered a category of nonprovision of information"* (¶24).
+**Line 3 is the binding one and it is tight.** China's general-government final accounts cleared the three-quarter allowance by about two weeks. The note is explicit that *"the 'late provision' of information is considered a category of nonprovision of information"* (¶24), so there is no grace beyond the lag.
 
-#### 1.4.2 Items 13 to 15, operationalised
+**Worth separating from the verdict.** The central-government accounts appeared two months earlier, on 2026-07-15/16, with the national and local tables following on 2026-09-16. Under this obligation only the later date matters, and it passes. Under China's *separate* SDDS publication commitment of not later than seven months, the same date was about 47 days late. That is a dissemination matter, outside this check, and is noted only so the two are not conflated.
 
-Appendix VII Table 2 unpacks the three Annex A lines into eight reporting lines, all annual. Item 13's headline carries a three-quarter lag. Items 14 and 15 carry **three quarters for general government and two quarters for central government**.
+### 2.2 Financing composition
 
-The 80% coverage threshold is defined precisely: the denominator is total gross debt at the relevant level of government **excluding guaranteed debt**, measured separately for central and general government, tested **each reporting year**. The uncovered remainder is not a free pass — the member must still state what instrument types or which issuing government units it consists of.
+The note requires, for each of central and general government: *net lending (+)/net borrowing (−)*, *net acquisition of financial assets (Domestic, External)*, and *net incurrence of liabilities (Domestic, External)*.
 
-| # | Requirement | China's position | Verdict | Verify |
-|---|---|---|---|---|
-| A-14 | Item 13 headline — total general government debt stock, annual, 3-quarter lag, first reporting period **2025** | Provision is not public. China publishes no general-government debt aggregate (see B-4) | **Could not verify** | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) App. VII Tbl 2 |
-| A-15 | Capacity defence available even for a first reporting period | Table 2 footnote: first reporting applies *"except when capacity limitations prevent them from doing so. In these circumstances, members would be expected to improve their statistical reporting systems over time."* | Escape valve exists | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) App. VII Tbl 2 fn |
-| A-16 | Central-government-first ramp permitted where capacity constrains | Footnote 2: members able to report only at central level *"would be expected to expand capacity to cover the general government over time"* | Escape valve exists | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) App. VII Tbl 2 fn 2 |
-| A-17 | Country-specific understandings may replace the general ones | ¶30: specific understandings may offer *"longer lags or less frequent provision … so long as the frequency and lag are still sufficient"*; written register with SPR, STA and LEG; existing ones to be documented by **end-2026** | Whether China has any is **not public** | [`[GN2026-xml]`](https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml) ¶30 |
+| # | Required | Chinese data page | Verdict |
+|---|---|---|---|
+| 5 | Net lending / net borrowing | Derivable from the revenue and expenditure 决算 tables above; the headline deficit is set out in the NPC budget report | **Met in substance** — the balance is published, though not labelled in GFSM terms |
+| 6 | Net acquisition of financial assets, split domestic and external | **No page found** presenting this as a GFSM-form series | **Could not verify** |
+| 7 | Net incurrence of liabilities, split domestic and external | Debt stocks carry a domestic/external split (line 9), but a **flow** presentation on a GFSM basis was **not found** | **Could not verify** |
 
-**A-15 to A-17 matter for interpretation.** Two distinct escape valves exist: the capacity defence, which means no breach at all, and a negotiated specific understanding, which changes what is owed. Neither is published per country, so no outside observer can know China's true benchmark with certainty.
+Lines 6 and 7 are the clearest gap this check can see. China's final accounts are presented on its own budget basis — four accounts, revenue and expenditure — not as a GFSM analytic statement with an above-the-line balance and a below-the-line financing split. Whether China supplies the Fund with a GFSM-form financing breakdown privately cannot be determined from outside. The note's carve-out for *"sound national methodology, where adequate for surveillance"* may well cover the presentation difference; it does not make the series visible to an outside checker.
 
-#### 1.4.3 LGFVs: the note is silent, which settles the point
+### 2.3 Debt stocks
 
-A full-text search of the 67-page note returns **zero** occurrences of "public corporation," "nonfinancial public," "state-owned," "SOE," "public sector debt" or "financing vehicle." The mandatory perimeter is stated three times as general government per the 2004 Decision and nothing wider.
-
-The only adjacent language sits in the **data adequacy questionnaire**, not the obligation: *"Is the coverage of government operations and debt statistics sufficiently comprehensive for the team's analysis … including risks from quasi-fiscal activities?"* That is regime C again.
-
-One further provision reinforces this. ¶26: *"Since the obligation to provide data lies with the member, **staff should not be the source of the data**; staff may assist the authorities to estimate required data only when capacity constraints prevent the member from fulfilling its obligation."* The Fund's augmented aggregates, built from WIND and Zero2IPO, are therefore staff estimates supplementing its own analysis — not data China is obliged to supply, and not a measure against which China can be found in breach.
-
-#### 1.4.4 A hard escalation clock, which is new
-
-¶33–34 impose a timetable the 2004 and 2024 Decisions did not: one month for the area department to escalate internally; four months at the staff due-diligence stage; a further six months at the pre-letter stage; two months for the Managing Director's letter. Target overall is twelve months, with an absolute cap: *"all steps to the conclusion of the Letter Stage … should not exceed 18 months."* Where staff judge non-compliance is *"due to unwillingness rather than inability,"* the steps compress. SPR owns the timeline.
-
-Management involvement is triggered specifically by moving from step 1 to step 2. The note also closes a loophole on accuracy: supplying correct data does **not** resolve an inaccuracy case unless the inaccuracy was capacity-driven (¶35).
-
-**No step has been triggered against China on fiscal data**, so far as any public record shows.
-
-#### 1.4.5 How items 13 to 15 are monitored — my earlier open question, answered
-
-¶8 states the surveillance table *"has been extended to include a select number of newly required indicators from the 2024 Review."* Reading the new template, the fiscal position is:
-
-| New indicator | In the published surveillance table? |
-|---|---|
-| Item 13 headline — total general government debt stock | **Yes** |
-| Item 15 — liquid financial assets | **Yes** |
-| Item 13 decompositions by maturity, currency, residency | **No** |
-| Item 14 in any form | **No** |
-
-What covers the rest, from footnote 38: *"A platform currently under development for the DAA will be expanded to allow country teams to comprehensively record and monitor members' compliance with data provision obligations under Article VIII, Section 5 … completing this process for each member would ideally be done in parallel during the completion of the TCIRS form."*
-
-So monitoring runs on two tracks, and **the fuller one is internal and not published**. The note does not say it ever will be. For an outside observer this caps what can be verified about regime A: the published table shows part, an unbuilt internal system is to hold the rest.
-
-One further detail worth knowing: the new table's footnote 4 records that the total general government debt stock is *"required for SDDS Plus countries and encouraged for SDDS and e-GDDS countries."* China is SDDS, not SDDS Plus, so **publishing** that aggregate is encouraged rather than required — while **providing** it to the Fund became mandatory with reporting year 2025. The two regimes point opposite ways on the same number.
-
----
-
-## 2. Regime B — SDDS publication (voluntary, observance published)
-
-China subscribed on **2015-10-07**, confirmed three ways: Press Release 15/466, the DSBB API field `SubscriptionDate`, and China's 2025 Annual Observance Report. **China is not an SDDS Plus adherent** — the API returns 32 adherents and China is not among them.
-
-### 2.1 The four fiscal data categories
-
-*Prescriptions from the SDDS Guide (2013) ¶1.10 and ¶4.2. China's practice from the DSBB API and corroborated independently by CR 26/44 Table 3 — two sources, identical values.*
-
-| # | Category | Prescribed periodicity | Prescribed timeliness | China declares | Verdict | Verify |
+| # | Required | Frequency / lag | Chinese data page | Published | Lag | Verdict |
 |---|---|---|---|---|---|---|
-| B-1 | General government operations | Annual | **Two quarters** | A / **NLT 7 months** | **Met via declared flexibility option** | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.2 · [`[DSBB-GGO]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/GGO00) |
-| B-2 | Central government operations | **Monthly** | **One month** | M / **25 days** | **Met, with margin** | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.2 · [`[DSBB-CGO]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGO00) |
-| B-3 | Central government debt | **Quarterly** | **One quarter** | Q / 1Q | **Met, exactly, no margin** | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.2 · [`[DSBB-CGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00) |
-| B-4 | General government gross debt | Quarterly *(encouraged)* | 4 months *(encouraged)* | **Nothing declared** | **Not a breach** — encouraged only | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶1.10 · [`[DSBB-GGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/GGD00) |
+| 8 | **Central government debt stock** | Annual / 3 quarters | [2025年中央财政国债余额情况表](http://yss.mof.gov.cn/2025zyjs/202607/t20260715_3993587.htm) · [说明](http://yss.mof.gov.cn/2025zyjs/202607/t20260715_3993586.htm) | 2026-07-15 | **197 d** | **Met, comfortably** |
+| 9 | Composition **by currency** | Annual / 3 quarters | Same table — carries an explicit 内债 / 外债 (domestic / external) split | 2026-07-15 | 197 d | **Met** |
+| 10 | Composition **by maturity** | Annual / 3 quarters | **Not found** in the 决算 table. Remaining maturity for *local* government debt appears in the monthly [地方政府债券发行和债务余额情况](https://zwgls.mof.gov.cn/tjsj/) release; no equivalent located for central government debt | — | — | **Could not verify** |
+| 11 | Holdings by **residents / non-residents** | Annual / 3 quarters | The 内债/外债 split is by place of issue, not holder residency. Holder residency for central government bonds is published monthly by the central depository — 债券托管量统计月报, 境外机构 line, at [chinabond.com.cn](https://www.chinabond.com.cn/zzsj/zzsj_tjsj/tjsj_tjyb/) — a different publisher and a market rather than fiscal source | Monthly | — | **Partially met** — the data exists and is official, but not in the ministry's fiscal release |
+| 12 | **Central-government-guaranteed** debt stock | Annual / 3 quarters | **No page found** publishing a guaranteed-debt stock as a distinct series | — | — | **Could not verify** |
 
-**On B-1.** The flexibility option is properly taken and justified. China's declared reason, verbatim from its DSBB metadata: *"According to the Budget Law, the Ministry of Finance is allowed to publish central government and national final revenue and expenditure data for the previous year after approval by the NPC, which generally occurs in the middle of July."* The SDDS Guide ¶2.26 requires a justification; one is on file. **Do not score the 2Q-versus-7M gap as non-compliance.**
+**On line 11.** The note conditions the residency split on the data being *"amenable to classification on the basis of the residency or nonresidency of the holder."* For Chinese central government bonds it plainly is, since the central depository publishes it monthly. The condition is therefore satisfied even though the figure sits outside the ministry's own release.
 
-**On the flexibility budget.** The SDDS permits **two** regular flexibility options across all sectors combined, not two per sector. China has taken three option-slots across two categories: labour market employment (periodicity), labour market wages (periodicity and timeliness), and GGO (timeliness). Whether labour market counts as one category or two is genuinely ambiguous in the Guide; the 2025 Observance Report raises no concern, implying the one-category reading. Either way **China has no headroom to relax CGO or CGD.**
+### 2.4 Methodological basis
 
-### 2.2 Prescribed components
-
-| # | Requirement | China's position | Verdict | Verify |
-|---|---|---|---|---|
-| B-5 | GGO/CGO financing disaggregated into domestic (bank, nonbank) and foreign; the maturity-plus-instrument-or-currency fallback applies only **if that split is "not feasible"** | The NSDP general-government row shows **no bank/nonbank split**; China uses the fallback but declares **no infeasibility justification** | **Technically unsatisfied condition.** The 2025 Observance Report ¶9 records China as meeting coverage for all categories, so the Fund accepts it. Flagged, not scored as breach | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) Table 2.1 · [`[NSDP]`](http://www.stats.gov.cn/english/Statisticaldata/nsdp/201508/t20150819_1232260.html) |
-| B-6 | Central government debt disaggregated by maturity **and** at least one of residency, instrument, or currency | China declares **all four**: maturity, residency, instrument, currency | **Exceeds requirement** | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) Table 2.1 · [`[DSBB-CGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00) |
-| B-7 | Guide ¶4.32 — state whether maturity is **residual or original** | Metadata silent | **Not met** (disclosure requirement) | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.32 · [`[DSBB-CGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00) |
-| B-8 | Guide ¶4.31 — state whether CGD coverage is identical to CGO coverage | Metadata silent | **Not met** (disclosure requirement) | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.31 · [`[DSBB-CGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00) |
-| B-9 | Guide ¶4.19 — describe which central government units CGO covers and excludes | Metadata says only "the monthly accounting statement of the central government" | **Not met** (disclosure requirement) | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.19 · [`[DSBB-CGO]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGO00) |
-| B-10 | Non-central-government debt guaranteed by central government, "as relevant" | No guaranteed-debt line anywhere; the 2025 Observance Report ¶8 states China took **no "as relevant" coverage flexibility options**, so the omission is undeclared | **Undeclared omission** | [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶8 · [`[DSBB-CGD]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00) |
-
-B-7 through B-9 are small but real: each is an explicit metadata obligation in the Guide that China's filing does not satisfy.
-
-### 2.3 Advance release calendars
-
-Guide ¶8.6: ARCs are **required for all prescribed categories**, which includes all three prescribed fiscal ones. The ARC flexibility option **was phased out at end-2017**, so since January 2018 the "Friday rule" applies with no escape.
-
-| # | Requirement | China's position | Verdict | Verify |
-|---|---|---|---|---|
-| B-11 | ARC for general government operations | **None provided.** All 13 ARC month slots null. The 2025 Annual Observance Report ¶7 names GGO explicitly among categories where China did not meet the ARC requirement | **NOT MET — a current, Fund-flagged non-observance on a fiscal category** | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶8.6 · [`[DSBB-ARC]`](https://dsbb.imf.org/sdds/advance-release-calendar-base/country/CHN/category/ARC#baseGGO00) · [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶7 |
-| B-12 | ARC for central government operations | Provided (26 Sep 2026, 25 Oct 2026, 25 Nov 2026) | **Met** | [`[DSBB-ARC]`](https://dsbb.imf.org/sdds/advance-release-calendar-base/country/CHN/category/ARC#baseGGO00) |
-| B-13 | ARC for central government debt | Provided | **Met** | [`[DSBB-ARC]`](https://dsbb.imf.org/sdds/advance-release-calendar-base/country/CHN/category/ARC#baseGGO00) |
-
-**B-11 is the clearest single failure in this entire check.** It is a prescribed requirement, on a fiscal category, with no flexibility option available, currently flagged by the Fund in a published report.
-
-### 2.4 Observance during 2025
-
-| # | Test | Result | Verdict | Verify |
-|---|---|---|---|---|
-| B-14 | CGO timeliness met every month | **No** — missed for the September reference month by 3 days | **Not met in 2025** | [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶13 |
-| B-15 | CGO punctual against its own ARC | **No** — 3 days and 7 days late on two occasions | **Not met in 2025** | [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶14 |
-| B-16 | GGO punctual against ARC | Listed among non-punctual categories | **Not met in 2025** | [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶14 |
-| B-17 | GGO timeliness met | Yes, judged against the NLT 7M flexibility | **Met** | [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶13 |
-| B-18 | CGD timeliness and punctuality | Met all four quarters | **Met** | [`[AR2025]`](https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf) ¶13–14 |
-
-### 2.5 Methodological basis
-
-| # | Requirement | China's position | Verdict | Verify |
-|---|---|---|---|---|
-| B-19 | SDDS **encourages** GFSM 2001 classification; GFSM 1986 presentation remains compliant | China uses **GFSM 1986** | **Compliant** — the newer framework is encouraged, not prescribed | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.4 · [`[DSBB-GGO]`](https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/GGO00) |
-| B-20 | Guide ¶4.20 — budget projections "do not conform to the Standard"; data must be actual or preliminary actual | No indication China disseminates projections as actuals | **Met** | [`[SDDSGuide]`](https://dsbb.imf.org/content/pdfs/sddsguide13.pdf) ¶4.20 |
-
-The SDDS fiscal prescription has **never been updated to GFSM 2014** — neither the 2013 nor the 2007 edition of the Guide mentions it. So China's use of a 1986-vintage framework, while a genuine analytical limitation, is not an SDDS breach.
+| # | Required | China's position | Verdict |
+|---|---|---|---|
+| 13 | GFSM 2014 and the Quarterly GFS Guide as the basis | Chinese final accounts follow the national four-account budget classification, not a GFSM analytic presentation. Appendix III lists GFSM 2014 as *preferred* and GFSM 2001 as acceptable; Appendix VII ¶1 allows *"sound national methodology, where adequate for surveillance"* where a specific understanding exists | **Not a breach on its face** — the note states a preference, not a requirement. Whether a specific understanding is on file is **not public** |
 
 ---
 
-## 3. Regime C — Adequacy for surveillance (staff judgment, not an obligation)
+## 3. Items 13 to 15 — the obligations added in 2024
 
-From CR 26/44 Annex VII Table 1. Scale: A adequate; B some shortcomings but broadly adequate; C shortcomings that somewhat hamper surveillance; D serious shortcomings that significantly hamper surveillance.
+Appendix VII Table 2 unpacks the three Annex A lines into eight reporting lines, all annual. Item 13's headline carries a three-quarter lag; items 14 and 15 carry three quarters for general government and two quarters for central government.
 
-| Dimension | Rating |
-|---|---|
-| **Overall data adequacy** | **B** |
-| National accounts | C |
-| Prices | B |
-| **Government finance statistics** | **C** |
-| External sector | B |
-| Monetary and financial | B |
-| Inter-sectoral consistency | B |
+### 3.1 Item 13 — total stock of general government debt, first reporting period **2025**
 
-**Government finance statistics, by sub-dimension:**
+Definition, verbatim: *"Total stock of debt … refers to total gross debt consisting of all liabilities that are debt instruments … SDRs; Currency and deposits; Debt securities; Loans; Insurance, pension, and standardized guarantee schemes; Other accounts payable."* Perimeter is general government per the 2004 Decision: central government including extrabudgetary and social security funds, plus state and local governments.
 
-| Sub-dimension | Rating |
-|---|---|
-| Coverage | **C** |
-| Granularity — government operations | **C** |
-| Granularity — public debt statistics | **A** |
-| Consistency | **C** |
-| Frequency and timeliness | **C** |
-
-Government finance statistics is the joint-worst sector in the assessment, tied with national accounts. Four of its five sub-dimensions are C. The single A, on public-debt granularity, is a recent upgrade that the report attributes to "the availability of the breakdown of official government debt figures, covering both local and central governments."
-
-**Note the tension between regimes.** Frequency and timeliness is rated **C** here, while regime B shows China meeting or beating every prescribed fiscal periodicity and timeliness test except the September CGO miss. These are not contradictory: regime B tests against the SDDS prescription, regime C asks whether the data are good enough for the Fund's analytical purpose. A country can satisfy the standard and still leave the Fund short.
-
-### 3.1 What the Fund actually objects to
-
-Verbatim from the staff assessment: *"The main areas of concern relate to national accounts data and government finance statistics. … For fiscal data, long-standing data gaps include general government data with a breakdown of expenditure by economic type (current and capital expenditure) as well as the data on off-budget entities (including LGFVs) that meet the statistical criteria for inclusion within the perimeter of the general government. The authorities have made progress and published estimates of hidden debt as of end-2023, but they are based on a legal definition not aligned with GFS."*
-
-From Appendix VIII ¶4: China's official general government is the four accounts — general public budget, government-managed fund, state capital operations, social insurance fund. *"These accounts exclude off-budget entities such as local government financial vehicles (LGFVs), government-guided funds (GGFs), and special construction funds. Furthermore, even the official accounts data does not provide a breakdown of expenditure by economic type."*
-
-From Appendix VIII ¶5: *"the MoF definition of hidden debt is based on legal criteria rather than an economic one, and the authorities have not published a full time series for hidden debt, nor have they provided above-the-line estimates of fiscal stance that is consistent with the debt data. Furthermore, staff estimates of off-budget LGFV debt … are more than three times the official figures for hidden debt."*
-
-**A discrepancy inside the report.** Appendix VIII ¶5 says staff LGFV estimates are "more than three times" the official hidden-debt figure; main-text ¶67 says "about four times." Both are in CR 26/44. Quote with care.
-
-### 3.2 How large the perimeter gap is, in the Fund's own numbers
-
-From CR 26/44 Table 2, as reconciled on this repository's `imf-augmented.html`, for 2025, percent of GDP:
-
-| Measure | 2025 | Gap to official |
-|---|---|---|
-| Official (central + local government debt) | 68.4 | — |
-| IMF / WEO general government (adds ≈⅔ of LGFV debt) | 98.9 | +30.5 |
-| IMF augmented (adds remaining LGFV, guided and special-construction funds) | 126.6 | +58.2 |
-
-The Fund's own general-government measure is **30.5 percentage points of GDP above** what China reports as government debt. Officially recognised hidden debt was RMB 14.3tn at end-2023, falling to RMB 10.5tn at end-2024 largely through debt swaps.
-
-**Why this is not a compliance finding.** The Board declined in April 2024 to bring non-financial public corporations or government-guaranteed debt into the mandatory perimeter (§1.3). The Fund therefore builds its augmented aggregates from commercial sources — WIND for LGFV liabilities, Zero2IPO for guided funds — rather than from data China is obliged to supply. The report says so: *"The fiscal data used in the Article IV consultation supplements the official GFS statistics with Staff estimates … from WIND and Zero2IPO."*
-
-### 3.3 Corrective actions
-
-The report's entire "Corrective actions and capacity development priorities" entry, verbatim: *"The authorities reiterated their commitment to improve data quality, including through collaboration with the Fund."*
-
-No remedial action is required or scheduled. Two IMF–MOF technical cooperation engagements on government finance statistics took place in April and July 2024, which is relevant to the Article VIII §5 standard that members are "obliged to improve their statistical reporting capacity over time."
-
-**There is no data ROSC for China.** The 2025 Observance Report ¶17 states China has never received a Data module Report on Observance of Standards and Codes mission.
-
----
-
-## 4. Independent check — publication lags measured from this archive
-
-The sections above rest on what the IMF and China declare. This section tests the declarations against the actual release record held in this repository. Lags are days from the end of the reference period to publication, for releases since January 2024.
-
-| Release | Periodicity | n | Median lag | Range | Bears on |
+| # | Required | Chinese data page | Published | Lag | Verdict |
 |---|---|---|---|---|---|
-| MOF 全国财政收支情况 (national fiscal revenue and expenditure) | Monthly | 13 | **19 d** | 14–24 | B-2 |
-| MOF 地方政府债券发行和债务余额情况 (local government debt) | Monthly | 32 | **31 d** | 24–45 | Beyond SDDS |
-| Debt Center 地方政府债券市场报告, Chinese | Monthly | 31 | **39 d** | 30–112 | Beyond SDDS |
-| Same report, English translation | Monthly | 25 | **48 d** | 37–75 | Beyond SDDS |
-| MOHRSS social insurance bulletin | Monthly | 30 | **29 d** | 22–39 | Beyond SDDS |
+| 14 | Total general government debt stock, annual, 3-quarter lag, **first year 2025** | **Components** are published: [central government debt](http://yss.mof.gov.cn/2025zyjs/202607/t20260715_3993587.htm) + [local general debt](http://yss.mof.gov.cn/2025zyjs/202607/t20260715_3993585.htm) + [local special debt](http://yss.mof.gov.cn/2025zyjs/202607/t20260715_3993577.htm) | 2026-07-15 | 197 d | **Components met on timing.** A consolidated total is **not given in these tables** — it has to be summed |
+| 15 | A single published general-government debt total | China does publish one, but in a different document: 国务院关于年度政府债务管理情况的报告 to the NPC Standing Committee. The [2024 edition](https://zwgls.mof.gov.cn/gzdt/202511/t20251102_3975538.htm) states 全国政府法定债务余额 82.1 万亿元. **The 2025 edition had not appeared** on the ministry's listing as of 2026-10-19 | — | — | **Could not verify for 2025** |
+| 16 | Decomposition by maturity, currency, residency, ≥80% coverage | Not due until **2027** | — | — | **Not yet due** |
 
-**Finding 1 — China publishes faster than it declares.** Its SDDS commitment for central government operations is 25 days; the measured median is **19 days**, with the slowest of 13 releases at 24 days. Every observed release since January 2024 fell within the declared 25-day commitment. This is consistent with CR 26/44's "25D" entry and does not contradict the one 2025 timeliness miss, which the Fund records for the September reference month.
+**Item 13 is the live question and it is genuinely open.** The components are published well inside the allowance. Whether China has furnished the Fund with a consolidated general-government total for 2025 cannot be established: provision is not public, the consolidated figure appears only in an annual report not yet published for 2025, and the internal system meant to record compliance with item 13 is, per the note's own footnote 38, *"currently under development."*
 
-**Finding 2 — the monthly release does not cover general government.** The monthly report carries two of China's four budget accounts. Measured against 2025 expenditure:
+### 3.2 Items 14 and 15
 
-| Component | Share of general government | Monthly release? |
-|---|---|---|
-| General public budget | 55.9% | Yes — MOF |
-| Government-managed fund | 22.0% | Yes — MOF |
-| Four social insurance schemes | 15.7% | Yes — MOHRSS, separate publisher |
-| Medical insurance | 5.9% | **No** |
-| State capital operations | 0.5% | **No** — annual only |
+| # | Required | First period | Verdict |
+|---|---|---|---|
+| 17 | Item 14 — debt by creditor type, by instrument, and by individual multilateral and official bilateral creditors where those exceed 20% of the stock | 2027 | **Not yet due** |
+| 18 | Item 15 — liquid financial assets of central and general government | 2027 | **Not yet due** |
 
-So **93.6%** of general-government expenditure has some monthly release and **6.4%** has none. The medical-insurance gap dates from the scheme moving to the National Healthcare Security Administration in 2018, after which it left the MOHRSS table. This is not an SDDS breach — SDDS prescribes monthly data for *central* government operations only, and general government annually — but it quantifies why the Fund rates coverage and frequency C.
+On item 14's 20% trigger, China looks unlikely to cross it: its government debt is overwhelmingly domestically held and market-issued rather than owed to multilateral or official bilateral creditors, and on the 国债余额 table external debt is a low single-digit share of the central stock. That is an observation, not a verdict, since the test applies per reporting year from 2027.
 
-*Precision note: the ~11.14tn full social-insurance account used as the denominator is an approximate figure carried in this repository, not a precisely sourced one, so these shares are good to about one percentage point.*
+### 3.3 The 80% coverage rule, for when it bites in 2027
 
-**Finding 3 — much of what China publishes is beyond anything the IMF requires.** Monthly local-government debt stock by province, monthly bond issuance by issuer and instrument, and per-province statutory debt-limit filings all exceed SDDS prescriptions, which ask only for quarterly *central* government debt. The 2026 provincial issuance series in this repository, covering all 37 issuers, has no counterpart in any IMF requirement.
+Denominator is total gross debt at the relevant level of government **excluding guaranteed debt**, tested separately for central and general government, **each reporting year**. The uncovered remainder is not a free pass: the member must still state what instrument types or which issuing government units it consists of.
+
+China is unusually well placed here. It already publishes local government debt by province monthly, and the provincial statutory filings give debt limits and balances by issuing unit — precisely the residual disclosure the rule asks for.
 
 ---
 
-## 5. Open items I could not verify
+## 4. Procedural requirements
 
-Listed so they are not mistaken for findings.
-
-1. **Item 13 provision (A-7).** Whether China has furnished a total general-government debt stock to the Fund, mandatory from reporting year 2025. Provision is not public; CR 26/44 is silent; the DSBB governs a different obligation.
-2. ~~**How items 13–15 are monitored.**~~ **RESOLVED** by the 2026 guidance note — see §1.4.5. The surveillance table now carries item 13's headline and item 15; item 14 and the item-13 decompositions go to an internal platform still under development. What remains unverifiable is the internal record itself, which is not published.
-3. **The stale general-government entry on the NSDP.** China's National Summary Data Page carries a last-update date of 2026-10-19 while its newest general-government observation is **2024**. Under China's own NLT 7M flexibility, 2025 data were due by end-July 2026 — an apparent slip of about two and a half months. The *fact* is verified; the *cause* is not. It could be an NSDP posting lag rather than non-publication by MOF. I could not resolve it from this archive: the repository scrapes only MOF's monthly topic page, which does not carry the annual final accounts (决算), and I could not locate the final-accounts column on the MOF site in the time available. **Resolving this is the single highest-value follow-up**, because if MOF did not publish by end-July 2026 it is a genuine breach of China's own declared flexibility terms.
-4. **Whether China's central-government-debt maturity split is residual or original** (B-7), **whether CGD coverage matches CGO** (B-8), and **which central government units CGO covers** (B-9). All three are metadata silences, which is itself the finding.
-5. **The flexibility-option count** (§2.1). Whether labour market is one category or two determines whether China is at two of two or three of two. The Guide does not resolve it.
-6. ~~**The periodicity and timeliness understanding attached to Annex A item 4.**~~ **RESOLVED** by the 2026 guidance note — see §1.4.1. Quarterly on a three-month lag for central-government flows; annual on a three-quarter lag for general-government flows and for debt stocks. China meets all three, though general government lands exactly on the limit with no margin.
-
-8. **Whether China has any country-specific understandings** under ¶30 that replace the general ones, and whether it has invoked the capacity defence on any fiscal item. Neither is published per country, so the true benchmark cannot be known from outside.
-9. **Whether China has provided item 13** is doubly unverifiable: provision is not public, and the internal compliance record that would track it does not yet exist.
-7. **Whether the social-insurance series gap is China's or ours.** This repository's series stops at 2026-06, but the ministry's site does not answer automated requests and this project deliberately ships no bypass, so I could not establish what has been published since. **Do not read our gap as a Chinese publication failure.**
+| # | Requirement | Position | Verdict |
+|---|---|---|---|
+| 19 | Capacity defence — no breach where capacity genuinely prevents provision; assessed by the area department with STA and SPR, *"benefit of any doubt"* to the member (¶25) | Whether China has invoked it on any fiscal item is **not published** | **Not public** |
+| 20 | Country-specific understandings may replace the general ones, including *"longer lags or less frequent provision"*; written register with SPR, STA and LEG; pre-existing ones to be documented by **end-2026** (¶30) | Whether China has any is **not published** | **Not public** |
+| 21 | Manner of provision — publication on a government website counts, if staff can access it and an understanding is in place. Commercial providers such as Haver or Bloomberg **do not** discharge the obligation (¶31, fn 35) | The ministry pages cited throughout this check are publicly accessible | Satisfiable by publication |
+| 22 | Late provision counts as nonprovision (¶24) | Bears directly on line 3, which cleared by 14 days | Noted |
+| 23 | Escalation clock — 1 month to escalate internally, 4 months at due diligence, 6 at pre-letter, 2 for the Managing Director's letter; 12-month target, **18-month cap**; compressed where non-compliance is *"due to unwillingness rather than inability"*; SPR owns the timeline (¶33–34) | **No step is known to have been triggered** against China on fiscal data | No action on record |
+| 24 | Staff may not substitute for the member: *"staff should not be the source of the data"* (¶26) | The Fund's augmented debt aggregates are built from WIND and Zero2IPO. They are staff estimates supplementing staff analysis, **not** data China is obliged to supply | Confirms the LGFV figures sit outside the obligation |
 
 ---
 
-## 6. Bottom line
+## 5. The perimeter question, settled by silence
 
-**On the binding obligation (regime A): compliant so far as can be established, and now measurable.** The 2026 guidance note published the periodicity and timeliness understandings for Annex A item 4 for the first time, so these verdicts no longer rest on inference. China **exceeds** the requirement on central-government flows and on central-government debt stocks, and **meets** it on general-government flows — the last of these exactly on the three-quarter limit, with no margin, in a regime where late provision counts as nonprovision. No breach has been declared, and a declaration would be public.
+A full-text search of the 67-page note returns **zero** occurrences of "public corporation," "nonfinancial public," "non-financial public," "state-owned," "SOE," "public sector debt" or "financing vehicle."
 
-The genuine unknown is item 13, the total general-government debt stock, mandatory from reporting year 2025 — exactly the aggregate China does not publish. It is doubly unverifiable from outside: provision to the Fund is not public, and the internal system meant to record compliance with it is still under development.
+The mandatory perimeter is stated three times as general government per the 2004 Decision: central government including budgetary, extrabudgetary and social security funds, plus state and local governments. Appendix VII Table 2 is headed "Mandatory **Public Sector** Indicators," but every line inside it is defined at central or general government level only — the title is broader than the content.
 
-**On SDDS publication (regime B): substantially compliant, with one real failure and several disclosure gaps.** China meets or beats every prescribed fiscal periodicity and timeliness, over-delivers on central-government debt disaggregation, and has one properly declared and justified flexibility option. Against that: **no advance release calendar for general government operations**, which is prescribed, has no available flexibility option, and is currently flagged by the Fund (B-11); a central-government-operations timeliness miss and two punctuality misses in 2025; an undeclared omission of guaranteed debt; and three metadata disclosures the Guide requires that China's filing does not make.
+The only adjacent language in the whole note sits in the **data adequacy questionnaire**, which is the staff judgment and not the obligation: *"Is the coverage of government operations and debt statistics sufficiently comprehensive … including risks from quasi-fiscal activities?"*
 
-**On adequacy for surveillance (regime C): this is where the real problem is, and it is not a compliance problem.** Government finance statistics is rated C, the joint-worst sector, with four of five sub-dimensions at C. The Fund's own general-government debt measure sits 30.5 percentage points of GDP above China's official figure, and it builds that measure from commercial data vendors because the Board declined in 2024 to make the off-budget perimeter a mandatory reporting obligation.
-
-**The sharpest way to put it:** China meets the letter of what the IMF requires on fiscal data while leaving the Fund unable to see roughly a third of GDP in government debt. That is a deficiency in the requirements, not in the compliance — and the 2024 Review's item 13 is the first move to close it.
+**So local government financing vehicles are outside the mandatory perimeter** unless an individual entity is classified inside general government under sector-classification rules — and the note gives no guidance on making that call. Combined with ¶26, which bars staff from being the source of the data, this means the Fund's augmented debt measure cannot generate a compliance finding against China, however large the gap it describes.
 
 ---
 
-## 7. Source links — where to verify every line
+## 6. What an outside check cannot reach
 
-Each verdict row above carries a short link label. They resolve here.
+Listed so they are not read as findings either way.
 
-### IMF requirement texts
-
-| Label | Document | URL |
-|---|---|---|
-| `[AoA]` | IMF Articles of Agreement (current edition) | https://www.imf.org/external/pubs/ft/aa/pdf/aa.pdf |
-| `[Dec13183]` | Decision No. 13183-(04/10), Strengthening the Effectiveness of Article VIII, Section 5 | https://www.imf.org/en/publications/selected-decisions/description/13183-(04/10) |
-| `[Rev2024]` | Review of Data Provision to the Fund for Surveillance Purposes, Policy Paper 2024/016 (contains Decision 17692-(24/33) and the 27-item Annex A) | https://www.imf.org/en/Publications/Policy-Papers/Issues/2024/04/12/Review-of-Data-Provision-to-the-Fund-for-Surveillance-Purposes-547697 |
-| `[GN2026]` | **Data Provision to the Fund for Surveillance Purposes — Operational Guidance Note**, Policy Paper 2026/001, 16 Jan 2026. Supersedes the 2013 note. The current operational standard | https://www.imf.org/en/publications/policy-papers/issues/2026/01/16/data-provision-to-the-fund-for-surveillance-purposed-operational-guidance-note-573266 |
-| `[GN2026-xml]` | The same note, full text, unblocked, tables as HTML — **use this one** | https://www.elibrary.imf.org/view/journals/007/2026/001/article-A001-en.xml |
-| `[SDDSGuide]` | SDDS Guide for Subscribers and Users, 2013 edition — the operative prescriptions | https://dsbb.imf.org/content/pdfs/sddsguide13.pdf |
-
-### China's declared practice (IMF Dissemination Standards Bulletin Board)
-
-`dsbb.imf.org` is an AngularJS single-page app, so a plain fetch of a `/sdds/...` route returns only a template shell. The JSON API below is the reliable route and is **not** blocked to ordinary requests.
-
-| Label | What it shows | URL |
-|---|---|---|
-| `[DSBB-CHN]` | China's SDDS country page | https://dsbb.imf.org/sdds/country/CHN |
-| `[DSBB-GGO]` | General government operations metadata | https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/GGO00 |
-| `[DSBB-CGO]` | Central government operations metadata | https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGO00 |
-| `[DSBB-CGD]` | Central government debt metadata | https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/CGD00 |
-| `[DSBB-GGD]` | General government gross debt (encouraged category — China's record is essentially empty) | https://dsbb.imf.org/sdds/dqaf-base/country/CHN/category/GGD00 |
-| `[DSBB-ARC]` | China's advance release calendars, all categories | https://dsbb.imf.org/sdds/advance-release-calendar-base/country/CHN/category/ARC#baseGGO00 |
-| `[AR2025]` | China SDDS Annual Observance Report 2025 — the Fund's own scoring of 2025 | https://dsbb.imf.org/Content/pdfs/AnnualReports/2025/CHN_SDDS_AR2025.pdf |
-| `[NSDP]` | China's National Summary Data Page, maintained by the National Bureau of Statistics | http://www.stats.gov.cn/english/Statisticaldata/nsdp/201508/t20150819_1232260.html |
-| `[API]` | JSON API pattern for any category: swap `GGO00` for `CGO00`, `CGD00`, `GGD00` | https://dsbb.imf.org/api/report/getCountryCategoryBase?countryCode=CHN&countryType=SDDS&categoryCode=GGO00 |
-| `[API-Plus]` | SDDS Plus adherent list — confirms China is absent | https://dsbb.imf.org/api/country/getcountrybytype?countryType=SDDSPLUS |
-
-### The Article IV report
-
-| Label | What it shows | URL |
-|---|---|---|
-| `[CR2644]` | IMF Country Report No. 26/44, China 2025 Article IV — landing page | https://www.imf.org/en/publications/cr/issues/2026/02/17/peoples-republic-of-china-2025-article-iv-consultation-press-release-staff-report-and-574028 |
-| `[CR2644-pdf]` | The source PDF | https://www.imf.org/-/media/files/publications/cr/2026/english/1chnea2026001-source-pdf.pdf |
-| `[CR2644-T3]` | Annex VII **Table 3**, Common Indicators Required for Surveillance — "As of January 5th, 2026". PDF pages 97–98 | same PDF, Annex VII |
-| `[CR2644-T1]` | Annex VII **Table 1**, Data Adequacy Assessment heatmap | same PDF, Annex VII |
-| `[CR2644-A8]` | Appendix VIII, Data Annex — the government-finance gap narrative, ¶4–¶6 | same PDF, from PDF page 99 |
-
-**Fetching note, as of 2026-10-19.** `www.imf.org` returns an Akamai 403 to ordinary automated download, and the `r.jina.ai` reader proxy **no longer works** on it either. Three routes that do work:
-
-1. **`elibrary.imf.org` is no longer blocked** and is now the best route for policy papers — a plain request returns the full document body with every table rendered as HTML, which beats wrestling with the PDF. Pattern: `https://www.elibrary.imf.org/view/journals/007/<YYYY>/<III>/article-A001-en.xml`.
-2. **`dsbb.imf.org` is not blocked**, but its pages are a single-page app; use the JSON API given above.
-3. **WebFetch passes Akamai on www.imf.org** and saves the real file to disk — point it at a PDF, ignore the prose answer, take the saved path, run `pdftotext -layout`. Expect occasional HTTP 429; retry.
-
-### The Chinese releases behind §4's measurements
-
-| Label | Release | URL |
-|---|---|---|
-| `[MOF-monthly]` | 全国财政收支情况, the monthly fiscal release | https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhiqingkuang/ |
-| `[MOF-debt]` | 地方政府债券发行和债务余额情况, Debt Management Department | https://zwgls.mof.gov.cn/tjsj/ |
-| `[MOF-debt-yss]` | The same series, Budget Department, history through 2024 | https://yss.mof.gov.cn/zhuantilanmu/dfzgl/sjtj/ |
-| `[DebtCentre]` | 地方政府债券市场报告, China Government Debt Research and Evaluation Center | https://kjhx.mof.gov.cn/yjbg/ |
-| `[MOHRSS]` | 人力资源和社会保障主要统计快报数据 | https://www.mohrss.gov.cn/SYrlzyhshbzb/zwgk/szrs/tjsj/ |
-| `[CELMA]` | 中国地方政府债券信息公开平台, the MOF disclosure platform | https://www.celma.org.cn/ |
-
-### Reproducing §4 from this repository
-
-Every figure in §4 is computed from the archive in this repo, not asserted. To regenerate:
-
-| Measurement | Data | Builder |
-|---|---|---|
-| Monthly fiscal publication lags | `data/mof-reports/index.json` — `date` field against the period in each `title` | `scripts/fetch_fiscal.py` |
-| Debt-balance lags | `data/mof-debt-balance/raw*/` filenames carry the publication date as `tYYYYMMDD_` | `scripts/fetch_repayment.py` |
-| Bond-report lags, both editions | `data/mof-research-reports/catalog.json` — `date` against the period in `title` | `scripts/fetch_bonds.py` |
-| Social-insurance lags | `data/mohrss/catalog.json` | `scripts/parse_mohrss.py` |
-| Four-account coverage shares | `data/mof-reports/accounts_annual.json` + `data/mohrss/mohrss_series.json` | `scripts/parse_accounts.py` |
-| Official vs augmented debt | `imf-augmented.html`, reconciled to CR 26/44 Table 2 | — |
+1. **Provision itself is not public.** Everything above tests publication. A member can satisfy the obligation by supplying data privately, and can fail it while publishing.
+2. **Item 13 for 2025** — whether a consolidated general-government debt total was furnished. The components are published; the consolidated figure appears only in an annual report not yet out for 2025.
+3. **Lines 6, 7, 10 and 12** — GFSM-form financing flows, central-government debt by maturity, and guaranteed debt. No published page was found for any of them. Absent from publication is not absent from provision.
+4. **Specific understandings and the capacity defence** (lines 19 and 20). Neither is published per country, so China's actual benchmark may differ from the general understandings used here.
+5. **The monitoring record.** Per footnote 38, the fuller compliance record for items 13 to 15 goes to an internal platform *"currently under development."* The published surveillance table carries only item 13's headline and item 15.
 
 ---
 
-*Verification basis: IMF Articles of Agreement; Decision No. 13183-(04/10) as amended through No. 17692-(24/33); SDDS Guide for Subscribers and Users (2013); IMF Dissemination Standards Bulletin Board and its JSON API; China SDDS Annual Observance Report 2025; IMF Country Report No. 26/44. Lag and coverage measurements computed from the release archive in this repository on 2026-10-19 and reproducible from it.*
+## 7. Summary
+
+| Requirement | Verdict |
+|---|---|
+| Central government flows — quarterly, 3-month lag | **Met, exceeded** — monthly, 19-day median |
+| General government flows — annual, 3-quarter lag | **Met** — 259 days of 273 |
+| Central government debt stock — annual, 3-quarter lag | **Met** — 197 days |
+| Currency composition of central government debt | **Met** |
+| Residency of holders | **Partially met** — published by the central depository, not the ministry |
+| Maturity composition of central government debt | **Could not verify** |
+| Guaranteed debt stock | **Could not verify** |
+| GFSM-form financing flows | **Could not verify** |
+| Item 13 — total general government debt stock, 2025 | **Components met; consolidated total unverified** |
+| Items 14 and 15 | **Not yet due** — 2027 |
+
+**Nothing in this check amounts to a finding of breach.** Every requirement with a verifiable publication is met, two of them with substantial margin. The four unverifiable lines are unverifiable because provision to the Fund is private, not because China is known to have withheld anything. The single item with real exposure is item 13, whose first reporting period is 2025 and whose consolidated figure China has not yet published for that year.
+
+**The tightest line is general-government flows.** China cleared a three-quarter allowance by fourteen days, in a regime where late provision is treated as nonprovision. If the 2026 final accounts slip by more than two weeks relative to this year's timing, that margin is gone.
+
+---
+
+## 8. The data pages used
+
+The 2025 final accounts hub, which carries every annual table cited above, is **http://yss.mof.gov.cn/2025zyjs/** — 2025年全国财政决算, Budget Department, Ministry of Finance. It publishes in two waves: central-government tables on 2026-07-15/16 (38 items) and national and local tables on 2026-09-16 (20 items).
+
+| Purpose | Page |
+|---|---|
+| Monthly central and general government flows | https://www.mof.gov.cn/zhengwuxinxi/redianzhuanti/quanguocaizhengshouzhiqingkuang/ |
+| Annual final accounts, all four accounts | http://yss.mof.gov.cn/2025zyjs/ |
+| Central government debt stock, with domestic/external split | http://yss.mof.gov.cn/2025zyjs/202607/t20260715_3993587.htm |
+| Local general debt stock | http://yss.mof.gov.cn/2025zyjs/202607/t20260715_3993585.htm |
+| Local special debt stock | http://yss.mof.gov.cn/2025zyjs/202607/t20260715_3993577.htm |
+| Monthly local government debt, incl. remaining maturity | https://zwgls.mof.gov.cn/tjsj/ |
+| Consolidated government debt total, annual report to the NPC | https://zwgls.mof.gov.cn/gzdt/ |
+| Holder residency for central government bonds | https://www.chinabond.com.cn/zzsj/zzsj_tjsj/tjsj_tjyb/ |
+| Provincial debt limits and balances by issuer | https://www.celma.org.cn/ |
+
+---
+
+*Checked against IMF Policy Paper 2026/001 only. Publication lags for the monthly series were computed from the release archive in this repository on 2026-10-19 and are reproducible from `data/mof-reports/index.json`. Annual lags are measured from the reference period end, 2025-12-31, to the publication date shown on each ministry page.*
