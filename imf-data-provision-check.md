@@ -55,10 +55,27 @@ The note requires, for each of central and general government: *net lending (+)/
 | # | Required | Where it is | Latest | Verdict |
 |---|---|---|---|---|
 | 5 | Net lending / net borrowing | NSDP, "- balance", for central government **and** general government | CG **Aug-2026**; GG 2024 | **Met** |
-| 6 | Net acquisition of financial assets, split domestic and external | **Not present.** The page is explicitly labelled *"For subscribers using the GFSM 1986 framework"*, and that framework has no net-acquisition-of-financial-assets concept — it presents a single below-the-line financing line instead | — | **Could not verify** — a framework difference, not an omission |
+| 6 | Net acquisition of financial assets, split domestic and external | **Not on the NSDP**, which is labelled *"For subscribers using the GFSM 1986 framework"* — a framework with no such line. **But its core component is published monthly by the central bank:** government fiscal deposits (财政性存款) in the [credit-funds table](https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/10/2026101417461893946.htm), and the bank's [September 2026 release](https://www.pbc.gov.cn/diaochatongjisi/116219/116225/2026101417073743604/index.html) states *"财政性存款增加1.63万亿元"* for January–September. See §2.2.1 | Monthly, **Sep-2026** | **Partly met** — the deposits instrument, domestically, is public; securities and other instruments are not |
 | 7 | Net incurrence of liabilities, split domestic and external | NSDP, "- financing" → "- domestic" / "- foreign", and again under "- By residence of the creditor" → domestic / external creditors. Also broken out by maturity, by instrument and by currency | CG **Aug-2026**; GG 2024 | **Met** |
 
-So line 7, which the previous draft could not verify, is in fact published monthly for central government and annually for general government, with four separate decompositions. Only line 6 remains open, and it is open because China reports on the 1986 framework, where the concept does not exist. The note lists GFSM 2014 as *preferred* and allows *"sound national methodology, where adequate for surveillance"*, so a framework difference is not on its face a breach.
+So line 7, which an earlier draft could not verify, is published monthly for central government and annually for general government, with four separate decompositions.
+
+#### 2.2.1 Line 6 — the deposit component, from the central bank
+
+Net acquisition of financial assets is not a line China presents, but the instrument that dominates government asset transactions — currency and deposits — is published monthly in the People's Bank of China's monetary statistics. All figures 亿元.
+
+| Series | Dec 2025 | Sep 2026 | Change | Source |
+|---|---|---|---|---|
+| **Fiscal deposits** (财政性存款), all financial institutions incl. the central bank | 62,817.62 | **79,489.30** | **+16,671.68** | [Dec-2025](https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/01/2026011516053141218.htm) · [Sep-2026](https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/10/2026101417461893946.htm) |
+| of which government deposits at the central bank (政府存款) | 50,000.10 | 58,733.64 | +8,733.54 | [Monetary authority balance sheet](https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/10/2026101417430649497.htm) |
+| of which treasury time deposits at banks (国库定期存款) | 10,640.37 | 18,726.14 | +8,085.77 | large-bank and medium/small-bank credit tables |
+| **Central bank's own published flow** | | | **+16,300** | *"财政性存款增加1.63万亿元"*, [release of 2026-10-14](https://www.pbc.gov.cn/diaochatongjisi/116219/116225/2026101417073743604/index.html) |
+
+The stock change and the bank's published flow agree to within rounding of the published figure to 0.01 trillion. The deposits are classified by the central bank's own statistical definition as *"财政部门存放在银行业金融机构的各项财政资金"* — all fiscal funds held by finance departments at banking institutions, explicitly including local treasury funds — so the coverage is central **and** local government.
+
+**Two traps, both avoided.** First, fiscal deposits already *contain* the government's deposits at the central bank and the treasury time deposits at banks; the three components sum to 77,459.78 against the 79,489.30 total, with the 2.6% residual being other fiscal deposits at banks. Adding them would double-count. Second, the "domestic" side is the whole of this: government deposits abroad are negligible.
+
+**What this does and does not prove.** It establishes the largest component of net acquisition of financial assets, monthly, with a published flow. It does not cover government purchases of securities, loans extended, or equity, and it is drawn from monetary rather than fiscal statistics. Verdict: **partly met**, with the gap now narrowed to non-deposit instruments.
 
 ### 2.3 Debt stocks
 
@@ -107,25 +124,56 @@ Definition, verbatim: *"Total stock of debt … refers to total gross debt consi
 
 ### 3.2 Items 14 and 15
 
-Not due until 2027, but worth checking what already exists, since much of it does.
+Not due until 2027. Checked anyway, because most of it already exists in public sources.
 
-| # | Element | First period | Already published? | Position |
+#### 3.2.1 Item 14 — debt by instrument, by creditor type, by individual creditor
+
+| # | Element | Already published? | Verdict |
+|---|---|---|---|
+| 18a | **By instrument** | **Yes.** [NSDP](https://www.stats.gov.cn/english/Statisticaldata/nsdp/201508/t20150819_1232260.html) Central Government Debt, "- By instrument": bonds 43,912.9 / loans 13.3 bn yuan, Q2/2026, quarterly | **Already met**, three years early |
+| 18b | **By creditor type**, five buckets | **Yes, reconstructable to the cent** from two official sources — see table below | **Met for four of five buckets**; foreign official/private split pending (§3.2.3) |
+| 18c | **By individual multilateral and official bilateral creditor**, required only above a 20% threshold | Not published | **Will not apply** — foreign debt is 1.14% of the stock |
+
+**Creditor types for central government bonds, August 2026, 亿元:**
+
+| Bucket required by the note | Public source | Holding | Share |
+|---|---|---|---|
+| Domestic central bank | People's Bank of China, [monetary authority balance sheet](https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/10/2026101417430649497.htm), 对政府债权, labelled central government only | 21,790.30 | 4.9% |
+| Domestic commercial banks | Central depository [table 6](https://www.chinabond.com.cn/zzsj/zzsj_tjsj/tjsj_tjyb/), 商业银行 | 296,420.33 | 67.2% |
+| Other domestic | Same table: credit unions, insurers, securities firms, funds, counter and exchange markets, and the "other" line **less the central bank** | 102,859.02 | 23.3% |
+| Foreign — official and private combined | Same table, 境外机构 | 20,255.03 | 4.6% |
+| **Sum** | | **441,324.68** | |
+| Depository table total | | 441,324.69 | |
+
+**It closes to one cent.** The depository table has no separate row for special settlement members, so the central bank's holdings must sit inside its "other" line of 43,960.67; subtracting the central bank there, rather than adding it as a fifth line, is what makes the total close. That placement is an inference, flagged as such, but the exact closure is strong evidence for it.
+
+**The 80% coverage rule is met with a wide margin.** The three domestic buckets alone identify 95.4% of the stock against a requirement of 80%.
+
+**A trap avoided.** The central bank's tables also report commercial banks' "claims on central government" at 823,175.68 for September 2026. That cannot be central-only: it is 1.8 times the whole central government debt stock. It evidently includes local government bonds despite its label, so it was not used for the commercial-bank bucket.
+
+**The individual-creditor trigger.** Required only where multilateral and official bilateral creditors hold at least 20% of the stock. On the NSDP's Q2/2026 figures, *all* foreign debt is 501.7 of 43,926.2 bn yuan, or **1.14%** — and that is every foreign creditor, official or private. China sits about eighteen percentage points below the threshold.
+
+#### 3.2.2 Item 15 — liquid financial assets of central and general government
+
+Defined in the note as *"debt securities, currency and deposit as well as monetary gold and SDR holdings."*
+
+| # | Component | Public source | Value | Verdict |
 |---|---|---|---|---|
-| 17a | Item 14 — **by instrument** | 2027 | **Yes.** [NSDP](https://www.stats.gov.cn/english/Statisticaldata/nsdp/201508/t20150819_1232260.html) Central Government Debt, "- By instrument": Bonds 43,912.9 / Loans 13.3 bn yuan, Q2/2026, quarterly | **Already satisfied** for central government |
-| 17b | Item 14 — **by creditor type**, in five buckets: domestic central bank, domestic commercial bank, other domestic, foreign official bilateral, foreign private | 2027 | **Partly.** The NSDP gives only domestic vs external creditors. The five-bucket split is not published there — but the central depository publishes monthly holder tables by institution type (commercial banks, insurance, funds, foreign institutions) at [chinabond.com.cn](https://www.chinabond.com.cn/zzsj/zzsj_tjsj/tjsj_tjyb/), which maps closely onto the required buckets | **Largely available**, though not yet in the required presentation |
-| 17c | Item 14 — **by individual multilateral and official bilateral creditor** | 2027 | Not published | **Almost certainly not required** — see the trigger test below |
-| 18 | Item 15 — **liquid financial assets** of central and general government: debt securities, currency and deposits, monetary gold and SDR holdings | 2027 | Not published as a consolidated fiscal series. Government deposits appear in the central bank's balance sheet, and gold and SDR holdings in the official reserve tables, but not assembled as a government liquid-asset aggregate | **Gap, but not yet due** |
+| 19a | **Currency and deposits — treasury funds**, central and local | People's Bank of China [credit-funds table](https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/10/2026101417461893946.htm), 财政性存款, monthly | 79,489.30 亿, Sep 2026 · 62,817.62 亿, end-2025 | **Published monthly** |
+| 19b | **Currency and deposits — social insurance funds** | Ministry of Finance [2025 final accounts](http://yss.mof.gov.cn/2025zyjs/202609/t20260916_3997508.htm), 全国社会保险基金年末滚存结余 | 162,093.96 亿, end-2025 | **Balance published; how it is held is not** |
+| 19c | National Social Security Fund — the strategic reserve | [NCSSF 2025 annual report](https://www.ssf.gov.cn/portal/yljjgl/webinfo/2026/08/1790006092551639.htm): total assets 38,083.73 亿; bank deposits 495.28 亿; financial assets 33,451 亿 not split by instrument | end-2025 | **Published, instrument split absent** |
+| 19d | **Debt securities held by government** | **Not published.** Bond holdings sit inside the social funds' "trading" and "amortised-cost" financial assets without an instrument split | — | **Gap** |
+| 19e | **Monetary gold and SDRs** | Held by the central bank, not the government: the PBOC Law, Article 4(7), gives the bank the holding of *"国家外汇储备、黄金储备"*, and gold appears as the bank's own asset in its balance sheet | **Nil** for general government | **Satisfiable as a nil return** |
 
-**The item 14 individual-creditor trigger will not bite.** The note requires that breakdown only where debt owed to multilateral and official bilateral creditors is **at least 20 percent** of the stock. On the NSDP's own Q2/2026 figures:
+**Do not add 19a and 19b together.** The social insurance balance is held in fiscal special accounts and entrusted investments, and the central bank does not say which deposit line captures it, so part may already sit inside 19a or inside the broader deposits of government organisations. The components are shown side by side for that reason.
 
-| | Billion yuan | Share |
-|---|---|---|
-| Central government debt, total | 43,926.2 | 100% |
-| of which foreign debt | 501.7 | **1.14%** |
+**Three of item 15's four instruments are now accounted for.** Deposits are published, monthly for treasury funds and annually for social funds. Gold and SDRs are a nil for general government, which is itself a valid answer. **The genuine gap is the government's holdings of debt securities**, which no public source breaks out.
 
-And 1.14% is *all* foreign debt, not merely the official and multilateral part, so the true ratio is lower still. China sits roughly eighteen percentage points below the threshold. Barring a transformation of how it funds itself, item 14's individual-creditor element will not apply.
+**The data almost certainly exists internally.** The Ministry of Finance compiles an accrual-basis *government comprehensive financial report* (政府综合财务报告); the 2025 final-accounts report of June 2026 instructs that the national report continue to be compiled, but it is not published. That report is the likeliest source from which China could supply item 15 by 2027. The fund accounting rules (财会〔2017〕28号) already require each social insurance fund to keep asset accounts for bond investments and entrusted investments, so the instrument split exists at fund level.
 
-**So of the three elements of item 14, one is already published, one is largely available in a different presentation, and one will not be required.** The genuine forward gap is item 15.
+#### 3.2.3 Pending
+
+The foreign official/private split for item 14, and central-government-guaranteed debt for item 4, depend on external-debt and guarantee sources still being checked.
 
 ### 3.3 The 80% coverage rule, for when it bites in 2027
 
@@ -139,12 +187,12 @@ China is unusually well placed here. It already publishes local government debt 
 
 | # | Requirement | Position | Verdict |
 |---|---|---|---|
-| 19 | Capacity defence — no breach where capacity genuinely prevents provision; assessed by the area department with STA and SPR, *"benefit of any doubt"* to the member (¶25) | Whether China has invoked it on any fiscal item is **not published** | **Not public** |
-| 20 | Country-specific understandings may replace the general ones, including *"longer lags or less frequent provision"*; written register with SPR, STA and LEG; pre-existing ones to be documented by **end-2026** (¶30) | Whether China has any is **not published** | **Not public** |
-| 21 | Manner of provision — publication on a government website counts, if staff can access it and an understanding is in place. Commercial providers such as Haver or Bloomberg **do not** discharge the obligation (¶31, fn 35) | The ministry pages cited throughout this check are publicly accessible | Satisfiable by publication |
-| 22 | Late provision counts as nonprovision (¶24) | Bears directly on line 3, which cleared by 14 days | Noted |
-| 23 | Escalation clock — 1 month to escalate internally, 4 months at due diligence, 6 at pre-letter, 2 for the Managing Director's letter; 12-month target, **18-month cap**; compressed where non-compliance is *"due to unwillingness rather than inability"*; SPR owns the timeline (¶33–34) | **No step is known to have been triggered** against China on fiscal data | No action on record |
-| 24 | Staff may not substitute for the member: *"staff should not be the source of the data"* (¶26) | The Fund's augmented debt aggregates are built from WIND and Zero2IPO. They are staff estimates supplementing staff analysis, **not** data China is obliged to supply | Confirms the LGFV figures sit outside the obligation |
+| 20 | Capacity defence — no breach where capacity genuinely prevents provision; assessed by the area department with STA and SPR, *"benefit of any doubt"* to the member (¶25) | Whether China has invoked it on any fiscal item is **not published** | **Not public** |
+| 21 | Country-specific understandings may replace the general ones, including *"longer lags or less frequent provision"*; written register with SPR, STA and LEG; pre-existing ones to be documented by **end-2026** (¶30) | Whether China has any is **not published** | **Not public** |
+| 22 | Manner of provision — publication on a government website counts, if staff can access it and an understanding is in place. Commercial providers such as Haver or Bloomberg **do not** discharge the obligation (¶31, fn 35) | The ministry pages cited throughout this check are publicly accessible | Satisfiable by publication |
+| 23 | Late provision counts as nonprovision (¶24) | Bears directly on line 3, which cleared by 14 days | Noted |
+| 24 | Escalation clock — 1 month to escalate internally, 4 months at due diligence, 6 at pre-letter, 2 for the Managing Director's letter; 12-month target, **18-month cap**; compressed where non-compliance is *"due to unwillingness rather than inability"*; SPR owns the timeline (¶33–34) | **No step is known to have been triggered** against China on fiscal data | No action on record |
+| 25 | Staff may not substitute for the member: *"staff should not be the source of the data"* (¶26) | The Fund's augmented debt aggregates are built from WIND and Zero2IPO. They are staff estimates supplementing staff analysis, **not** data China is obliged to supply | Confirms the LGFV figures sit outside the obligation |
 
 ---
 
@@ -168,7 +216,7 @@ Listed so they are not read as findings either way.
 2. **Item 13 for 2025** — whether a consolidated general-government debt total was furnished. The components are published; the consolidated figure appears only in an annual report not yet out for 2025.
 3. **Line 6** — net acquisition of financial assets. Absent because China reports on the GFSM 1986 framework, which has no such concept, not because a known series is being withheld.
 4. **Line 12** — central-government-guaranteed debt. No page found on the NSDP, in the 决算 tables, or in the debt-management releases. It is possible China's guaranteed stock is nil or immaterial, in which case a nil return would satisfy the requirement, but I found nothing stating that either way.
-5. **Specific understandings and the capacity defence** (lines 19 and 20). Neither is published per country, so China's actual benchmark may differ from the general understandings used here.
+5. **Specific understandings and the capacity defence** (lines 20 and 21). Neither is published per country, so China's actual benchmark may differ from the general understandings used here.
 6. **The monitoring record.** Per footnote 38, the fuller compliance record for items 13 to 15 goes to an internal platform *"currently under development."* The published surveillance table carries only item 13's headline and item 15.
 
 ---
