@@ -228,11 +228,12 @@ the insurance schemes by the fixed order of their triplets.
 Every IMF report whose subject is mainland China in the past five years: the five Article IV
 staff reports (2021–2025 consultations) and their Selected Issues, the 2024 FSAP (stability
 assessment plus two technical notes), the State Taxation Administration technical-assistance
-reports, and the September 2026 departmental paper on local-government debt. Also a list of the
+reports, the September 2026 departmental paper on local-government debt, and the IMF book
+*Toward a New Economic Growth Model for China* (September 2026, 11 chapters). Also a list of the
 press releases, mission statements and briefing transcripts that go with them.
 
 - **Sources:** https://www.imf.org/en/countries/chn and https://www.elibrary.imf.org/
-- **Coverage:** 17 documents (16 PDFs + 1 full-text HTML page), 15 statements
+- **Coverage:** 18 documents (16 PDFs + eLibrary full-text pages for the departmental paper and the book), 15 statements
 
 ```
 files/               the documents, named <published>_<number>_<topic>  (LOCAL ONLY, gitignored)

@@ -2,7 +2,7 @@
 
 The IMF's official documents on the People's Republic of China (mainland) since
 October 2021: Article IV staff reports, Selected Issues, FSAP reports, technical
-assistance reports and a departmental paper, plus the press releases, mission
+assistance reports, a departmental paper and a book, plus the press releases, mission
 statements and briefing transcripts that accompany them.
 
 imf.org and the IMF eLibrary both sit behind bot protection, so the files cannot be
@@ -22,7 +22,8 @@ IMF = 'https://www.imf.org'
 EL = 'https://www.elibrary.imf.org/view/journals'
 
 # kind, number, published, completed (cut-off date stated in the report), title,
-# pdf path on imf.org, landing page on imf.org, eLibrary issue page, local file
+# pdf path on imf.org, landing page on imf.org, eLibrary issue page (path under EL, or a
+# full URL), local file (or a tuple of candidates: the first that exists is used)
 DOCS = [
     ('Article IV', 'CR 22/21', '2022-01-28', '2021-12-21',
      '2021 Article IV Consultation — Press Release; Staff Report; and Statement by the Executive Director',
@@ -101,6 +102,32 @@ DOCS = [
      'Local Government Finances in China: Policy Options to Tackle the Debt Overhang (Adams, Ashcroft, Garrido, Hoyle, Jain-Chandra, Rendak et al.)',
      None, None,
      '087/2026/019/087.2026.issue-019-en.xml', '2026-09-25_DP26-19_local-government-finances.html'),
+    ('Book', 'ISBN 9798229037143', '2026-09-30', None,
+     'Toward a New Economic Growth Model for China (eds. Helbling, Jain-Chandra, Kothari, Srinivasan; 11 chapters, 238 pages in print)',
+     '/-/media/files/publications/books/2026/english/tnegmea.pdf',
+     'https://www.imf.org/en/publications/books/issues/2026/09/18/toward-a-new-economic-growth-model-for-china-573495',
+     'https://www.elibrary.imf.org/display/book/9798229037143/9798229037143.xml',
+     ('2026-09-30_BK26_toward-a-new-growth-model.pdf', '2026-09-30_BK26_toward-a-new-growth-model')),
+]
+
+# The book's chapters (eLibrary pages CH001-CH011). number, title, authors
+BOOK = 'https://www.elibrary.imf.org/display/book/9798229037143'
+CHAPTERS = [
+    (1, 'China\'s Economic Transformation: Exceptional Growth, Mounting Challenges and Reform Priorities',
+     'Thomas Helbling, Sonali Jain-Chandra, Siddharth Kothari, Krishna Srinivasan'),
+    (2, 'Reducing Household Savings and Boosting Consumption', 'Yizhi Xu, Fan Zhang'),
+    (3, 'Service Sector as an Engine of Growth', 'Natalija Novta, Yizhi Xu, Robert Zymek'),
+    (4, 'Scaling Back Industrial Policies to Reduce Misallocation', 'Daniel Garcia-Macia, Siddharth Kothari'),
+    (5, 'Lifting Productivity Growth: Promoting Innovation and Business Dynamism',
+     'Marshall Mills, Diego Alejandro Cerdeiro, Emilia Magdalena Jurzyk, Cian Ruane'),
+    (6, 'Delivering an Efficient Green Transition', 'Florence Jaumotte, Natalija Novta, Gregor Schwerhoff'),
+    (7, 'Reforming the Fiscal Framework: The Challenges and Way Forward', 'Yongquan Cao, Daniel Garcia-Macia'),
+    (8, 'Addressing the Local Government Debt Overhang', 'Yingyuan Chen, Daniel Garcia-Macia, Henry Hoyle'),
+    (9, 'Reform Options to Upgrade the Monetary Policy Framework',
+     'Chris Redl, Henry Hoyle, Yingyuan Chen, Dmitry Plotnikov'),
+    (10, 'The Financial System: Reforms to Ensure Stability',
+     'Yingyuan Chen, Estelle Liu, Natalia Novikova, Wei Sun, Constant Verkoren'),
+    (11, 'Upgrading China\'s Insolvency Framework', 'Jose M. Garrido'),
 ]
 
 # Statements: not archived (imf.org serves them only as web pages; the Board press
@@ -149,6 +176,11 @@ def file_stats(name):
     path = os.path.join(ROOT, 'files', name)
     if not os.path.exists(path):
         return {'local': False}
+    if os.path.isdir(path):  # a set of saved web pages: hash them in name order
+        parts = [open(os.path.join(path, f), 'rb').read() for f in sorted(os.listdir(path))]
+        data = b''.join(parts)
+        return {'local': True, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(),
+                'html_pages': len(parts)}
     data = open(path, 'rb').read()
     out = {'local': True, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
     if name.endswith('.pdf'):
@@ -164,15 +196,19 @@ def file_stats(name):
 def main():
     docs = []
     for kind, num, pub, done, title, pdf, landing, el, fname in DOCS:
+        if isinstance(fname, tuple):
+            fname = next((f for f in fname if os.path.exists(os.path.join(ROOT, 'files', f))), fname[-1])
         d = {'kind': kind, 'number': num, 'published': pub, 'completed': done, 'title': title,
              'pdf_url': IMF + pdf if pdf else None,
              'landing_url': landing or (f'{IMF}/external/pubs/cat/longres.aspx?sk={SK[num]}' if num in SK else None),
-             'elibrary_url': f'{EL}/{el}', 'file': f'files/{fname}'}
+             'elibrary_url': el if el.startswith('http') else f'{EL}/{el}', 'file': f'files/{fname}'}
         d.update(file_stats(fname))
         docs.append(d)
     stm = [{'kind': k, 'date': dt, 'number': n or None, 'title': t, 'url': NEWS + p}
            for k, dt, n, t, p in STATEMENTS]
-    json.dump({'documents': docs, 'statements': stm},
+    chapters = [{'chapter': n, 'title': t, 'authors': a, 'url': f'{BOOK}/CH{n:03d}.xml'}
+                for n, t, a in CHAPTERS]
+    json.dump({'documents': docs, 'book_chapters': chapters, 'statements': stm},
               open(os.path.join(ROOT, 'catalog.json'), 'w'), ensure_ascii=False, indent=1)
 
     local = [d for d in docs if d['local']]
@@ -190,7 +226,7 @@ def main():
          'against the report number on each cover. `scripts/build_imf_china_index.py` rebuilds this '
          'index and `catalog.json` (size, pages, SHA-256) from whatever is in `files/`.', '',
          '**Scope.** Included: Article IV staff reports, Selected Issues, FSAP reports, technical '
-         'assistance reports and summaries, and departmental papers whose subject is mainland China. '
+         'assistance reports and summaries, departmental papers and books whose subject is mainland China. '
          'Excluded: IMF Working Papers (staff research that carries the disclaimer that it does not '
          'represent IMF views), multi-country reports such as the WEO, and the separate Hong Kong SAR '
          'and Macao SAR reports.', '',
@@ -209,6 +245,20 @@ def main():
           'The departmental paper has no PDF link: its imf.org page could not be located, and the '
           'eLibrary serves its PDF only behind a browser challenge. The local copy is the eLibrary\'s '
           'full-text HTML page.', '',
+          'The book\'s PDF is listed on its imf.org page, but imf.org refused every automated request for it '
+          'and the eLibrary PDF sits behind the same browser challenge. Until a PDF is saved, the local copy '
+          'is the eLibrary\'s 13 full-text pages (front matter, chapters 1–11, back matter); the figures are '
+          'images on the eLibrary and are not included. Save the PDF as '
+          '`files/2026-09-30_BK26_toward-a-new-growth-model.pdf` and rerun the builder to switch to it.', '',
+          '## The book: *Toward a New Economic Growth Model for China* (2026)', '',
+          'Edited by Thomas Helbling, Sonali Jain-Chandra, Siddharth Kothari and Krishna Srinivasan. '
+          'Published 30 September 2026; DOI '
+          '[10.5089/9798229037143.071](https://doi.org/10.5089/9798229037143.071). '
+          'The chapters state the authors\' views, not necessarily the IMF\'s.', '',
+          '| Ch. | Title | Authors |', '|---|---|---|']
+    for c in chapters:
+        L.append(f"| {c['chapter']} | [{c['title']}]({c['url']}) | {c['authors']} |")
+    L += ['',
           '## Press releases, mission statements and briefings', '',
           'Listed, not archived: imf.org serves these only as web pages. The Board press releases are '
           'also reproduced at the front of the matching Article IV report above.', '',

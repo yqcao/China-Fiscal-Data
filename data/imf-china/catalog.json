@@ -253,6 +253,89 @@
    "local": true,
    "bytes": 1021009,
    "sha256": "1c2e2ec578f3acd4412b6c8850322ab74995aa9cfbaa2316f0a81cca9ed88288"
+  },
+  {
+   "kind": "Book",
+   "number": "ISBN 9798229037143",
+   "published": "2026-09-30",
+   "completed": null,
+   "title": "Toward a New Economic Growth Model for China (eds. Helbling, Jain-Chandra, Kothari, Srinivasan; 11 chapters, 238 pages in print)",
+   "pdf_url": "https://www.imf.org/-/media/files/publications/books/2026/english/tnegmea.pdf",
+   "landing_url": "https://www.imf.org/en/publications/books/issues/2026/09/18/toward-a-new-economic-growth-model-for-china-573495",
+   "elibrary_url": "https://www.elibrary.imf.org/display/book/9798229037143/9798229037143.xml",
+   "file": "files/2026-09-30_BK26_toward-a-new-growth-model",
+   "local": true,
+   "bytes": 9338246,
+   "sha256": "32c25fa905182be0699218cd34bd19e2f27c7ef9c4ee99466f2302884c7b22b9",
+   "html_pages": 13
+  }
+ ],
+ "book_chapters": [
+  {
+   "chapter": 1,
+   "title": "China's Economic Transformation: Exceptional Growth, Mounting Challenges and Reform Priorities",
+   "authors": "Thomas Helbling, Sonali Jain-Chandra, Siddharth Kothari, Krishna Srinivasan",
+   "url": "https://www.elibrary.imf.org/display/book/9798229037143/CH001.xml"
+  },
+  {
+   "chapter": 2,
+   "title": "Reducing Household Savings and Boosting Consumption",
+   "authors": "Yizhi Xu, Fan Zhang",
+   "url": "https://www.elibrary.imf.org/display/book/9798229037143/CH002.xml"
+  },
+  {
+   "chapter": 3,
+   "title": "Service Sector as an Engine of Growth",
+   "authors": "Natalija Novta, Yizhi Xu, Robert Zymek",
+   "url": "https://www.elibrary.imf.org/display/book/9798229037143/CH003.xml"
+  },
+  {
+   "chapter": 4,
+   "title": "Scaling Back Industrial Policies to Reduce Misallocation",
+   "authors": "Daniel Garcia-Macia, Siddharth Kothari",
+   "url": "https://www.elibrary.imf.org/display/book/9798229037143/CH004.xml"
+  },
+  {
+   "chapter": 5,
+   "title": "Lifting Productivity Growth: Promoting Innovation and Business Dynamism",
+   "authors": "Marshall Mills, Diego Alejandro Cerdeiro, Emilia Magdalena Jurzyk, Cian Ruane",
+   "url": "https://www.elibrary.imf.org/display/book/9798229037143/CH005.xml"
+  },
+  {
+   "chapter": 6,
+   "title": "Delivering an Efficient Green Transition",
+   "authors": "Florence Jaumotte, Natalija Novta, Gregor Schwerhoff",
+   "url": "https://www.elibrary.imf.org/display/book/9798229037143/CH006.xml"
+  },
+  {
+   "chapter": 7,
+   "title": "Reforming the Fiscal Framework: The Challenges and Way Forward",
+   "authors": "Yongquan Cao, Daniel Garcia-Macia",
+   "url": "https://www.elibrary.imf.org/display/book/9798229037143/CH007.xml"
+  },
+  {
+   "chapter": 8,
+   "title": "Addressing the Local Government Debt Overhang",
+   "authors": "Yingyuan Chen, Daniel Garcia-Macia, Henry Hoyle",
+   "url": "https://www.elibrary.imf.org/display/book/9798229037143/CH008.xml"
+  },
+  {
+   "chapter": 9,
+   "title": "Reform Options to Upgrade the Monetary Policy Framework",
+   "authors": "Chris Redl, Henry Hoyle, Yingyuan Chen, Dmitry Plotnikov",
+   "url": "https://www.elibrary.imf.org/display/book/9798229037143/CH009.xml"
+  },
+  {
+   "chapter": 10,
+   "title": "The Financial System: Reforms to Ensure Stability",
+   "authors": "Yingyuan Chen, Estelle Liu, Natalia Novikova, Wei Sun, Constant Verkoren",
+   "url": "https://www.elibrary.imf.org/display/book/9798229037143/CH010.xml"
+  },
+  {
+   "chapter": 11,
+   "title": "Upgrading China's Insolvency Framework",
+   "authors": "Jose M. Garrido",
+   "url": "https://www.elibrary.imf.org/display/book/9798229037143/CH011.xml"
   }
  ],
  "statements": [

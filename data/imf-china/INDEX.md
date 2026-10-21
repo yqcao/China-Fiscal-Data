@@ -2,16 +2,17 @@
 
 People's Republic of China (mainland). Sources: [imf.org](https://www.imf.org/en/countries/chn) and the [IMF eLibrary](https://www.elibrary.imf.org/).
 
-17 documents (17 held locally, 1,261 PDF pages, 37.6 MB) and 15 press releases, mission statements and briefing transcripts.
+18 documents (18 held locally, 1,261 PDF pages, 46.9 MB) and 15 press releases, mission statements and briefing transcripts.
 
 **The files are local only.** IMF reports are © International Monetary Fund, so `files/` (the PDFs) and `text/` (`pdftotext -layout` extractions for searching) are gitignored. Each row links the IMF's own PDF. imf.org and the eLibrary both sit behind bot protection, so no script in this repo downloads them; the copies were collected one at a time and checked against the report number on each cover. `scripts/build_imf_china_index.py` rebuilds this index and `catalog.json` (size, pages, SHA-256) from whatever is in `files/`.
 
-**Scope.** Included: Article IV staff reports, Selected Issues, FSAP reports, technical assistance reports and summaries, and departmental papers whose subject is mainland China. Excluded: IMF Working Papers (staff research that carries the disclaimer that it does not represent IMF views), multi-country reports such as the WEO, and the separate Hong Kong SAR and Macao SAR reports.
+**Scope.** Included: Article IV staff reports, Selected Issues, FSAP reports, technical assistance reports and summaries, departmental papers and books whose subject is mainland China. Excluded: IMF Working Papers (staff research that carries the disclaimer that it does not represent IMF views), multi-country reports such as the WEO, and the separate Hong Kong SAR and Macao SAR reports.
 
 ## Documents
 
 | Published | No. | Type | Title | Completed | Pages | Local file | Source |
 |---|---|---|---|---|---|---|---|
+| 2026-09-30 | ISBN 9798229037143 | Book | Toward a New Economic Growth Model for China (eds. Helbling, Jain-Chandra, Kothari, Srinivasan; 11 chapters, 238 pages in print) | — | — | `files/2026-09-30_BK26_toward-a-new-growth-model` | [PDF](https://www.imf.org/-/media/files/publications/books/2026/english/tnegmea.pdf) · [page](https://www.imf.org/en/publications/books/issues/2026/09/18/toward-a-new-economic-growth-model-for-china-573495) · [eLibrary](https://www.elibrary.imf.org/display/book/9798229037143/9798229037143.xml) |
 | 2026-09-25 | DP 26/19 | Departmental paper | Local Government Finances in China: Policy Options to Tackle the Debt Overhang (Adams, Ashcroft, Garrido, Hoyle, Jain-Chandra, Rendak et al.) | — | — | `files/2026-09-25_DP26-19_local-government-finances.html` | [eLibrary](https://www.elibrary.imf.org/view/journals/087/2026/019/087.2026.issue-019-en.xml) |
 | 2026-08-07 | CR 26/214 | Selected Issues | Selected Issues (background to the 2025 Article IV, published six months after it) | 2026-01-28 | 50 | `files/2026-08-07_CR26-214_selected-issues.pdf` | [PDF](https://www.imf.org/-/media/files/publications/cr/2026/english/1chnea2026002.pdf) · [page](https://www.imf.org/en/publications/cr/issues/2026/08/07/peoples-republic-of-china-selected-issues-578524) · [eLibrary](https://www.elibrary.imf.org/view/journals/002/2026/214/002.2026.issue-214-en.xml) |
 | 2026-03-10 | HLS 26/15 | Technical assistance | High-Level Summary — Structured Approaches to Risk Assessment (State Taxation Administration; FAD) | 2025-09 | 4 | `files/2026-03-10_HLS26-15_summary-structured-risk-assessment.pdf` | [PDF](https://www.imf.org/-/media/files/publications/hls/2026/english/hlsea2026015.pdf) · [page](https://www.imf.org/en/publications/high-level-summary-technical-assistance-reports/issues/2026/03/09/peoples-republic-of-china-structured-approaches-to-risk-assessment-574542) · [eLibrary](https://www.elibrary.imf.org/view/journals/029/2026/015/029.2026.issue-015-en.xml) |
@@ -33,6 +34,26 @@ People's Republic of China (mainland). Sources: [imf.org](https://www.imf.org/en
 *Completed* is the date each report says its information was cut off; for the technical-assistance reports it is the cover date.
 
 The departmental paper has no PDF link: its imf.org page could not be located, and the eLibrary serves its PDF only behind a browser challenge. The local copy is the eLibrary's full-text HTML page.
+
+The book's PDF is listed on its imf.org page, but imf.org refused every automated request for it and the eLibrary PDF sits behind the same browser challenge. Until a PDF is saved, the local copy is the eLibrary's 13 full-text pages (front matter, chapters 1–11, back matter); the figures are images on the eLibrary and are not included. Save the PDF as `files/2026-09-30_BK26_toward-a-new-growth-model.pdf` and rerun the builder to switch to it.
+
+## The book: *Toward a New Economic Growth Model for China* (2026)
+
+Edited by Thomas Helbling, Sonali Jain-Chandra, Siddharth Kothari and Krishna Srinivasan. Published 30 September 2026; DOI [10.5089/9798229037143.071](https://doi.org/10.5089/9798229037143.071). The chapters state the authors' views, not necessarily the IMF's.
+
+| Ch. | Title | Authors |
+|---|---|---|
+| 1 | [China's Economic Transformation: Exceptional Growth, Mounting Challenges and Reform Priorities](https://www.elibrary.imf.org/display/book/9798229037143/CH001.xml) | Thomas Helbling, Sonali Jain-Chandra, Siddharth Kothari, Krishna Srinivasan |
+| 2 | [Reducing Household Savings and Boosting Consumption](https://www.elibrary.imf.org/display/book/9798229037143/CH002.xml) | Yizhi Xu, Fan Zhang |
+| 3 | [Service Sector as an Engine of Growth](https://www.elibrary.imf.org/display/book/9798229037143/CH003.xml) | Natalija Novta, Yizhi Xu, Robert Zymek |
+| 4 | [Scaling Back Industrial Policies to Reduce Misallocation](https://www.elibrary.imf.org/display/book/9798229037143/CH004.xml) | Daniel Garcia-Macia, Siddharth Kothari |
+| 5 | [Lifting Productivity Growth: Promoting Innovation and Business Dynamism](https://www.elibrary.imf.org/display/book/9798229037143/CH005.xml) | Marshall Mills, Diego Alejandro Cerdeiro, Emilia Magdalena Jurzyk, Cian Ruane |
+| 6 | [Delivering an Efficient Green Transition](https://www.elibrary.imf.org/display/book/9798229037143/CH006.xml) | Florence Jaumotte, Natalija Novta, Gregor Schwerhoff |
+| 7 | [Reforming the Fiscal Framework: The Challenges and Way Forward](https://www.elibrary.imf.org/display/book/9798229037143/CH007.xml) | Yongquan Cao, Daniel Garcia-Macia |
+| 8 | [Addressing the Local Government Debt Overhang](https://www.elibrary.imf.org/display/book/9798229037143/CH008.xml) | Yingyuan Chen, Daniel Garcia-Macia, Henry Hoyle |
+| 9 | [Reform Options to Upgrade the Monetary Policy Framework](https://www.elibrary.imf.org/display/book/9798229037143/CH009.xml) | Chris Redl, Henry Hoyle, Yingyuan Chen, Dmitry Plotnikov |
+| 10 | [The Financial System: Reforms to Ensure Stability](https://www.elibrary.imf.org/display/book/9798229037143/CH010.xml) | Yingyuan Chen, Estelle Liu, Natalia Novikova, Wei Sun, Constant Verkoren |
+| 11 | [Upgrading China's Insolvency Framework](https://www.elibrary.imf.org/display/book/9798229037143/CH011.xml) | Jose M. Garrido |
 
 ## Press releases, mission statements and briefings
 
