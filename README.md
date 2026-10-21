@@ -223,6 +223,30 @@ the insurance schemes by the fixed order of their triplets.
 > ships **no bot-detection bypass**, so unlike the MOF/NBS/PBOC scrapers this dataset cannot be
 > refreshed unattended — see *Refreshing the MOHRSS data* below.
 
+### `data/imf-china/` — IMF official documents on China, Oct 2021 → Oct 2026
+
+Every IMF report whose subject is mainland China in the past five years: the five Article IV
+staff reports (2021–2025 consultations) and their Selected Issues, the 2024 FSAP (stability
+assessment plus two technical notes), the State Taxation Administration technical-assistance
+reports, and the September 2026 departmental paper on local-government debt. Also a list of the
+press releases, mission statements and briefing transcripts that go with them.
+
+- **Sources:** https://www.imf.org/en/countries/chn and https://www.elibrary.imf.org/
+- **Coverage:** 17 documents (16 PDFs + 1 full-text HTML page), 15 statements
+
+```
+files/               the documents, named <published>_<number>_<topic>  (LOCAL ONLY, gitignored)
+text/                pdftotext -layout extractions for searching           (LOCAL ONLY, gitignored)
+catalog.json         per document: number, dates, title, PDF / page / eLibrary URLs, pages, SHA-256
+INDEX.md             human-readable tables of documents and statements
+```
+
+> **Local only, and collected by hand.** The reports are © IMF, so the PDFs and their text are
+> not committed; `INDEX.md` links the IMF's own copy of each. imf.org and the eLibrary are behind
+> bot protection, so there is no fetch script: each file was collected individually and checked
+> against the report number on its cover. `scripts/build_imf_china_index.py` rebuilds the index
+> from the curated list in the script and whatever is in `files/`.
+
 ## The Monthly Fiscal Monitor
 
 The dashboard (`fiscal-monitor.html`) embeds the four parsed JSON series inline and is
@@ -295,6 +319,7 @@ scripts/
   build_prov_debt_panel.py  tidy data/celma/ into prov_panel.json/.csv (feeds the monitor's Section 4)
   parse_mohrss.py        parse data/mohrss/files/ → mohrss_series.json (browser-collected)
   build_mohrss.py        rebuild mohrss.html from mohrss_series.json
+  build_imf_china_index.py  data/imf-china/ catalog.json + INDEX.md (hand-collected IMF reports)
   update.sh              run all of the above in order
 ```
 

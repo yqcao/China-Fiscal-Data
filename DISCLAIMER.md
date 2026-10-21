@@ -1,6 +1,6 @@
 # Disclaimer · 免责声明
 
-*Last updated: 2026-09-11*
+*Last updated: 2026-10-21*
 
 This repository and the site published from it at https://yqcao.github.io/China-Fiscal-Data/
 (together, "the Project") are a personal, non-commercial research archive. By using the
@@ -38,7 +38,9 @@ remain with the issuing agency or organisation. In particular:
   files.
 - **IMF figures** on the augmented-debt page are transcribed from IMF Country Report
   No. 26/44 (February 2026), Table 2, © International Monetary Fund, and are reproduced for
-  non-commercial research with attribution.
+  non-commercial research with attribution. The catalogue in `data/imf-china/` lists IMF
+  documents on China with links to the IMF's own copies; the documents themselves are kept
+  locally and are not redistributed.
 - **Bond-holder statistics** are from the monthly statistical releases of China Central
   Depository & Clearing Co., Ltd. (ChinaBond, 中债), which retains all rights in them.
 - **Provincial boundary geometry** used for maps is from DataV.GeoAtlas (Alibaba Cloud) and is
