@@ -214,5 +214,17 @@
 "cumulative": false,
 "title": "8月份国民经济运行平稳、发展向新向优",
 "url": "https://www.stats.gov.cn/sj/zxfb/202609/t20260915_1965307.html"
+},
+{
+"period": "2026-10",
+"year": 2026,
+"month": 10,
+"exports_yoy": 28.7,
+"imports_yoy": 34.7,
+"total_yoy": 31.2,
+"basis": "RMB",
+"cumulative": false,
+"title": "10月份国民经济运行总体平稳、向新向优",
+"url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965844.html"
 }
 ]

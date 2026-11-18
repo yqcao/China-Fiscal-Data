@@ -187,5 +187,23 @@
 "ytd": 1.1,
 "title": "2026年1—8月份社会消费品零售总额增长1.1%",
 "url": "https://www.stats.gov.cn/sj/zxfb/202609/t20260915_1965311.html"
+},
+{
+"period": "2026-09",
+"year": 2026,
+"month": 9,
+"yoy": 1.1,
+"ytd": 1.1,
+"title": "2026年1—9月份社会消费品零售总额增长1.1%",
+"url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965614.html"
+},
+{
+"period": "2026-10",
+"year": 2026,
+"month": 10,
+"yoy": 0.4,
+"ytd": 1.0,
+"title": "2026年1—10月份社会消费品零售总额增长1.0%",
+"url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965839.html"
 }
 ]

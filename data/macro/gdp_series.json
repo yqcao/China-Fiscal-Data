@@ -62,5 +62,13 @@
 "gdp_yoy": 4.7,
 "title": "2026年二季度和上半年国内生产总值初步核算结果",
 "url": "https://www.stats.gov.cn/sj/zxfb/202607/t20260716_1964142.html"
+},
+{
+"period": "2026-Q3",
+"year": 2026,
+"quarter": 3,
+"gdp_yoy": 4.6,
+"title": "2026年三季度国内生产总值初步核算结果",
+"url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261020_1965658.html"
 }
 ]
